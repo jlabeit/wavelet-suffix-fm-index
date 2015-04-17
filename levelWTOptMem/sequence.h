@@ -26,6 +26,11 @@
 #include <iostream>
 #include "parallel.h"
 #include "utils.h"
+
+// For fast popcount
+#include <immintrin.h>
+#include <x86intrin.h>
+
 using namespace std;
 
 #define _BSIZE 2048
@@ -260,17 +265,29 @@ namespace sequence {
 
 
   template <class intT>
-  bool checkBit(long* Fl, intT i) {
+  inline bool checkBit(long* Fl, intT i) {
 	return Fl[i/64] & ((long)1 << (i % 64));
   }
 
   template<class intT>
   intT sumBitFlagsSerial(long* Fl, intT s, intT e) {
-	// TODO:  use popcount
 	intT res = 0;
-	for (int i = s; i < e; ++i) 
-		if (checkBit(Fl, i)) ++res;
-		
+	while (s % 64 && s < e) {
+		if (checkBit(Fl,s)) ++res;
+		s++;
+	}
+	if (s == e)
+		return res;
+	while (e%64) {
+		if (checkBit(Fl,e-1)) ++res;
+		e--;
+	}
+	// Do the rest with popcount
+	intT be = e / 64;
+	intT bs = s / 64;
+	for (intT i = bs; i < be; ++i) {
+		res += _popcnt64(Fl[i]);
+	}		
 	return res;
   }
 
@@ -286,7 +303,26 @@ namespace sequence {
   }
 
   template <class ET, class intT, class F>
-  _seq<ET> packSerial0(ET* Out, long* Fl, intT s, intT e, F f) {
+  void packSerial01(ET* Out0, ET* Out1, long* Fl, intT s, intT e, F f) {
+	if (Out0 == NULL) {
+		intT m = e - s - sumBitFlagsSerial(Fl, e, s);
+		Out0 = newA(ET,m);
+	}
+	if (Out1 == NULL) {
+		intT m = sumBitFlagsSerial(Fl, e, s);
+		Out1 = newA(ET,m);
+	}
+	intT k0 = 0;
+	intT k1 = 0;
+	for (intT i = s; i < e; ++i) {
+		if (checkBit(Fl,i)) 
+			Out1[k1++] = f(i);		
+		else 
+			Out0[k0++] = f(i);
+	}
+  } 
+  template <class ET, class intT, class F>
+  void packSerial0(ET* Out, long* Fl, intT s, intT e, F f) {
 	if (Out == NULL) {
 		intT m = e - s - sumBitFlagsSerial(Fl, e, s);
 		Out = newA(ET,m);
@@ -296,17 +332,15 @@ namespace sequence {
 		if (!checkBit(Fl, i)) {
 			Out[k++] = f(i);
 		}
-	return _seq<ET>(Out,k);
   }
   template <class ET, class intT, class F>
-  _seq<ET> packSerial1(ET* Out, long* Fl, intT s, intT e, F f) {
+  void packSerial1(ET* Out, long* Fl, intT s, intT e, F f) {
 	if (Out == NULL) {
 		intT m = sumBitFlagsSerial(Fl, e, s);
 		Out = newA(ET,m);
 	}
 	intT k = 0;
 	for (intT i=s; i < e; i++) if (checkBit(Fl, i)) Out[k++] = f(i);
-	return _seq<ET>(Out,k);
   }
 
 
@@ -373,8 +407,9 @@ namespace sequence {
       Out2 = Out+m1;
     }
     blocked_for(i, s, e, _F_BSIZE, 
-		packSerial0(Out1+Sums1[i], Fl, s, e, f);
-		packSerial1(Out2+Sums2[i], Fl, s, e, f););
+		packSerial01(Out1+Sums1[i], Out2+Sums2[i], Fl, s, e, f););
+		//packSerial0(Out1+Sums1[i], Fl, s, e, f);
+		//packSerial1(Out2+Sums2[i], Fl, s, e, f););
     free(Sums1); free(Sums2);
     return pair<_seq<ET>,_seq<ET> >(_seq<ET>(Out1,m1),_seq<ET>(Out2,m2));
   }
@@ -398,7 +433,6 @@ namespace sequence {
 	intT pack2Bit(ET* In, ET* Out, long* Flags, intT s, intT e) {
 	pair<_seq<ET>,_seq<ET> > r;
 	r = pack2(Out, Flags,  s, e, getA<ET, intT>(In)); 
-	//return pair<intT,intT>(r.first.n, r.second.n);
 	return r.first.n;
   }  
 
