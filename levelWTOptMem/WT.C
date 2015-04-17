@@ -54,9 +54,6 @@ pair<WTnode*,long*> WT(symbol* s, uintT n, uintT sigma) {
   long* wt = newA(long,((long)n*levels+63)/64);
   parallel_for(long i=0;i<((long)n*levels+63)/64; i++) wt[i] = 0;
   uintT numChunks = 1;
-
-  uintT* space = newA(uintT,n); //temp space
-
   for(int l = 0; l < levels; l++) {
     intOffset levelOffset = l*n;
     int mask = (long)1 << (levels - l - 1);
@@ -115,66 +112,43 @@ pair<WTnode*,long*> WT(symbol* s, uintT n, uintT sigma) {
 #endif
 	offsets2[j*2].start = offsets2[j*2+1].start = UINT_T_MAX;
       } else {
-	//count up number of elts on the left
-	if(length < THRESHOLD) {
-	  for(uintT i=start;i<start+length;i++) {
-	    space[i] = (!(source[i] & mask)) ? 1 : 0;
-	  }
-	}
-	else {
-	  parallel_for(uintT i=start;i<start+length;i++) {
-	    space[i] = (!(source[i] & mask)) ? 1 : 0;
-	  }
-	}
-	// perform prefix sum on one bits
-	intOffset rightStart = sequence::plusScan(space+start,space+start,length);
-
+	intOffset wtBegin_ = wtBegin;
+	intOffset wtEnd_ = wtEnd;	
 	if(length < 128) {
 	  for(intOffset i=wtBegin;i<=wtEnd;i++) {
-	    if(source[sourceOffset+i] & mask) {
+	    if(source[sourceOffset+i] & mask)
 	      writeOr(&wt[i/64],(long)1 << (i % 64));
-	      s2[rightStart+sourceOffset+i-space[sourceOffset+i]] = source[sourceOffset+i];
-	    }
-	    else s2[start+space[sourceOffset+i]] = source[sourceOffset+i];
 	  }
 	}
 	else if(length < THRESHOLD) {
 	  while(wtBegin%64) { //shares first word with someone else
-	    if(source[sourceOffset+wtBegin] & mask) { writeOr(&wt[word],(long)1 << (wtBegin % 64));
-	      //position on right is equal to index minus position on left
-	      s2[rightStart+sourceOffset+wtBegin-space[sourceOffset+wtBegin]] = source[sourceOffset+wtBegin]; }
-	    else {s2[start+space[sourceOffset+wtBegin]] = source[sourceOffset+wtBegin]; }
+	    if(source[sourceOffset+wtBegin] & mask)  
+		    writeOr(&wt[word],(long)1 << (wtBegin % 64));
 	    wtBegin++;
 	  }
 	  word = wtEnd/64;
 	  while(wtEnd%64 != 63) { //shares last word with someone else
-	    if(source[sourceOffset+wtEnd] & mask) { writeOr(&wt[word],(long)1 << (wtEnd % 64));
+	    if(source[sourceOffset+wtEnd] & mask) 
+		    writeOr(&wt[word],(long)1 << (wtEnd % 64));
 	      //position on right is equal to index minus position on left
-	      s2[rightStart+sourceOffset+wtEnd-space[sourceOffset+wtEnd]] = source[sourceOffset+wtEnd]; }
-	    else {s2[start+space[sourceOffset+wtEnd]] = source[sourceOffset+wtEnd]; }
 	    wtEnd--;
 	  }
 	  for(intOffset i=wtBegin;i<=wtEnd;i++) {
-	    if(source[sourceOffset+i] & mask) {
+	    if(source[sourceOffset+i] & mask) 
 	      wt[i/64] |= (long)1 << (i % 64);
-	      s2[rightStart+sourceOffset+i-space[sourceOffset+i]] = source[sourceOffset+i];
-	    }
-	    else {s2[start+space[sourceOffset+i]] = source[sourceOffset+i]; }
 	  }
 	} else {
 	  while(wtBegin%64) { //shares first word with someone else
-	    if(source[sourceOffset+wtBegin] & mask) { writeOr(&wt[word],(long)1 << (wtBegin % 64));
+	    if(source[sourceOffset+wtBegin] & mask) 
+		    writeOr(&wt[word],(long)1 << (wtBegin % 64));
 	      //position on right is equal to index minus position on left
-	      s2[rightStart+sourceOffset+wtBegin-space[sourceOffset+wtBegin]] = source[sourceOffset+wtBegin]; }
-	    else {s2[start+space[sourceOffset+wtBegin]] = source[sourceOffset+wtBegin]; }
 	    wtBegin++; 
 	  }
 	  word = wtEnd/64;
 	  while(wtEnd%64 != 63) { //shares last word with someone else
-	    if(source[sourceOffset+wtEnd] & mask) { writeOr(&wt[word],(long)1 << (wtEnd % 64));
+	    if(source[sourceOffset+wtEnd] & mask) 
+		    writeOr(&wt[word],(long)1 << (wtEnd % 64));
 	      //position on right is equal to index minus position on left
-	      s2[rightStart+sourceOffset+wtEnd-space[sourceOffset+wtEnd]] = source[sourceOffset+wtEnd]; }
-	    else {s2[start+space[sourceOffset+wtEnd]] = source[sourceOffset+wtEnd]; }
 	    wtEnd--;
 	  }
 	  //loop over rest in chunks
@@ -182,12 +156,14 @@ pair<WTnode*,long*> WT(symbol* s, uintT n, uintT sigma) {
 	  parallel_for(intOffset k=startWord;k<=endWord;k++) {
 	    intOffset b = 64*k;
 	    for(intOffset i=b;i<b+64;i++) {
-	      if(source[sourceOffset+i] & mask) { wt[k] |= (long)1 << (i % 64);
-	  	s2[rightStart+sourceOffset+i-space[sourceOffset+i]] = source[sourceOffset+i];
-	      } else {s2[start+space[sourceOffset+i]] = source[sourceOffset+i];}
+	      if(source[sourceOffset+i] & mask) 
+		      wt[k] |= (long)1 << (i % 64);
 	    }
 	  }
 	}
+	// Reorder s1 s2 correctly
+	// Check that input and flags are indexed the same, but output is indexed starting from 0
+	intOffset rightStart = sequence::pack2Bit(source-levelOffset , s2+start , wt, wtBegin_, wtEnd_+1); 
 	if(rightStart) {
 #ifdef POINTERS
 	  nodes[2*nodeID+1].parent = nodeID;
@@ -219,8 +195,8 @@ pair<WTnode*,long*> WT(symbol* s, uintT n, uintT sigma) {
     swap(s1,s2);
     
   }
-  free(space); 
-  free(offsets); free(offsets2);
+  free(offsets); 
+  free(offsets2);
   free(s2); 
   free(s1);
   return make_pair(nodes,wt);

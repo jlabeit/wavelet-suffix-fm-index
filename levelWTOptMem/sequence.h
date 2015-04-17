@@ -258,6 +258,22 @@ namespace sequence {
     return r;
   }
 
+
+  template <class intT>
+  bool checkBit(long* Fl, intT i) {
+	return Fl[i/64] & ((long)1 << (i % 64));
+  }
+
+  template<class intT>
+  intT sumBitFlagsSerial(long* Fl, intT s, intT e) {
+	// TODO:  use popcount
+	intT res = 0;
+	for (int i = s; i < e; ++i) 
+		if (checkBit(Fl, i)) ++res;
+		
+	return res;
+  }
+
   template <class ET, class intT, class F> 
   _seq<ET> packSerial(ET* Out, bool* Fl, intT s, intT e, F f) {
     if (Out == NULL) {
@@ -268,6 +284,31 @@ namespace sequence {
     for (intT i=s; i < e; i++) if (Fl[i]) Out[k++] = f(i);
     return _seq<ET>(Out,k);
   }
+
+  template <class ET, class intT, class F>
+  _seq<ET> packSerial0(ET* Out, long* Fl, intT s, intT e, F f) {
+	if (Out == NULL) {
+		intT m = e - s - sumBitFlagsSerial(Fl, e, s);
+		Out = newA(ET,m);
+	}
+	intT k = 0;
+	for (intT i=s; i < e; i++) 
+		if (!checkBit(Fl, i)) {
+			Out[k++] = f(i);
+		}
+	return _seq<ET>(Out,k);
+  }
+  template <class ET, class intT, class F>
+  _seq<ET> packSerial1(ET* Out, long* Fl, intT s, intT e, F f) {
+	if (Out == NULL) {
+		intT m = sumBitFlagsSerial(Fl, e, s);
+		Out = newA(ET,m);
+	}
+	intT k = 0;
+	for (intT i=s; i < e; i++) if (checkBit(Fl, i)) Out[k++] = f(i);
+	return _seq<ET>(Out,k);
+  }
+
 
   template <class ET, class intT, class F> 
   _seq<ET> pack(ET* Out, bool* Fl, intT s, intT e, F f) {
@@ -308,6 +349,38 @@ namespace sequence {
     free(Sums1); free(Sums2);
     return pair<_seq<ET>,_seq<ET> >(_seq<ET>(Out1,m1),_seq<ET>(Out2,m2));
   }
+  // Custom pack2 to be used with general flag functions
+  template <class ET, class intT, class F>
+  pair<_seq<ET>,_seq<ET> > pack2(ET* Out, long* Fl, intT s, intT e, F f) {
+    // If interval empty
+    if (s >= e)
+	    return pair<_seq<ET>,_seq<ET> >(_seq<ET>(Out,0),_seq<ET>(Out,0));
+    intT l = nblocks(e-s, _F_BSIZE);
+    intT *Sums1 = newA(intT,l);
+    intT *Sums2 = newA(intT,l);
+    blocked_for (i, s, e, _F_BSIZE, 
+                 Sums2[i] = sumBitFlagsSerial(Fl, s, e); // count ones
+                 Sums1[i] = (e-s-Sums2[i]);); // calculate zeros 
+    intT m1 = plusScan(Sums1, Sums1, l);
+    intT m2 = plusScan(Sums2, Sums2, l);
+    ET* Out1;
+    ET* Out2;
+    if (Out == NULL) {
+      Out1 = newA(ET,m1);
+      Out2 = newA(ET,m2);
+    } else {
+      Out1 = Out;
+      Out2 = Out+m1;
+    }
+    blocked_for(i, s, e, _F_BSIZE, 
+		packSerial0(Out1+Sums1[i], Fl, s, e, f);
+		packSerial1(Out2+Sums2[i], Fl, s, e, f););
+    free(Sums1); free(Sums2);
+    return pair<_seq<ET>,_seq<ET> >(_seq<ET>(Out1,m1),_seq<ET>(Out2,m2));
+  }
+
+
+
 
   template <class ET, class intT> 
   intT pack(ET* In, ET* Out, bool* Fl, intT n) {
@@ -319,6 +392,15 @@ namespace sequence {
     r = pack2(Out, Fl1, Fl2, (intT) 0, n, getA<ET,intT>(In));
     return pair<intT,intT>(r.first.n,r.second.n);
   }
+
+  // Custom pack which takes an input and one flag array and puts all elements where 0 is set on the left side and alle the other elements on to the right
+  template <class ET, class intT>
+	intT pack2Bit(ET* In, ET* Out, long* Flags, intT s, intT e) {
+	pair<_seq<ET>,_seq<ET> > r;
+	r = pack2(Out, Flags,  s, e, getA<ET, intT>(In)); 
+	//return pair<intT,intT>(r.first.n, r.second.n);
+	return r.first.n;
+  }  
 
   template <class ET, class intT> 
   _seq<ET> pack(ET* In, bool* Fl, intT n) {
