@@ -383,7 +383,7 @@ namespace sequence {
     free(Sums1); free(Sums2);
     return pair<_seq<ET>,_seq<ET> >(_seq<ET>(Out1,m1),_seq<ET>(Out2,m2));
   }
-  // Custom pack2 to be used with general flag functions
+  // Custom pack2 to be used with bitvector as flags (used for example for wavelet trees)
   template <class ET, class intT, class F>
   pair<_seq<ET>,_seq<ET> > pack2(ET* Out, long* Fl, intT s, intT e, F f) {
     // If interval empty
