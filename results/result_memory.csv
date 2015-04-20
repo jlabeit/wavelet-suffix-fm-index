@@ -1,0 +1,16 @@
+File name,integer/testSerial(m),integer/testLevelOpt1(m),integer/testLevelOpt64(m),integer/testLevelOptMem1(m),integer/testLevelOptMem64(m)
+chr22.dna,112,244,241,112,108
+etext99,402,804,805,403,405
+howto,151,302,300,151,151
+jdk13c,258,525,523,259,259
+proteins,726,1527,1527,727,727
+rctail96,425,863,863,425,425
+rfc,431,876,876,431,432
+sprot34,406,824,825,406,407
+trigramString_10000000,35,74,70,35,31
+w3c2,398,796,797,399,400
+wikisamp.xml,382,764,765,383,385
+randomSeq_10M_256_int,260,298,296,260,257
+randomSeq_100M_256_int,2590,2972,2971,2590,2591
+randomSeq_10M_100K_int,286,324,322,286,285
+randomSeq_10M_1048576_int,3091,3473,3472,3091,3235

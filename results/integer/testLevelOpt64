@@ -9,9 +9,9 @@
 1 : sprot34 :  -r 1 -o /tmp/ofile958309_619500 : '0.538' : 825.
 1 : w3c2 :  -r 1 -o /tmp/ofile518961_85155 : '0.563' : 797.
 1 : wikisamp.xml :  -r 1 -o /tmp/ofile558014_564486 : '0.487' : 765.
-levelWTOpt : 0 : weighted time, min=0.168 median=0.168 mean=0.168
+#levelWTOpt : 0 : weighted time, min=0.168 median=0.168 mean=0.168
 1 : randomSeq_100M_256_int :  -r 1 -o /tmp/ofile813421_748213 : '0.686' : 2971.
 1 : randomSeq_10M_100K_int :  -r 1 -o /tmp/ofile656003_691735 : '0.15' : 322.
 1 : randomSeq_10M_1048576_int :  -r 1 -o /tmp/ofile799218_697228 : '1.37' : 3472.
 1 : randomSeq_10M_256_int :  -r 1 -o /tmp/ofile935332_701648 : '0.095' : 296.
-levelWTOpt : 0 : weighted time, min=0.575 median=0.575 mean=0.575
+#levelWTOpt : 0 : weighted time, min=0.575 median=0.575 mean=0.575
