@@ -1,0 +1,17 @@
+1 : trigramString_10000000 :  -r 1 -o /tmp/ofile438283_93463 : '0.056' : 71.
+1 : chr22.dna :  -r 1 -o /tmp/ofile341749_917551 : '0.061' : 236.
+1 : etext99 :  -r 1 -o /tmp/ofile929220_235047 : '0.7' : 801.
+1 : howto :  -r 1 -o /tmp/ofile895008_734677 : '0.216' : 295.
+1 : jdk13c :  -r 1 -o /tmp/ofile237867_343784 : '0.368' : 521.
+1 : proteins :  -r 1 -o /tmp/ofile749636_2873 : '0.723' : 1525.
+1 : rctail96 :  -r 1 -o /tmp/ofile778294_911730 : '0.627' : 862.
+1 : rfc :  -r 1 -o /tmp/ofile3796_587188 : '0.599' : 872.
+1 : sprot34 :  -r 1 -o /tmp/ofile209364_675412 : '0.653' : 824.
+1 : w3c2 :  -r 1 -o /tmp/ofile469628_225408 : '0.665' : 797.
+1 : wikisamp.xml :  -r 1 -o /tmp/ofile570253_766671 : '0.697' : 762.
+1 : randomSeq_100M_256_int :  -r 1 -o /tmp/ofile807946_551187 : '1.21' : 2595.
+1 : randomSeq_10M_100K_int :  -r 1 -o /tmp/ofile132903_599423 : '0.293' : 424.
+1 : randomSeq_10M_1048576_int :  -r 1 -o /tmp/ofile777763_710642 : '2.35' : 5049.
+1 : randomSeq_10M_256_int :  -r 1 -o /tmp/ofile300078_976485 : '0.209' : 256.
+1 : wikisamp.xml :  -r 1 -o /tmp/ofile208046_967367 : '0.858' : 761.
+levelWTOpt : 0 : weighted time, min=0.642 median=0.642 mean=0.642
