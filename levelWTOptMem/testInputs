@@ -1,15 +1,16 @@
 #!/usr/bin/python
 
-bnchmrk="WT"
+bnchmrkc="WTc"
+bnchmrki="WTi"
 benchmark="Wavelet Tree"
 checkProgram="../common/WTCheck"
 dataDir = "../sequenceData/data"
 
-tests = [
+testschar = [
     [20, "trigramString_10000000", "", ""],
     [6, "chr22.dna", "", ""],
     [1, "etext99", "", ""],
-    [1, "HG18", "", ""],
+#    [1, "HG18", "", ""],
     [1, "howto", "", ""],
     [1, "jdk13c", "", ""],
     [1, "proteins", "", ""],
@@ -17,14 +18,17 @@ tests = [
     [1, "rfc", "", ""],
     [1, "spot34", "", ""],
     [1, "w3c2", "", ""],
-    [1, "wikisamp.xml", "", ""],
+    [1, "wikisamp.xml", "", ""]
+]
+
+testsint = [
     [1, "randomSeq_100M_256_int", "", ""],
-    [1, "randomSeq_10M_100k_int", "", ""],
+    [1, "randomSeq_10M_100K_int", "", ""],
     [1, "randomSeq_10M_1048576_int", "", ""],
-    [1, "randomSeq_10M_256_int", "", ""],
-    [1, "wikisamp.xml", "", ""],
+    [1, "randomSeq_10M_256_int", "", ""]
 ]
 
 import runTests
-runTests.timeAllArgs(bnchmrk, benchmark, checkProgram, dataDir, tests)
+runTests.timeAllArgs(bnchmrkc, benchmark, checkProgram, dataDir, testschar)
+runTests.timeAllArgs(bnchmrki, benchmark, checkProgram, dataDir, testsint)
 
