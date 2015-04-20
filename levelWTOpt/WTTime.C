@@ -142,6 +142,7 @@ int parallel_main(int argc, char* argv[]) {
   int rounds = P.getOptionIntValue("-r",1);
   bool binary = P.getOption("-b");
   int check = P.getOptionIntValue("-c",0);
+  std::cout<<"Workers:" << getWorkers()<<std::endl;
   if(binary) {
     ifstream in(iFile,ifstream::in |ios::binary);
     in.seekg(0,ios::end);
