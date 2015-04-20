@@ -14,4 +14,4 @@
 1 : randomSeq_10M_1048576_int :  -r 1 -o /tmp/ofile675375_232514 : '2.94' : 5053.
 1 : randomSeq_10M_256_int :  -r 1 -o /tmp/ofile912539_123111 : '0.108' : 257.
 1 : wikisamp.xml :  -r 1 -o /tmp/ofile562252_26601 : '0.5' : 763.
-levelWTOpt : 0 : weighted time, min=0.636 median=0.636 mean=0.636
+#levelWTOpt : 0 : weighted time, min=0.636 median=0.636 mean=0.636
