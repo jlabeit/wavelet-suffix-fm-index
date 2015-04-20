@@ -6,8 +6,8 @@ checkProgram="../common/WTCheck"
 dataDir = "../sequenceData/data"
 
 tests = [
-    [20, "trigramString_10000000", "", ""],
-    [6, "chr22.dna", "", ""],
+    [1, "trigramString_10000000", "", ""],
+    [1, "chr22.dna", "", ""],
     [1, "etext99", "", ""],
     [1, "HG18", "", ""],
     [1, "howto", "", ""],
@@ -15,11 +15,11 @@ tests = [
     [1, "proteins", "", ""],
     [1, "rctail96", "", ""],
     [1, "rfc", "", ""],
-    [1, "spot34", "", ""],
+    [1, "sprot34", "", ""],
     [1, "w3c2", "", ""],
     [1, "wikisamp.xml", "", ""],
     [1, "randomSeq_100M_256_int", "", ""],
-    [1, "randomSeq_10M_100k_int", "", ""],
+    [1, "randomSeq_10M_100K_int", "", ""],
     [1, "randomSeq_10M_1048576_int", "", ""],
     [1, "randomSeq_10M_256_int", "", ""],
     [1, "wikisamp.xml", "", ""],
