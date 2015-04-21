@@ -103,7 +103,18 @@ void serialWT(symbol* s, uintT n, uintT sigma, WTnode* nodes, long* wt) {
   return make_pair(nodes,wt);
 }
 
-
+template<intT>
+void copy_interval<intT>(intT s, intT e, WTnode* nodes, long* prewt, long* wt) {
+	//TODO optimize (binary search or better)
+	intT n = 2*sigma-1;	
+	while (n > 0 && nodes[n].bitmapPtr > s) n--;
+	// TODO write complete words if possible
+	while (n < s) {
+		
+		n++;
+	}	
+	
+}
 
 pair<WTnode*,long*> WT(symbol* s, uintT n, uintT sigma) {
   int num_threads = __cilkrts_get_nworkers();
@@ -118,10 +129,27 @@ pair<WTnode*,long*> WT(symbol* s, uintT n, uintT sigma) {
 	serialWT(s + s, (e-s), sigma, prenodes + i*2*sigma, prewt + i*s*levels);	
   }
   // Merge wts to one result
-
-
+  
+  // Calculate Positions
   WTnode* nodes = newA(WTnode,sigma*2);
   long* wt = newA(long,((long)n*levels+63)/64);
+  // Reorder offset values in temporary array
+  intOffset* bitmapPtrs = newA(intOffset, 2*sigma*num_threads);
+  parallel_for (intT n = 0; n < 2*sigma; ++n) {
+	  intT offset = n*num_threads;
+	  parallel_for (intT p = 0; p < num_threads; ++p) {
+		bitmapPtrs[offset + p] = prenodes[p*2*sigma + n]; 			
+	  }
+  }
+  parallel_for (int n = 0; n < 2*sigma; ++n) {
+	// Prefix sum over all processors
+	nodes[n].bitmapPtr = plusReduce(bitmapPtr + num_threads*n, num_threads);
+  }
+  free(bitmapPtrs);
+  // TODO Blocks have to be aligned so no write conflicts appear
+  blocked_for(i, s, e, BLOCK_SIZE, 
+		copy_interval(s, e, nodes, prewt, wt);
+	     );
 
 
   free(prenodes);

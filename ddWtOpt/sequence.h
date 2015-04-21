@@ -82,6 +82,7 @@ namespace sequence {
     OT operator () (intT i) {return f(A[i]);}
   };
 
+
 #define nblocks(_n,_bsize) (1 + ((_n)-1)/(_bsize))
 
 #define blocked_for(_i, _s, _e, _bsize, _body)  {	\

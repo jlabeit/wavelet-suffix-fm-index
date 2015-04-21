@@ -34,6 +34,7 @@ struct WTnode {
 #endif
 };
 
+
 #ifdef INT
 typedef uintT symbol;
 #else
