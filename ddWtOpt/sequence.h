@@ -116,6 +116,7 @@ namespace sequence {
     return r;
   }
 
+
   template <class OT, class intT, class F> 
   OT reduce(OT* A, intT n, F f) {
     return reduce<OT>((intT)0,n,f,getA<OT,intT>(A));
@@ -343,6 +344,37 @@ namespace sequence {
 	intT k = 0;
 	for (intT i=s; i < e; i++) if (checkBit(Fl, i)) Out[k++] = f(i);
   }
+
+template <class T>
+T prefixSumSerial(T* data, intT s, intT e) {
+	T res = 0;
+	for (intT i = s; i < e; ++i) {
+		res += data[i];
+		data[i] = res - data[i];
+	}
+	return res;
+}
+
+template <class T>
+void addSerial(T* data, intT s, intT e, T val) {
+	for (intT i = s; i < e; ++i) 
+		data[i] += val;
+}
+
+template <class T>
+T prefixSum(T* data, intT s, intT e) {
+	intT l = nblocks(e-s, _SCAN_BSIZE);
+	if (l <= 1) return prefixSumSerial(data, s, e);
+	T* sums = newA(T, l);
+	blocked_for (i, s, e, _SCAN_BSIZE,
+			sums[i] = prefixSumSerial<T>(data, s, e););
+	T res = prefixSumSerial(sums, 0, l);
+	blocked_for (i, s, e, _SCAN_BSIZE,
+			addSerial(data, s, e, sums[i]););
+	return res;
+}
+
+
 
 
   template <class ET, class intT, class F> 

@@ -100,59 +100,94 @@ void serialWT(symbol* s, uintT n, uintT sigma, WTnode* nodes, long* wt) {
   }
 
   free(s1); free(s2); free(offsets); free(offsets2);
-  return make_pair(nodes,wt);
 }
 
-template<intT>
-void copy_interval<intT>(intT s, intT e, WTnode* nodes, long* prewt, long* wt) {
-	//TODO optimize (binary search or better)
-	intT n = 2*sigma-1;	
-	while (n > 0 && nodes[n].bitmapPtr > s) n--;
-	// TODO write complete words if possible
-	while (n < s) {
+
+void copy_wt(long* wt_in, uintT s_in, long* wt_out, uintT s_out, uintT len) {
+	for (uintT i = 0; i < len; ++i) {
+		if (wt_in[(s_in + i) / 64] & (long)1<<((s_in + i) % 64))
+			wt_out[(s_out + i) / 64] |= (long)1<<((s_out + i) % 64);
+	}
+}
+
+
 		
-		n++;
-	}	
-	
-}
 
-pair<WTnode*,long*> WT(symbol* s, uintT n, uintT sigma) {
-  int num_threads = __cilkrts_get_nworkers();
+pair<WTnode*,long*> WT(symbol* input_str, uintT n, uintT sigma) {
+  int num_threads = getWorkers();
   // Allocate needed space
-  WTnode* prenodes = newA(WTnode,sigma*2*num_threads);
+  uintT num_total_nodes = 2*sigma*num_threads;
+  WTnode* prenodes = newA(WTnode, num_total_nodes);
   int levels = max(1,utils::log2Up(sigma));
-  long* prewt = newA(long,((long)n*levels+63)/64); // TODO: has to be alligned!
+  long* prewt = newA(long,((long)n*levels+63)/64);
+
+  // On default nodes are empty:
+  WTnode* nodes = newA(WTnode, 2*sigma);
+  parallel_for (uintT i = 0; i < num_total_nodes; ++i)
+	  prenodes[i].length = 0;
+  // Default wt bit is 0 
+  long* wt = newA(long, ((long)n*levels+63)/64);
+  parallel_for(long i=0;i<(n*levels+63)/64; i++) wt[i] = 0;
+
   // Every thread builds one wt
-  paralle_for (int i = 0; i< num_threads;i++) {
-	uintT s = i * n / num_threads / 64 * 64;		
-	uintT e = min((i+1) * n / num_thrads / 64 * 64, n);
-	serialWT(s + s, (e-s), sigma, prenodes + i*2*sigma, prewt + i*s*levels);	
+  parallel_for (int p = 0; p< num_threads;p++) {
+	// Important that no word overlaps between the wt arrays
+	uintT s = p * n / num_threads / 64 * 64;		
+	uintT e = min((p+1) * n / num_threads / 64 * 64, n);
+	// for the last argument it is importtant that s is always multiple of 64
+	serialWT(input_str + s, (e-s), sigma, prenodes + p*2*sigma, prewt + (s*levels/64));	
   }
-  // Merge wts to one result
+  // Arrays used for reordering
+  uintT* node_lengths = newA(uintT, num_total_nodes);
+  uintT* node_bitmapPtrs_old = newA(intOffset, num_total_nodes);
+  uintT* node_bitmapPtrs_new = newA(intOffset, num_total_nodes);
+  parallel_for (uintT i = 0; i < num_total_nodes; ++i) {
+	  uintT p = i % num_threads;
+	  uintT node_id = i / num_threads;
+	  uintT i_old = p*2*sigma+i;
+	  node_lengths[i] = node_bitmapPtrs_new[i] = prenodes[i_old].length;
+	  node_bitmapPtrs_old[i] = prenodes[i_old].bitmapPtr;
+  }
   
-  // Calculate Positions
-  WTnode* nodes = newA(WTnode,sigma*2);
-  long* wt = newA(long,((long)n*levels+63)/64);
-  // Reorder offset values in temporary array
-  intOffset* bitmapPtrs = newA(intOffset, 2*sigma*num_threads);
-  parallel_for (intT n = 0; n < 2*sigma; ++n) {
-	  intT offset = n*num_threads;
-	  parallel_for (intT p = 0; p < num_threads; ++p) {
-		bitmapPtrs[offset + p] = prenodes[p*2*sigma + n]; 			
-	  }
+  // Prefix sum on node_lengths to get new offset into wt array
+  uintT result_size = sequence::prefixSum<uintT>(node_bitmapPtrs_new, 0, num_total_nodes); 
+  // Set new nodes information
+  parallel_for (uintT node_id = 0; node_id < 2*sigma; ++node_id) {
+	uintT s = node_id*num_threads;
+	uintT e = s + num_threads -1;
+	nodes[node_id].length = node_bitmapPtrs_new[e] - node_bitmapPtrs_new[s] + node_lengths[e];
+	nodes[node_id].bitmapPtr = node_bitmapPtrs_new[s];
+  } 
+  // Actually copy the wt data in large blocks
+  uintT block_size = result_size / (num_threads*4) / 64 *64;
+  uintT num_blocks = (result_size + block_size - 1) / block_size;
+  parallel_for (uintT b = 0; b < num_blocks; ++b) {
+	uintT s = block_size * b;	
+	uintT e = std::min(block_size * (b+1), result_size);
+	// Binary search for start of the block
+	uintT* array_end = node_bitmapPtrs_new + num_total_nodes;
+	uintT* cur_pos_ptr = std::upper_bound(node_bitmapPtrs_new, array_end, s);
+	uintT cur_pos = node_bitmapPtrs_new - cur_pos_ptr - 1;
+	while (cur_pos < num_total_nodes) {
+		if (node_bitmapPtrs_new[cur_pos] >= e) // Done with the block
+			break;		
+		uintT s_new = std::max(s, node_bitmapPtrs_new[cur_pos]); 	
+		uintT e_new = std::min(e, node_bitmapPtrs_new[cur_pos] + node_lengths[cur_pos]);
+		uintT s_old = node_bitmapPtrs_old[cur_pos];
+		// If node was splitted, move copy position same offset forward
+		if (s_new > node_bitmapPtrs_new[cur_pos])
+			s_old += s_new - node_bitmapPtrs_new[cur_pos];
+		copy_wt(prewt, s_old, wt, s_new, e_new - s_new);
+		cur_pos++;
+	}
   }
-  parallel_for (int n = 0; n < 2*sigma; ++n) {
-	// Prefix sum over all processors
-	nodes[n].bitmapPtr = plusReduce(bitmapPtr + num_threads*n, num_threads);
-  }
-  free(bitmapPtrs);
-  // TODO Blocks have to be aligned so no write conflicts appear
-  blocked_for(i, s, e, BLOCK_SIZE, 
-		copy_interval(s, e, nodes, prewt, wt);
-	     );
-
-
+  free(node_lengths); 
+  free(node_bitmapPtrs_old);
+  free(node_bitmapPtrs_new);
   free(prenodes);
   free(prewt);
   return pair<WTnode*,long*>(nodes,wt);
 }
+
+
+
