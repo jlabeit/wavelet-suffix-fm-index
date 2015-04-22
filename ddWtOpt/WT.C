@@ -148,8 +148,9 @@ pair<WTnode*,long*> WT(symbol* input_str, uintT n, uintT sigma) {
   parallel_for (uintT i = 0; i < num_total_nodes; ++i) {
 	  uintT p = i % num_threads;
 	  uintT node_id = i / num_threads;
-	  uintT i_old = p*2*sigma+i;
-	  node_lengths[i] = node_bitmapPtrs_new[i] = prenodes[i_old].length;
+	  uintT i_old = p*2*sigma+node_id;
+	  node_lengths[i] = prenodes[i_old].length;
+	  node_bitmapPtrs_new[i] = prenodes[i_old].length;
 	  node_bitmapPtrs_old[i] = prenodes[i_old].bitmapPtr;
   }
   
