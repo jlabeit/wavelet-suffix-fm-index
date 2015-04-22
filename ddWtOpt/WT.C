@@ -130,7 +130,7 @@ pair<WTnode*,long*> WT(symbol* input_str, uintT n, uintT sigma) {
   parallel_for(long i=0;i<(n*levels+63)/64; i++) wt[i] = 0;
 
   // Every thread builds one wt
-  parallel_for (int p = 0; p< num_threads;p++) {
+  parallel_for (int p = 0; p < num_threads;p++) {
 	// Important that no word overlaps between the wt arrays
 	uintT s = p * n / num_threads / 64 * 64;		
 	uintT e = min((p+1) * n / num_threads / 64 * 64, n);
