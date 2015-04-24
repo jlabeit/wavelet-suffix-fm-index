@@ -42,7 +42,10 @@ struct isChild { bool operator() (chunkInfo i) {return i.start != UINT_T_MAX;}};
 
 
 
-void recursiveWT(uintT n, uintT sigma, chunkInfo& current_chunk, symbol* source, symbol* destination, WTnode* nodes, long* wt, int levels, int l) { 
+void recursiveWT(symbol* s, uintT n, uintT sigma, chunkInfo& current_chunk, symbol* source, symbol* destination, WTnode* nodes, long* wt, int levels, int l) { 
+	if (l == 0)
+		std::swap(s,source);
+		
 	intOffset levelOffset = l*n;
 	int mask = (long)1 << (levels - l - 1);
 	uintT start = current_chunk.start, length = current_chunk.length, nodeID = current_chunk.nodeID, range = current_chunk.range;
@@ -177,10 +180,12 @@ void recursiveWT(uintT n, uintT sigma, chunkInfo& current_chunk, symbol* source,
       // Spawn children
   l++;
   if (l < levels) {
+	  if (l == 1)
+		  swap(source,s);
 	  if (left_child.start != UINT_T_MAX)
-		  cilk_spawn recursiveWT(n, sigma, left_child, destination, source, nodes, wt, levels, l);
-	  if (right_child.start != UINT_T_MAX) // TODO does is make sense to spawn both children
-		  cilk_spawn recursiveWT(n, sigma, right_child, destination, source, nodes, wt, levels, l);
+		  cilk_spawn recursiveWT(s, n, sigma, left_child, destination, source, nodes, wt, levels, l);
+	  if (right_child.start != UINT_T_MAX) 
+		  recursiveWT(s, n, sigma, right_child, destination, source, nodes, wt, levels, l);
   }
 }
 
@@ -197,8 +202,7 @@ pair<WTnode*,long*> WT(symbol* s, uintT n, uintT sigma) {
   int levels = max(1,utils::log2Up(sigma));
   long* wt = newA(long,((long)n*levels+63)/64);
   parallel_for(long i=0;i<((long)n*levels+63)/64; i++) wt[i] = 0;
-  parallel_for(uintT i=0;i<n;++i) s1[i] = s[i]; // TODO this copy is not necessary
-  recursiveWT(n, sigma, start_chunk, s1, s2, nodes, wt, levels, 0);
+  recursiveWT(s, n, sigma, start_chunk, s1, s2, nodes, wt, levels, 0);
   free(s2); 
   free(s1);
   return make_pair(nodes,wt);
