@@ -162,6 +162,9 @@ pair<WTnode*,long*> WT(symbol* input_str, uintT n, uintT sigma) {
 	uintT e = s + num_threads -1;
 	nodes[node_id].length = node_bitmapPtrs_new[e] - node_bitmapPtrs_new[s] + node_lengths[e];
 	nodes[node_id].bitmapPtr = node_bitmapPtrs_new[s];
+#ifdef POINTERS
+	// TODO add points ifdef POINTER
+#endif
   } 
   // Actually copy the wt data in large blocks
   {
