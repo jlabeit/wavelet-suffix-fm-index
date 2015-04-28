@@ -1,17 +1,17 @@
-20 : trigramString_10000000 :  -r 1 -o /tmp/ofile322652_16216 : '0.479' : 35.
-6 : chr22.dna :  -r 1 -o /tmp/ofile959179_717829 : '0.83' : 112.
-1 : etext99 :  -r 1 -o /tmp/ofile249999_639454 : '6.98' : 403.
-1 : howto :  -r 1 -o /tmp/ofile186793_408406 : '2.47' : 151.
-1 : jdk13c :  -r 1 -o /tmp/ofile672372_11012 : '4.07' : 259.
-1 : proteins :  -r 1 -o /tmp/ofile662672_353920 : '10.4' : 727.
-1 : rctail96 :  -r 1 -o /tmp/ofile547684_575273 : '6.79' : 425.
-1 : rfc :  -r 1 -o /tmp/ofile374643_435676 : '6.45' : 431.
-1 : sprot34 :  -r 1 -o /tmp/ofile571326_566495 : '6.43' : 406.
-1 : w3c2 :  -r 1 -o /tmp/ofile988226_496569 : '6.72' : 399.
-1 : wikisamp.xml :  -r 1 -o /tmp/ofile697200_823765 : '6.05' : 383.
-#levelWTOptMemRec : 0 : weighted time, min=2.026 median=2.026 mean=2.026
-1 : randomSeq_100M_256_int :  -r 1 -o /tmp/ofile781507_582825 : '10.4' : 2590.
-1 : randomSeq_10M_100K_int :  -r 1 -o /tmp/ofile836063_159960 : '2.26' : 286.
-1 : randomSeq_10M_1048576_int :  -r 1 -o /tmp/ofile339893_71976 : '27.2' : 3091.
-1 : randomSeq_10M_256_int :  -r 1 -o /tmp/ofile572880_804581 : '1.04' : 260.
-#levelWTOptMemRec : 0 : weighted time, min=10.225 median=10.225 mean=10.225
+20 : trigramString_10000000 :  -r 1 -o /tmp/ofile560966_261180 : '0.464' : 35.
+6 : chr22.dna :  -r 1 -o /tmp/ofile330954_882881 : '0.791' : 112.
+1 : etext99 :  -r 1 -o /tmp/ofile155954_242890 : '6.82' : 403.
+1 : howto :  -r 1 -o /tmp/ofile817025_359615 : '2.39' : 151.
+1 : jdk13c :  -r 1 -o /tmp/ofile874466_926974 : '4.' : 259.
+1 : proteins :  -r 1 -o /tmp/ofile694343_486332 : '10.1' : 727.
+1 : rctail96 :  -r 1 -o /tmp/ofile933769_837674 : '6.58' : 425.
+1 : rfc :  -r 1 -o /tmp/ofile857755_136235 : '6.25' : 431.
+1 : sprot34 :  -r 1 -o /tmp/ofile265567_535279 : '6.25' : 406.
+1 : w3c2 :  -r 1 -o /tmp/ofile63529_475849 : '6.55' : 399.
+1 : wikisamp.xml :  -r 1 -o /tmp/ofile846055_836092 : '5.87' : 383.
+levelWTOptMemRec : 0 : weighted time, min=1.966 median=1.966 mean=1.966
+1 : randomSeq_100M_256_int :  -r 1 -o /tmp/ofile321889_594396 : '10.2' : 2590.
+1 : randomSeq_10M_100K_int :  -r 1 -o /tmp/ofile508020_771934 : '2.23' : 286.
+1 : randomSeq_10M_1048576_int :  -r 1 -o /tmp/ofile611610_729587 : '27.1' : 3091.
+1 : randomSeq_10M_256_int :  -r 1 -o /tmp/ofile828012_995457 : '1.02' : 260.
+levelWTOptMemRec : 0 : weighted time, min=10.137 median=10.137 mean=10.137
