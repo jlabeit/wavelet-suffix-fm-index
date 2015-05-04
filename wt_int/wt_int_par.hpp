@@ -238,8 +238,10 @@ class wt_int
 				build_recursive(right_child_start, right_child_length, destination, source, tree_data, sigma, max_levels, l+1);
 			}
 		} else {
-			sigma += 2;
+			sigma++;
+			sigma++;
 		}
+		
 	}
 
     public:
@@ -394,12 +396,12 @@ class wt_int
             init_buffers(m_max_level);
 
             size_type bit_size = m_size*m_max_level;
-	    bit_vector tree(bit_size);
+	    m_tree = bit_vector_type();
+	    m_tree.resize(bit_size);
 	    std::atomic<size_type> sigma(0); 
-	    build_recursive(0, m_size, s1, s2, (uint64_t*)tree.data(), sigma, m_max_level, 0);
+	    build_recursive(0, m_size, s1, s2, (uint64_t*)m_tree.data(), sigma, m_max_level, 0);
 	    m_sigma = sigma.load();
                             
-            m_tree = bit_vector_type(std::move(tree));
             util::init_support(m_tree_rank, &m_tree);
             util::init_support(m_tree_select0, &m_tree);
             util::init_support(m_tree_select1, &m_tree);
@@ -408,22 +410,43 @@ class wt_int
 
         template<uint8_t int_width>
         wt_int(int_vector_buffer<int_width>& buf, size_type size,
-               uint32_t max_level=0) : m_size(size) {
-		size_t n = buf.size();
-		if (n < m_size) {
-			throw std::logic_error("n="+util::to_string(n)+" < "+util::to_string(m_size)+"=m_size");
-			return;
-		}
-		// TODO do this better
+               uint32_t max_level=0) : m_size(size) { 
+	    init_buffers(m_max_level);
+            if (0 == m_size)
+                return;
+            size_type n = buf.size();  // set n
+            if (n < m_size) {
+                throw std::logic_error("n="+util::to_string(n)+" < "+util::to_string(m_size)+"=m_size");
+                return;
+            }
+            m_sigma = 0;
+            int_vector<int_width> s1(m_size, 0, buf.width());
+	    int_vector<int_width> s2(m_size, 0, buf.width());
 
-		int_vector<int_width> mem_buf(n);
-		uint64_t x = 0;
-		for (size_type i = 0; i < n; i++) {
-			if (buf[i] > x)
-				x = buf[i];
-			mem_buf[i] = buf[i]; 
-		}	
-		wt_int(mem_buf, m_size, max_level);
+            value_type x = 1;  // variable for the biggest value in rac
+            for (size_type i=0; i < m_size; ++i) {
+                if (buf[i] > x)
+                    x = buf[i];
+                s1[i] = buf[i];
+            }
+
+            if (max_level == 0) {
+                m_max_level = bits::hi(x)+1; // max_level bits to represent all values range [0..x]
+            } else {
+                m_max_level = max_level;
+            }
+            init_buffers(m_max_level);
+
+            size_type bit_size = m_size*m_max_level;
+	    m_tree = bit_vector_type();
+	    m_tree.resize(bit_size);
+	    std::atomic<size_type> sigma(0); 
+	    build_recursive(0, m_size, s1, s2, (uint64_t*)m_tree.data(), sigma, m_max_level, 0);
+	    m_sigma = sigma.load();
+                            
+            util::init_support(m_tree_rank, &m_tree);
+            util::init_support(m_tree_select0, &m_tree);
+            util::init_support(m_tree_select1, &m_tree);
 	}
 
         //! Copy constructor

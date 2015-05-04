@@ -45,8 +45,8 @@ pair<WTnode*,long*> WT(symbol* s, uintT n, uintT sigma) {
   sdsl::wt_int<> wt;
   sdsl::construct_im(wt, input);
   //sdsl::wt_int<> wt(input, n);
-
-
+  // output node
+  sdsl::store_to_file(wt, "output_wt");
   //long* result_tree = (long*)malloc(sizeof(symbol)*n);
   //memcpy((void*)result_tree, (void*)wt.m_tree.data(), sizeof(symbol)*n);
   long* empty_result = (long*)malloc(sizeof(long));
