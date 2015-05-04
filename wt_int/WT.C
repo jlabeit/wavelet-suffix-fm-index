@@ -25,7 +25,6 @@
 #include "sequence.h"
 #include "WT.h"
 #include "wt_int_par.hpp"
-//#include "wt_int_par.hpp"
 
 using namespace std;
 

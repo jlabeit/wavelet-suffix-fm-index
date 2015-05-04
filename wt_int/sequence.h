@@ -74,6 +74,14 @@ namespace sequence {
     ET operator() (intT i) {return A[i];}
   };
 
+  template<class ET, class intT>
+  struct getAObj {
+	ET& A;
+	intT off;
+	getAObj(ET& AA, intT offset) : A(AA), off(offset) {}
+	typename ET::value_type operator() (intT i) {return A[i+off];}
+  };
+
   template <class IT, class OT, class intT, class F>
   struct getAF {
     IT* A;
@@ -265,12 +273,12 @@ namespace sequence {
 
 
   template <class intT>
-  inline bool checkBit(long* Fl, intT i) {
-	return Fl[i/64] & ((long)1 << (i % 64));
+  inline bool checkBit(uint64_t* Fl, intT i) {
+	return Fl[i/64] & (1LL << (i % 64));
   }
 
   template<class intT>
-  intT sumBitFlagsSerial(long* Fl, intT s, intT e) {
+  intT sumBitFlagsSerial(uint64_t* Fl, intT s, intT e) {
 	intT res = 0;
 	while (s % 64 && s < e) {
 		if (checkBit(Fl,s)) ++res;
@@ -303,7 +311,7 @@ namespace sequence {
   }
 
   template <class ET, class intT, class F>
-  void packSerial01(ET* Out0, ET* Out1, long* Fl, intT s, intT e, F f) {
+  void packSerial01(ET* Out0, ET* Out1, uint64_t* Fl, intT s, intT e, F f) {
 	if (Out0 == NULL) {
 		intT m = e - s - sumBitFlagsSerial(Fl, e, s);
 		Out0 = newA(ET,m);
@@ -320,9 +328,18 @@ namespace sequence {
 		else 
 			Out0[k0++] = f(i);
 	}
+  }
+  template <class ET, class intT, class F>
+  void packSerial01(ET& Out, intT k0, intT k1, uint64_t* Fl, intT s, intT e, F f) {
+	for (intT i = s; i < e; ++i) {
+		if (checkBit(Fl,i)) 
+			Out[k1++] = f(i);		
+		else 
+			Out[k0++] = f(i);
+	}
   } 
   template <class ET, class intT, class F>
-  void packSerial0(ET* Out, long* Fl, intT s, intT e, F f) {
+  void packSerial0(ET* Out, uint64_t* Fl, intT s, intT e, F f) {
 	if (Out == NULL) {
 		intT m = e - s - sumBitFlagsSerial(Fl, e, s);
 		Out = newA(ET,m);
@@ -334,7 +351,7 @@ namespace sequence {
 		}
   }
   template <class ET, class intT, class F>
-  void packSerial1(ET* Out, long* Fl, intT s, intT e, F f) {
+  void packSerial1(ET* Out, uint64_t* Fl, intT s, intT e, F f) {
 	if (Out == NULL) {
 		intT m = sumBitFlagsSerial(Fl, e, s);
 		Out = newA(ET,m);
@@ -385,7 +402,7 @@ namespace sequence {
   }
   // Custom pack2 to be used with bitvector as flags (used for example for wavelet trees)
   template <class ET, class intT, class F>
-  pair<_seq<ET>,_seq<ET> > pack2(ET* Out, long* Fl, intT s, intT e, F f) {
+  pair<_seq<ET>,_seq<ET> > pack2(ET* Out, uint64_t* Fl, intT s, intT e, F f) {
     // If interval empty
     if (s >= e)
 	    return pair<_seq<ET>,_seq<ET> >(_seq<ET>(Out,0),_seq<ET>(Out,0));
@@ -408,13 +425,28 @@ namespace sequence {
     }
     blocked_for(i, s, e, _F_BSIZE, 
 		packSerial01(Out1+Sums1[i], Out2+Sums2[i], Fl, s, e, f););
-		//packSerial0(Out1+Sums1[i], Fl, s, e, f);
-		//packSerial1(Out2+Sums2[i], Fl, s, e, f););
     free(Sums1); free(Sums2);
     return pair<_seq<ET>,_seq<ET> >(_seq<ET>(Out1,m1),_seq<ET>(Out2,m2));
   }
 
-
+template <class ET, class intT, class F>
+  intT pack2(ET& Out, intT out_offset, uint64_t* Fl, intT s, intT e, F f) {
+    // If interval empty
+    if (s >= e)
+	    return 0;
+    intT l = nblocks(e-s, _F_BSIZE);
+    intT *Sums1 = newA(intT,l);
+    intT *Sums2 = newA(intT,l);
+    blocked_for (i, s, e, _F_BSIZE, 
+                 Sums2[i] = sumBitFlagsSerial(Fl, s, e); // count ones
+                 Sums1[i] = (e-s-Sums2[i]);); // calculate zeros 
+    intT m1 = plusScan(Sums1, Sums1, l);
+    intT m2 = plusScan(Sums2, Sums2, l);
+    blocked_for(i, s, e, _F_BSIZE, 
+		packSerial01(Out, Sums1[i] + out_offset, m1+Sums2[i], Fl, s, e, f););
+    free(Sums1); free(Sums2);
+    return m1;
+  }
 
 
   template <class ET, class intT> 
@@ -430,11 +462,15 @@ namespace sequence {
 
   // Custom pack which takes an input and one flag array and puts all elements where 0 is set on the left side and alle the other elements on to the right
   template <class ET, class intT>
-	intT pack2Bit(ET* In, ET* Out, long* Flags, intT s, intT e) {
+	intT pack2Bit(ET* In, ET* Out, uint64_t* Flags, intT s, intT e) {
 	pair<_seq<ET>,_seq<ET> > r;
 	r = pack2(Out, Flags,  s, e, getA<ET, intT>(In)); 
 	return r.first.n;
   }  
+template <class ET, class intT>
+	intT pack2Bit(ET& In, intT in_offset, ET& Out, intT out_offset, uint64_t* Flags, intT s, intT e) {
+	return pack2(Out, out_offset, Flags,  s, e, getAObj<ET, intT>(In, in_offset)); 
+  }
 
   template <class ET, class intT> 
   _seq<ET> pack(ET* In, bool* Fl, intT n) {
