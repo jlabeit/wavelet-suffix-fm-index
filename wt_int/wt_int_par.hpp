@@ -225,27 +225,20 @@ class wt_int
 
 			}
 		}
-		if (l + 1 == max_levels) {
-			sigma+=2;	
-		} else {
-			size_type left_child_start = -1;
-		       	size_type right_child_start = -1;	
-			size_type left_child_length, right_child_length;
+		if (l + 1 < max_level) {
 			size_type right_start = sequence::pack2Bit(source, -level_offset, destination, start, tree_data, wt_begin, wt_end +1);
 			if (right_start) {
-				left_child_start = start;
-				left_child_length = right_start;
+				size_type left_child_start = start;
+				size_type left_child_length = right_start;
+				cilk_spawn this->build_recursive(left_child_start, left_child_length, destination, source, tree_data, sigma, max_levels, l+1);
 			} 
 			if (length - right_start) {
-				right_child_start = start + right_start;
-				right_child_length = length - right_start;
+				size_type right_child_start = start + right_start;
+				size_type right_child_length = length - right_start;
+				build_recursive(right_child_start, right_child_length, destination, source, tree_data, sigma, max_levels, l+1);
 			}
-			if (left_child_start != -1) {
-				build_recursive(left_child_start, left_child_length, destination, source, tree_data, sigma, max_levels, l+1);
-			}			
-			if (right_child_start != -1) {
-				cilk_spawn this->build_recursive(right_child_start, right_child_length, destination, source, tree_data, sigma, max_levels, l+1);
-			}			
+		} else {
+			sigma += 2;
 		}
 	}
 
@@ -270,7 +263,7 @@ class wt_int
          *    \par Space complexity
          *        \f$ n\log|\Sigma| + O(1)\f$ bits, where \f$n=size\f$.
          */
-        template<uint8_t int_width>
+       /* template<uint8_t int_width>
         wt_int(int_vector_buffer<int_width>& buf, size_type size,
                uint32_t max_level=0) : m_size(size) {
             init_buffers(m_max_level);
@@ -359,7 +352,7 @@ class wt_int
             util::init_support(m_tree_rank, &m_tree);
             util::init_support(m_tree_select0, &m_tree);
             util::init_support(m_tree_select1, &m_tree);
-        }
+        }*/
 
 
         //! In-memory constructor
@@ -372,8 +365,8 @@ class wt_int
          *        \f$ n\log|\Sigma| + O(1)\f$ bits, where \f$n=size\f$.
          */
         template<uint8_t int_width>
-        wt_int(int_vector<int_width>& buf,
-               uint32_t max_level=0) : m_size(buf.size()) {
+        wt_int(int_vector<int_width>& buf, size_type size, 
+               uint32_t max_level=0) : m_size(size) {
             init_buffers(m_max_level);
             if (0 == m_size)
                 return;
@@ -400,7 +393,6 @@ class wt_int
             }
             init_buffers(m_max_level);
 
-
             size_type bit_size = m_size*m_max_level;
 	    bit_vector tree(bit_size);
 	    std::atomic<size_type> sigma(0); 
@@ -414,7 +406,25 @@ class wt_int
         }
 
 
+        template<uint8_t int_width>
+        wt_int(int_vector_buffer<int_width>& buf, size_type size,
+               uint32_t max_level=0) : m_size(size) {
+		size_t n = buf.size();
+		if (n < m_size) {
+			throw std::logic_error("n="+util::to_string(n)+" < "+util::to_string(m_size)+"=m_size");
+			return;
+		}
+		// TODO do this better
 
+		int_vector<int_width> mem_buf(n);
+		uint64_t x = 0;
+		for (size_type i = 0; i < n; i++) {
+			if (buf[i] > x)
+				x = buf[i];
+			mem_buf[i] = buf[i]; 
+		}	
+		wt_int(mem_buf, m_size, max_level);
+	}
 
         //! Copy constructor
 	//
