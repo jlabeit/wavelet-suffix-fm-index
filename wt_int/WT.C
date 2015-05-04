@@ -24,7 +24,9 @@
 #include <iostream>
 #include "sequence.h"
 #include "WT.h"
-#include "wt_int_par.hpp"
+//#include "wt_int_par.hpp"
+#include <sdsl/construct.hpp>
+#include <sdsl/wt_int.hpp>
 
 using namespace std;
 
@@ -34,12 +36,20 @@ using namespace std;
 
 
 pair<WTnode*,long*> WT(symbol* s, uintT n, uintT sigma) {
-  sdsl::int_vector<sizeof(symbol)> input(n);
-  for (uintT i = 0; i < n; i++)
-	  input[i] = s[i];
-  sdsl::wt_int<> wt(input);
-  long* result_tree = (long*)malloc(sizeof(symbol)*n);
-  memcpy((void*)result_tree, (void*)wt.m_tree.data(), sizeof(symbol)*n);
+  sdsl::int_vector<> input;
+  input.resize(n);
+  symbol x = 0;
+  for (uintT i = 0; i < n; i++) 
+	  input[i] = (uint64_t)s[i];
+  
+  sdsl::wt_int<> wt;
+  sdsl::construct_im(wt, input);
+  //sdsl::wt_int<> wt(input, n);
+
+
+  //long* result_tree = (long*)malloc(sizeof(symbol)*n);
+  //memcpy((void*)result_tree, (void*)wt.m_tree.data(), sizeof(symbol)*n);
+  long* empty_result = (long*)malloc(sizeof(long));
   WTnode* emptyNode = (WTnode*)malloc(sizeof(WTnode)); 
-  return make_pair((WTnode*)emptyNode,(long*)result_tree);
+  return make_pair((WTnode*)emptyNode,(long*)empty_result);
 }
