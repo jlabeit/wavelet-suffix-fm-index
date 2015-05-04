@@ -162,12 +162,22 @@ class wt_int
                 _interval_symbols(new_i, new_j, k, cs, rank_c_i, rank_c_j, level+1, (path<<1)|1, new_node_size, new_offset);
             }
         }
+	inline void write_or(uint64_t *a, uint64_t b) {
+		volatile uint64_t newV,oldV;
+		do {oldV = *a; newV = oldV | b;}
+		while ((oldV != newV) && !utils::CAS(a, oldV, newV));
+	}
 
-
-	void build_recursive(size_type start, size_type length, int_vector<>& source, int_vector<> destination, uint64_t* tree_data, std::atomic<size_type>& sigma,  size_type max_levels, size_type l = 0) {
-		size_type levelOffset = l*m_size;
+#define THRESHOLD 10000
+        template<uint8_t int_width>
+	void build_recursive(size_type start, size_type length, 
+			int_vector<int_width>& source, int_vector<int_width>& destination, 
+			uint64_t* tree_data, 
+			std::atomic<size_type>& sigma,  
+			size_type max_levels, size_type l = 0) {
+		size_type level_offset = l*m_size;
 		uint64_t mask = 1LL << (max_levels -l -1);
-		size_type my_offset = start + levelOffset;
+		size_type my_offset = start + level_offset;
 		size_type source_offset = start - my_offset;
 		size_type wt_begin = my_offset, wt_end = my_offset + length -1;
 		if (length < 128) {
@@ -177,8 +187,9 @@ class wt_int
 			}
 
 		} else if (length < THRESHOLD) {
+			size_type word = wt_begin/64;
 			while (wt_begin%64) { // share first word
-				if (source[source_offset + wt_begin] & mask) write_or(&wt[word], 1LL << (wt_begin % 64));		
+				if (source[source_offset + wt_begin] & mask) write_or(&tree_data[word], 1LL << (wt_begin % 64));		
 				wt_begin++;
 			}
 			if (word != wt_end/64) { // check if first and last word are different
@@ -190,12 +201,13 @@ class wt_int
 			}
 			// write the rest
 			for (size_type i = wt_begin; i <= wt_end; i++) {
-				if (source[sourceOffset+i] & mask)
+				if (source[source_offset+i] & mask)
 					tree_data[i/64] |= 1LL << (i % 64);
 			}
 		} else {
+			size_type word = wt_begin/64;
 			while (wt_begin%64) { // share first word
-				if (source[source_offset + wt_begin] & mask) write_or(&wt[word], 1LL << (wt_begin % 64));		
+				if (source[source_offset + wt_begin] & mask) write_or(&tree_data[word], 1LL << (wt_begin % 64));		
 				wt_begin++;
 			}
 			word = wt_end/64;
@@ -218,7 +230,8 @@ class wt_int
 		} else {
 			size_type left_child_start = -1;
 		       	size_type right_child_start = -1;	
-			size_type right_start = sequence::pack2Bit(source - level_offset, destination + start, tree_data, wt_begin, wt_end +1);
+			size_type left_child_length, right_child_length;
+			size_type right_start = sequence::pack2Bit(source, -level_offset, destination, start, tree_data, wt_begin, wt_end +1);
 			if (right_start) {
 				left_child_start = start;
 				left_child_length = right_start;
@@ -228,10 +241,10 @@ class wt_int
 				right_child_length = length - right_start;
 			}
 			if (left_child_start != -1) {
-				cilk_spawn recursiveWT(left_child_start, left_child_length, destination, source, tree_data, max_levels, l+1);
+				build_recursive(left_child_start, left_child_length, destination, source, tree_data, sigma, max_levels, l+1);
 			}			
 			if (right_child_start != -1) {
-				recursiveWT(right_child_start, right_child_length, destination, source, tree_data, max_levels, l+1);
+				cilk_spawn this->build_recursive(right_child_start, right_child_length, destination, source, tree_data, sigma, max_levels, l+1);
 			}			
 		}
 	}
@@ -391,7 +404,7 @@ class wt_int
             size_type bit_size = m_size*m_max_level;
 	    bit_vector tree(bit_size);
 	    std::atomic<size_type> sigma(0); 
-	    build_recursive(s1.data(), s2.data(), tree.data(), sigma, m_max_level, 0);
+	    build_recursive(0, m_size, s1, s2, (uint64_t*)tree.data(), sigma, m_max_level, 0);
 	    m_sigma = sigma.load();
                             
             m_tree = bit_vector_type(std::move(tree));
@@ -993,7 +1006,9 @@ class wt_int
             auto v_sp_rank = m_tree_rank(v.offset);  // this is already calculated in expand(v)
             range_vec_type res(ranges.size());
             size_t i = 0;
-            for (auto& r : ranges) {
+            //for (auto& r : ranges) {
+	    for (auto it = ranges.begin(); it != ranges.end(); ++it) {
+		auto& r = *it;
                 auto sp_rank    = m_tree_rank(v.offset + r.first);
                 auto right_size = m_tree_rank(v.offset + r.second + 1)
                                   - sp_rank;
