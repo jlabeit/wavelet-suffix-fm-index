@@ -174,9 +174,15 @@ class wt_int
 			int_vector<int_width>& source, int_vector<int_width>& destination, 
 			uint64_t* tree_data, 
 			std::atomic<size_type>& sigma,  
-			size_type max_levels, size_type l = 0) {
+			size_type l = 0) {
+		if (l == m_max_level-1) {
+			for (int i = start; i < start+length; i++) {
+				cout<<source[i]<<" ";
+			}
+			std::cout<<"|";
+		}
 		size_type level_offset = l*m_size;
-		uint64_t mask = 1LL << (max_levels -l -1);
+		uint64_t mask = 1LL << (m_max_level -l -1);
 		size_type my_offset = start + level_offset;
 		size_type source_offset = start - my_offset;
 		size_type wt_begin = my_offset, wt_end = my_offset + length -1;
@@ -225,23 +231,23 @@ class wt_int
 
 			}
 		}
-		if (l + 1 < max_level) {
-			size_type right_start = sequence::pack2Bit(source, -level_offset, destination, start, tree_data, wt_begin, wt_end +1);
-			if (right_start) {
-				size_type left_child_start = start;
-				size_type left_child_length = right_start;
-				cilk_spawn this->build_recursive(left_child_start, left_child_length, destination, source, tree_data, sigma, max_levels, l+1);
-			} 
-			if (length - right_start) {
-				size_type right_child_start = start + right_start;
-				size_type right_child_length = length - right_start;
-				build_recursive(right_child_start, right_child_length, destination, source, tree_data, sigma, max_levels, l+1);
-			}
-		} else {
-			sigma++;
-			sigma++;
+		size_type right_start = sequence::pack2Bit(source, -level_offset, destination, start, tree_data, wt_begin, wt_end +1);
+		if (right_start) {
+			size_type left_child_start = start;
+			size_type left_child_length = right_start;
+			if (l+1 < m_max_level)
+				cilk_spawn this->build_recursive(left_child_start, left_child_length, destination, source, tree_data, sigma, l+1);
+			else
+				sigma++;
+		} 
+		if (length - right_start) {
+			size_type right_child_start = start + right_start;
+			size_type right_child_length = length - right_start;
+			if (l+1 < m_max_level -1)
+				build_recursive(right_child_start, right_child_length, destination, source, tree_data, sigma, l+1);
+			else 
+				sigma++;
 		}
-		
 	}
 
     public:
@@ -399,12 +405,13 @@ class wt_int
 	    m_tree = bit_vector_type();
 	    m_tree.resize(bit_size);
 	    std::atomic<size_type> sigma(0); 
-	    build_recursive(0, m_size, s1, s2, (uint64_t*)m_tree.data(), sigma, m_max_level, 0);
+	    build_recursive(0, m_size, s1, s2, (uint64_t*)m_tree.data(), sigma, 0);
 	    m_sigma = sigma.load();
                             
             util::init_support(m_tree_rank, &m_tree);
             util::init_support(m_tree_select0, &m_tree);
             util::init_support(m_tree_select1, &m_tree);
+	    
         }
 
 
@@ -441,9 +448,13 @@ class wt_int
 	    m_tree = bit_vector_type();
 	    m_tree.resize(bit_size);
 	    std::atomic<size_type> sigma(0); 
-	    build_recursive(0, m_size, s1, s2, (uint64_t*)m_tree.data(), sigma, m_max_level, 0);
+	    build_recursive(0, m_size, s1, s2, (uint64_t*)m_tree.data(), sigma, 0);
 	    m_sigma = sigma.load();
                             
+	    for (int i = 0; i < m_tree.size(); i++) {
+		std::cout<<m_tree[i];
+	    }
+	    std::cout<<"\nSigma: "<<m_sigma<<endl;
             util::init_support(m_tree_rank, &m_tree);
             util::init_support(m_tree_select0, &m_tree);
             util::init_support(m_tree_select1, &m_tree);
