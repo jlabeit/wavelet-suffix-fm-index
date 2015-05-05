@@ -175,12 +175,6 @@ class wt_int
 			uint64_t* tree_data, 
 			std::atomic<size_type>& sigma,  
 			size_type l = 0) {
-		if (l == m_max_level-1) {
-			for (int i = start; i < start+length; i++) {
-				cout<<source[i]<<" ";
-			}
-			std::cout<<"|";
-		}
 		size_type level_offset = l*m_size;
 		uint64_t mask = 1LL << (m_max_level -l -1);
 		size_type my_offset = start + level_offset;
@@ -243,7 +237,7 @@ class wt_int
 		if (length - right_start) {
 			size_type right_child_start = start + right_start;
 			size_type right_child_length = length - right_start;
-			if (l+1 < m_max_level -1)
+			if (l+1 < m_max_level)
 				build_recursive(right_child_start, right_child_length, destination, source, tree_data, sigma, l+1);
 			else 
 				sigma++;
@@ -451,10 +445,6 @@ class wt_int
 	    build_recursive(0, m_size, s1, s2, (uint64_t*)m_tree.data(), sigma, 0);
 	    m_sigma = sigma.load();
                             
-	    for (int i = 0; i < m_tree.size(); i++) {
-		std::cout<<m_tree[i];
-	    }
-	    std::cout<<"\nSigma: "<<m_sigma<<endl;
             util::init_support(m_tree_rank, &m_tree);
             util::init_support(m_tree_select0, &m_tree);
             util::init_support(m_tree_select1, &m_tree);
