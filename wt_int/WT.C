@@ -43,8 +43,13 @@ pair<WTnode*,long*> WT(symbol* s, uintT n, uintT sigma) {
 	  input[i] = (uint64_t)s[i];
   
   sdsl::wt_int<> wt;
+  std::cout<<"Construction started\n";
   sdsl::construct_im(wt, input);
   //sdsl::wt_int<> wt(input, n);
+  for (int i = 0; i < wt.size(); i++) {
+	//cout<<wt[i];
+  }
+  cout<<endl;
   // output node
   sdsl::store_to_file(wt, "output_wt");
   //long* result_tree = (long*)malloc(sizeof(symbol)*n);
