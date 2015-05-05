@@ -225,6 +225,10 @@ class wt_int
 
 			}
 		}
+		// Reset begin and end
+		wt_begin = my_offset;
+		wt_end =  my_offset + length -1;
+		// input offset is negative offset
 		size_type right_start = sequence::pack2Bit(source, -level_offset, destination, start, tree_data, wt_begin, wt_end +1);
 		if (right_start) {
 			size_type left_child_start = start;
@@ -396,8 +400,7 @@ class wt_int
             init_buffers(m_max_level);
 
             size_type bit_size = m_size*m_max_level;
-	    m_tree = bit_vector_type();
-	    m_tree.resize(bit_size);
+	    m_tree = bit_vector_type(bit_size);
 	    std::atomic<size_type> sigma(0); 
 	    build_recursive(0, m_size, s1, s2, (uint64_t*)m_tree.data(), sigma, 0);
 	    m_sigma = sigma.load();
@@ -439,8 +442,7 @@ class wt_int
             init_buffers(m_max_level);
 
             size_type bit_size = m_size*m_max_level;
-	    m_tree = bit_vector_type();
-	    m_tree.resize(bit_size);
+	    m_tree = bit_vector_type(bit_size); // TODO parallel init 
 	    std::atomic<size_type> sigma(0); 
 	    build_recursive(0, m_size, s1, s2, (uint64_t*)m_tree.data(), sigma, 0);
 	    m_sigma = sigma.load();
