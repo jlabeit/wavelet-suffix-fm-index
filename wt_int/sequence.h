@@ -443,7 +443,7 @@ template <class ET, class intT, class F>
     intT m1 = plusScan(Sums1, Sums1, l);
     intT m2 = plusScan(Sums2, Sums2, l);
     blocked_for(i, s, e, _F_BSIZE, 
-		packSerial01(Out, Sums1[i] + out_offset, m1+Sums2[i], Fl, s, e, f););
+		packSerial01(Out, Sums1[i] + out_offset, m1+Sums2[i]+out_offset , Fl, s, e, f););
     free(Sums1); free(Sums2);
     return m1;
   }
