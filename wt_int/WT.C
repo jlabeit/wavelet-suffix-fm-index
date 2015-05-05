@@ -41,19 +41,14 @@ pair<WTnode*,long*> WT(symbol* s, uintT n, uintT sigma) {
   symbol x = 0;
   for (uintT i = 0; i < n; i++) 
 	  input[i] = (uint64_t)s[i];
-  
+  sdsl::util::bit_compress(input);  
+  sdsl::store_to_file(input, "input_vector");
   sdsl::wt_int<> wt;
-  std::cout<<"Construction started\n";
-  sdsl::construct_im(wt, input);
-  //sdsl::wt_int<> wt(input, n);
-  for (int i = 0; i < wt.size(); i++) {
-	//cout<<wt[i];
-  }
-  cout<<endl;
+  sdsl::construct(wt, "input_vector");
   // output node
   sdsl::store_to_file(wt, "output_wt");
-  //long* result_tree = (long*)malloc(sizeof(symbol)*n);
-  //memcpy((void*)result_tree, (void*)wt.m_tree.data(), sizeof(symbol)*n);
+
+
   long* empty_result = (long*)malloc(sizeof(long));
   WTnode* emptyNode = (WTnode*)malloc(sizeof(WTnode)); 
   return make_pair((WTnode*)emptyNode,(long*)empty_result);
