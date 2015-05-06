@@ -95,7 +95,7 @@ class rank_support_v : public rank_support
 		uint64_t sum = trait_type::args_in_the_word(data[b<<3], carry); 
 		uint64_t second_level_cnt = 0;
 		// Last word is covered by <= with the +1
-		size_type end = std::min((b<<3) + 8, (m_v->capacity()>>6)+1);
+		size_type end = std::min((b<<3) + 8, (m_v->capacity()>>6));
 	    	for (size_type i = (b<<3)+1; i < end; i++) {
 			second_level_cnt |= sum<<(63-9*(i&0x7));	
 			sum += trait_type::args_in_the_word(data[i], carry);
@@ -106,9 +106,6 @@ class rank_support_v : public rank_support
 	    // exclusive prefix sum over the block_sums
 	    sequence::skip1<int_vector<64>, uint64_t, size_type> skp(m_basic_block);
 	    sequence::scan(skp, skp, (basic_block_size>>1), utils::addF<uint64_t>() ,   (uint64_t)0);
-	    for (int i = 0; i < basic_block_size; i+=2) {
-		std::cout<<m_basic_block[i]<<" ";
-	    }std::cout<<std::endl;
 	   /* {
 		uint64_t sum = 0;
 		for (size_type b = 0; b < (m_v->capacity()>>9); ++b) {
