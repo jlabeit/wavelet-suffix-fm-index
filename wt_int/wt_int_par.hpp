@@ -31,7 +31,8 @@
 //#include "util.hpp"
 #include <sdsl/sdsl_concepts.hpp>
 #include <sdsl/int_vector.hpp>
-#include <sdsl/rank_support_v.hpp>
+#include "rank_support_v_par.hpp"
+//#include <sdsl/rank_support_v.hpp>
 #include <sdsl/select_support_mcl.hpp>
 #include <sdsl/wt_helper.hpp>
 #include <sdsl/util.hpp>
@@ -404,7 +405,6 @@ class wt_int
 	    std::atomic<size_type> sigma(0); 
 	    build_recursive(0, m_size, s1, s2, (uint64_t*)m_tree.data(), sigma, 0);
 	    m_sigma = sigma.load();
-                            
             util::init_support(m_tree_rank, &m_tree);
             util::init_support(m_tree_select0, &m_tree);
             util::init_support(m_tree_select1, &m_tree);
