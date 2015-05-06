@@ -104,6 +104,8 @@ class rank_support_v : public rank_support
 		m_basic_block[2*b+1] = second_level_cnt;
 	    }
 	    // exclusive prefix sum over the block_sums
+	    sequence::skip1<int_vector<64>, uint64_t, size_type> skp(m_basic_block);
+	    m_basic_block[2*(m_v->capacity()>>9)] = sequence::scan(skp, skp, (basic_block_size>>1), utils::addF<uint64_t>() ,   (uint64_t)0);
 	    {
 		uint64_t sum = 0;
 		for (size_type b = 0; b < (m_v->capacity()>>9); ++b) {

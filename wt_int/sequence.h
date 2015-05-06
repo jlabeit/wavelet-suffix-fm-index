@@ -74,12 +74,12 @@ namespace sequence {
     ET operator() (intT i) {return A[i];}
   };
 
-  template<class ET, class intT>
+  template<class ETCon, class ET, class intT>
   struct getAObj {
-	ET& A;
+	ETCon& A;
 	intT off;
-	getAObj(ET& AA, intT offset) : A(AA), off(offset) {}
-	typename ET::value_type operator() (intT i) {return A[i+off];}
+	getAObj(ETCon& AA, intT offset) : A(AA), off(offset) {}
+	ET operator() (intT i) {return A[i+off];}
   };
 
   template <class IT, class OT, class intT, class F>
@@ -88,6 +88,13 @@ namespace sequence {
     F f;
     getAF(IT* AA, F ff) : A(AA), f(ff) {}
     OT operator () (intT i) {return f(A[i]);}
+  };
+
+  template<class ETCon, class ET, class intT>
+  struct skip1 {
+    ETCon& data;
+    skip1(ETCon& d) : data(d) {}
+    ET& operator[](intT i) { return data[i<<2]; }
   };
 
 #define nblocks(_n,_bsize) (1 + ((_n)-1)/(_bsize))
@@ -202,10 +209,40 @@ namespace sequence {
     return r;
   }
 
+template <class ETCon, class ET, class intT, class F, class G> 
+  ET scanSerial(ETCon& Out, intT s, intT e, F f, G g, ET zero, bool inclusive, bool back) {
+    ET r = zero;
+
+    if (inclusive) {
+      if (back) for (long i = e-1; i >= s; i--) Out[i] = r = f(r,g(i));
+      else for (intT i = s; i < e; i++) Out[i] = r = f(r,g(i));
+    } else {
+      if (back) 
+	for (long i = e-1; i >= s; i--) {
+	  ET t = g(i);
+	  Out[i] = r;
+	  r = f(r,t);
+	}
+      else
+	for (intT i = s; i < e; i++) {
+	  ET t = g(i);
+	  Out[i] = r;
+	  r = f(r,t);
+	}
+    }
+    return r;
+  }
+
   template <class ET, class intT, class F> 
   ET scanSerial(ET *In, ET* Out, intT n, F f, ET zero) {
     return scanSerial(Out, (intT) 0, n, f, getA<ET,intT>(In), zero, false, false);
   }
+
+template <class ETCon, class ET, class intT, class F> 
+  ET scanSerial(ETCon &In, ETCon& Out, intT n, F f, ET zero) {
+    return scanSerial(Out, (intT) 0, n, f, getAObj<ETCon, ET,intT>(In,0), zero, false, false);
+  }
+
 
   // back indicates it runs in reverse direction
   template <class ET, class intT, class F, class G> 
@@ -223,9 +260,28 @@ namespace sequence {
     return total;
   }
 
+  template <class ETCon, class ET, class intT, class F, class G> 
+  ET scan(ETCon& Out, intT s, intT e, F f, G g,  ET zero, bool inclusive, bool back) {
+    intT n = e-s;
+    intT l = nblocks(n,_SCAN_BSIZE);
+    if (l <= 2) return scanSerial(Out, s, e, f, g, zero, inclusive, back);
+    ET *Sums = newA(ET,nblocks(n,_SCAN_BSIZE));
+    blocked_for (i, s, e, _SCAN_BSIZE, 
+		 Sums[i] = reduceSerial<ET>(s, e, f, g););
+    ET total = scan(Sums, (intT) 0, l, f, getA<ET,intT>(Sums), zero, false, back);
+    blocked_for (i, s, e, _SCAN_BSIZE, 
+		 scanSerial(Out, s, e, f, g, Sums[i], inclusive, back););
+    free(Sums);
+    return total;
+  }
+
   template <class ET, class intT, class F> 
   ET scan(ET *In, ET* Out, intT n, F f, ET zero) {
     return scan(Out, (intT) 0, n, f, getA<ET,intT>(In), zero, false, false);}
+
+  template <class ETCon, class ET, class intT, class F> 
+  ET scan(ETCon& In, ETCon& Out, intT n, F f, ET zero) {
+    return scan(Out, (intT) 0, n, f, getAObj<ETCon, ET,intT>(In, 0), zero, false, false);}
 
   template <class ET, class intT, class F> 
   ET scanBack(ET *In, ET* Out, intT n, F f, ET zero) {
@@ -469,7 +525,7 @@ template <class ET, class intT, class F>
   }  
 template <class ET, class intT>
 	intT pack2Bit(ET& In, intT in_offset, ET& Out, intT out_offset, uint64_t* Flags, intT s, intT e) {
-	return pack2(Out, out_offset, Flags,  s, e, getAObj<ET, intT>(In, in_offset)); 
+	return pack2(Out, out_offset, Flags,  s, e, getAObj<ET, typename ET::value_type, intT>(In, in_offset)); 
   }
 
   template <class ET, class intT> 
