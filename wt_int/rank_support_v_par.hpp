@@ -105,15 +105,18 @@ class rank_support_v : public rank_support
 	    }
 	    // exclusive prefix sum over the block_sums
 	    sequence::skip1<int_vector<64>, uint64_t, size_type> skp(m_basic_block);
-	    m_basic_block[2*(m_v->capacity()>>9)] = sequence::scan(skp, skp, (basic_block_size>>1), utils::addF<uint64_t>() ,   (uint64_t)0);
-	    {
+	    sequence::scan(skp, skp, (basic_block_size>>1), utils::addF<uint64_t>() ,   (uint64_t)0);
+	    for (int i = 0; i < basic_block_size; i+=2) {
+		std::cout<<m_basic_block[i]<<" ";
+	    }std::cout<<std::endl;
+	   /* {
 		uint64_t sum = 0;
 		for (size_type b = 0; b < (m_v->capacity()>>9); ++b) {
 			sum += m_basic_block[2*b];
 			m_basic_block[2*b] = sum - m_basic_block[2*b];
 		}
 		m_basic_block[2*(m_v->capacity()>>9)] = sum;
-	    }
+	    }*/
         }
 
         rank_support_v(const rank_support_v&)  = default;
