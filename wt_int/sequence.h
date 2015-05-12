@@ -94,7 +94,7 @@ namespace sequence {
   struct skip1 {
     ETCon& data;
     skip1(ETCon& d) : data(d) {}
-    ET& operator[](intT i) { return data[i<<2]; }
+    ET& operator[](intT i) { return data[i<<1]; }
   };
 
 #define nblocks(_n,_bsize) (1 + ((_n)-1)/(_bsize))
@@ -110,6 +110,8 @@ namespace sequence {
       _body						\
 	}						\
   }
+
+
 
   template <class OT, class intT, class F, class G> 
   OT reduceSerial(intT s, intT e, F f, G g) {

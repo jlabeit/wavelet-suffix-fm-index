@@ -24,9 +24,9 @@
 #include <iostream>
 #include "sequence.h"
 #include "WT.h"
-//#include "wt_int_par.hpp"
+#include "wt_int_par.hpp"
 #include <sdsl/construct.hpp>
-#include <sdsl/wt_int.hpp>
+//#include <sdsl/wt_int.hpp>
 
 using namespace std;
 
