@@ -343,7 +343,7 @@ void select_support_mcl<t_b,t_pat_len>::init_superblock_serial(int_vector<0>& bl
 				       	block_num * SUPER_BLOCK_SIZE - arg_cnt_old, carry_old);			
 		}
 		// special case for last block
-		if (arg_cnt == m_arg_cnt) {
+		if (arg_cnt == m_arg_cnt && arg_cnt_old < arg_cnt) {
 			blockends[blockends.size()-1] = s + select_support_trait<t_b, t_pat_len>::ith_arg_pos_in_the_word(data[s/64],
 					arg_cnt - arg_cnt_old, carry_old);
 			break; // Important to stop after last argument
