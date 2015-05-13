@@ -343,9 +343,11 @@ void select_support_mcl<t_b,t_pat_len>::init_superblock_serial(int_vector<0>& bl
 				       	block_num * SUPER_BLOCK_SIZE - arg_cnt_old, carry_old);			
 		}
 		// special case for last block
-		if (arg_cnt == m_arg_cnt)
+		if (arg_cnt == m_arg_cnt) {
 			blockends[blockends.size()-1] = s + select_support_trait<t_b, t_pat_len>::ith_arg_pos_in_the_word(data[s/64],
 					arg_cnt - arg_cnt_old, carry_old);
+			break; // Important to stop after last argument
+		}
 		arg_cnt_old = arg_cnt;
 		carry_old = carry;		
 		s += 64;
@@ -428,7 +430,7 @@ void select_support_mcl<t_b,t_pat_len>::init_fast(const bit_vector* v)
     bit_vector::size_type arg_position[SUPER_BLOCK_SIZE];
     const uint64_t* data = v->data();
 
-        // Init m_superblock with blocked for 
+    // Init m_superblock with blocked for 
     blocked_for (i, s, e, _SCAN_BSIZE<<3,
 		init_superblock_serial(superblockend, block_sum_arg[i], s, e, SUPER_BLOCK_SIZE);
 		);
