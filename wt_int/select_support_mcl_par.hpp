@@ -273,31 +273,98 @@ void select_support_mcl<t_b,t_pat_len>::init_slow(const bit_vector* v)
 template<uint8_t t_b, uint8_t t_pat_len>
 typename select_support_mcl<t_b,t_pat_len>::size_type select_support_mcl<t_b,t_pat_len>::sum_args_serial(size_type s, size_type e) {
 	size_type result = 0;
-	for (size_type i = s; i < e; ++i) {
-	// TODO implemented block wise scan 
-	// TODO compute carry correctly 
-		if (select_support_trait<t_b, t_pat_len>::found_arg(i, *v)) 
+	const uint64_t* data = m_v->data();
+	uint64_t carry = 0;
+	// first partial block
+	while (s % 64 != 0 && e < s) {
+		if (select_support_trait<t_b, t_pat_len>::found_arg(s, *m_v)) 
 			result++;
+		s++;
 	}
+	// get carry
+	if (s > 63) {
+		select_support_trait<t_b, t_pat_len>::args_in_the_word(data[s/64-1], carry);	
+	}
+	// sum blockwise
+	while (s/64 < e/64) {
+		result += select_support_trait<t_b, t_pat_len>::args_in_the_word(data[s/64], carry);
+		s += 64;
+	}
+	// last partial block
+	while (s < e) {
+		if (select_support_trait<t_b, t_pat_len>::found_arg(s, *m_v)) 
+			result++;
+		s++;
+	}	
 	return result;
 }
 
 
 template<uint8_t t_b, uint8_t t_pat_len>
 void select_support_mcl<t_b,t_pat_len>::init_superblock_serial(int_vector<0>& blockends, size_type arg_cnt, size_type s, size_type e, const size_type SUPER_BLOCK_SIZE) {
-	for (size_type i = s; i < e; ++i) {
-		if (select_support_trait<t_b,t_pat_len>::found_arg(i, *v)) {
+	const uint64_t* data = m_v->data();
+	uint64_t carry = 0;
+	// first partial block
+	while (s % 64 != 0 && s < e) {
+		if (select_support_trait<t_b,t_pat_len>::found_arg(s, *m_v)) {
 			// Set end
 			if ((arg_cnt + 1) % SUPER_BLOCK_SIZE == 0)
-				blockends[arg_cnt / SUPER_BLOCK_SIZE] = i;
+				blockends[arg_cnt / SUPER_BLOCK_SIZE] = s;
 			// Set start
 			if (arg_cnt % SUPER_BLOCK_SIZE == 0 )
-				m_superblock[arg_cnt / SUPER_BLOCK_SIZE] = i;
+				m_superblock[arg_cnt / SUPER_BLOCK_SIZE] = s;
 			arg_cnt++;
-			// Set special end
+			// special case for last block 
 			if (arg_cnt == m_arg_cnt) 
-				blockends[blockends.size()-1] = i;
-		}		
+				blockends[blockends.size()-1] = s;
+		}
+		s++;
+	}
+	// get carry
+	if (s > 63) {
+		select_support_trait<t_b, t_pat_len>::args_in_the_word(data[s/64-1], carry);	
+	}
+	size_type arg_cnt_old = arg_cnt;
+	uint64_t carry_old = carry;
+	// Traverse blockwise
+	while (s/64 < e/64) {
+		arg_cnt += select_support_trait<t_b, t_pat_len>::args_in_the_word(data[s/64], carry);	
+		// if start of a superblock is in the current block 
+		if ((arg_cnt-1) / SUPER_BLOCK_SIZE != (arg_cnt_old-1)/SUPER_BLOCK_SIZE) {
+			size_type block_num = (arg_cnt-1) / SUPER_BLOCK_SIZE;
+			m_superblock[block_num] = s + select_support_trait<t_b, t_pat_len>::ith_arg_pos_in_the_word(data[s/64],
+				       	block_num * SUPER_BLOCK_SIZE - arg_cnt_old+1, carry_old);			
+		}
+		// if end of a superblock is in the current block
+		if (arg_cnt / SUPER_BLOCK_SIZE != arg_cnt_old / SUPER_BLOCK_SIZE) {
+			// id of block which just started
+			size_type block_num = arg_cnt / SUPER_BLOCK_SIZE;
+			blockends[block_num-1] = s + select_support_trait<t_b, t_pat_len>::ith_arg_pos_in_the_word(data[s/64],
+				       	block_num * SUPER_BLOCK_SIZE - arg_cnt_old, carry_old);			
+		}
+		// special case for last block
+		if (arg_cnt == m_arg_cnt)
+			blockends[blockends.size()-1] = s + select_support_trait<t_b, t_pat_len>::ith_arg_pos_in_the_word(data[s/64],
+					arg_cnt - arg_cnt_old, carry_old);
+		arg_cnt_old = arg_cnt;
+		carry_old = carry;		
+		s += 64;
+	}	
+	// last partial block
+	while (s < e) {
+		if (select_support_trait<t_b,t_pat_len>::found_arg(s, *m_v)) {
+			// Set end
+			if ((arg_cnt + 1) % SUPER_BLOCK_SIZE == 0)
+				blockends[arg_cnt / SUPER_BLOCK_SIZE] = s;
+			// Set start
+			if (arg_cnt % SUPER_BLOCK_SIZE == 0 )
+				m_superblock[arg_cnt / SUPER_BLOCK_SIZE] = s;
+			arg_cnt++;
+			// special case for last block 
+			if (arg_cnt == m_arg_cnt) 
+				blockends[blockends.size()-1] = s;
+		}	
+		s++;
 	}
 }
 
