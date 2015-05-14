@@ -25,9 +25,9 @@
 #include "sequence.h"
 #include "WT.h"
 //#include "wt_int_par.hpp"
-//#include "wt_huff_par.hpp"
+#include "wt_huff_par.hpp"
 #include <sdsl/construct.hpp>
-#include <sdsl/wt_huff.hpp>
+//#include <sdsl/wt_huff.hpp>
 
 using namespace std;
 
