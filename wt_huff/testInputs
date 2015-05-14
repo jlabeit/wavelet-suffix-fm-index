@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
-bnchmrkc="WTc"
-bnchmrki="WTi"
+bnchmrkc="WT"
+#bnchmrki="WTi"
 benchmark="Wavelet Tree"
 checkProgram="../common/WTCheck"
 dataDir = "../sequenceData/data"
@@ -21,14 +21,14 @@ testschar = [
     [1, "wikisamp.xml", "", ""]
 ]
 
-testsint = [
-    [1, "randomSeq_100M_256_int", "", ""],
-    [1, "randomSeq_10M_100K_int", "", ""],
-    [1, "randomSeq_10M_1048576_int", "", ""],
-    [1, "randomSeq_10M_256_int", "", ""]
-]
+#testsint = [
+#    [1, "randomSeq_100M_256_int", "", ""],
+#    [1, "randomSeq_10M_100K_int", "", ""],
+#    [1, "randomSeq_10M_1048576_int", "", ""],
+#    [1, "randomSeq_10M_256_int", "", ""]
+#]
 
 import runTests
 runTests.timeAllArgs(bnchmrkc, benchmark, checkProgram, dataDir, testschar)
-runTests.timeAllArgs(bnchmrki, benchmark, checkProgram, dataDir, testsint)
+#runTests.timeAllArgs(bnchmrki, benchmark, checkProgram, dataDir, testsint)
 
