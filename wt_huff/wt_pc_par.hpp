@@ -203,7 +203,7 @@ class wt_pc
 		size_type source_offset = start - wt_begin;
 		if (length < 128) {
 			for (size_type i = wt_begin; i <= wt_end; ++i) {
-				if (m_tree.bit_path(source[i+source_offset]) & mask)
+				if ( m_tree.bit_path(source[i+source_offset]) & mask)
 					write_or(&tree_data[i/64], 1LL << (i % 64));
 			}
 		} else {
@@ -301,7 +301,7 @@ class wt_pc
             }
 	    int_vector<tree_strat_type::int_width> s1(m_size);
 	    int_vector<tree_strat_type::int_width> s2(m_size);
-	    for (size_type i=0; i < m_size; ++i) {
+	    for (size_type i = 0;i < m_size; i++) {
 		s1[i] = input_buf[i];
 	    }
 	    // start, len, source, destination, huff_tree_structure, output_wt
