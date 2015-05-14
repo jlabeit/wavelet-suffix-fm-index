@@ -45,11 +45,12 @@ pair<WTnode*,long*> WT(symbol* s, uintT n, uintT sigma) {
   for (uintT i = 0; i < n; i++) 
 	  input[i] = (uint64_t)s[i];
   sdsl::util::bit_compress(input);  
-  sdsl::store_to_file(input, "input_vector");
+  string file = "@input_vector.iv8";
+  sdsl::store_to_file(input, file);
   sdsl::wt_huff<> wt;
-  sdsl::construct(wt, "input_vector");
+  sdsl::construct(wt, file);
   // output node
-  sdsl::store_to_file(wt, "output_wt");
+  //sdsl::store_to_file(wt, "output_wt");
 
 
   long* empty_result = (long*)malloc(sizeof(long));
