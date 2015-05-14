@@ -140,8 +140,8 @@ class wt_pc
         }
 
         void construct_init_rank_select() {
-            util::init_support(m_bv_rank, &m_bv);
-            util::init_support(m_bv_select0, &m_bv);
+            cilk_spawn util::init_support(m_bv_rank, &m_bv);
+            cilk_spawn util::init_support(m_bv_select0, &m_bv);
             util::init_support(m_bv_select1, &m_bv);
         }
 
@@ -275,13 +275,20 @@ class wt_pc
               size_type size):m_size(size) {
             if (0 == m_size)
                 return;
+	    // For parallel construction buffer needs to be in memory
+	    int_vector<tree_strat_type::int_width> s1(m_size);
+	    int_vector<tree_strat_type::int_width> s2(m_size);
+	    // Has to be sequential because may be on disk 
+	    for (size_type i = 0;i < m_size; i++) {
+		s1[i] = input_buf[i];
+	    }
             // O(n + |\Sigma|\log|\Sigma|) algorithm for calculating node sizes
             // TODO: C should also depend on the tree_strategy. C is just a mapping
             // from a symbol to its frequency. So a map<uint64_t,uint64_t> could be
             // used for integer alphabets...
             std::vector<size_type> C;
             // 1. Count occurrences of characters
-            calculate_character_occurences(input_buf, m_size, C); // TODO count in parallel
+            calculate_character_occurences(s1, m_size, C); // TODO count in parallel
             // 2. Calculate effective alphabet size
             calculate_effective_alphabet_size(C, m_sigma);
             // 3. Generate tree shape
@@ -299,11 +306,7 @@ class wt_pc
                 throw std::logic_error("Stream size is smaller than size!");
                 return;
             }
-	    int_vector<tree_strat_type::int_width> s1(m_size);
-	    int_vector<tree_strat_type::int_width> s2(m_size);
-	    for (size_type i = 0;i < m_size; i++) {
-		s1[i] = input_buf[i];
-	    }
+	    
 	    // start, len, source, destination, huff_tree_structure, output_wt
 	    build_recursive(0, m_size, s1, s2, (uint64_t*)temp_bv.data(), bv_node_pos, m_tree.root());
             m_bv = bit_vector_type(std::move(temp_bv));
