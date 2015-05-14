@@ -24,12 +24,12 @@
 #include <iostream>
 #include "sequence.h"
 #include "WT.h"
-#include "select_support_mcl_par.hpp"
-#include "rank_support_v_par.hpp"
+//#include "select_support_mcl_par.hpp"
+//#include "rank_support_v_par.hpp"
 //#include "wt_int_par.hpp"
-#include "wt_huff_par.hpp"
+//#include "wt_huff_par.hpp"
 #include <sdsl/construct.hpp>
-//#include <sdsl/wt_huff.hpp>
+#include <sdsl/wt_huff.hpp>
 
 using namespace std;
 
