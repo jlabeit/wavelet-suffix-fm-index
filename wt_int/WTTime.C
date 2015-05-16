@@ -93,35 +93,29 @@ void timeWT(symbol* s, long n, int rounds, char* outFile, int check) {
   parallel_for(long i=0;i<n;i++) s[i] = A[s[i]];
   free(A);
 
-  pair<WTnode*,long*> R;
-  R = WT(s, n, sigma);
+  // Version for sdsl
+  sdsl::int_vector<0> input(n, 0, sizeof(symbol)*8);
+  for (uint64_t i = 0; i < n; i++) {
+	input[i] = s[i];
+  }
+  string input_file = "@input.sdsl"; 
+  sdsl::store_to_file(input, input_file);
+  sdsl::wt_int<> wt;
+  sdsl::construct(wt, input_file);
   for (int i=0; i < rounds; i++) {
-    free(R.first); free(R.second);
     startTime();
-    R = WT(s, n, sigma);
+    sdsl::construct(wt, input_file);
     nextTimeN();
   }
   cout<<"Peak-memory: " << getPeakRSS() / (1024*1024)<< endl;
 
   if(check) {
-    cout << "checking...\n";
-    parallel_for(long i=0;i<check;i++) {
-      uintT index = utils::hash(i) % n;
-      uintT q = query(R,index,sigma,n);
-      if(q != s[index]) cout << "i = " << index << " query result = " << q << " expected result = " << (uintT) s[index] << endl;
-    }
-    cout << "done checking...\n";
+	  std::cout<<"Checking...";
+	  //TODO 
   }
-
-  if(outFile != NULL) {
-    symbol* foo = newA(symbol,n); 
-    parallel_for(long i=0;i<n;i++) foo[i] = (symbol) s[i];
-    ofstream out(outFile, ofstream::out | ios::binary);
-    out.write((char*)foo, sizeof(symbol)*n);
-    free(foo);
-    out.close();
+  if (outFile != NULL) {
+	sdsl::store_to_file(wt, outFile);
   }
-
   // if(outFile != NULL) {
   //   intT* foo = newA(intT,n); 
   //   parallel_for(long i=0;i<n;i++) foo[i] = (intT) s[i];
@@ -132,7 +126,6 @@ void timeWT(symbol* s, long n, int rounds, char* outFile, int check) {
   // }
 
   //if (outFile != NULL) writeIntArrayToFile((intT*) R, (intT) n, outFile);
-  free(R.first); free(R.second);
 }
 
 int parallel_main(int argc, char* argv[]) {

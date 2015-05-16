@@ -24,9 +24,6 @@
 #include <iostream>
 #include "sequence.h"
 #include "WT.h"
-#include "wt_int_par.hpp"
-#include <sdsl/construct.hpp>
-//#include <sdsl/wt_int.hpp>
 
 using namespace std;
 
@@ -34,22 +31,4 @@ using namespace std;
 
 
 
-
-pair<WTnode*,long*> WT(symbol* s, uintT n, uintT sigma) {
-  sdsl::int_vector<> input;
-  input.resize(n);
-  symbol x = 0;
-  for (uintT i = 0; i < n; i++) 
-	  input[i] = (uint64_t)s[i];
-  sdsl::util::bit_compress(input);  
-  sdsl::store_to_file(input, "input_vector");
-  sdsl::wt_int<> wt;
-  sdsl::construct(wt, "input_vector");
-  // output node
-  sdsl::store_to_file(wt, "output_wt");
-
-
-  long* empty_result = (long*)malloc(sizeof(long));
-  WTnode* emptyNode = (WTnode*)malloc(sizeof(WTnode)); 
-  return make_pair((WTnode*)emptyNode,(long*)empty_result);
-}
+void WT() {}
