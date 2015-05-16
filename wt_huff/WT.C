@@ -19,17 +19,6 @@
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-#include "parallel.h"
-#include "utils.h"
-#include <iostream>
-#include "sequence.h"
-#include "WT.h"
-#include "select_support_mcl_par.hpp"
-#include "rank_support_v_par.hpp"
-//#include "wt_int_par.hpp"
-#include "wt_huff_par.hpp"
-#include <sdsl/construct.hpp>
-//#include <sdsl/wt_huff.hpp>
 
 using namespace std;
 
@@ -38,22 +27,5 @@ using namespace std;
 
 
 
-pair<WTnode*,long*> WT(symbol* s, uintT n, uintT sigma) {
-  sdsl::int_vector<> input;
-  input.resize(n);
-  symbol x = 0;
-  for (uintT i = 0; i < n; i++) 
-	  input[i] = (uint64_t)s[i];
-  sdsl::util::bit_compress(input);  
-  string file = "@input_vector.iv8";
-  sdsl::store_to_file(input, file);
-  sdsl::wt_huff<> wt;
-  sdsl::construct(wt, file);
-  // output node
-  //sdsl::store_to_file(wt, "output_wt");
-
-
-  long* empty_result = (long*)malloc(sizeof(long));
-  WTnode* emptyNode = (WTnode*)malloc(sizeof(WTnode)); 
-  return make_pair((WTnode*)emptyNode,(long*)empty_result);
+void WT(void) {
 }
