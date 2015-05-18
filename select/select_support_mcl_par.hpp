@@ -396,12 +396,41 @@ void select_support_mcl<t_b,t_pat_len>::init_superblock_serial(
 template<uint8_t t_b, uint8_t t_pat_len>
 void select_support_mcl<t_b,t_pat_len>::init_longblock_serial(int_vector<0>& longblock, size_type s, size_type e, size_type offset) {
 	size_type arg_cnt = offset;	
-	for (size_type i = s; i < e; i++) {
-		if (select_support_trait<t_b, t_pat_len>::found_arg(i, *v)) {
-			longblock[arg_cnt] = i;
+	const uint64_t* data = v->data();
+	uint64_t carry = 0;
+	// first partial block
+	while (s % 64 != 0 && s < e) {
+		if (select_support_trait<t_b, t_pat_len>::found_arg(s, *v)) {
+			longblock[arg_cnt] = s;
 			arg_cnt++;
-		}		
+		}	
+		s++;
 	}
+	// init carry
+	if (s > 63) {
+		select_support_trait<t_b, t_pat_len>::args_in_the_word(data[s/64-1], carry);
+	}
+	uint64_t carry_old = carry;
+	size_type arg_cnt_old = arg_cnt;
+	while (s/64 < e/64) {	
+		arg_cnt += select_support_trait<t_b, t_pat_len>::args_in_the_word(data[s/64], carry);
+		for (size_type j = 1; j <= arg_cnt - arg_cnt_old; j++) {	
+			longblock[arg_cnt_old+j-1] = select_support_trait<t_b, t_pat_len>::ith_arg_pos_in_the_word(data[s/64], j, carry_old);
+		}
+		arg_cnt_old = arg_cnt;
+		carry_old = carry;
+		s += 64;
+	}
+	// last partial block
+	if ( s > e) s -= 64;
+	while (s < e) {
+		if (select_support_trait<t_b, t_pat_len>::found_arg(s, *v)) {
+			longblock[arg_cnt] = s;
+			arg_cnt++;
+		}	
+		s++;
+	}
+		
 }
 // Sample the delta to start of every 64 argument
 template<uint8_t t_b, uint8_t t_pat_len>
