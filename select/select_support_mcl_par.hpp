@@ -465,9 +465,11 @@ void select_support_mcl<t_b,t_pat_len>::init_fast(const bit_vector* v)
 	if (cnt_e - cnt_s > m_logn4) { // Long
 	    m_longsuperblock[i] = int_vector<0>(SUPER_BLOCK_SIZE, 0, bits::hi(cnt_e) + 1);
 	    // Do chunks in parallel
-	    parallel_for (uint32_t c = sb_to_chunk[i].first; c < sb_to_chunk[i].second; ++c) {
-		    // TODO intervalle richtig berechnen und block_sum_arg[c] modulo rechnen
-		    init_longblock_serial(m_longsuperblock[i], cnt_s, cnt_e+1, block_sum_arg[c]);
+	    parallel_for (uint32_t c = sb_to_chunk[i].first; c <= sb_to_chunk[i].second; ++c) {
+		    size_type cur_start = std::max(cnt_s, (size_type)c * (_SCAN_BSIZE<<3));
+		    size_type cur_end = std::min(cnt_e +1, (size_type)(c+1)*(_SCAN_BSIZE<<3));
+		    size_type cur_offset = cur_start == cnt_s ? 0 : (block_sum_arg[c] - i*SUPER_BLOCK_SIZE); 
+		    init_longblock_serial(m_longsuperblock[i], cur_start, cur_end, cur_offset);
 	    }
 	} else { // Miniblock
 	    m_miniblock[i] = int_vector<0>(64, 0, bits::hi(cnt_e-cnt_s)+1);
