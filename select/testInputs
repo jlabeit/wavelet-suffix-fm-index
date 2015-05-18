@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+bnchmrk="WT"
 bnchmrkc="WTc"
 bnchmrki="WTi"
 benchmark="Wavelet Tree"
@@ -29,6 +30,7 @@ testsint = [
 ]
 
 import runTests
-runTests.timeAllArgs(bnchmrkc, benchmark, checkProgram, dataDir, testschar)
-runTests.timeAllArgs(bnchmrki, benchmark, checkProgram, dataDir, testsint)
+#runTests.timeAllArgs(bnchmrkc, benchmark, checkProgram, dataDir, testschar)
+#runTests.timeAllArgs(bnchmrki, benchmark, checkProgram, dataDir, testsint)
+runTests.timeAllArgs(bnchmrk, benchmark, checkProgram, dataDir, testschar)
 
