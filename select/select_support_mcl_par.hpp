@@ -435,74 +435,102 @@ void select_support_mcl<t_b,t_pat_len>::init_longblock_serial(int_vector<0>& lon
 // Sample the delta to start of every 64 argument
 template<uint8_t t_b, uint8_t t_pat_len>
 void select_support_mcl<t_b,t_pat_len>::init_miniblock_serial(int_vector<0>& miniblock, size_type s, size_type e) {
-	size_type arg_cnt = 0;
-	for (size_type i = s; i < e; i++) {
-		if (select_support_trait<t_b, t_pat_len>::found_arg(i, *v)) {
-			if (arg_cnt % 64 == 0) {
-				miniblock[arg_cnt/64] = i-s;	
-			}	
-			arg_cnt++;
-		}
+const uint64_t* data = v->data();
+uint64_t carry, carry_old;
+carry = carry_old = 0;
+size_type arg_cnt, arg_cnt_old;
+arg_cnt = arg_cnt_old = 0;
+size_type i = s;
+// First partial block
+while (i % 64 != 0 && i < e) {
+	if (select_support_trait<t_b, t_pat_len>::found_arg(i, *v)) {
+		if (arg_cnt % 64 == 0) {
+			miniblock[arg_cnt/64] = i-s;	
+		}	
+		arg_cnt++;
 	}
+	i++;
+}
+// blockwise
+while (i/64 < e/64) {
+	arg_cnt += select_support_trait<t_b, t_pat_len>::args_in_the_word(data[i/64], carry);
+	if ((arg_cnt-1)/64 != (arg_cnt_old-1)/64) {
+		miniblock[(arg_cnt-1)/64] = i-s + select_support_trait<t_b, t_pat_len>::ith_arg_pos_in_the_word(data[i/64], 64 - ((arg_cnt_old-1)%64) , carry_old);	
+	}
+	arg_cnt_old = arg_cnt;
+	carry_old = carry;
+	i += 64;
+} 
+
+// Rest of the interval
+while (i < e) {
+	if (select_support_trait<t_b, t_pat_len>::found_arg(i, *v)) {
+		if (arg_cnt % 64 == 0) {
+			miniblock[arg_cnt/64] = i-s;	
+		}	
+		arg_cnt++;
+	}
+	i++;
+}
 }
 
 template<uint8_t t_b, uint8_t t_pat_len>
 void select_support_mcl<t_b,t_pat_len>::init_fast(const bit_vector* v)
 {
-    set_vector(v);
-    initData();
-    if (m_v==nullptr)
-        return;
+set_vector(v);
+initData();
+if (m_v==nullptr)
+return;
 //    m_arg_cnt = select_support_trait<t_b,t_pat_len>::arg_cnt(*v); 
 // Calculate prefix sum blockwise over sum args 
-    size_type num_blocks = nblocks(v->size(), _SCAN_BSIZE<<3); 
-    bit_vector::size_type *block_sum_arg = new bit_vector::size_type[num_blocks];
-    bit_vector::size_type s = 0;
-    bit_vector::size_type e = v->size();
-    blocked_for (i, s, e, _SCAN_BSIZE<<3, 
-		 block_sum_arg[i] = sum_args_serial(s, e););
-    m_arg_cnt =  sequence::scan(block_sum_arg, block_sum_arg, num_blocks, utils::addF<bit_vector::size_type>(), 0);
+size_type num_blocks = nblocks(v->size(), _SCAN_BSIZE<<3); 
+bit_vector::size_type *block_sum_arg = new bit_vector::size_type[num_blocks];
+bit_vector::size_type s = 0;
+bit_vector::size_type e = v->size();
+blocked_for (i, s, e, _SCAN_BSIZE<<3, 
+	 block_sum_arg[i] = sum_args_serial(s, e););
+m_arg_cnt =  sequence::scan(block_sum_arg, block_sum_arg, num_blocks, utils::addF<bit_vector::size_type>(), 0);
 
 
-    const size_type SUPER_BLOCK_SIZE = 64*64;
+const size_type SUPER_BLOCK_SIZE = 64*64;
 
-    if (m_arg_cnt==0) // if there are no arguments in the vector we are done...
-        return;
+if (m_arg_cnt==0) // if there are no arguments in the vector we are done...
+return;
 
 //    size_type sb = (m_arg_cnt+63+SUPER_BLOCK_SIZE-1)/SUPER_BLOCK_SIZE; // number of superblocks, add 63 as the last block could contain 63 uninitialized bits
-    size_type sb = (m_arg_cnt+SUPER_BLOCK_SIZE-1)/SUPER_BLOCK_SIZE; // number of superblocks
-    if (m_miniblock != nullptr) delete [] m_miniblock;
-    m_miniblock = new int_vector<0>[sb];
-    if (m_longsuperblock != nullptr) delete [] m_longsuperblock;
-    m_longsuperblock = new int_vector<0>[sb+1];
+size_type sb = (m_arg_cnt+SUPER_BLOCK_SIZE-1)/SUPER_BLOCK_SIZE; // number of superblocks
+if (m_miniblock != nullptr) delete [] m_miniblock;
+m_miniblock = new int_vector<0>[sb];
+if (m_longsuperblock != nullptr) delete [] m_longsuperblock;
+m_longsuperblock = new int_vector<0>[sb+1];
 
-    m_superblock = int_vector<0>(sb, 0, m_logn);// TODO: hier koennte man logn noch optimieren...s
-    int_vector<0> superblockend(sb, 0, m_logn); 
+m_superblock = int_vector<0>(sb, 0, m_logn);// TODO: hier koennte man logn noch optimieren...s
+int_vector<0> superblockend(sb, 0, m_logn); 
 
-    const uint64_t* data = v->data();
-    // Assings start and end chunk to every superblock
-    std::pair<uint32_t, uint32_t>* sb_to_chunk = new std::pair<uint32_t, uint32_t>[sb];
+const uint64_t* data = v->data();
+// Assings start and end chunk to every superblock
+std::pair<uint32_t, uint32_t>* sb_to_chunk = new std::pair<uint32_t, uint32_t>[sb];
 
-    // Init m_superblock with blocked for 
-    blocked_for (i, s, e, _SCAN_BSIZE<<3,
-		init_superblock_serial(superblockend, block_sum_arg[i], sb_to_chunk, i, s, e, SUPER_BLOCK_SIZE);
-		);
-    // Calculate long/miniblocks 
-    parallel_for (uint32_t i = 0; i < sb; ++i) {
-	size_type cnt_s = m_superblock[i];
-	size_type cnt_e = superblockend[i];
-	if (cnt_e - cnt_s > m_logn4) { // Long
-	    m_longsuperblock[i] = int_vector<0>(SUPER_BLOCK_SIZE, 0, bits::hi(cnt_e) + 1);
-	    // Do chunks in parallel
-	    parallel_for (uint32_t c = sb_to_chunk[i].first; c <= sb_to_chunk[i].second; ++c) {
-		    size_type cur_start = std::max(cnt_s, (size_type)c * (_SCAN_BSIZE<<3));
-		    size_type cur_end = std::min(cnt_e +1, (size_type)(c+1)*(_SCAN_BSIZE<<3));
-		    size_type cur_offset = cur_start == cnt_s ? 0 : (block_sum_arg[c] - i*SUPER_BLOCK_SIZE); 
-		    init_longblock_serial(m_longsuperblock[i], cur_start, cur_end, cur_offset);
-	    }
-	} else { // Miniblock
-	    m_miniblock[i] = int_vector<0>(64, 0, bits::hi(cnt_e-cnt_s)+1);
-	    init_miniblock_serial(m_miniblock[i], cnt_s, cnt_e+1);
+// Init m_superblock with blocked for 
+blocked_for (i, s, e, _SCAN_BSIZE<<3,
+	init_superblock_serial(superblockend, block_sum_arg[i], sb_to_chunk, i, s, e, SUPER_BLOCK_SIZE);
+	);
+// Calculate long/miniblocks 
+parallel_for (uint32_t i = 0; i < sb; ++i) {
+size_type cnt_s = m_superblock[i];
+size_type cnt_e = superblockend[i];
+if (cnt_e - cnt_s > m_logn4) { // Long
+    m_longsuperblock[i] = int_vector<0>(SUPER_BLOCK_SIZE, 0, bits::hi(cnt_e) + 1);
+    // Do chunks in parallel
+    parallel_for (uint32_t c = sb_to_chunk[i].first; c <= sb_to_chunk[i].second; ++c) {
+	    size_type cur_start = std::max(cnt_s, (size_type)c * (_SCAN_BSIZE<<3));
+	    size_type cur_end = std::min(cnt_e +1, (size_type)(c+1)*(_SCAN_BSIZE<<3));
+	    size_type cur_offset = cur_start == cnt_s ? 0 : (block_sum_arg[c] - i*SUPER_BLOCK_SIZE); 
+	    init_longblock_serial(m_longsuperblock[i], cur_start, cur_end, cur_offset);
+    }
+} else { // Miniblock
+    m_miniblock[i] = int_vector<0>(64, 0, bits::hi(cnt_e-cnt_s)+1);
+    init_miniblock_serial(m_miniblock[i], cnt_s, cnt_e+1);
 	}
     }
     delete[] sb_to_chunk;
