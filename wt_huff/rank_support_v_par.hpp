@@ -78,6 +78,7 @@ class rank_support_v : public rank_support
             m_basic_block.resize(basic_block_size);   // resize structure for basic_blocks
             if (m_basic_block.empty())
                 return;
+	    // sometimes last value isnt used
             const uint64_t* data = m_v->data();
             //m_basic_block[0] = m_basic_block[1] = 0;
 
@@ -97,11 +98,14 @@ class rank_support_v : public rank_support
 		uint64_t second_level_cnt = 0;
 		// Last word is covered by <= with the +1
 		size_type end = std::min((b<<3) + 8, (m_v->capacity()>>6));
-	    	for (size_type i = (b<<3)+1; i < end; i++) {
+		size_type i;
+	    	for (i = (b<<3)+1; i < end; i++) {
 			second_level_cnt |= sum<<(63-9*(i&0x7));	
 			sum += trait_type::args_in_the_word(data[i], carry);
 		}	
 		m_basic_block[2*b] = sum;
+		if (i % 8 != 0)  // Special case for last block
+			second_level_cnt |= sum<<(63-9*(i&0x7));	
 		m_basic_block[2*b+1] = second_level_cnt;
 	    }
 	    // exclusive prefix sum over the block_sums
@@ -115,6 +119,7 @@ class rank_support_v : public rank_support
 		}
 		m_basic_block[2*(m_v->capacity()>>9)] = sum;
 	    }*/
+
         }
 
         rank_support_v(const rank_support_v&)  = default;
