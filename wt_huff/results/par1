@@ -1,12 +1,12 @@
-20 : trigramString_10000000 :  -r 1 -o /tmp/ofile656448_947506 : '3.05' : 114.
-6 : chr22.dna :  -r 1 -o /tmp/ofile675437_74376 : '6.05' : 350.
-1 : etext99 :  -r 1 -o /tmp/ofile181137_978073 : '37.1' : 1295.
-1 : howto :  -r 1 -o /tmp/ofile490102_491060 : '13.9' : 339.
-1 : jdk13c :  -r 1 -o /tmp/ofile708926_69079 : '30.2' : 599.
-1 : proteins :  -r 1 -o /tmp/ofile979912_40426 : '69.3' : 1801.
-1 : rctail96 :  -r 1 -o /tmp/ofile899389_557325 : '49.7' : 986.
-1 : rfc :  -r 1 -o /tmp/ofile991221_277504 : '49.7' : 1000.
-1 : sprot34 :  -r 1 -o /tmp/ofile493079_43036 : '46.9' : 942.
-1 : w3c2 :  -r 1 -o /tmp/ofile925453_830301 : '43.6' : 895.
-1 : wikisamp.xml :  -r 1 -o /tmp/ofile332164_929417 : '36.5' : 859.
-wt_huff : 0 : weighted time, min=13.548 median=13.548 mean=13.548
+20 : trigramString_10000000 :  -r 1 -o /tmp/ofile148014_646018 : '2.79' : 83.
+6 : chr22.dna :  -r 1 -o /tmp/ofile355867_201715 : '6.66' : 277.
+1 : etext99 :  -r 1 -o /tmp/ofile701298_897616 : '33.4' : 801.
+1 : howto :  -r 1 -o /tmp/ofile903124_711269 : '12.8' : 303.
+1 : jdk13c :  -r 1 -o /tmp/ofile521528_600313 : '25.1' : 550.
+1 : proteins :  -r 1 -o /tmp/ofile758413_743941 : '62.8' : 1587.
+1 : rctail96 :  -r 1 -o /tmp/ofile975639_524584 : '39.2' : 890.
+1 : rfc :  -r 1 -o /tmp/ofile235094_15969 : '36.6' : 893.
+1 : sprot34 :  -r 1 -o /tmp/ofile743021_281309 : '35.4' : 837.
+1 : w3c2 :  -r 1 -o /tmp/ofile464081_70905 : '40.' : 840.
+1 : wikisamp.xml :  -r 1 -o /tmp/ofile375698_432491 : '33.2' : 798.
+wt_huff : 0 : weighted time, min=11.836 median=11.836 mean=11.836
