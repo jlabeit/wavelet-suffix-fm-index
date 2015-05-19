@@ -275,6 +275,7 @@ class wt_pc
               size_type size):m_size(size) {
             if (0 == m_size)
                 return;
+	    std::cout<<"Start\n";
 	    // For parallel construction buffer needs to be in memory
 	    int_vector<tree_strat_type::int_width> s1(m_size);
 	    int_vector<tree_strat_type::int_width> s2(m_size);
@@ -282,6 +283,7 @@ class wt_pc
 	    for (size_type i = 0;i < m_size; i++) {
 		s1[i] = input_buf[i];
 	    }
+	    std::cout<<"1\n";
             // O(n + |\Sigma|\log|\Sigma|) algorithm for calculating node sizes
             // TODO: C should also depend on the tree_strategy. C is just a mapping
             // from a symbol to its frequency. So a map<uint64_t,uint64_t> could be
@@ -306,17 +308,20 @@ class wt_pc
                 throw std::logic_error("Stream size is smaller than size!");
                 return;
             }
-	    
+	    std::cout<<"build wt\n";
 	    // start, len, source, destination, huff_tree_structure, output_wt
 	    build_recursive(0, m_size, s1, s2, (uint64_t*)temp_bv.data(), bv_node_pos, m_tree.root());
             m_bv = bit_vector_type(std::move(temp_bv));
+	    std::cout<<"done building wt\n";
             // 5. Initialize rank and select data structures for m_bv
             construct_init_rank_select();
 	    // END PERFORMANCE CRITICAL
 	    
+	    std::cout<<"rank\n";
 
             // 6. Finish inner nodes by precalculating the bv_pos_rank values
             m_tree.init_node_ranks(m_bv_rank);
+	    std::cout<<"Done\n";
         }
 
 
