@@ -136,6 +136,7 @@ note:
       for(c1 = ALPHABET_SIZE - 1; c0 < c1; j = i, --c1) {
         i = BUCKET_BSTAR(c0, c1);
         if(1 < (j - i)) {
+	  // TODO use parallel sort here when j-i gets to large!
           sssort(T, PAb, SA + i, SA + j,
                  buf, bufsize, 2, n, *(SA + i) == (m - 1));
         }
@@ -155,10 +156,8 @@ note:
       do { ISAb[SA[i] = ~SA[i]] = j; } while(SA[--i] < 0);
       ISAb[SA[i]] = j;
     }
-
     /* Construct the inverse suffix array of type B* suffixes using trsort. */
     trsort(ISAb, SA, m, 1);
-
     /* Set the sorted order of tyoe B* suffixes. */
     for(i = n - 1, j = m, c0 = T[n - 1]; 0 <= i;) {
       for(--i, c1 = c0; (0 <= i) && ((c0 = T[i]) >= c1); --i, c1 = c0) { }
