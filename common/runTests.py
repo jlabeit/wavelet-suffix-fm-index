@@ -36,8 +36,7 @@ def runSingle(runProgram, options, ifile, procs) :
   #print(out)
   try:
     times = [float(str[str.index(' ')+1:]) for str in out.split('\n') if str.startswith("PBBS-time: ")]
-    memory = [float(str[str.index(' ')+1:]) for str in out.split('\n') if str.startswith("Peak-memory: ")][0]
-    return (times,memory)
+    return times
   except (ValueError,IndexError):
     raise NameError(comString+"\n"+out)
 
@@ -54,7 +53,7 @@ def runTest(runProgram, checkProgram, dataDir, test, rounds, procs, noOutput) :
     runOptions = runOptions + " -r " + `rounds`
     if (noOutput == 0) :
       runOptions = runOptions + " -o " + outFile
-    (times,memory) = runSingle(runProgram, runOptions, longInputNames, procs)
+    times = runSingle(runProgram, runOptions, longInputNames, procs)
     if (noOutput == 0) :
       checkString = ("./" + checkProgram + " " + checkOptions + " "
                      + longInputNames + " " + outFile)
@@ -67,12 +66,11 @@ def runTest(runProgram, checkProgram, dataDir, test, rounds, procs, noOutput) :
       os.remove(outFile)
     ptimes = str([stripFloat(time)
                   for time in times])[1:-1]
-    pmemory = str(stripFloat(memory)) 
     outputStr = ""
     if (len(runOptions) > 0) :
       outputStr = " : " + runOptions
     print(`weight` + " : " + shortInputNames + outputStr + " : "
-        + ptimes + " : " + pmemory)
+          + ptimes)
     return [weight,times]
     
 def averageTime(times) :
