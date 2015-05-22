@@ -46,7 +46,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 
   /* Initialize bucket arrays. */
   parallel_for(saidx_t i_ = 0; i_ < BUCKET_A_SIZE; ++i_) { bucket_A[i_] = 0; }
-  parallel_for(i_ = 0; i_ < BUCKET_B_SIZE; ++i_) { bucket_B[i_] = 0; }
+  parallel_for(saidx_t i_ = 0; i_ < BUCKET_B_SIZE; ++i_) { bucket_B[i_] = 0; }
 
   /* Count the number of occurrences of the first one or two characters of each
      type A, B and B* suffix. Moreover, store the beginning position of all
