@@ -133,13 +133,17 @@ note:
     }
 #else
     buf = SA + m, bufsize = n - (2 * m);
+    bufsize = 0; // Dont use buffer when multithreadding
     for(c0 = ALPHABET_SIZE - 2, j = m; 0 < j; --c0) {
       for(c1 = ALPHABET_SIZE - 1; c0 < c1; j = i, --c1) {
         i = BUCKET_BSTAR(c0, c1);
         if(1 < (j - i)) {
+	  if (j - i > 1024) 
 	  // TODO use parallel sort here when j-i gets to large!
-          cilk_spawn sssort(T, PAb, SA + i, SA + j,
-                 buf, bufsize, 2, n, *(SA + i) == (m - 1));
+          cilk_spawn sssort(T, PAb, SA + i, SA + j, buf, bufsize, 2, n, *(SA + i) == (m - 1));
+	  else 
+          sssort(T, PAb, SA + i, SA + j, buf, bufsize, 2, n, *(SA + i) == (m - 1));
+	
         }
       }
     }
