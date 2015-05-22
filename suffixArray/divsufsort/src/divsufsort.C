@@ -100,6 +100,7 @@ note:
     t = PAb[m - 1], c0 = T[t], c1 = T[t + 1];
     SA[--BUCKET_BSTAR(c0, c1)] = m - 1;
 
+    printf("sssort_begin\n");
     /* Sort the type B* substrings using sssort. */
 #ifdef _OPENMP
     tmp = omp_get_max_threads();
@@ -137,13 +138,15 @@ note:
         i = BUCKET_BSTAR(c0, c1);
         if(1 < (j - i)) {
 	  // TODO use parallel sort here when j-i gets to large!
-          sssort(T, PAb, SA + i, SA + j,
+          cilk_spawn sssort(T, PAb, SA + i, SA + j,
                  buf, bufsize, 2, n, *(SA + i) == (m - 1));
         }
       }
     }
+    cilk_sync;
 #endif
 
+    printf("sssort_end\n");
     /* Compute ranks of type B* substrings. */
     for(i = m - 1; 0 <= i; --i) {
       if(0 <= SA[i]) {
@@ -228,7 +231,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
       }
     }
   }
-
+  
   /* Construct the suffix array by using
      the sorted order of type B suffixes. */
   k = SA + BUCKET_A(c2 = T[n - 1]);
