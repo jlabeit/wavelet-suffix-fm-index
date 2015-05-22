@@ -26,6 +26,7 @@
 
 #include "config.h"
 #include "divsufsort_private.h"
+#include "parallel.h"
 #ifdef _OPENMP
 # include <omp.h>
 #endif
@@ -134,20 +135,29 @@ note:
 #else
     buf = SA + m, bufsize = n - (2 * m);
     bufsize = 0; // Dont use buffer when multithreadding
-    for(c0 = ALPHABET_SIZE - 2, j = m; 0 < j; --c0) {
-      for(c1 = ALPHABET_SIZE - 1; c0 < c1; j = i, --c1) {
+    //for(c0 = ALPHABET_SIZE - 2, j = m; 0 < j; --c0) {
+    //  for(c1 = ALPHABET_SIZE - 1; c0 < c1; j = i, --c1) {
+    //    i = BUCKET_BSTAR(c0, c1);
+    //    if(1 < (j - i)) {
+    //      sssort(T, PAb, SA + i, SA + j, buf, bufsize, 2, n, *(SA + i) == (m - 1));
+    //    }
+    //  }
+    parallel_for(saint_t c0 = 0; c0 < ALPHABET_SIZE-1; ++c0) {
+      parallel_for(saint_t c1 = c0+1; c1 < ALPHABET_SIZE; ++c1) {
         i = BUCKET_BSTAR(c0, c1);
+	if (c1 < ALPHABET_SIZE -1) {
+		j = BUCKET_BSTAR(c0, c1+1);
+	} else if (c0 < ALPHABET_SIZE - 2) {
+		j = BUCKET_BSTAR(c0+1, 0);
+	} else {
+		j = m;
+	}
         if(1 < (j - i)) {
-	  if (j - i > 1024) 
-	  // TODO use parallel sort here when j-i gets to large!
-          cilk_spawn sssort(T, PAb, SA + i, SA + j, buf, bufsize, 2, n, *(SA + i) == (m - 1));
-	  else 
           sssort(T, PAb, SA + i, SA + j, buf, bufsize, 2, n, *(SA + i) == (m - 1));
-	
         }
       }
     }
-    cilk_sync;
+	    
 #endif
 
     printf("sssort_end\n");
