@@ -103,7 +103,7 @@ void timeWT(symbol* s, long n, int rounds, char* outFile, int check) {
   sdsl::wt_huff<> wt;
   sdsl::construct(wt, input_file);
   for (int i=0; i < rounds; i++) {
-    startTime();
+    //startTime();
     sdsl::construct(wt, input_file);
     nextTimeN();
   }
