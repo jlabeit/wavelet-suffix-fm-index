@@ -41,24 +41,17 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
                saidx_t *bucket_A, saidx_t *bucket_B,
                saidx_t n) {
   saidx_t *PAb, *ISAb, *buf;
-#ifdef _OPENMP
-  saidx_t *curbuf;
-  saidx_t l;
-#endif
   saidx_t i, j, k, t, m, bufsize;
   saint_t c0, c1;
-#ifdef _OPENMP
-  saint_t d0, d1;
-  int tmp;
-#endif
 
   /* Initialize bucket arrays. */
-  for(i = 0; i < BUCKET_A_SIZE; ++i) { bucket_A[i] = 0; }
-  for(i = 0; i < BUCKET_B_SIZE; ++i) { bucket_B[i] = 0; }
+  parallel_for(saidx_t i_ = 0; i_ < BUCKET_A_SIZE; ++i_) { bucket_A[i_] = 0; }
+  parallel_for(i_ = 0; i_ < BUCKET_B_SIZE; ++i_) { bucket_B[i_] = 0; }
 
   /* Count the number of occurrences of the first one or two characters of each
      type A, B and B* suffix. Moreover, store the beginning position of all
      type B* suffixes into the array SA. */
+  // TODO parallelize this
   for(i = n - 1, m = n, c0 = T[n - 1]; 0 <= i;) {
     /* type A suffix. */
     do { ++BUCKET_A(c1 = c0); } while((0 <= --i) && ((c0 = T[i]) >= c1));
@@ -101,54 +94,16 @@ note:
     t = PAb[m - 1], c0 = T[t], c1 = T[t + 1];
     SA[--BUCKET_BSTAR(c0, c1)] = m - 1;
 
-    printf("sssort_begin\n");
     /* Sort the type B* substrings using sssort. */
-#ifdef _OPENMP
-    tmp = omp_get_max_threads();
-    buf = SA + m, bufsize = (n - (2 * m)) / tmp;
-    c0 = ALPHABET_SIZE - 2, c1 = ALPHABET_SIZE - 1, j = m;
-#pragma omp parallel default(shared) private(curbuf, k, l, d0, d1, tmp)
-    {
-      tmp = omp_get_thread_num();
-      curbuf = buf + tmp * bufsize;
-      k = 0;
-      for(;;) {
-        #pragma omp critical(sssort_lock)
-        {
-          if(0 < (l = j)) {
-            d0 = c0, d1 = c1;
-            do {
-              k = BUCKET_BSTAR(d0, d1);
-              if(--d1 <= d0) {
-                d1 = ALPHABET_SIZE - 1;
-                if(--d0 < 0) { break; }
-              }
-            } while(((l - k) <= 1) && (0 < (l = k)));
-            c0 = d0, c1 = d1, j = k;
-          }
-        }
-        if(l == 0) { break; }
-        sssort(T, PAb, SA + k, SA + l,
-               curbuf, bufsize, 2, n, *(SA + k) == (m - 1));
-      }
-    }
-#else
     buf = SA + m, bufsize = n - (2 * m);
     bufsize = 0; // Dont use buffer when multithreadding
-    //for(c0 = ALPHABET_SIZE - 2, j = m; 0 < j; --c0) {
-    //  for(c1 = ALPHABET_SIZE - 1; c0 < c1; j = i, --c1) {
-    //    i = BUCKET_BSTAR(c0, c1);
-    //    if(1 < (j - i)) {
-    //      sssort(T, PAb, SA + i, SA + j, buf, bufsize, 2, n, *(SA + i) == (m - 1));
-    //    }
-    //  }
-    parallel_for(saint_t c0 = 0; c0 < ALPHABET_SIZE-1; ++c0) {
-      parallel_for(saint_t c1 = c0+1; c1 < ALPHABET_SIZE; ++c1) {
-        i = BUCKET_BSTAR(c0, c1);
-	if (c1 < ALPHABET_SIZE -1) {
-		j = BUCKET_BSTAR(c0, c1+1);
-	} else if (c0 < ALPHABET_SIZE - 2) {
-		j = BUCKET_BSTAR(c0+1, 0);
+    parallel_for(saint_t c0_ = 0; c0_ < ALPHABET_SIZE-1; ++c0_) {
+      parallel_for(saint_t c1_ = c0_+1; c1_ < ALPHABET_SIZE; ++c1_) {
+        i = BUCKET_BSTAR(c0_, c1_);
+	if (c1_ < ALPHABET_SIZE -1) {
+		j = BUCKET_BSTAR(c0_, c1_+1);
+	} else if (c0_ < ALPHABET_SIZE - 2) {
+		j = BUCKET_BSTAR(c0_+1, c0_+2);
 	} else {
 		j = m;
 	}
@@ -157,10 +112,6 @@ note:
         }
       }
     }
-	    
-#endif
-
-    printf("sssort_end\n");
     /* Compute ranks of type B* substrings. */
     for(i = m - 1; 0 <= i; --i) {
       if(0 <= SA[i]) {
@@ -174,6 +125,7 @@ note:
       ISAb[SA[i]] = j;
     }
     /* Construct the inverse suffix array of type B* suffixes using trsort. */
+
     trsort(ISAb, SA, m, 1);
     /* Set the sorted order of tyoe B* suffixes. */
     for(i = n - 1, j = m, c0 = T[n - 1]; 0 <= i;) {
