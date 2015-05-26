@@ -165,26 +165,22 @@ uintT* suffixArrayInternal(unsigned char* ss, long n) {
 
   uintT bits = max(1,utils::log2Up(m));
   uintT nchars = 31/bits;
-  uintT *foobar = ranks;
 
   // pack characters into word in chunks of "bits"
   startTime();
   if(n+1 > nchars) {
     parallel_for (uintT i=0; i < n-nchars+1; i++) {
       C[i].first = grabChars(s+i,bits,nchars); 
-      //foobar[i] = C[i].first;
       C[i].second = i;
     }
 
     for (uintT i=n-nchars+1; i < n; i++) {
       C[i].first = grabCharsEnd(s+i,bits,nchars,n-i); 
-      //foobar[i] = C[i].first;
       C[i].second = i;
     }
   } else {
     for (uintT i=0; i < n; i++) {
       C[i].first = grabCharsEnd(s+i,bits,nchars,n-i); 
-      //foobar[i] = C[i].first;
       C[i].second = i;
     }
   }
@@ -226,7 +222,6 @@ uintT* suffixArrayInternal(unsigned char* ss, long n) {
   }
   parallel_for (uintT i=0; i < n; i++) ranks[i] = C[i].second;
   free(C); free(segOuts); free(segments); free(offsets); 
-  //for (int i=0; i < n; i++) cout << "SA[" << i << "] = " << ranks[i] << endl;
   return ranks;
 }
 

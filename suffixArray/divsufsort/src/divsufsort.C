@@ -51,7 +51,6 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
   /* Count the number of occurrences of the first one or two characters of each
      type A, B and B* suffix. Moreover, store the beginning position of all
      type B* suffixes into the array SA. */
-  // TODO parallelize this
   for(i = n - 1, m = n, c0 = T[n - 1]; 0 <= i;) {
     /* type A suffix. */
     do { ++BUCKET_A(c1 = c0); } while((0 <= --i) && ((c0 = T[i]) >= c1));
@@ -112,22 +111,28 @@ note:
         }
       }
     }
+    
+     
     /* Compute ranks of type B* substrings. */
+    
     for(i = m - 1; 0 <= i; --i) {
       if(0 <= SA[i]) {
         j = i;
         do { ISAb[SA[i]] = i; } while((0 <= --i) && (0 <= SA[i]));
-        SA[i + 1] = i - j;
+        //SA[i + 1] = i - j; // skip values for already sorted sequence (negative!)
         if(i <= 0) { break; }
       }
       j = i;
       do { ISAb[SA[i] = ~SA[i]] = j; } while(SA[--i] < 0);
-      ISAb[SA[i]] = j;
+      ISAb[SA[i]] = j; // End of the bucket with equal suffixes
     }
-    /* Construct the inverse suffix array of type B* suffixes using trsort. */
+    
+    // Construct the inverse suffix array of type B* suffixes using trsort. 
+    //trsort(ISAb, SA, m, 1);
+    
+    paralleltrsort(ISAb, SA, m);
 
-    trsort(ISAb, SA, m, 1);
-    /* Set the sorted order of tyoe B* suffixes. */
+    /* Set the sorted order of type B* suffixes. */
     for(i = n - 1, j = m, c0 = T[n - 1]; 0 <= i;) {
       for(--i, c1 = c0; (0 <= i) && ((c0 = T[i]) >= c1); --i, c1 = c0) { }
       if(0 <= i) {
@@ -136,6 +141,7 @@ note:
         SA[ISAb[--j]] = ((t == 0) || (1 < (t - i))) ? t : ~t;
       }
     }
+    /* Set the sorted order of type B* suffixes. */
 
     /* Calculate the index of start/end point of each bucket. */
     BUCKET_B(ALPHABET_SIZE - 1, ALPHABET_SIZE - 1) = n; /* end point */
