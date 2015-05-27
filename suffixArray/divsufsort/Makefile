@@ -4,8 +4,8 @@ include parallelDefs
 SORT =  blockRadixSort.h transpose.h
 OTHER = merge.h rangeMin.h
 GLOBAL_REQUIRE = parallel.h sequence.h utils.h  $(SORT) $(OTHER)
-LOCAL_REQUIRE = src/sssort.C src/trsort.C src/paralleltrsort.C src/utils.C src/divsufsort.C
-OBJS = pks.o src/sssort.o src/trsort.o src/paralleltrsort.o src/utils.o src/divsufsort.o
+LOCAL_REQUIRE =  divsufsort.C sssort.C trsort.C utils.C paralleltrsort.C 
+OBJS =  paralleltrsort.o divsufsort.o sssort.o trsort.o utils.o 
 
 
 include ../common/timeRequiredFiles

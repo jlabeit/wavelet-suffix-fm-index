@@ -23,7 +23,7 @@ PCFLAGS = -O3 -DCILKP $(INTT)
 PLFLAGS = 
 
 else
-PCC = g++ -g
+PCC = g++ 
 PLFLAGS = $(LFLAGS)
 PCFLAGS = -O2 $(INTT)
 endif

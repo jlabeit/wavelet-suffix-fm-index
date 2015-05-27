@@ -29,7 +29,7 @@
 #include "parseCommandLine.h"
 #include "SA.h"
 #include "sequence.h"
-#include "src/divsufsort.h"
+#include "divsufsort.h"
 
 using namespace std;
 using namespace benchIO;
