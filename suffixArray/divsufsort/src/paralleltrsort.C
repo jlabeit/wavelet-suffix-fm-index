@@ -130,11 +130,13 @@ void brokenCilk(uintT nSegs, seg *segments, saidx_t *SA, saidx_t offset, saidx_t
   parallel_for(saidx_t i = 0; i < n; i++) ISA[i] = ISA_buf[i];
 }
 
-void paralleltrsort(saidx_t* ISA, saidx_t* SA, saidx_t n) {
+void paralleltrsort(saidx_t* ISA, saidx_t* SA, saidx_t n, saidx_t nSegs) {
+	if (nSegs == 0)
+		return;
 	saidx_t offset = 1;
-	seg *segOuts = newA(seg,n);
-  	seg *segments= newA(seg,n);
-	saidx_t *offsets = newA(saidx_t,n);
+	seg *segOuts = newA(seg,nSegs);
+  	seg *segments= newA(seg,nSegs);
+	saidx_t *offsets = newA(saidx_t,nSegs);
 	saidx_t *ISA_buf = newA(saidx_t,n);
 	splitSegment(segOuts, 0, n, ISA, ISA_buf, SA, 1, cmp_offset(SA, ISA, n, 0));
 	parallel_for(saidx_t i = 0; i < n; i++) ISA[i] = ISA_buf[i];
@@ -142,7 +144,7 @@ void paralleltrsort(saidx_t* ISA, saidx_t* SA, saidx_t n) {
 	while (true) {
 		utils::myAssert(offset <= n,  "Suffix Array:  Too many rounds");
 		// Calculate segments 
-		saidx_t nSegs = sequence::filter(segOuts,segments,nKeys,isSeg());
+		nSegs = sequence::filter(segOuts,segments,nKeys,isSeg());
 		if (nSegs == 0) break;
 
 		parallel_for (uintT i=0; i < nSegs; i++)
