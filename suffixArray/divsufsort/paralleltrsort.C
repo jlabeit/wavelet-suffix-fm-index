@@ -26,13 +26,13 @@
 
 #include <iostream>
 #include <algorithm>
-#include "../gettime.h"
-#include "../sequence.h"
+#include "gettime.h"
+#include "sequence.h"
 #include "blockRadixSort.h"
 #include "quickSort.h"
-//#include "SA.h"
 
 using namespace std;
+
 
 //#define printInfo
 
