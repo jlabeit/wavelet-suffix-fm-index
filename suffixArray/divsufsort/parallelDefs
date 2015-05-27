@@ -4,17 +4,17 @@ endif
 
 ifdef OPENMP
 PCC = g++
-PCFLAGS = -fopenmp -mcx16 -O3 -DOPENMP -DMCX16 $(INTT)
+PCFLAGS = -std=c++11 -fopenmp -mcx16 -O3 -DOPENMP -DMCX16 $(INTT)
 PLFLAGS = -fopenmp
 
 else ifdef GCILK
 PCC = g++
-PCFLAGS = -lcilkrts -fcilkplus -mcx16 -O2 -DCILKP -DMCX16 $(INTT)
+PCFLAGS = -std=c++11 -lcilkrts -fcilkplus -mcx16 -O2 -DCILKP -DMCX16 $(INTT)
 PLFLAGS = -lcilkrts -fcilkplus
 
 else ifdef CILK
 PCC = cilk++
-PCFLAGS = -O2 -DCILK -Wno-cilk-for $(INTT)
+PCFLAGS = -std=c++11 -O2 -DCILK -Wno-cilk-for $(INTT)
 PLFLAGS = 
 
 else ifdef MKLROOT
@@ -25,5 +25,5 @@ PLFLAGS =
 else
 PCC = g++ 
 PLFLAGS = $(LFLAGS)
-PCFLAGS = -O2 $(INTT)
+PCFLAGS = -std=c++11 -O2 $(INTT)
 endif
