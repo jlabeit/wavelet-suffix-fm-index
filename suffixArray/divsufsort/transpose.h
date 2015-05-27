@@ -42,13 +42,13 @@ struct transpose {
     } else if (cCount > rCount) {
       intT l1 = cCount/2;
       intT l2 = cCount - cCount/2;
-      cilk_spawn transR(rStart,rCount,rLength,cStart,l1,cLength);
+      cilk_spawn this->transR(rStart,rCount,rLength,cStart,l1,cLength);
       transR(rStart,rCount,rLength,cStart + l1,l2,cLength);
       cilk_sync;
     } else {
       intT l1 = rCount/2;
       intT l2 = rCount - rCount/2;
-      cilk_spawn transR(rStart,l1,rLength,cStart,cCount,cLength);
+      cilk_spawn this->transR(rStart,l1,rLength,cStart,cCount,cLength);
       transR(rStart + l1,l2,rLength,cStart,cCount,cLength);
       cilk_sync;
     }	
@@ -82,13 +82,13 @@ struct blockTrans {
     } else if (cCount > rCount) {
       intT l1 = cCount/2;
       intT l2 = cCount - cCount/2;
-      cilk_spawn transR(rStart,rCount,rLength,cStart,l1,cLength);
+      cilk_spawn this->transR(rStart,rCount,rLength,cStart,l1,cLength);
       transR(rStart,rCount,rLength,cStart + l1,l2,cLength);
       cilk_sync;
     } else {
       intT l1 = rCount/2;
       intT l2 = rCount - rCount/2;
-      cilk_spawn transR(rStart,l1,rLength,cStart,cCount,cLength);
+      cilk_spawn this->transR(rStart,l1,rLength,cStart,cCount,cLength);
       transR(rStart + l1,l2,rLength,cStart,cCount,cLength);
       cilk_sync;
     }	
