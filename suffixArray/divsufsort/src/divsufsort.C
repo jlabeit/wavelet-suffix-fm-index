@@ -112,9 +112,8 @@ note:
       }
     }
     
-     
-    /* Compute ranks of type B* substrings. */
     
+    /* Compute ranks of type B* substrings. */
     for(i = m - 1; 0 <= i; --i) {
       if(0 <= SA[i]) {
         j = i;
@@ -132,7 +131,7 @@ note:
     
     paralleltrsort(ISAb, SA, m);
 
-    /* Set the sorted order of type B* suffixes. */
+    /* Set the sorted order of tyoe B* suffixes. */
     for(i = n - 1, j = m, c0 = T[n - 1]; 0 <= i;) {
       for(--i, c1 = c0; (0 <= i) && ((c0 = T[i]) >= c1); --i, c1 = c0) { }
       if(0 <= i) {
@@ -141,7 +140,6 @@ note:
         SA[ISAb[--j]] = ((t == 0) || (1 < (t - i))) ? t : ~t;
       }
     }
-    /* Set the sorted order of type B* suffixes. */
 
     /* Calculate the index of start/end point of each bucket. */
     BUCKET_B(ALPHABET_SIZE - 1, ALPHABET_SIZE - 1) = n; /* end point */
