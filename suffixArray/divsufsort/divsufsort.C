@@ -140,7 +140,6 @@ note:
     }
     t = PAb[m - 1], c0 = T[t], c1 = T[t + 1];
     SA[--BUCKET_BSTAR(c0, c1)] = m - 1;
-
     /* Sort the type B* substrings using sssort. */
     buf = SA + m, bufsize = n - (2 * m);
     bufsize = 0; // Dont use buffer when multithreadding
@@ -155,7 +154,7 @@ note:
 		j = m;
 	}
         if(1 < (j - i)) {
-          sssort(T, PAb, SA + i, SA + j, buf, 0, 2, n, *(SA + i) == (m - 1));
+          sssort(T, PAb, SA + i, SA + j, buf, bufsize, 2, n, *(SA + i) == (m - 1));
         }
       }
     }
@@ -172,7 +171,6 @@ note:
       do { ISAb[SA[i] = ~SA[i]] = j; } while(SA[--i] < 0);
       ISAb[SA[i]] = j; // End of the bucket with equal suffixes
     }
-    
     // Construct the inverse suffix array of type B* suffixes using trsort. 
     trsort(ISAb, SA, m, 1);
     //buf = SA + (2*m);
@@ -207,6 +205,7 @@ note:
     }
   }
 
+    printf("done\n");
   return m;
 }
 
