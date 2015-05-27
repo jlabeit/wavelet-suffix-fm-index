@@ -24,10 +24,10 @@ using namespace std;
 #define POINTERS 1
 //#define INT 1
 
-//#include "wt_int_par.hpp"
+#include "wt_int_par.hpp"
 #include <sdsl/construct.hpp>
 
-#include <sdsl/wt_int.hpp>
+//#include <sdsl/wt_int.hpp>
 //typedef ulong intOffset;
 typedef uintT intOffset;
 
