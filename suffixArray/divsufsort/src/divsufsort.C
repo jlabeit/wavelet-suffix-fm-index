@@ -112,7 +112,6 @@ note:
       }
     }
     
-    saidx_t nsegs = 0; 
     /* Compute ranks of type B* substrings. */
     for(i = m - 1; 0 <= i; --i) {
       if(0 <= SA[i]) {
@@ -124,13 +123,11 @@ note:
       j = i;
       do { ISAb[SA[i] = ~SA[i]] = j; } while(SA[--i] < 0);
       ISAb[SA[i]] = j; // End of the bucket with equal suffixes
-      nsegs++;
     }
     
     // Construct the inverse suffix array of type B* suffixes using trsort. 
     //trsort(ISAb, SA, m, 1);
-    
-    paralleltrsort(ISAb, SA, m, nsegs);
+    paralleltrsort(ISAb, SA, m);
 
     /* Set the sorted order of tyoe B* suffixes. */
     for(i = n - 1, j = m, c0 = T[n - 1]; 0 <= i;) {
