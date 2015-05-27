@@ -130,12 +130,12 @@ void brokenCilk(uintT nSegs, seg *segments, saidx_t *SA, saidx_t offset, saidx_t
   parallel_for(saidx_t i = 0; i < n; i++) ISA[i] = ISA_buf[i];
 }
 
-void paralleltrsort(saidx_t* ISA, saidx_t* SA, saidx_t n) {
+void paralleltrsort(saidx_t* ISA, saidx_t* SA, saidx_t n, saidx_t* buf, saidx_t buffer_len) {
 	saidx_t offset = 1;
 	seg *segOuts = newA(seg,n); 
-  	seg *segments= newA(seg,n);
-	saidx_t *offsets = newA(saidx_t,n);
-	saidx_t *ISA_buf = newA(saidx_t,n);
+  	seg *segments= newA(seg,n/2);
+	saidx_t *offsets = newA(saidx_t,n/2);
+	saidx_t *ISA_buf = (buffer_len >= n) ? buf : newA(saidx_t,n);
 	splitSegment(segOuts, 0, n, ISA, ISA_buf, SA, 1, cmp_offset(SA, ISA, n, 0));
 	parallel_for(saidx_t i = 0; i < n; i++) ISA[i] = ISA_buf[i];
 	saidx_t nKeys = n;
@@ -162,5 +162,5 @@ void paralleltrsort(saidx_t* ISA, saidx_t* SA, saidx_t n) {
 	free(segOuts);
 	free(segments);
 	free(offsets);
-	free(ISA_buf);
+	if (buffer_len < n) free(ISA_buf);
 }

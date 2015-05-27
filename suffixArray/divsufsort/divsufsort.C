@@ -24,9 +24,16 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#include <iostream>
+#include <thread>
+#include <atomic>
 #include "config.h"
 #include "divsufsort_private.h"
 #include "parallel.h"
+#include "sequence.h"
+#include <cilk/cilk.h>
+#include <cilk/cilk_api.h>
+#include <cilk/reducer_opadd.h>
 #ifdef _OPENMP
 # include <omp.h>
 #endif
@@ -51,20 +58,61 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
   /* Count the number of occurrences of the first one or two characters of each
      type A, B and B* suffix. Moreover, store the beginning position of all
      type B* suffixes into the array SA. */
-  for(i = n - 1, m = n, c0 = T[n - 1]; 0 <= i;) {
-    /* type A suffix. */
-    do { ++BUCKET_A(c1 = c0); } while((0 <= --i) && ((c0 = T[i]) >= c1));
-    if(0 <= i) {
-      /* type B* suffix. */
-      ++BUCKET_BSTAR(c0, c1);
-      SA[--m] = i;
-      /* type B suffix. */
-      for(--i, c1 = c0; (0 <= i) && ((c0 = T[i]) <= c1); --i, c1 = c0) {
-        ++BUCKET_B(c0, c1);
-      }
-    }
+  if(false) {
+  bool* is_bstar = new bool[n];
+  { // Count A,B,BSTAR types
+	cilk::reducer_opadd<saidx_t> reducer_m;
+	std::atomic<saidx_t>* reducer_bucket_A = new std::atomic<saidx_t>[BUCKET_A_SIZE];
+	std::atomic<saidx_t>* reducer_bucket_B = new std::atomic<saidx_t>[BUCKET_B_SIZE];
+	BUCKET_A(T[n-1])++;
+	is_bstar[n-1] = false;
+	parallel_for (saidx_t i = 0; i < n-1; i++) {
+		saint_t c0 = T[i];	
+		saint_t c1 = T[i+1];
+		if (c0 >= c1) { // A Bucket
+			RED_BUCKET_A(c0)++;
+			is_bstar[i] = false;
+		} else { // B Bucket
+			if (i < n-2 && c1 >= T[i+2]) { // BSTAR
+				RED_BUCKET_BSTAR(c0,c1)++;
+				reducer_m++;
+				is_bstar[i] = true;
+			} else { // B
+				RED_BUCKET_B(c0,c1)++;
+				is_bstar[i] = false;
+			}
+		}
+	}
+	m = reducer_m.get_value();
+	parallel_for(saidx_t i_ = 0; i_ < BUCKET_A_SIZE; ++i_) { bucket_A[i_] = reducer_bucket_A[i_].load(); }
+  	parallel_for(saidx_t i_ = 0; i_ < BUCKET_B_SIZE; ++i_) { bucket_B[i_] = reducer_bucket_B[i_].load(); }
+	delete []reducer_bucket_A;
+	delete []reducer_bucket_B;
   }
-  m = n - m;
+  // Write position of BSTAR suffixes to the end of SA array
+  // Pack all elements i from [0,n-1] to SA+n-m such that i is a BSTAR suffix	
+  sequence::packIndex(SA+n-m, is_bstar, n);
+  delete [] is_bstar;
+  } else {
+	  for(i = n - 1, m = n, c0 = T[n - 1]; 0 <= i;) {
+		  /* type A suffix. */
+		  do { ++BUCKET_A(c1 = c0); } while((0 <= --i) && ((c0 = T[i]) >= c1));
+		  if(0 <= i) {
+			  /* type B* suffix. */
+			  ++BUCKET_BSTAR(c0, c1);
+			  SA[--m] = i;
+			  /* type B suffix. */
+			  for(--i, c1 = c0; (0 <= i) && ((c0 = T[i]) <= c1); --i, c1 = c0) {
+				  ++BUCKET_B(c0, c1);
+			  }
+		  }
+	  }
+	  m = n - m;
+  }
+  //for (int i = 0; i < m; i++) {
+	//printf("%d ", *(SA + n - m + i));
+  //}printf("\n");
+
 /*
 note:
   A type B* suffix is lexicographically smaller than a type B suffix that
@@ -107,7 +155,7 @@ note:
 		j = m;
 	}
         if(1 < (j - i)) {
-          sssort(T, PAb, SA + i, SA + j, buf, bufsize, 2, n, *(SA + i) == (m - 1));
+          sssort(T, PAb, SA + i, SA + j, buf, 0, 2, n, *(SA + i) == (m - 1));
         }
       }
     }
@@ -117,7 +165,7 @@ note:
       if(0 <= SA[i]) {
         j = i;
         do { ISAb[SA[i]] = i; } while((0 <= --i) && (0 <= SA[i]));
-        //SA[i + 1] = i - j; // skip values for already sorted sequence (negative!)
+        SA[i + 1] = i - j; // skip values for already sorted sequence (negative!)
         if(i <= 0) { break; }
       }
       j = i;
@@ -126,8 +174,10 @@ note:
     }
     
     // Construct the inverse suffix array of type B* suffixes using trsort. 
-    //trsort(ISAb, SA, m, 1);
-    paralleltrsort(ISAb, SA, m);
+    trsort(ISAb, SA, m, 1);
+    //buf = SA + (2*m);
+    //bufsize = n - (2*m);
+    //paralleltrsort(ISAb, SA, m, buf, bufsize);
 
     /* Set the sorted order of tyoe B* suffixes. */
     for(i = n - 1, j = m, c0 = T[n - 1]; 0 <= i;) {

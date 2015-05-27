@@ -179,12 +179,17 @@ extern "C" {
   } while(0)
 /* for divsufsort.c */
 #define BUCKET_A(_c0) bucket_A[(_c0)]
+#define RED_BUCKET_A(_c0) reducer_bucket_A[(_c0)]
 #if ALPHABET_SIZE == 256
 #define BUCKET_B(_c0, _c1) (bucket_B[((_c1) << 8) | (_c0)])
 #define BUCKET_BSTAR(_c0, _c1) (bucket_B[((_c0) << 8) | (_c1)])
+#define RED_BUCKET_B(_c0, _c1) (reducer_bucket_B[((_c1) << 8) | (_c0)])
+#define RED_BUCKET_BSTAR(_c0, _c1) (reducer_bucket_B[((_c0) << 8) | (_c1)])
 #else
 #define BUCKET_B(_c0, _c1) (bucket_B[(_c1) * ALPHABET_SIZE + (_c0)])
-#define BUCKET_BSTAR(_c0, _c1) (bucket_B[(_c0) * ALPHABET_SIZE + (_c1)])
+#define BUCKET_B(_c0, _c1) (bucket_B[(_c1) * ALPHABET_SIZE + (_c0)])
+#define RED_BUCKET_BSTAR(_c0, _c1) (reducer_bucket_B[(_c0) * ALPHABET_SIZE + (_c1)])
+#define RED_BUCKET_BSTAR(_c0, _c1) (reducer_bucket_B[(_c0) * ALPHABET_SIZE + (_c1)])
 #endif
 
 
@@ -201,7 +206,7 @@ trsort(saidx_t *ISA, saidx_t *SA, saidx_t n, saidx_t depth);
 
 /* paralleltrsort.c */
 void
-paralleltrsort(saidx_t *ISA, saidx_t *SA, saidx_t n);
+paralleltrsort(saidx_t *ISA, saidx_t *SA, saidx_t n, saidx_t* buf, saidx_t buffer_len);
 
 
 #ifdef __cplusplus
