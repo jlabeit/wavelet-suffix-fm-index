@@ -24,9 +24,10 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#include "parallel.h"
+#include <algorithm>
 #include "config.h"
 #include "divsufsort_private.h"
-
 
 /*- Private Functions -*/
 
@@ -572,7 +573,7 @@ trsort(saidx_t *ISA, saidx_t *SA, saidx_t n, saidx_t depth) {
         last = SA + ISA[t] + 1;
         if(1 < (last - first)) {
           budget.count = 0;
-          tr_introsort(ISA, ISAd, SA, first, last, &budget); // TODO use cilk_spawn here? 
+          tr_introsort(ISA, ISAd, SA, first, last, &budget);
           if(budget.count != 0) { unsorted += budget.count; }
           else { skip = first - last; }
         } else if((last - first) == 1) {

@@ -8,7 +8,7 @@ PCFLAGS = -fopenmp -mcx16 -O3 -DOPENMP -DMCX16 $(INTT)
 PLFLAGS = -fopenmp
 
 else ifdef GCILK
-PCC = g++
+PCC = g++ -g
 PCFLAGS = -lcilkrts -fcilkplus -mcx16 -O2 -DCILKP -DMCX16 $(INTT)
 PLFLAGS = -lcilkrts -fcilkplus
 

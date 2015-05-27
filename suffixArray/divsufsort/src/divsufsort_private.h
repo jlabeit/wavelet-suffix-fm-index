@@ -199,6 +199,10 @@ sssort(const sauchar_t *Td, const saidx_t *PA,
 void
 trsort(saidx_t *ISA, saidx_t *SA, saidx_t n, saidx_t depth);
 
+/* paralleltrsort.c */
+void
+paralleltrsort(saidx_t *ISA, saidx_t *SA, saidx_t n);
+
 
 #ifdef __cplusplus
 } /* extern "C" */
