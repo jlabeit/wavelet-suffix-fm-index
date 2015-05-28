@@ -55,21 +55,18 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
   /* Count the number of occurrences of the first one or two characters of each
      type A, B and B* suffix. Moreover, store the beginning position of all
      type B* suffixes into the array SA. */
+  saidx_t  block_size = 1024*1024*16;
+  saidx_t num_blocks = n / block_size + 1;	
+  saidx_t* bstar_count = new saidx_t[num_blocks];
+  memset(bstar_count, 0, sizeof(saidx_t)*num_blocks);
   { // Count A,B,BSTAR types
-	// TODO dont use atomic for m
-
-	saidx_t  block_size = 1024*1024*16;
-	saidx_t num_blocks = n / block_size + 1;	
-
-	saidx_t* tempM = new saidx_t[num_blocks];
-	memset(tempM, 0, sizeof(saidx_t)*num_blocks);
 	saidx_t* tempBA = new saidx_t[num_blocks*BUCKET_A_SIZE];
 	memset(tempBA, 0, sizeof(saidx_t)*num_blocks*BUCKET_A_SIZE);
 	saidx_t* tempBB = new saidx_t[num_blocks*BUCKET_B_SIZE];
 	memset(tempBB, 0, sizeof(saidx_t)*num_blocks*BUCKET_B_SIZE);
 	parallel_for (saidx_t b = 0; b < num_blocks; b++) {
 		// Init values with 0
-		saidx_t *reducer_m = (tempM + b);
+		saidx_t *reducer_m = (bstar_count + b);
 		saidx_t* reducer_bucket_A = tempBA + b * BUCKET_A_SIZE;
 		saidx_t* reducer_bucket_B = tempBB + b * BUCKET_B_SIZE;
 		
@@ -102,8 +99,8 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 	}
 	m = 0; // inclusive prefix sum
 	for (int b = 0; b < num_blocks; b++) {
-		m += tempM[b];
-		tempM[b] = m;
+		m += bstar_count[b];
+		bstar_count[b] = m;
 	} 
 	saidx_t* SAb = SA + n - m;
 	parallel_for(saidx_t i_ = 0; i_ < BUCKET_A_SIZE; ++i_) { bucket_A[i_] = 0; for (int b = 0; b < num_blocks; b++) bucket_A[i_] += tempBA[i_ + b*BUCKET_A_SIZE]; } 
@@ -116,7 +113,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 		saidx_t s = std::min(n, block_size * (b+1)) - 1;
 		saidx_t e = block_size * b;
 		sauchar_t c0,c1;
-		saidx_t m_ = tempM[b];
+		saidx_t m_ = bstar_count[b];
 		// Go until definitly finding A type suffix 
 		if (s < n-1) // If not the last block
 			while (e < s && T[s] <= T[s+1]) s--; 
@@ -138,7 +135,6 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 			}	
 		}
 	}
-  	delete [] tempM;
   }
 /*
 note:
@@ -208,15 +204,39 @@ note:
     bufsize = n - (2*m);
     paralleltrsort(ISAb, SA, m, buf, bufsize);
 
-    /* Set the sorted order of tyoe B* suffixes. */
+    /* Set the sorted order of type B* suffixes. */
+	/*    
     for(i = n - 1, j = m, c0 = T[n - 1]; 0 <= i;) {
-      for(--i, c1 = c0; (0 <= i) && ((c0 = T[i]) >= c1); --i, c1 = c0) { }
+      for(--i, c1 = c0; (0 <= i) && ((c0 = T[i]) >= c1); --i, c1 = c0) { } // A suffix
       if(0 <= i) {
-        t = i;
-        for(--i, c1 = c0; (0 <= i) && ((c0 = T[i]) <= c1); --i, c1 = c0) { }
+        t = i; // B* suffix
+        for(--i, c1 = c0; (0 <= i) && ((c0 = T[i]) <= c1); --i, c1 = c0) { } // B suffix
         SA[ISAb[--j]] = ((t == 0) || (1 < (t - i))) ? t : ~t;
       }
+    }*/
+    parallel_for (saidx_t b = 0; b < num_blocks; b++) {
+		saidx_t s = std::min(n, block_size * (b+1)) - 1;
+		saidx_t e = block_size * b;
+		sauchar_t c0,c1;
+		saidx_t t,j,i;
+		// Go until definitly finding A type suffix 
+		if (s < n-1) // If not the last block
+			while (e < s && T[s] <= T[s+1]) s--; 
+		for(i = s, j = bstar_count[b], c0 = T[s]; e <= i;) {
+			for(--i, c1 = c0; (0 <= i) && ((c0 = T[i]) >= c1); --i, c1 = c0) { 
+				if (i < e && c0 > c1) { // If next block can be sure it's a A-type suffix
+					i = -1;
+					break;
+				}
+			} // A suffix
+			if(0 <= i) {
+				t = i; // B* suffix
+				for(--i, c1 = c0; (0 <= i) && ((c0 = T[i]) <= c1); --i, c1 = c0) { } // B suffix
+				SA[ISAb[--j]] = ((t == 0) || (1 < (t - i))) ? t : ~t;
+			}
+		}
     }
+    delete [] bstar_count;
 
     /* Calculate the index of start/end point of each bucket. */
     BUCKET_B(ALPHABET_SIZE - 1, ALPHABET_SIZE - 1) = n; /* end point */
