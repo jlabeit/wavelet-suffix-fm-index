@@ -24,20 +24,17 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#include <iostream>
-#include <thread>
-#include <atomic>
 #include "config.h"
 #include "divsufsort_private.h"
 #include "parallel.h"
 #include "sequence.h"
 #include <cilk/cilk.h>
 #include <cilk/cilk_api.h>
-#include <cilk/reducer_opadd.h>
+//#include <cilk/reducer_opadd.h>
 #ifdef _OPENMP
 # include <omp.h>
 #endif
-
+#include <atomic>
 
 /*- Private Functions -*/
 
@@ -58,61 +55,69 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
   /* Count the number of occurrences of the first one or two characters of each
      type A, B and B* suffix. Moreover, store the beginning position of all
      type B* suffixes into the array SA. */
-  if(false) {
-  bool* is_bstar = new bool[n];
   { // Count A,B,BSTAR types
-	cilk::reducer_opadd<saidx_t> reducer_m;
-	std::atomic<saidx_t>* reducer_bucket_A = new std::atomic<saidx_t>[BUCKET_A_SIZE];
-	std::atomic<saidx_t>* reducer_bucket_B = new std::atomic<saidx_t>[BUCKET_B_SIZE];
-	BUCKET_A(T[n-1])++;
-	is_bstar[n-1] = false;
-	parallel_for (saidx_t i = 0; i < n-1; i++) {
-		saint_t c0 = T[i];	
-		saint_t c1 = T[i+1];
-		if (c0 >= c1) { // A Bucket
-			RED_BUCKET_A(c0)++;
-			is_bstar[i] = false;
-		} else { // B Bucket
-			if (i < n-2 && c1 >= T[i+2]) { // BSTAR
-				RED_BUCKET_BSTAR(c0,c1)++;
-				reducer_m++;
+	// TODO dont use atomic for m
+	bool* is_bstar = new bool[n];
+	parallel_for(saidx_t i = 0; i < n; i++) is_bstar[i] = false;
+
+	saidx_t  block_size = 1024*1024*16;
+	saidx_t num_blocks = n / block_size + 1;	
+
+	saidx_t* tempM = new saidx_t[num_blocks];
+	memset(tempM, 0, sizeof(saidx_t)*num_blocks);
+	saidx_t* tempBA = new saidx_t[num_blocks*BUCKET_A_SIZE];
+	memset(tempBA, 0, sizeof(saidx_t)*num_blocks*BUCKET_A_SIZE);
+	saidx_t* tempBB = new saidx_t[num_blocks*BUCKET_B_SIZE];
+	memset(tempBB, 0, sizeof(saidx_t)*num_blocks*BUCKET_B_SIZE);
+	parallel_for (saidx_t b = 0; b < num_blocks; b++) {
+		// Init values with 0
+		saidx_t *reducer_m = (tempM + b);
+		saidx_t* reducer_bucket_A = tempBA + b * BUCKET_A_SIZE;
+		saidx_t* reducer_bucket_B = tempBB + b * BUCKET_B_SIZE;
+		
+		saidx_t s = std::min(n, block_size * (b+1)) - 1;
+		saidx_t e = block_size * b;
+		sauchar_t c0,c1;
+		// Go until definitly finding A type suffix 
+		if (s < n-1) // If not the last block
+			while (e < s && T[s] <= T[s+1]) s--; 
+		// it is ensured that s is set to a position of a A-type suffix
+		// loop goes past e until finding A-type suffix after a B-type suffix
+		for(saidx_t i = s, c0 = T[s]; e <= i; ) {
+			do { 
+				if (i < e && c0 > c1) { // If next block can be sure it's a A-type suffix
+					i = -1;
+					break;
+				}
+				++RED_BUCKET_A(c1 = c0); 
+			} while((0 <= --i) && ((c0 = T[i]) >= c1));
+			if(0 <= i) {
+				/* type B* suffix. */
+				++RED_BUCKET_BSTAR(c0, c1);
+				(*reducer_m)++;
 				is_bstar[i] = true;
-			} else { // B
-				RED_BUCKET_B(c0,c1)++;
-				is_bstar[i] = false;
-			}
+				/* type B suffix. */
+				for(--i, c1 = c0; (0 <= i) && ((c0 = T[i]) <= c1); --i, c1 = c0) {
+					++RED_BUCKET_B(c0, c1);
+				}
+			}	
 		}
 	}
-	m = reducer_m.get_value();
-	parallel_for(saidx_t i_ = 0; i_ < BUCKET_A_SIZE; ++i_) { bucket_A[i_] = reducer_bucket_A[i_].load(); }
-  	parallel_for(saidx_t i_ = 0; i_ < BUCKET_B_SIZE; ++i_) { bucket_B[i_] = reducer_bucket_B[i_].load(); }
-	delete []reducer_bucket_A;
-	delete []reducer_bucket_B;
+	m = 0;
+	for (int b = 0; b < num_blocks; b++) {
+		m += tempM[b];
+	}
+	parallel_for(saidx_t i_ = 0; i_ < BUCKET_A_SIZE; ++i_) { bucket_A[i_] = 0; for (int b = 0; b < num_blocks; b++) bucket_A[i_] += tempBA[i_ + b*BUCKET_A_SIZE]; } 
+	parallel_for(saidx_t i_ = 0; i_ < BUCKET_B_SIZE; ++i_) { bucket_B[i_] = 0; for (int b = 0; b < num_blocks; b++) bucket_B[i_] += tempBB[i_ + b*BUCKET_B_SIZE]; } 
+  	delete [] tempM;
+	delete [] tempBA;
+	delete [] tempBB;
+	
+	// Write position of BSTAR suffixes to the end of SA array
+	// Pack all elements i from [0,n-1] to SA+n-m such that i is a BSTAR suffix	
+ 	sequence::packIndex(SA+n-m, is_bstar, n);
+	delete [] is_bstar;
   }
-  // Write position of BSTAR suffixes to the end of SA array
-  // Pack all elements i from [0,n-1] to SA+n-m such that i is a BSTAR suffix	
-  sequence::packIndex(SA+n-m, is_bstar, n);
-  delete [] is_bstar;
-  } else {
-	  for(i = n - 1, m = n, c0 = T[n - 1]; 0 <= i;) {
-		  /* type A suffix. */
-		  do { ++BUCKET_A(c1 = c0); } while((0 <= --i) && ((c0 = T[i]) >= c1));
-		  if(0 <= i) {
-			  /* type B* suffix. */
-			  ++BUCKET_BSTAR(c0, c1);
-			  SA[--m] = i;
-			  /* type B suffix. */
-			  for(--i, c1 = c0; (0 <= i) && ((c0 = T[i]) <= c1); --i, c1 = c0) {
-				  ++BUCKET_B(c0, c1);
-			  }
-		  }
-	  }
-	  m = n - m;
-  }
-  //for (int i = 0; i < m; i++) {
-	//printf("%d ", *(SA + n - m + i));
-  //}printf("\n");
-
 /*
 note:
   A type B* suffix is lexicographically smaller than a type B suffix that
@@ -140,6 +145,7 @@ note:
     }
     t = PAb[m - 1], c0 = T[t], c1 = T[t + 1];
     SA[--BUCKET_BSTAR(c0, c1)] = m - 1;
+
     /* Sort the type B* substrings using sssort. */
     buf = SA + m, bufsize = n - (2 * m);
     bufsize = 0; // Dont use buffer when multithreadding
@@ -158,6 +164,9 @@ note:
         }
       }
     }
+    //for (int i = 0; i < n; i++) {
+	//printf("%d ", SA[i]);
+    //}printf("\n");
     
     /* Compute ranks of type B* substrings. */
     for(i = m - 1; 0 <= i; --i) {
