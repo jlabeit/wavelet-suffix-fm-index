@@ -25,17 +25,13 @@
  */
 
 #include "config.h"
+#include "gettime.h"
 #include "divsufsort_private.h"
 #include "parallel.h"
 #include "sequence.h"
-#include <cilk/cilk.h>
-#include <cilk/cilk_api.h>
-//#include <cilk/reducer_opadd.h>
 #ifdef _OPENMP
 # include <omp.h>
 #endif
-#include <atomic>
-
 /*- Private Functions -*/
 
 /* Sorts suffixes of type B*. */
@@ -247,9 +243,8 @@ note:
         BUCKET_B(c0, c1) = i; /* end point */
 
         /* Move all type B* suffixes to the correct position. */
-        for(i = t, j = BUCKET_BSTAR(c0, c1);
-            j <= k;
-            --i, --k) { SA[i] = SA[k]; }
+        for(i = t, j = BUCKET_BSTAR(c0, c1); j <= k; --i, --k) 
+		SA[i] = SA[k]; 
       }
       BUCKET_BSTAR(c0, c0 + 1) = i - BUCKET_B(c0, c0) + 1; /* start point */
       BUCKET_B(c0, c0) = i; /* end point */
@@ -415,7 +410,9 @@ divsufsort(const sauchar_t *T, saidx_t *SA, saidx_t n) {
 
   /* Suffixsort. */
   if((bucket_A != NULL) && (bucket_B != NULL)) {
+    startTime();
     m = sort_typeBstar(T, SA, bucket_A, bucket_B, n);
+    nextTime();
     construct_SA(T, SA, bucket_A, bucket_B, n, m);
   } else {
     err = -2;
