@@ -769,7 +769,7 @@ sssort(const sauchar_t *T, const saidx_t *PA,
   saidx_t i;
   
   if(lastsuffix != 0) { ++first; }
-  if (last - first > 8*1024*1024) {
+  if (last - first > 4*1024*1024) {
 	// Parallel sort
 	  //std::sort(first, last, 
 		  //[=] (const saidx_t& a, const saidx_t& b) { return 0 > ss_compare(T, PA + a, PA + b, depth);});
