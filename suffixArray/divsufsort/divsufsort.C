@@ -57,8 +57,6 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
      type B* suffixes into the array SA. */
   { // Count A,B,BSTAR types
 	// TODO dont use atomic for m
-	bool* is_bstar = new bool[n];
-	parallel_for(saidx_t i = 0; i < n; i++) is_bstar[i] = false;
 
 	saidx_t  block_size = 1024*1024*16;
 	saidx_t num_blocks = n / block_size + 1;	
@@ -95,7 +93,6 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 				/* type B* suffix. */
 				++RED_BUCKET_BSTAR(c0, c1);
 				(*reducer_m)++;
-				is_bstar[i] = true;
 				/* type B suffix. */
 				for(--i, c1 = c0; (0 <= i) && ((c0 = T[i]) <= c1); --i, c1 = c0) {
 					++RED_BUCKET_B(c0, c1);
@@ -103,20 +100,45 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 			}	
 		}
 	}
-	m = 0;
+	m = 0; // inclusive prefix sum
 	for (int b = 0; b < num_blocks; b++) {
 		m += tempM[b];
-	}
+		tempM[b] = m;
+	} 
+	saidx_t* SAb = SA + n - m;
 	parallel_for(saidx_t i_ = 0; i_ < BUCKET_A_SIZE; ++i_) { bucket_A[i_] = 0; for (int b = 0; b < num_blocks; b++) bucket_A[i_] += tempBA[i_ + b*BUCKET_A_SIZE]; } 
 	parallel_for(saidx_t i_ = 0; i_ < BUCKET_B_SIZE; ++i_) { bucket_B[i_] = 0; for (int b = 0; b < num_blocks; b++) bucket_B[i_] += tempBB[i_ + b*BUCKET_B_SIZE]; } 
-  	delete [] tempM;
 	delete [] tempBA;
 	delete [] tempBB;
-	
 	// Write position of BSTAR suffixes to the end of SA array
 	// Pack all elements i from [0,n-1] to SA+n-m such that i is a BSTAR suffix	
- 	sequence::packIndex(SA+n-m, is_bstar, n);
-	delete [] is_bstar;
+	parallel_for (saidx_t b = 0; b < num_blocks; b++) {
+		saidx_t s = std::min(n, block_size * (b+1)) - 1;
+		saidx_t e = block_size * b;
+		sauchar_t c0,c1;
+		saidx_t m_ = tempM[b];
+		// Go until definitly finding A type suffix 
+		if (s < n-1) // If not the last block
+			while (e < s && T[s] <= T[s+1]) s--; 
+		// it is ensured that s is set to a position of a A-type suffix
+		// loop goes past e until finding A-type suffix after a B-type suffix
+		for(saidx_t i = s, c0 = T[s]; e <= i; ) {
+			do { 
+				if (i < e && c0 > c1) { // If next block can be sure it's a A-type suffix
+					i = -1;
+					break;
+				}
+				c1 = c0;
+			} while((0 <= --i) && ((c0 = T[i]) >= c1));
+			if(0 <= i) {
+				/* type B* suffix. */
+				SAb[--m_] = i;
+				/* type B suffix. */
+				for(--i, c1 = c0; (0 <= i) && ((c0 = T[i]) <= c1); --i, c1 = c0) { }
+			}	
+		}
+	}
+  	delete [] tempM;
   }
 /*
 note:
@@ -173,7 +195,7 @@ note:
       if(0 <= SA[i]) {
         j = i;
         do { ISAb[SA[i]] = i; } while((0 <= --i) && (0 <= SA[i]));
-        SA[i + 1] = i - j; // skip values for already sorted sequence (negative!)
+        //SA[i + 1] = i - j; // skip values for already sorted sequence (negative!)
         if(i <= 0) { break; }
       }
       j = i;
@@ -181,10 +203,10 @@ note:
       ISAb[SA[i]] = j; // End of the bucket with equal suffixes
     }
     // Construct the inverse suffix array of type B* suffixes using trsort. 
-    trsort(ISAb, SA, m, 1);
-    //buf = SA + (2*m);
-    //bufsize = n - (2*m);
-    //paralleltrsort(ISAb, SA, m, buf, bufsize);
+    //trsort(ISAb, SA, m, 1);
+    buf = SA + (2*m);
+    bufsize = n - (2*m);
+    paralleltrsort(ISAb, SA, m, buf, bufsize);
 
     /* Set the sorted order of tyoe B* suffixes. */
     for(i = n - 1, j = m, c0 = T[n - 1]; 0 <= i;) {
@@ -214,7 +236,6 @@ note:
     }
   }
 
-    printf("done\n");
   return m;
 }
 

@@ -9,7 +9,7 @@ PLFLAGS = -fopenmp
 
 else ifdef GCILK
 PCC = g++
-PCFLAGS = -std=c++11 -lcilkrts -fcilkplus -mcx16 -O2 -DCILKP -DMCX16 $(INTT)
+PCFLAGS = -g -std=c++11 -lcilkrts -fcilkplus -mcx16 -O2 -DCILKP -DMCX16 $(INTT)
 PLFLAGS = -lcilkrts -fcilkplus
 
 else ifdef CILK
@@ -25,5 +25,5 @@ PLFLAGS =
 else
 PCC = g++ 
 PLFLAGS = $(LFLAGS)
-PCFLAGS = -std=c++11 -O2 $(INTT)
+PCFLAGS = -g -std=c++11 -O2 $(INTT)
 endif
