@@ -174,7 +174,7 @@ note:
 		j = m;
 	}
         if(1 < (j - i)) {
-          sssort(T, PAb, SA + i, SA + j, buf, bufsize, 2, n, *(SA + i) == (m - 1));
+         sssort(T, PAb, SA + i, SA + j, buf, bufsize, 2, n, *(SA + i) == (m - 1));
         }
       }
     }
