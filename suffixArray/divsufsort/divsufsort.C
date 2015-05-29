@@ -156,6 +156,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
   }
   cilk_sync; // Make sure bucket calculation is done
   if(0 < m) {
+    // TODO make this parallel
     /* Sort the type B* suffixes by their first two characters. */
     PAb = SA + n - m; ISAb = SA + m;
     for(i = m - 2; 0 <= i; --i) {
@@ -230,7 +231,8 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 
     buf = SA + (2*m);
     bufsize = n - (2*m);
-    paralleltrsort(ISAb, SA, m, buf, bufsize);
+    //paralleltrsort(ISAb, SA, m, buf, bufsize);
+    trsort(ISAb, SA, m, 1);
 
     num_blocks = n / block_size + 1;
     /* Set the sorted order of type B* suffixes. */
@@ -258,6 +260,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
     }
     delete [] bstar_count;
 
+    // TODO make this parallel
     /* Calculate the index of start/end point of each bucket. */
     BUCKET_B(ALPHABET_SIZE - 1, ALPHABET_SIZE - 1) = n; /* end point */
     for(c0 = ALPHABET_SIZE - 2, k = m - 1; 0 <= c0; --c0) {
