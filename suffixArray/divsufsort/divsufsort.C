@@ -231,8 +231,8 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 
     buf = SA + (2*m);
     bufsize = n - (2*m);
-    //paralleltrsort(ISAb, SA, m, buf, bufsize);
-    trsort(ISAb, SA, m, 1);
+    paralleltrsort(ISAb, SA, m, buf, bufsize);
+    //trsort(ISAb, SA, m, 1);
 
     num_blocks = n / block_size + 1;
     /* Set the sorted order of type B* suffixes. */
