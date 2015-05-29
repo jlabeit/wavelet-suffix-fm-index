@@ -33,6 +33,27 @@
 # include <omp.h>
 #endif
 /*- Private Functions -*/
+void calculateBucketOffsets(saidx_t * bucket_A, saidx_t* bucket_B) {
+/*
+note:
+  A type B* suffix is lexicographically smaller than a type B suffix that
+  begins with the same first two characters.
+*/
+  saidx_t i,j,t;
+  saint_t c0,c1;
+  /* Calculate the index of start/end point of each bucket. */
+  for(c0 = 0, i = 0, j = 0; c0 < ALPHABET_SIZE; ++c0) {
+    t = i + BUCKET_A(c0);
+    BUCKET_A(c0) = i + j; /* start point */
+    i = t + BUCKET_B(c0, c0);
+    for(c1 = c0 + 1; c1 < ALPHABET_SIZE; ++c1) {
+      j += BUCKET_BSTAR(c0, c1);
+      BUCKET_BSTAR(c0, c1) = j; /* end point */
+      i += BUCKET_B(c0, c1);
+    }
+  }
+}
+
 
 /* Sorts suffixes of type B*. */
 static
@@ -51,7 +72,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
   /* Count the number of occurrences of the first one or two characters of each
      type A, B and B* suffix. Moreover, store the beginning position of all
      type B* suffixes into the array SA. */
-  saidx_t  block_size = 1024*1024*16;
+  saidx_t  block_size = 1024*1024;
   saidx_t num_blocks = n / block_size + 1;	
   saidx_t* bstar_count = new saidx_t[num_blocks];
   memset(bstar_count, 0, sizeof(saidx_t)*num_blocks);
@@ -101,6 +122,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 	saidx_t* SAb = SA + n - m;
 	parallel_for(saidx_t i_ = 0; i_ < BUCKET_A_SIZE; ++i_) { bucket_A[i_] = 0; for (int b = 0; b < num_blocks; b++) bucket_A[i_] += tempBA[i_ + b*BUCKET_A_SIZE]; } 
 	parallel_for(saidx_t i_ = 0; i_ < BUCKET_B_SIZE; ++i_) { bucket_B[i_] = 0; for (int b = 0; b < num_blocks; b++) bucket_B[i_] += tempBB[i_ + b*BUCKET_B_SIZE]; } 
+	cilk_spawn calculateBucketOffsets(bucket_A, bucket_B);	// Buckets offsets can be calculated during the second pass
 	delete [] tempBA;
 	delete [] tempBB;
 	// Write position of BSTAR suffixes to the end of SA array
@@ -132,25 +154,9 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 		}
 	}
   }
-/*
-note:
-  A type B* suffix is lexicographically smaller than a type B suffix that
-  begins with the same first two characters.
-*/
-
-  /* Calculate the index of start/end point of each bucket. */
-  for(c0 = 0, i = 0, j = 0; c0 < ALPHABET_SIZE; ++c0) {
-    t = i + BUCKET_A(c0);
-    BUCKET_A(c0) = i + j; /* start point */
-    i = t + BUCKET_B(c0, c0);
-    for(c1 = c0 + 1; c1 < ALPHABET_SIZE; ++c1) {
-      j += BUCKET_BSTAR(c0, c1);
-      BUCKET_BSTAR(c0, c1) = j; /* end point */
-      i += BUCKET_B(c0, c1);
-    }
-  }
-
+  cilk_sync; // Make sure bucket calculation is done
   if(0 < m) {
+    // TODO make this parallel
     /* Sort the type B* suffixes by their first two characters. */
     PAb = SA + n - m; ISAb = SA + m;
     for(i = m - 2; 0 <= i; --i) {
@@ -178,38 +184,58 @@ note:
         }
       }
     }
-    //for (int i = 0; i < n; i++) {
-	//printf("%d ", SA[i]);
-    //}printf("\n");
-    
+
     /* Compute ranks of type B* substrings. */
-    for(i = m - 1; 0 <= i; --i) {
-      if(0 <= SA[i]) {
-        j = i;
-        do { ISAb[SA[i]] = i; } while((0 <= --i) && (0 <= SA[i]));
-        //SA[i + 1] = i - j; // skip values for already sorted sequence (negative!)
-        if(i <= 0) { break; }
-      }
-      j = i;
-      do { ISAb[SA[i] = ~SA[i]] = j; } while(SA[--i] < 0);
-      ISAb[SA[i]] = j; // End of the bucket with equal suffixes
+    num_blocks = m / block_size + 1;
+    saidx_t* block_start_rank = new saidx_t[num_blocks];
+    block_start_rank[0] = 0;
+    // First pass calculate block start rank
+    parallel_for (saidx_t b = 1; b < num_blocks; b++) {
+		saidx_t s = std::min(m, block_size * (b+1)) - 1;
+		saidx_t e = block_size * b;
+		if (SA[e] < 0) {
+			while (e <= s && SA[e] < 0) e++;
+			if (e > s && e < m && SA[e] < 0) block_start_rank[b] = -1; // block starts in previous chunks 
+			else block_start_rank[b] = e-1;	 // block starts in this chunk at position e-1 
+		} else {
+			block_start_rank[b] = 0; // there is no block starting in this chunk which ends in later chunks
+		}
     }
-    // Construct the inverse suffix array of type B* suffixes using trsort. 
-    //trsort(ISAb, SA, m, 1);
+    for (saidx_t b = num_blocks-2; b > 0; b--) {
+	if (block_start_rank[b] == -1)
+		block_start_rank[b] = block_start_rank[b+1];
+    }
+    // Second pass for actuall rank calculation
+    parallel_for (saidx_t b = 0; b < num_blocks; b++) {
+	saidx_t s = std::min(m, block_size * (b+1)) - 1;
+	saidx_t e = block_size * b;
+	saidx_t i,j;
+	// Deal with block crossing the boarder
+	if (b < num_blocks-1 && block_start_rank[b+1] !=  0) {
+		j = block_start_rank[b+1];
+		while (s >= e && SA[s] < 0) { ISAb[SA[s] = ~SA[s]] = j; s--; }
+		if (e <= s) {
+			ISAb[SA[s]] = j;
+			s--;
+		}
+	}
+	for(i = s; e <= i; --i) {
+		while (e <= i && 0 <= SA[i]) { ISAb[SA[i]] = i; i--;}
+		j = i;
+		while (e <= i && SA[i] < 0) { ISAb[SA[i] = ~SA[i]] = j; i--; }
+		if (e <= i)
+			ISAb[SA[i]] = j; // End of the bucket with equal suffixes
+	}
+    }
+    delete []block_start_rank;
+
     buf = SA + (2*m);
     bufsize = n - (2*m);
-    paralleltrsort(ISAb, SA, m, buf, bufsize);
+    //paralleltrsort(ISAb, SA, m, buf, bufsize);
+    trsort(ISAb, SA, m, 1);
 
+    num_blocks = n / block_size + 1;
     /* Set the sorted order of type B* suffixes. */
-	/*    
-    for(i = n - 1, j = m, c0 = T[n - 1]; 0 <= i;) {
-      for(--i, c1 = c0; (0 <= i) && ((c0 = T[i]) >= c1); --i, c1 = c0) { } // A suffix
-      if(0 <= i) {
-        t = i; // B* suffix
-        for(--i, c1 = c0; (0 <= i) && ((c0 = T[i]) <= c1); --i, c1 = c0) { } // B suffix
-        SA[ISAb[--j]] = ((t == 0) || (1 < (t - i))) ? t : ~t;
-      }
-    }*/
     parallel_for (saidx_t b = 0; b < num_blocks; b++) {
 		saidx_t s = std::min(n, block_size * (b+1)) - 1;
 		saidx_t e = block_size * b;
@@ -234,6 +260,7 @@ note:
     }
     delete [] bstar_count;
 
+    // TODO make this parallel
     /* Calculate the index of start/end point of each bucket. */
     BUCKET_B(ALPHABET_SIZE - 1, ALPHABET_SIZE - 1) = n; /* end point */
     for(c0 = ALPHABET_SIZE - 2, k = m - 1; 0 <= c0; --c0) {
@@ -250,7 +277,6 @@ note:
       BUCKET_B(c0, c0) = i; /* end point */
     }
   }
-
   return m;
 }
 
