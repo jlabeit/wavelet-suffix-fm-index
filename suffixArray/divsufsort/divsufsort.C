@@ -72,7 +72,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
   /* Count the number of occurrences of the first one or two characters of each
      type A, B and B* suffix. Moreover, store the beginning position of all
      type B* suffixes into the array SA. */
-  saidx_t  block_size = 1024*512;
+  saidx_t  block_size = 1024*1024;
   saidx_t num_blocks = n / block_size + 1;	
   saidx_t* bstar_count = new saidx_t[num_blocks];
   memset(bstar_count, 0, sizeof(saidx_t)*num_blocks);
@@ -183,25 +183,6 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
         }
       }
     }
-   
-    
-    if (false) {
-    /* Compute ranks of type B* substrings. */
-    for(i = m - 1; 0 <= i; --i) {
-      if(0 <= SA[i]) {
-        j = i;
-        do { ISAb[SA[i]] = i; } while((0 <= --i) && (0 <= SA[i]));
-        SA[i + 1] = i - j; // skip values for already sorted sequence (negative!)
-        if(i <= 0) { break; }
-      }
-      j = i;
-      do { ISAb[SA[i] = ~SA[i]] = j; } while(SA[--i] < 0);
-      ISAb[SA[i]] = j; // End of the bucket with equal suffixes
-    }
-
-    // Construct the inverse suffix array of type B* suffixes using trsort. 
-    trsort(ISAb, SA, m, 1);
-    } else {
 
     /* Compute ranks of type B* substrings. */
     num_blocks = m / block_size + 1;
@@ -246,11 +227,12 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 	}
     }
     delete []block_start_rank;
+
     buf = SA + (2*m);
     bufsize = n - (2*m);
     paralleltrsort(ISAb, SA, m, buf, bufsize);
-    }
 
+    num_blocks = n / block_size + 1;
     /* Set the sorted order of type B* suffixes. */
     parallel_for (saidx_t b = 0; b < num_blocks; b++) {
 		saidx_t s = std::min(n, block_size * (b+1)) - 1;
@@ -292,7 +274,6 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
       BUCKET_B(c0, c0) = i; /* end point */
     }
   }
-
   return m;
 }
 
