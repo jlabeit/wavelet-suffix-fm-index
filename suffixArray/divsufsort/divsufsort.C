@@ -315,10 +315,11 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
   saidx_t *i, *j, *k;
   saidx_t s;
   saint_t c0, c1, c2;
+  startTime();
   if(0 < m) {
 	/* Construct the sorted order of type B suffixes by using
  	   the sorted order of type B* suffixes. */
-	saidx_t num_blocks = 4;
+	saidx_t num_blocks = 8;
 	saidx_t* block_bucket_cnt = new saidx_t[num_blocks*BUCKET_B_SIZE];
 	for (c1 = ALPHABET_SIZE-2; 0 <= c1; --c1) {
 		
@@ -358,6 +359,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 	}
 	delete [] block_bucket_cnt;
   }
+	    nextTime();
 
 
   /* Construct the suffix array by using
@@ -478,9 +480,7 @@ divsufsort(const sauchar_t *T, saidx_t *SA, saidx_t n) {
   /* Suffixsort. */
   if((bucket_A != NULL) && (bucket_B != NULL)) {
     m = sort_typeBstar(T, SA, bucket_A, bucket_B, n);
-    startTime();
     construct_SA(T, SA, bucket_A, bucket_B, n, m);
-    nextTime();
   } else {
     err = -2;
   }
