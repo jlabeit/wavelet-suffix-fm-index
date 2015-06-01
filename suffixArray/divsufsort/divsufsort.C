@@ -318,10 +318,10 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
   if(0 < m) {
 	/* Construct the sorted order of type B suffixes by using
  	   the sorted order of type B* suffixes. */
-	saidx_t num_blocks = 64;
+	saidx_t num_blocks = 4;
 	saidx_t* block_bucket_cnt = new saidx_t[num_blocks*BUCKET_B_SIZE];
 	for (c1 = ALPHABET_SIZE-2; 0 <= c1; --c1) {
-		if(true) {
+		
 		saidx_t* start = SA + BUCKET_A(c1+1);
 		saidx_t* end = SA + BUCKET_B(c1, c1)+1;
 		if (start > end) {
@@ -350,11 +350,11 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 		parallel_for (saidx_t i = 0; i < BUCKET_B_SIZE; i++) {
 			bucket_B[i] = block_bucket_cnt[i];	
 		}
-		}
 		// Handle rest of the bucket sequentially
 		fillBBSeq(end, SA + BUCKET_BSTAR(c1, c1+1), bucket_B, c1, T, SA); 
-	} else 
-		fillBBSeq(SA + BUCKET_A(c1 + 1), SA + BUCKET_BSTAR(c1, c1+1), bucket_B, c1, T, SA);
+		
+		}
+		//fillBBSeq(SA + BUCKET_A(c1 + 1), SA + BUCKET_BSTAR(c1, c1+1), bucket_B, c1, T, SA);
 	}
 	delete [] block_bucket_cnt;
   }
@@ -477,8 +477,8 @@ divsufsort(const sauchar_t *T, saidx_t *SA, saidx_t n) {
   
   /* Suffixsort. */
   if((bucket_A != NULL) && (bucket_B != NULL)) {
-    startTime();
     m = sort_typeBstar(T, SA, bucket_A, bucket_B, n);
+    startTime();
     construct_SA(T, SA, bucket_A, bucket_B, n, m);
     nextTime();
   } else {
