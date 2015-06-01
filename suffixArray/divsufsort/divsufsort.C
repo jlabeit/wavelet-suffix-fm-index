@@ -254,13 +254,12 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 			if(0 <= i) {
 				t = i; // B* suffix
 				for(--i, c1 = c0; (0 <= i) && ((c0 = T[i]) <= c1); --i, c1 = c0) { } // B suffix
-				SA[ISAb[--j]] = ((t == 0) || (1 < (t - i))) ? t : ~t;
+				SA[ISAb[--j]] = ((t == 0) || (1 < (t - i))) ? t : ~t; // negative if the corresponding B bucket is empty
 			}
 		}
     }
     delete [] bstar_count;
 
-    // TODO make this parallel
     /* Calculate the index of start/end point of each bucket. */
     BUCKET_B(ALPHABET_SIZE - 1, ALPHABET_SIZE - 1) = n; /* end point */
     for(c0 = ALPHABET_SIZE - 2, k = m - 1; 0 <= c0; --c0) {
@@ -268,10 +267,9 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
       for(c1 = ALPHABET_SIZE - 1; c0 < c1; --c1) {
         t = i - BUCKET_B(c0, c1);
         BUCKET_B(c0, c1) = i; /* end point */
-
-        /* Move all type B* suffixes to the correct position. */
+	// TODO make this in parallel, does SA[i] overwrite others SA[k] ?
         for(i = t, j = BUCKET_BSTAR(c0, c1); j <= k; --i, --k) 
-		SA[i] = SA[k]; 
+  		SA[i] = SA[k]; 
       }
       BUCKET_BSTAR(c0, c0 + 1) = i - BUCKET_B(c0, c0) + 1; /* start point */
       BUCKET_B(c0, c0) = i; /* end point */
@@ -280,6 +278,34 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
   return m;
 }
 
+void countBBSeq (saidx_t* start, saidx_t* end, saidx_t* bucket_B, sauchar_t c1, const sauchar_t* T) {
+	// Set counters to 0
+	memset(bucket_B, 0, sizeof(saidx_t)*BUCKET_B_SIZE);
+	saidx_t s;
+	sauchar_t c0;
+	for (saidx_t* i = start-1; i >= end; i--) {
+		if (0 < (s = *i)) {
+			c0 = T[--s];
+			if (c0 <= c1) // If is B-type suffix
+				BUCKET_B(c0,c1)++;
+		}
+	}
+}
+
+void fillBBSeq (saidx_t* start, saidx_t* end, saidx_t* bucket_B, sauchar_t c1, const sauchar_t* T, saidx_t* SA) {
+	saidx_t s;
+	sauchar_t c0;
+	for (saidx_t* i = start-1; i >= end; i--) {
+		if (0 < (s = *i)) {
+			*i = ~s;
+			c0 = T[--s];
+			if ((0 < s) && (T[s-1] > c0)) { s = ~s; }
+			*(BUCKET_B(c0, c1)-- + SA) = s;
+		} else {
+			*i = ~s;
+		}
+	}
+}
 /* Constructs the suffix array by using the sorted order of type B* suffixes. */
 static
 void
@@ -289,37 +315,51 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
   saidx_t *i, *j, *k;
   saidx_t s;
   saint_t c0, c1, c2;
-
   if(0 < m) {
-    /* Construct the sorted order of type B suffixes by using
-       the sorted order of type B* suffixes. */
-    for(c1 = ALPHABET_SIZE - 2; 0 <= c1; --c1) {
-      /* Scan the suffix array from right to left. */
-      for(i = SA + BUCKET_BSTAR(c1, c1 + 1),
-          j = SA + BUCKET_A(c1 + 1) - 1, k = NULL, c2 = -1;
-          i <= j;
-          --j) {
-        if(0 < (s = *j)) {
-          assert(T[s] == c1);
-          assert(((s + 1) < n) && (T[s] <= T[s + 1]));
-          assert(T[s - 1] <= T[s]);
-          *j = ~s;
-          c0 = T[--s];
-          if((0 < s) && (T[s - 1] > c0)) { s = ~s; }
-          if(c0 != c2) {
-            if(0 <= c2) { BUCKET_B(c2, c1) = k - SA; }
-            k = SA + BUCKET_B(c2 = c0, c1);
-          }
-          assert(k < j);
-          *k-- = s;
-        } else {
-          assert(((s == 0) && (T[s] == c1)) || (s < 0));
-          *j = ~s;
-        }
-      }
-    }
+	/* Construct the sorted order of type B suffixes by using
+ 	   the sorted order of type B* suffixes. */
+	saidx_t num_blocks = 64;
+	saidx_t* block_bucket_cnt = new saidx_t[num_blocks*BUCKET_B_SIZE];
+	for (c1 = ALPHABET_SIZE-2; 0 <= c1; --c1) {
+		if(true) {
+		saidx_t* start = SA + BUCKET_A(c1+1);
+		saidx_t* end = SA + BUCKET_B(c1, c1)+1;
+		if (start > end) {
+		saidx_t block_size = (start-end) / num_blocks +1;
+		// Count for each block how many items are put into the b buckets
+		parallel_for (saidx_t b = num_blocks-1; 0 <= b; b--) {
+			saidx_t* s = std::min((b+1)*block_size + end, start);
+			saidx_t* e = b * block_size + end;
+			countBBSeq(s, e, block_bucket_cnt + BUCKET_B_SIZE*b, c1, T);
+		}
+		// Make explusive prefix sum to calculate offsets of the bucket
+		parallel_for (saidx_t i = 0; i < BUCKET_B_SIZE; i++) {
+			saidx_t sum = bucket_B[i];
+			for (saidx_t b = num_blocks-1; 0 <= b; b--) {
+				sum -= block_bucket_cnt[b*BUCKET_B_SIZE + i];			
+				block_bucket_cnt[b*BUCKET_B_SIZE + i] = sum + block_bucket_cnt[b*BUCKET_B_SIZE + i];
+			}
+		}
+		// Put B suffixes into the correct buckets
+		parallel_for (saidx_t b = num_blocks-1; 0 <= b; b--) {
+			saidx_t* s = std::min((b+1)*block_size + end, start);
+			saidx_t* e = b * block_size + end;
+			fillBBSeq(s, e, block_bucket_cnt + BUCKET_B_SIZE*b, c1, T, SA);
+		}
+		// Update new B Bucket counts
+		parallel_for (saidx_t i = 0; i < BUCKET_B_SIZE; i++) {
+			bucket_B[i] = block_bucket_cnt[i];	
+		}
+		}
+		// Handle rest of the bucket sequentially
+		fillBBSeq(end, SA + BUCKET_BSTAR(c1, c1+1), bucket_B, c1, T, SA); 
+	} else 
+		fillBBSeq(SA + BUCKET_A(c1 + 1), SA + BUCKET_BSTAR(c1, c1+1), bucket_B, c1, T, SA);
+	}
+	delete [] block_bucket_cnt;
   }
-  
+
+
   /* Construct the suffix array by using
      the sorted order of type B suffixes. */
   k = SA + BUCKET_A(c2 = T[n - 1]);
@@ -439,8 +479,8 @@ divsufsort(const sauchar_t *T, saidx_t *SA, saidx_t n) {
   if((bucket_A != NULL) && (bucket_B != NULL)) {
     startTime();
     m = sort_typeBstar(T, SA, bucket_A, bucket_B, n);
-    nextTime();
     construct_SA(T, SA, bucket_A, bucket_B, n, m);
+    nextTime();
   } else {
     err = -2;
   }
