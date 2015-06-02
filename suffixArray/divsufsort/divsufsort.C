@@ -388,7 +388,6 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 	}
 	delete [] block_bucket_cnt;
   }
-  startTime();
 
   /* Construct the suffix array by using
      the sorted order of type B suffixes. */
@@ -439,7 +438,6 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 	  }
   }
   delete[] block_bucket_cnt;
-  nextTime();
 
 }
 
