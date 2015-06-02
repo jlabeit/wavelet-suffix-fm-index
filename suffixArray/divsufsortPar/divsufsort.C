@@ -166,6 +166,8 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
     }
     t = PAb[m - 1], c0 = T[t], c1 = T[t + 1];
     SA[--BUCKET_BSTAR(c0, c1)] = m - 1;
+    
+  nextTime("BSTARSORT, seq init\t\t");
 
     /* Sort the type B* substrings using sssort. */
     buf = SA + m, bufsize = n - (2 * m);
