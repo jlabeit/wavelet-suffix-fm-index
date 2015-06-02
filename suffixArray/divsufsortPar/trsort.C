@@ -24,8 +24,10 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#include "parallel.h"
+#include <algorithm>
+#include "config.h"
 #include "divsufsort_private.h"
-
 
 /*- Private Functions -*/
 
