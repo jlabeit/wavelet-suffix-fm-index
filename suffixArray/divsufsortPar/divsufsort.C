@@ -155,6 +155,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 	}
   }
   cilk_sync; // Make sure bucket calculation is done
+  nextTime("BSTARSORT, Init buck\t\t");
   if(0 < m) {
     // TODO make this parallel
     /* Sort the type B* suffixes by their first two characters. */
@@ -184,7 +185,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
         }
       }
     }
-
+  nextTime("BSTARSORT, sssort\t\t");
     /* Compute ranks of type B* substrings. */
     num_blocks = m / block_size + 1;
     saidx_t* block_start_rank = new saidx_t[num_blocks];
@@ -229,11 +230,13 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
     }
     delete []block_start_rank;
 
+  nextTime("BSTARSORT, ranks\t\t");
     buf = SA + (2*m);
     bufsize = n - (2*m);
     paralleltrsort(ISAb, SA, m, buf, bufsize);
     //trsort(ISAb, SA, m, 1);
 
+  nextTime("BSTARSORT, trsort\t\t");
     num_blocks = n / block_size + 1;
     /* Set the sorted order of type B* suffixes. */
     parallel_for (saidx_t b = 0; b < num_blocks; b++) {
@@ -275,6 +278,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
       BUCKET_B(c0, c0) = i; /* end point */
     }
   }
+  nextTime("BSTARSORT, finishing of\t\t");
   return m;
 }
 
@@ -388,6 +392,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 	}
 	delete [] block_bucket_cnt;
   }
+  nextTime("Construct_SA, B suff\t\t");
 
   /* Construct the suffix array by using
      the sorted order of type B suffixes. */
@@ -438,6 +443,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 	  }
   }
   delete[] block_bucket_cnt;
+  nextTime("Construct_SA, A suf\t\t");
 
 }
 
@@ -535,8 +541,10 @@ divsufsort(const sauchar_t *T, saidx_t *SA, saidx_t n) {
   
   /* Suffixsort. */
   if((bucket_A != NULL) && (bucket_B != NULL)) {
+    startTime();    
     m = sort_typeBstar(T, SA, bucket_A, bucket_B, n);
     construct_SA(T, SA, bucket_A, bucket_B, n, m);
+    nextTime();
   } else {
     err = -2;
   }
