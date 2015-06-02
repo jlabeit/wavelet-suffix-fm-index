@@ -9,6 +9,7 @@ tests = [
     [20, "trigramString_10000000", "", ""],
     [6, "chr22.dna", "", ""],
     [1, "etext99", "", ""],
+    [1, "proteins", "", ""],
     [1, "wikisamp.xml", "", ""]
 ]
 
