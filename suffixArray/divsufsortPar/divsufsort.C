@@ -265,6 +265,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
     }
     delete [] bstar_count;
 
+    nextTime("BSTARSORT, finishing of\t\t");
     /* Calculate the index of start/end point of each bucket. */
     BUCKET_B(ALPHABET_SIZE - 1, ALPHABET_SIZE - 1) = n; /* end point */
     for(c0 = ALPHABET_SIZE - 2, k = m - 1; 0 <= c0; --c0) {
@@ -280,7 +281,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
       BUCKET_B(c0, c0) = i; /* end point */
     }
   }
-  nextTime("BSTARSORT, finishing of\t\t");
+  nextTime("BSTARSORT, finishing seq\t\t");
   return m;
 }
 
