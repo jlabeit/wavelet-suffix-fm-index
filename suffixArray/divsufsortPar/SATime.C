@@ -42,9 +42,7 @@ void timeSuffixArray(unsigned char* s, long n, int rounds, char* outFile) {
   divsufsort(s, R, n);
   for (int i=0; i < rounds; i++) {
     //R = suffixArray(s, n);
-    startTime();
     divsufsort(s, R, n);
-  nextTime();
   }
   cout<<"Peak-memory: " <<getPeakRSS() / (1024*1024) << endl;
   cout << endl;
