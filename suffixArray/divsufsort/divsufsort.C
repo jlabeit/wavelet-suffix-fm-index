@@ -306,6 +306,36 @@ void fillBBSeq (saidx_t* start, saidx_t* end, saidx_t* bucket_B, sauchar_t c1, c
 		}
 	}
 }
+
+void countASeq (saidx_t* start, saidx_t* end, saidx_t* bucket_A, const sauchar_t* T) {
+	saidx_t s;
+	sauchar_t c0;
+	for (saidx_t* i = start; i < end; i++) {
+		if(0 < (s = *i)) {
+			assert(T[s - 1] >= T[s]);
+			c0 = T[--s];
+			if((s != 0) && (T[s - 1] <= c0)) 
+				BUCKET_A(c0)++;
+		}
+	}
+
+}
+
+void fillASeq (saidx_t* start, saidx_t* end, saidx_t* bucket_A, const sauchar_t* T, saidx_t* SA) {
+	saidx_t s;
+	sauchar_t c0;
+	for (saidx_t* i = start; i < end; i++) {
+		if(0 < (s = *i)) {
+			assert(T[s - 1] >= T[s]);
+			c0 = T[--s];
+			if((s != 0) && (T[s - 1] <= c0)) 
+				*(SA + BUCKET_A(c0)++) = s;
+		} else {
+			*i = ~s;
+		}
+	}
+}
+
 /* Constructs the suffix array by using the sorted order of type B* suffixes. */
 static
 void
@@ -361,9 +391,35 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
   }
 	    nextTime();
 
-
+if (true) {
   /* Construct the suffix array by using
      the sorted order of type B suffixes. */
+  saidx_t num_blocks = 8;
+  saidx_t* block_bucket_cnt = new saidx_t[num_blocks*BUCKET_A_SIZE];
+  saidx_t block_size = n / num_blocks +1;
+  // Count A type suffixes  
+  parallel_for (saidx_t b = 0; b < num_blocks; b++) {
+	  saidx_t* s = SA + b*block_size;
+	  saidx_t* e = SA + std::min((b+1)*block_size, n);
+	  countASeq(s, e, block_bucket_cnt + BUCKET_A_SIZE*b, T);
+  }
+  // Prefix sum
+  parallel_for (saidx_t i = 0; i < BUCKET_A_SIZE; i++) {
+	  saidx_t sum = bucket_A[i];
+	  for (saidx_t b = 0; b < num_blocks; b++) {
+		  sum += block_bucket_cnt[b*BUCKET_A_SIZE + i];			
+		  block_bucket_cnt[b*BUCKET_A_SIZE + i] = sum + block_bucket_cnt[b*BUCKET_A_SIZE + i];
+	  }
+  }
+  // Sort the A suffixes to the correct place
+  parallel_for (saidx_t b = 0; b < num_blocks; b++) {
+	  saidx_t* s = SA + b*block_size;
+	  saidx_t* e = SA + std::min((b+1)*block_size, n);
+	fillASeq(s, e, block_bucket_cnt + BUCKET_A_SIZE*b, T, SA);
+  }
+  delete[] block_bucket_cnt;
+} else {
+
   k = SA + BUCKET_A(c2 = T[n - 1]);
   *k++ = (T[n - 2] < c2) ? ~(n - 1) : (n - 1);
   /* Scan the suffix array from left to right. */
@@ -383,6 +439,8 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
       *i = ~s;
     }
   }
+}
+
 }
 
 /* Constructs the burrows-wheeler transformed string directly
