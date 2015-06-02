@@ -49,11 +49,11 @@ typedef uint8_t sauchar_t;
 #endif /* SAUCHAR_T */
 #ifndef SAINT_T
 #define SAINT_T
-typedef int64_t saint_t;
+typedef int32_t saint_t;
 #endif /* SAINT_T */
 #ifndef SAIDX_T
 #define SAIDX_T
-typedef int64_t saidx_t;
+typedef int32_t saidx_t;
 #endif /* SAIDX_T */
 #ifndef PRIdSAINT_T
 #define PRIdSAINT_T PRId32
