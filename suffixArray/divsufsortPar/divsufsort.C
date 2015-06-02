@@ -157,6 +157,49 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
   cilk_sync; // Make sure bucket calculation is done
   nextTime("BSTARSORT, Init buck\t\t");
   if(0 < m) {
+if (true) {
+    saidx_t num_blocks = 64;
+    saidx_t block_size = m / num_blocks + 1;    
+    saidx_t* block_bucket_cnt = new saidx_t[num_blocks*BUCKET_B_SIZE];
+    memset(block_bucket_cnt, 0, sizeof(saidx_t) * num_blocks* BUCKET_B_SIZE); // TODO is this faster than parallel memset?
+    // First pass count buckets for each block
+    parallel_for (saidx_t b = num_blocks-1; 0 <= b; b--) {
+	saidx_t start = std::min(m, (b+1)*block_size);
+	saidx_t end = b*block_size;
+	saidx_t *bucket_B = block_bucket_cnt + b * BUCKET_B_SIZE; 
+	saidx_t p;
+	sauchar_t c0,c1;
+	for (saidx_t i = start-1; end <= i; --i) {
+		p = PAb[i], c0 = T[t], c1 = T[t+1];
+		BUCKET_BSTAR(c0,c1)--;	
+	}
+    }
+    // Prefix sum
+    parallel_for (saidx_t i = 0; i < BUCKET_B_SIZE; i++) {
+	saidx_t sum = bucket_B[i];	
+	for (saidx_t b = num_blocks-1; 0 <= b; b--) {
+		sum += block_bucket_cnt[b*BUCKET_B_SIZE + i];
+		block_bucket_cnt[b*BUCKET_B_SIZE + i] = sum - block_bucket_cnt[b*BUCKET_B_SIZE + i];
+	}
+    }
+    // Second pass to fill the actual buckets
+    parallel_for (saidx_t b = num_blocks-1; 0 <= b; b--) {
+	saidx_t start = std::min(m, (b+1)*block_size);
+	saidx_t end = b*block_size;
+	saidx_t *bucket_B = block_bucket_cnt + b*BUCKET_B_SIZE;
+	saidx_t p;
+	sauchar_t c0,c1;
+	for (saidx_t i = start -1; end <= i; --i) {
+		p = PAb[i], c0 = T[t], c1 = T[t+1];
+		SA[--BUCKET_BSTAR(c0,c1)] = i;
+	}
+    }
+    // Init again correctly
+    parallel_for (saidx_t i = 0; i < BUCKET_B_SIZE; i++)  bucket_B[i] = block_bucket_cnt[i];
+    delete [] block_bucket_cnt;
+    t = PAb[m - 1], c0 = T[t], c1 = T[t + 1];
+    SA[--BUCKET_BSTAR(c0, c1)] = m - 1;
+}else {
     // TODO make this parallel
     /* Sort the type B* suffixes by their first two characters. */
     PAb = SA + n - m; ISAb = SA + m;
@@ -166,6 +209,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
     }
     t = PAb[m - 1], c0 = T[t], c1 = T[t + 1];
     SA[--BUCKET_BSTAR(c0, c1)] = m - 1;
+}
     
   nextTime("BSTARSORT, seq init\t\t");
 
@@ -281,7 +325,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
       BUCKET_B(c0, c0) = i; /* end point */
     }
   }
-  nextTime("BSTARSORT, finishing seq\t\t");
+  nextTime("BSTARSORT, finishing se\t\t");
   return m;
 }
 
