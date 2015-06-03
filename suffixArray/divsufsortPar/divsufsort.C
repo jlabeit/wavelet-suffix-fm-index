@@ -211,7 +211,7 @@ if (false) {
     t = PAb[m - 1], c0 = T[t], c1 = T[t + 1];
     SA[--BUCKET_BSTAR(c0, c1)] = m - 1;
 }
-    
+   // TODO why does this take long if cilk is enabled? CILK sync?
   nextTime("BSTARSORT, seq init\t\t");
 
     /* Sort the type B* substrings using sssort. */
@@ -283,6 +283,7 @@ if (false) {
     paralleltrsort(ISAb, SA, m, buf, bufsize);
     //trsort(ISAb, SA, m, 1);
 
+    // TODO is the next step neccessary if SA is already sorted by paralleltrsort?
   nextTime("BSTARSORT, trsort\t\t");
     num_blocks = n / block_size + 1;
     /* Set the sorted order of type B* suffixes. */
