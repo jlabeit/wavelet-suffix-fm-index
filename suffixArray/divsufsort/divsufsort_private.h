@@ -27,6 +27,7 @@
 #ifndef _DIVSUFSORT_PRIVATE_H
 #define _DIVSUFSORT_PRIVATE_H 1
 
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
