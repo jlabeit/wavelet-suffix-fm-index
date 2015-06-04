@@ -407,6 +407,14 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 		
 		saidx_t* start = SA + BUCKET_A(c1+1);
 		saidx_t* end = SA + BUCKET_B(c1, c1)+1;
+		saidx_t* cur_start = start;
+		// Handle in-bucket updates
+		while (end < SA + BUCKET_BSTAR(c1,c1+1)) { // While complete bucket not initialized
+			saidx_t count_init = pack(cur_start, end, end, is_in_bucket_init);
+			cur_start = end;
+			end += count_init;
+			map_plus_one(cur_start, end);
+		}
 		if (start > end) {
 		saidx_t block_size = (start-end) / num_blocks +1;
 		// Count for each block how many items are put into the b buckets
