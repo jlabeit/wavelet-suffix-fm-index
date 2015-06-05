@@ -24,6 +24,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#include "gettime.h"
 #include <stdlib.h>
 #include "divsufsort_private.h"
 #ifdef _OPENMP
