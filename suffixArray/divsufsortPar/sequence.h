@@ -337,6 +337,24 @@ namespace sequence {
     free(Fl);
     return m;
   }
+  template <class ET, class intT, class PRED> 
+  intT filter_rev(ET* In, ET* Out, intT n, PRED p) {
+    bool *Fl = newA(bool,n);
+    parallel_for (intT i=0; i < n; i++) Fl[i] = (bool) p(In[i]);
+    intT l = nblocks(n, _F_BSIZE);
+    intT m;
+    if (l <= 1) m = sumFlagsSerial(Fl, n);
+    else {
+	    intT s = 0;
+	    intT e = n;
+	    intT *Sums = newA(intT,l);
+	    blocked_for (i, s, e, _F_BSIZE, Sums[i] = sumFlagsSerial(Fl+s, e-s););
+	    m = plusScan(Sums, Sums, l);
+    }
+    m = pack(In, Out-m, Fl, n);
+    free(Fl);
+    return m;
+  }
 
   template <class ET, class intT, class PRED> 
   _seq<ET> filter(ET* In, intT n, PRED p) {
