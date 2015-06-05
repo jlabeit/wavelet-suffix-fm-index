@@ -445,7 +445,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
   if(0 < m) {
 	/* Construct the sorted order of type B suffixes by using
  	   the sorted order of type B* suffixes. */
-	saidx_t num_blocks = 16;
+	saidx_t num_blocks = 64;
 	saidx_t* block_bucket_cnt = new saidx_t[num_blocks*BUCKET_B_SIZE];
 	for (c1 = ALPHABET_SIZE-2; 0 <= c1; --c1) {
 			
