@@ -155,7 +155,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 	}
   }
   cilk_sync; // Make sure bucket calculation is done
-  //nextTime("BSTARSORT, Init buck\t\t");
+  nextTime("BSTARSORT, Init buck\t\t");
   if(0 < m) {
 if (false) {
     PAb = SA + n - m; ISAb = SA + m;
@@ -233,7 +233,7 @@ if (false) {
         }
       }
     }
-  //nextTime("BSTARSORT, sssort\t\t");
+  nextTime("BSTARSORT, sssort\t\t");
     /* Compute ranks of type B* substrings. */
     num_blocks = m / block_size + 1;
     saidx_t* block_start_rank = new saidx_t[num_blocks];
@@ -278,7 +278,7 @@ if (false) {
     }
     delete []block_start_rank;
 
-  //nextTime("BSTARSORT, ranks\t\t");
+  nextTime("BSTARSORT, ranks\t\t");
     buf = SA + (2*m);
     bufsize = n - (2*m);
     paralleltrsort(ISAb, SA, m, buf, bufsize);
@@ -312,7 +312,7 @@ if (false) {
     }
     delete [] bstar_count;
 
-    //nextTime("BSTARSORT, finishing of\t\t");
+    nextTime("BSTARSORT, finishing of\t\t");
     /* Calculate the index of start/end point of each bucket. */
     BUCKET_B(ALPHABET_SIZE - 1, ALPHABET_SIZE - 1) = n; /* end point */
     for(c0 = ALPHABET_SIZE - 2, k = m - 1; 0 <= c0; --c0) {
@@ -328,7 +328,7 @@ if (false) {
       BUCKET_B(c0, c0) = i; /* end point */
     }
   }
-  //nextTime("BSTARSORT, finishing se\t\t");
+  nextTime("BSTARSORT, finishing se\t\t");
   return m;
 }
 
@@ -507,7 +507,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 	}
 	delete [] block_bucket_cnt;
   }
-  //nextTime("Construct_SA, B suff\t\t");
+  nextTime("Construct_SA, B suff\t\t");
 
   /* Construct the suffix array by using
      the sorted order of type B suffixes. */
@@ -558,7 +558,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 	  }
   }
   delete[] block_bucket_cnt;
-  //nextTime("Construct_SA, A suf\t\t");
+  nextTime("Construct_SA, A suf\t\t");
 
 }
 
