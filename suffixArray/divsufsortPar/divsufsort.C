@@ -212,7 +212,8 @@ if (false) {
     SA[--BUCKET_BSTAR(c0, c1)] = m - 1;
 }
     
-  //nextTime("BSTARSORT, seq init\t\t");
+   // TODO why does this take long if cilk is enabled? CILK sync?
+  nextTime("BSTARSORT, seq init\t\t");
 
     /* Sort the type B* substrings using sssort. */
     buf = SA + m, bufsize = n - (2 * m);
@@ -283,7 +284,8 @@ if (false) {
     paralleltrsort(ISAb, SA, m, buf, bufsize);
     //trsort(ISAb, SA, m, 1);
 
-  //nextTime("BSTARSORT, trsort\t\t");
+    // TODO is the next step neccessary if SA is already sorted by paralleltrsort?
+  nextTime("BSTARSORT, trsort\t\t");
     num_blocks = n / block_size + 1;
     /* Set the sorted order of type B* suffixes. */
     parallel_for (saidx_t b = 0; b < num_blocks; b++) {
@@ -343,6 +345,19 @@ void countBBSeq (saidx_t* start, saidx_t* end, saidx_t* bucket_B, sauchar_t c1, 
 		}
 	}
 }
+void countBBSeqNoInBucket (saidx_t* start, saidx_t* end, saidx_t* bucket_B, sauchar_t c1, const sauchar_t* T) {
+	// Set counters to 0
+	memset(bucket_B, 0, sizeof(saidx_t)*BUCKET_B_SIZE);
+	saidx_t s;
+	sauchar_t c0;
+	for (saidx_t* i = start-1; i >= end; i--) {
+		if (0 < (s = *i)) {
+			c0 = T[--s];
+			if (c0 < c1) // If is B-type suffix
+				BUCKET_B(c0,c1)++;
+		}
+	}
+}
 
 void fillBBSeq (saidx_t* start, saidx_t* end, saidx_t* bucket_B, sauchar_t c1, const sauchar_t* T, saidx_t* SA) {
 	saidx_t s;
@@ -353,6 +368,23 @@ void fillBBSeq (saidx_t* start, saidx_t* end, saidx_t* bucket_B, sauchar_t c1, c
 			c0 = T[--s];
 			if ((0 < s) && (T[s-1] > c0)) { s = ~s; }
 			*(BUCKET_B(c0, c1)-- + SA) = s;
+		} else {
+			*i = ~s;
+		}
+	}
+}
+
+void fillBBSeqNoInBucket (saidx_t* start, saidx_t* end, saidx_t* bucket_B, sauchar_t c1, const sauchar_t* T, saidx_t* SA) {
+	saidx_t s;
+	sauchar_t c0;
+	for (saidx_t* i = start-1; i >= end; i--) {
+		if (0 < (s = *i)) {
+			*i = ~s;
+			c0 = T[--s];
+			if (c0 < c1) { // If no in-bucket
+				if ((0 < s) && (T[s-1] > c0)) { s = ~s; }
+				*(BUCKET_B(c0, c1)-- + SA) = s;
+			}
 		} else {
 			*i = ~s;
 		}
@@ -388,6 +420,19 @@ void fillASeq (saidx_t* start, saidx_t* end, saidx_t* bucket_A, const sauchar_t*
 	}
 }
 
+
+struct is_in_bucket_update {
+	const sauchar_t* T;
+	saidx_t n;
+	is_in_bucket_update(const sauchar_t* T_, saidx_t n_) : T(T_), n(n_) {}
+	bool operator()(saidx_t& pos) const {
+		if (pos > 0 && T[pos] == T[pos-1]) { 
+			return true;
+		}
+		return false;
+	}	
+};
+
 /* Constructs the suffix array by using the sorted order of type B* suffixes. */
 static
 void
@@ -403,16 +448,35 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 	saidx_t num_blocks = 16;
 	saidx_t* block_bucket_cnt = new saidx_t[num_blocks*BUCKET_B_SIZE];
 	for (c1 = ALPHABET_SIZE-2; 0 <= c1; --c1) {
-		
+			
 		saidx_t* start = SA + BUCKET_A(c1+1);
 		saidx_t* end = SA + BUCKET_B(c1, c1)+1;
+		saidx_t* cur_start = start;
+		// Handle in-bucket updates
+		bool old = true;
+		if (!old)
+		while (end > SA + BUCKET_BSTAR(c1,c1+1)) { // While complete bucket not initialized
+			// First parameter is start of sequence to filter, second is end of result sequence
+			saidx_t count_init = sequence::filter_rev(end, end, (cur_start-end), is_in_bucket_update(T,n));
+			cur_start = end;
+			end -= count_init;
+			BUCKET_B(c1,c1) -= count_init;
+			parallel_for (saidx_t* i = cur_start-1; i >= end; i--) {
+				saidx_t s = --(*i);
+				if((s == 0) || (T[s-1] > T[s]))  *i = ~s; // Mark A bucket
+			}	
+		}
+		// Handle cross-bucket updates
 		if (start > end) {
 		saidx_t block_size = (start-end) / num_blocks +1;
 		// Count for each block how many items are put into the b buckets
 		parallel_for (saidx_t b = num_blocks-1; 0 <= b; b--) {
 			saidx_t* s = std::min((b+1)*block_size + end, start);
 			saidx_t* e = b * block_size + end;
+			if (old)
 			countBBSeq(s, e, block_bucket_cnt + BUCKET_B_SIZE*b, c1, T);
+			else
+			countBBSeqNoInBucket(s, e, block_bucket_cnt + BUCKET_B_SIZE*b, c1, T);
 		}
 		// Make explusive prefix sum to calculate offsets of the bucket
 		parallel_for (saidx_t i = 0; i < BUCKET_B_SIZE; i++) {
@@ -426,15 +490,18 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 		parallel_for (saidx_t b = num_blocks-1; 0 <= b; b--) {
 			saidx_t* s = std::min((b+1)*block_size + end, start);
 			saidx_t* e = b * block_size + end;
+			if (old)
 			fillBBSeq(s, e, block_bucket_cnt + BUCKET_B_SIZE*b, c1, T, SA);
+			else
+			fillBBSeqNoInBucket(s, e, block_bucket_cnt + BUCKET_B_SIZE*b, c1, T, SA);
 		}
 		// Update new B Bucket counts
 		parallel_for (saidx_t i = 0; i < BUCKET_B_SIZE; i++) {
 			bucket_B[i] = block_bucket_cnt[i];	
 		}
 		// Handle rest of the bucket sequentially
+		if (old)
 		fillBBSeq(end, SA + BUCKET_BSTAR(c1, c1+1), bucket_B, c1, T, SA); 
-		
 		}
 		//fillBBSeq(SA + BUCKET_A(c1 + 1), SA + BUCKET_BSTAR(c1, c1+1), bucket_B, c1, T, SA);
 	}
