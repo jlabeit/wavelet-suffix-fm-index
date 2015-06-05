@@ -502,6 +502,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 		// Handle rest of the bucket sequentially
 		if (old)
 		fillBBSeq(end, SA + BUCKET_BSTAR(c1, c1+1), bucket_B, c1, T, SA); 
+		
 		}
 		//fillBBSeq(SA + BUCKET_A(c1 + 1), SA + BUCKET_BSTAR(c1, c1+1), bucket_B, c1, T, SA);
 	}
@@ -523,7 +524,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
   saidx_t *end;
   for (c1 = 0; c1 < ALPHABET_SIZE; c1++) {
 	  // If not initialized part of bucket
-	  if (BUCKET_A(c1) <= BUCKET_B(c1,c1) || c1 == ALPHABET_SIZE-1) { // If hit uninitialized block or the end
+	  while (BUCKET_A(c1) <= BUCKET_B(c1,c1) || c1 == ALPHABET_SIZE-1) { // If hit uninitialized block or the end
 	  end = SA + BUCKET_A(c1);
 	  saidx_t block_size = (end-start)/num_blocks + 1;
 	  // Count A type suffixes  
@@ -552,9 +553,9 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 	  // Do rest of block A sequantially 
 	  start = end;
 	  if (start - SA == n) break;
-	  end = SA + BUCKET_B(c1,c1)+1;
-	  fillASeq(start, end, bucket_A, T, SA);
-	  start = end;
+	  //end = SA + BUCKET_B(c1,c1)+1;
+	  //fillASeq(start, end, bucket_A, T, SA);
+	  //start = end;
 	  }
   }
   delete[] block_bucket_cnt;
