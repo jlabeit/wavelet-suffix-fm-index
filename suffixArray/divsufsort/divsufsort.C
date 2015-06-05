@@ -186,6 +186,7 @@ note:
       BUCKET_B(c0, c0) = i; /* end point */
     }
   }
+  nextTime("BSTARSORT, finishing se\t\t");
 
   return m;
 }
@@ -229,6 +230,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
       }
     }
   }
+  nextTime("Construct_SA, B suff\t\t");
 
   /* Construct the suffix array by using
      the sorted order of type B suffixes. */
@@ -251,6 +253,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
       *i = ~s;
     }
   }
+  nextTime("Construct_SA, A suf\t\t");
 }
 
 /* Constructs the burrows-wheeler transformed string directly
@@ -346,8 +349,10 @@ divsufsort(const sauchar_t *T, saidx_t *SA, saidx_t n) {
 
   /* Suffixsort. */
   if((bucket_A != NULL) && (bucket_B != NULL)) {
+    startTime();    
     m = sort_typeBstar(T, SA, bucket_A, bucket_B, n);
     construct_SA(T, SA, bucket_A, bucket_B, n, m);
+    nextTime();
   } else {
     err = -2;
   }
