@@ -162,12 +162,12 @@ if (true) {
     saidx_t num_blocks = 32;
     saidx_t block_size = (m-1) / num_blocks + 1;    
     saidx_t* block_bucket_cnt = new saidx_t[num_blocks*BUCKET_B_SIZE];
-    memset(block_bucket_cnt, 0, sizeof(saidx_t)*num_blocks*BUCKET_B_SIZE); // TODO is this faster than parallel memset?
     // First pass count buckets for each block
     parallel_for (saidx_t b = num_blocks-1; 0 <= b; b--) {
 	saidx_t start = std::min((m-1), (b+1)*block_size);
 	saidx_t end = b*block_size;
 	saidx_t *bucket_B = block_bucket_cnt + b * BUCKET_B_SIZE; 
+	memset(bucket_B, 0, sizeof(saidx_t) * BUCKET_B_SIZE);
 	saidx_t p;
 	sauchar_t c0,c1;
 	for (saidx_t i = start-1; end <= i; --i) {
