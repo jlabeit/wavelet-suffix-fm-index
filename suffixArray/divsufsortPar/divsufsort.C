@@ -175,6 +175,7 @@ if (true) {
 		BUCKET_BSTAR(c0,c1)--;	
 	}
     }
+  nextTime("BSTARSORT, seq init precalc\t\t");
     // Prefix sum
     parallel_for (saidx_t i = 0; i < BUCKET_B_SIZE; i++) {
 	saidx_t sum = bucket_B[i];	
