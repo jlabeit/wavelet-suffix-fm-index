@@ -157,9 +157,9 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
   cilk_sync; // Make sure bucket calculation is done
   nextTime("BSTARSORT, Init buck\t\t");
   if(0 < m) {
-if (false) {
+if (true) {
     PAb = SA + n - m; ISAb = SA + m;
-    saidx_t num_blocks = 8;
+    saidx_t num_blocks = 32;
     saidx_t block_size = (m-1) / num_blocks + 1;    
     saidx_t* block_bucket_cnt = new saidx_t[num_blocks*BUCKET_B_SIZE];
     memset(block_bucket_cnt, 0, sizeof(saidx_t)*num_blocks*BUCKET_B_SIZE); // TODO is this faster than parallel memset?
@@ -185,7 +185,7 @@ if (false) {
     }
     // Second pass to fill the actual buckets
     parallel_for (saidx_t b = num_blocks-1; 0 <= b; b--) {
-	saidx_t start = std::min(m, (b+1)*block_size);
+	saidx_t start = std::min(m-1, (b+1)*block_size);
 	saidx_t end = b*block_size;
 	saidx_t *bucket_B = block_bucket_cnt + b*BUCKET_B_SIZE;
 	saidx_t p;
@@ -211,6 +211,7 @@ if (false) {
     t = PAb[m - 1], c0 = T[t], c1 = T[t + 1];
     SA[--BUCKET_BSTAR(c0, c1)] = m - 1;
 }
+
     
    // TODO why does this take long if cilk is enabled? CILK sync?
   nextTime("BSTARSORT, seq init\t\t");
