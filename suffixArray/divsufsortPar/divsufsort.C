@@ -56,7 +56,7 @@ note:
 
 
 void initBStarBuckets(const sauchar_t *T, saidx_t *SA, saidx_t* bucket_B, saidx_t n, saidx_t m, saidx_t* PAb) {
-    saidx_t num_blocks = 32;
+    saidx_t num_blocks = 64;
     saidx_t block_size = (m-1) / num_blocks + 1;    
     saidx_t* block_bucket_cnt = new saidx_t[num_blocks*BUCKET_B_SIZE];
     memset(block_bucket_cnt, 0, sizeof(saidx_t)*num_blocks*BUCKET_B_SIZE); // TODO is this faster than parallel memset?
@@ -72,7 +72,6 @@ void initBStarBuckets(const sauchar_t *T, saidx_t *SA, saidx_t* bucket_B, saidx_
 		BUCKET_BSTAR(c0,c1)--;	
 	}
     }
-  nextTime("BSTARSORT, seq init precalc\t\t");
     // Prefix sum
     parallel_for (saidx_t i = 0; i < BUCKET_B_SIZE; i++) {
 	saidx_t sum = bucket_B[i];	
@@ -206,22 +205,8 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
   nextTime("BSTARSORT, Init buck\t\t");
     PAb = SA + n - m; ISAb = SA + m;
   if(0 < m) {
-if (true) {
     initBStarBuckets(T, SA, bucket_B, n, m, PAb);
-}else {
-    // TODO make this parallel
-    /* Sort the type B* suffixes by their first two characters. */
-    for(i = m - 2; 0 <= i; --i) {
-      t = PAb[i], c0 = T[t], c1 = T[t + 1];
-      SA[--BUCKET_BSTAR(c0, c1)] = i;
-    }
-    t = PAb[m - 1], c0 = T[t], c1 = T[t + 1];
-    SA[--BUCKET_BSTAR(c0, c1)] = m - 1;
-}
-
-    
-   // TODO why does this take long if cilk is enabled? CILK sync?
-  nextTime("BSTARSORT, seq init\t\t");
+    nextTime("BSTARSORT, seq init\t\t");
 
     /* Sort the type B* substrings using sssort. */
     buf = SA + m, bufsize = n - (2 * m);
