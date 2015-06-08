@@ -121,8 +121,8 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
   /* Count the number of occurrences of the first one or two characters of each
      type A, B and B* suffix. Moreover, store the beginning position of all
      type B* suffixes into the array SA. */
-  saidx_t  block_size = 1024*1024*32;
-  saidx_t num_blocks = n / block_size + 1;	
+  saidx_t num_blocks = 64;
+  saidx_t block_size = n / num_blocks + 1;    
   saidx_t* bstar_count = new saidx_t[num_blocks];
   memset(bstar_count, 0, sizeof(saidx_t)*num_blocks);
   { // Count A,B,BSTAR types
