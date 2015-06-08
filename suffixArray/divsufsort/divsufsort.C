@@ -90,6 +90,7 @@ note:
       i += BUCKET_B(c0, c1);
     }
   }
+  nextTime("BSTARSORT, Init buck\t\t");
 
   if(0 < m) {
     /* Sort the type B* suffixes by their first two characters. */
@@ -101,6 +102,7 @@ note:
     t = PAb[m - 1], c0 = T[t], c1 = T[t + 1];
     SA[--BUCKET_BSTAR(c0, c1)] = m - 1;
 
+    nextTime("BSTARSORT, seq init\t\t");
     /* Sort the type B* substrings using sssort. */
 #ifdef _OPENMP
     tmp = omp_get_max_threads();
@@ -144,6 +146,7 @@ note:
     }
 #endif
 
+  nextTime("BSTARSORT, sssort\t\t");
     /* Compute ranks of type B* substrings. */
     for(i = m - 1; 0 <= i; --i) {
       if(0 <= SA[i]) {
@@ -157,9 +160,11 @@ note:
       ISAb[SA[i]] = j;
     }
 
+  nextTime("BSTARSORT, ranks\t\t");
     /* Construct the inverse suffix array of type B* suffixes using trsort. */
     trsort(ISAb, SA, m, 1);
 
+  nextTime("BSTARSORT, trsort\t\t");
     /* Set the sorted order of tyoe B* suffixes. */
     for(i = n - 1, j = m, c0 = T[n - 1]; 0 <= i;) {
       for(--i, c1 = c0; (0 <= i) && ((c0 = T[i]) >= c1); --i, c1 = c0) { }
@@ -170,6 +175,7 @@ note:
       }
     }
 
+    nextTime("BSTARSORT, finishing of\t\t");
     /* Calculate the index of start/end point of each bucket. */
     BUCKET_B(ALPHABET_SIZE - 1, ALPHABET_SIZE - 1) = n; /* end point */
     for(c0 = ALPHABET_SIZE - 2, k = m - 1; 0 <= c0; --c0) {
