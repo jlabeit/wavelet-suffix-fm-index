@@ -113,13 +113,15 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
   saint_t c0, c1;
 
   /* Initialize bucket arrays. */
-  parallel_for(saidx_t i_ = 0; i_ < BUCKET_A_SIZE; ++i_) { bucket_A[i_] = 0; }
-  parallel_for(saidx_t i_ = 0; i_ < BUCKET_B_SIZE; ++i_) { bucket_B[i_] = 0; }
+  //parallel_for(saidx_t i_ = 0; i_ < BUCKET_A_SIZE; ++i_) { bucket_A[i_] = 0; }
+  //parallel_for(saidx_t i_ = 0; i_ < BUCKET_B_SIZE; ++i_) { bucket_B[i_] = 0; }
+  memset(bucket_A, 0, sizeof(saidx_t)*BUCKET_A_SIZE);
+  memset(bucket_B, 0, sizeof(saidx_t)*BUCKET_B_SIZE);
 
   /* Count the number of occurrences of the first one or two characters of each
      type A, B and B* suffix. Moreover, store the beginning position of all
      type B* suffixes into the array SA. */
-  saidx_t  block_size = 1024*1024;
+  saidx_t  block_size = 1024*1024*32;
   saidx_t num_blocks = n / block_size + 1;	
   saidx_t* bstar_count = new saidx_t[num_blocks];
   memset(bstar_count, 0, sizeof(saidx_t)*num_blocks);
