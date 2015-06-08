@@ -434,6 +434,34 @@ struct is_in_bucket_update {
 	}	
 };
 
+class cached_bucket_writer {
+	private:
+	static const saidx_t BUF_SIZE = 1024;
+	saidx_t** buffers; // Für each block, for earch bucket BUF_SIZE spots
+	saidx_t num_blocks;
+	saidx_t num_buckets;
+	saidx_t* bucket_offsets;
+
+	public:
+	cached_bucket_writer(saidx_t num_blocks_, saidx_t* bucket_offsets_, saidx_t num_buckets_) : 
+		num_blocks(num_blocks_), 
+		bucket_offsets_(bucket_offsets),
+       		num_buckets(num_buckets_)	{
+			buffers = new saidx_t*[num_blocks];
+			parallel_for (saidx_t b = 0; b < num_blocks; b++) {
+				buffers[b] = new saidx_t[BUF_SIZE*num_buckets];		
+			}
+	}
+	~cached_bucket_writer() {
+		parallel_for (saidx_t b = 0; b < num_blocks; b++) delete[] buffers[b];
+		delete [] buffers;
+	}
+	inline void writeToBucket(saidx_t block, saint_t bucket) {
+			
+
+	}
+};
+
 /* Constructs the suffix array by using the sorted order of type B* suffixes. */
 static
 void
@@ -525,37 +553,39 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
   for (c1 = 0; c1 < ALPHABET_SIZE; c1++) {
 	  // If not initialized part of bucket
 	  while (BUCKET_A(c1) <= BUCKET_B(c1,c1) || c1 == ALPHABET_SIZE-1) { // If hit uninitialized block or the end
-	  end = SA + BUCKET_A(c1);
-	  saidx_t block_size = (end-start)/num_blocks + 1;
-	  // Count A type suffixes  
-	  parallel_for (saidx_t b = 0; b < num_blocks; b++) {
-		  saidx_t* s = start + b*block_size;
-		  saidx_t* e = start + std::min((b+1)*block_size, (saidx_t)(end-start));
-		  countASeq(s, e, block_bucket_cnt + BUCKET_A_SIZE*b, T);
-	  }
-	  // Prefix sum
-	  parallel_for (saidx_t i = 0; i < BUCKET_A_SIZE; i++) {
-		  saidx_t sum = bucket_A[i];
-		  for (saidx_t b = 0; b < num_blocks; b++) {
-			  sum += block_bucket_cnt[b*BUCKET_A_SIZE + i];			
-			  block_bucket_cnt[b*BUCKET_A_SIZE + i] = sum - block_bucket_cnt[b*BUCKET_A_SIZE + i];
+		  end = SA + BUCKET_A(c1);
+		  saidx_t block_size = (end-start)/num_blocks + 1;
+		  // Count A type suffixes  
+		  parallel_for (saidx_t b = 0; b < num_blocks; b++) {
+			  saidx_t* s = start + b*block_size;
+			  saidx_t* e = start + std::min((b+1)*block_size, (saidx_t)(end-start));
+			  countASeq(s, e, block_bucket_cnt + BUCKET_A_SIZE*b, T);
 		  }
-	  }
-	  // Sort the A suffixes to the correct place
-	  parallel_for (saidx_t b = 0; b < num_blocks; b++) {
-		saidx_t* s = start + b*block_size;
-		saidx_t* e = start + std::min((b+1)*block_size, (saidx_t)(end-start));
-		fillASeq(s, e, block_bucket_cnt + BUCKET_A_SIZE*b, T, SA);
-	  }
-	  // Update block positions
-	  for (saidx_t i = 0; i < BUCKET_A_SIZE; i++)
-		bucket_A[i] = block_bucket_cnt[(num_blocks-1)*BUCKET_A_SIZE + i];		  
-	  // Do rest of block A sequantially 
-	  start = end;
-	  if (start - SA == n) break;
-	  //end = SA + BUCKET_B(c1,c1)+1;
-	  //fillASeq(start, end, bucket_A, T, SA);
-	  //start = end;
+		  // Prefix sum
+		  parallel_for (saidx_t i = 0; i < BUCKET_A_SIZE; i++) {
+			  saidx_t sum = bucket_A[i];
+			  for (saidx_t b = 0; b < num_blocks; b++) {
+				  sum += block_bucket_cnt[b*BUCKET_A_SIZE + i];			
+				  block_bucket_cnt[b*BUCKET_A_SIZE + i] = sum - block_bucket_cnt[b*BUCKET_A_SIZE + i];
+			  }
+		  }
+		  // Sort the A suffixes to the correct place
+		  parallel_for (saidx_t b = 0; b < num_blocks; b++) {
+			  saidx_t* s = start + b*block_size;
+			  saidx_t* e = start + std::min((b+1)*block_size, (saidx_t)(end-start));
+			  fillASeq(s, e, block_bucket_cnt + BUCKET_A_SIZE*b, T, SA);
+		  }
+		  // Update block positions
+		  for (saidx_t i = 0; i < BUCKET_A_SIZE; i++)
+			  bucket_A[i] = block_bucket_cnt[(num_blocks-1)*BUCKET_A_SIZE + i];		  
+		  start = end;
+		  if (start - SA == n) break;
+		  // if not much left of the block do sequentially
+		  if ( SA + BUCKET_B(c1,c1) - start <  64 * 1024) {
+			  end = SA + BUCKET_B(c1,c1)+1;
+			  fillASeq(start, end, bucket_A, T, SA);
+			  start = end;
+		  }
 	  }
   }
   delete[] block_bucket_cnt;
