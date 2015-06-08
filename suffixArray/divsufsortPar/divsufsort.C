@@ -174,6 +174,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 	cilk_spawn calculateBucketOffsets(bucket_A, bucket_B);	// Buckets offsets can be calculated during the second pass
 	delete [] tempBA;
 	delete [] tempBB;
+  nextTime("BSTARSORT, Init buck\t\t");
 	// Write position of BSTAR suffixes to the end of SA array
 	// Pack all elements i from [0,n-1] to SA+n-m such that i is a BSTAR suffix	
 	parallel_for (saidx_t b = 0; b < num_blocks; b++) {
