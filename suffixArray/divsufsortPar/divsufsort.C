@@ -135,15 +135,14 @@ void initBuckets(const sauchar_t *T, saidx_t *SA,
 			} while((0 <= --i) && ((c0 = T[i]) >= c1));
 			if(0 <= i) {
 				/* type B* suffix. */
-				++RED_BUCKET_BSTAR(c0, c1);
-				(*reducer_m)++;
+				//++RED_BUCKET_BSTAR(c0, c1);
+				//(*reducer_m)++;
 				/* type B suffix. */
 				for(--i, c1 = c0; (0 <= i) && ((c0 = T[i]) <= c1); --i, c1 = c0) {
-					++RED_BUCKET_B(c0, c1);
+					//++RED_BUCKET_B(c0, c1);
 				}
 			}	
 		}
-		printf("%d\n", b);
 	}
 	m = 0; // inclusive prefix sum
 	for (int b = 0; b < num_blocks; b++) {
