@@ -143,6 +143,7 @@ void initBuckets(const sauchar_t *T, saidx_t *SA,
 				}
 			}	
 		}
+		printf("%d\n", b);
 	}
 	m = 0; // inclusive prefix sum
 	for (int b = 0; b < num_blocks; b++) {
