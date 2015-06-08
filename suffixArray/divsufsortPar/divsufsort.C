@@ -130,6 +130,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 	memset(tempBA, 0, sizeof(saidx_t)*num_blocks*BUCKET_A_SIZE);
 	saidx_t* tempBB = new saidx_t[num_blocks*BUCKET_B_SIZE];
 	memset(tempBB, 0, sizeof(saidx_t)*num_blocks*BUCKET_B_SIZE);
+  nextTime("BSTARSORT, Init buck\t\t");
 	parallel_for (saidx_t b = 0; b < num_blocks; b++) {
 		// Init values with 0
 		saidx_t *reducer_m = (bstar_count + b);
