@@ -113,7 +113,7 @@ void initBuckets(const sauchar_t *T, saidx_t *SA,
 	memset(tempBB, 0, sizeof(saidx_t)*num_blocks*BUCKET_B_SIZE);
 	parallel_for (saidx_t b = 0; b < num_blocks; b++) {
 		// Init values with 0
-		saidx_t *reducer_m = (bstar_count + b);
+		saidx_t reducer_m = 0;
 		saidx_t* reducer_bucket_A = tempBA + b * BUCKET_A_SIZE;
 		saidx_t* reducer_bucket_B = tempBB + b * BUCKET_B_SIZE;
 
@@ -135,14 +135,15 @@ void initBuckets(const sauchar_t *T, saidx_t *SA,
 			} while((0 <= --i) && ((c0 = T[i]) >= c1));
 			if(0 <= i) {
 				/* type B* suffix. */
-				//++RED_BUCKET_BSTAR(c0, c1);
-				//(*reducer_m)++;
+				++RED_BUCKET_BSTAR(c0, c1);
+				reducer_m++;
 				/* type B suffix. */
 				for(--i, c1 = c0; (0 <= i) && ((c0 = T[i]) <= c1); --i, c1 = c0) {
-					//++RED_BUCKET_B(c0, c1);
+					++RED_BUCKET_B(c0, c1);
 				}
 			}	
 		}
+		*(bstar_count + b) = reducer_m;
 	}
 	m = 0; // inclusive prefix sum
 	for (int b = 0; b < num_blocks; b++) {
