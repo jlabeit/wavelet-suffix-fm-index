@@ -102,41 +102,21 @@ void initBStarBuckets(const sauchar_t *T, saidx_t *SA, saidx_t* bucket_B, saidx_
 }
 
 
-/* Sorts suffixes of type B*. */
-static
-saidx_t
-sort_typeBstar(const sauchar_t *T, saidx_t *SA,
+void initBuckets(const sauchar_t *T, saidx_t *SA,
                saidx_t *bucket_A, saidx_t *bucket_B,
-               saidx_t n) {
-  saidx_t *PAb, *ISAb, *buf;
-  saidx_t i, j, k, t, m, bufsize;
-  saint_t c0, c1;
-
-  /* Initialize bucket arrays. */
-  //parallel_for(saidx_t i_ = 0; i_ < BUCKET_A_SIZE; ++i_) { bucket_A[i_] = 0; }
-  //parallel_for(saidx_t i_ = 0; i_ < BUCKET_B_SIZE; ++i_) { bucket_B[i_] = 0; }
-  memset(bucket_A, 0, sizeof(saidx_t)*BUCKET_A_SIZE);
-  memset(bucket_B, 0, sizeof(saidx_t)*BUCKET_B_SIZE);
-
-  /* Count the number of occurrences of the first one or two characters of each
-     type A, B and B* suffix. Moreover, store the beginning position of all
-     type B* suffixes into the array SA. */
-  saidx_t num_blocks = 64;
-  saidx_t block_size = n / num_blocks + 1;    
-  saidx_t* bstar_count = new saidx_t[num_blocks];
-  memset(bstar_count, 0, sizeof(saidx_t)*num_blocks);
-  { // Count A,B,BSTAR types
+               saidx_t n, saidx_t& m,
+	       saidx_t num_blocks, saidx_t block_size, saidx_t* bstar_count) {
+  
 	saidx_t* tempBA = new saidx_t[num_blocks*BUCKET_A_SIZE];
 	memset(tempBA, 0, sizeof(saidx_t)*num_blocks*BUCKET_A_SIZE);
 	saidx_t* tempBB = new saidx_t[num_blocks*BUCKET_B_SIZE];
 	memset(tempBB, 0, sizeof(saidx_t)*num_blocks*BUCKET_B_SIZE);
-  nextTime("BSTARSORT, Init buck\t\t");
 	parallel_for (saidx_t b = 0; b < num_blocks; b++) {
 		// Init values with 0
 		saidx_t *reducer_m = (bstar_count + b);
 		saidx_t* reducer_bucket_A = tempBA + b * BUCKET_A_SIZE;
 		saidx_t* reducer_bucket_B = tempBB + b * BUCKET_B_SIZE;
-		
+
 		saidx_t s = std::min(n, block_size * (b+1)) - 1;
 		saidx_t e = block_size * b;
 		sauchar_t c0,c1;
@@ -164,7 +144,6 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 			}	
 		}
 	}
-  nextTime("BSTARSORT, Init buck\t\t");
 	m = 0; // inclusive prefix sum
 	for (int b = 0; b < num_blocks; b++) {
 		m += bstar_count[b];
@@ -204,8 +183,34 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 			}	
 		}
 	}
-  }
-  cilk_sync; // Make sure bucket calculation is done
+}
+
+
+/* Sorts suffixes of type B*. */
+static
+saidx_t
+sort_typeBstar(const sauchar_t *T, saidx_t *SA,
+               saidx_t *bucket_A, saidx_t *bucket_B,
+               saidx_t n) {
+  saidx_t *PAb, *ISAb, *buf;
+  saidx_t i, j, k, t, m, bufsize;
+  saint_t c0, c1;
+
+  /* Initialize bucket arrays. */
+  //parallel_for(saidx_t i_ = 0; i_ < BUCKET_A_SIZE; ++i_) { bucket_A[i_] = 0; }
+  //parallel_for(saidx_t i_ = 0; i_ < BUCKET_B_SIZE; ++i_) { bucket_B[i_] = 0; }
+  memset(bucket_A, 0, sizeof(saidx_t)*BUCKET_A_SIZE);
+  memset(bucket_B, 0, sizeof(saidx_t)*BUCKET_B_SIZE);
+
+  /* Count the number of occurrences of the first one or two characters of each
+     type A, B and B* suffix. Moreover, store the beginning position of all
+     type B* suffixes into the array SA. */
+  saidx_t num_blocks = 64;
+  saidx_t block_size = n / num_blocks + 1;    
+  saidx_t* bstar_count = new saidx_t[num_blocks];
+  memset(bstar_count, 0, sizeof(saidx_t)*num_blocks);
+  initBuckets(T, SA, bucket_A, bucket_B, n, m, num_blocks, block_size, bstar_count);
+
   nextTime("BSTARSORT, Init buck\t\t");
     PAb = SA + n - m; ISAb = SA + m;
   if(0 < m) {
@@ -232,7 +237,8 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
     }
   nextTime("BSTARSORT, sssort\t\t");
     /* Compute ranks of type B* substrings. */
-    num_blocks = m / block_size + 1;
+    saidx_t num_blocks = 64;
+    saidx_t block_size = m / num_blocks + 1;
     saidx_t* block_start_rank = new saidx_t[num_blocks];
     block_start_rank[0] = 0;
     // First pass calculate block start rank
@@ -275,15 +281,16 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
     }
     delete []block_start_rank;
 
-  nextTime("BSTARSORT, ranks\t\t");
+    nextTime("BSTARSORT, ranks\t\t");
     buf = SA + (2*m);
     bufsize = n - (2*m);
     paralleltrsort(ISAb, SA, m, buf, bufsize);
     //trsort(ISAb, SA, m, 1);
 
     // TODO is the next step neccessary if SA is already sorted by paralleltrsort?
-  nextTime("BSTARSORT, trsort\t\t");
-    num_blocks = n / block_size + 1;
+    nextTime("BSTARSORT, trsort\t\t");
+    num_blocks = 64;
+    block_size = n / num_blocks + 1; // Use same blocks as when initializing bstar_count !
     /* Set the sorted order of type B* suffixes. */
     parallel_for (saidx_t b = 0; b < num_blocks; b++) {
 		saidx_t s = std::min(n, block_size * (b+1)) - 1;
