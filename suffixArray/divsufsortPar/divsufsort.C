@@ -394,7 +394,7 @@ void fillBBSeqNoInBucket (saidx_t* start, saidx_t* end, saidx_t* bucket_B, sauch
 
 class cached_bucket_writer {
 	private:
-	static const saidx_t BUF_SIZE = 16*1024;
+	static const saidx_t BUF_SIZE = 128;
 	std::pair<saidx_t, saidx_t>*** buffers; // Für each block, for earch bucket BUF_SIZE spots
 	saidx_t **buffer_pos;
 	saidx_t num_blocks;
@@ -442,7 +442,7 @@ class cached_bucket_writer {
 	}
 	void flush() {
 		parallel_for (saidx_t bucket = 0; bucket < num_buckets; bucket++) {
-			for (saidx_t block = 0; block < num_blocks; block++) flush(block, bucket);
+			parallel_for (saidx_t block = 0; block < num_blocks; block++) flush(block, bucket);
 		}
 	}
 	
