@@ -333,64 +333,8 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
   return m;
 }
 
-void countBBSeq (saidx_t* start, saidx_t* end, saidx_t* bucket_B, sauchar_t c1, const sauchar_t* T) {
-	// Set counters to 0
-	memset(bucket_B, 0, sizeof(saidx_t)*BUCKET_B_SIZE);
-	saidx_t s;
-	sauchar_t c0;
-	for (saidx_t* i = start-1; i >= end; i--) {
-		if (0 < (s = *i)) {
-			c0 = T[--s];
-			if (c0 <= c1) // If is B-type suffix
-				BUCKET_B(c0,c1)++;
-		}
-	}
-}
-void countBBSeqNoInBucket (saidx_t* start, saidx_t* end, saidx_t* bucket_B, sauchar_t c1, const sauchar_t* T) {
-	// Set counters to 0
-	memset(bucket_B, 0, sizeof(saidx_t)*BUCKET_B_SIZE);
-	saidx_t s;
-	sauchar_t c0;
-	for (saidx_t* i = start-1; i >= end; i--) {
-		if (0 < (s = *i)) {
-			c0 = T[--s];
-			if (c0 < c1) // If is B-type suffix
-				BUCKET_B(c0,c1)++;
-		}
-	}
-}
 
-void fillBBSeq (saidx_t* start, saidx_t* end, saidx_t* bucket_B, sauchar_t c1, const sauchar_t* T, saidx_t* SA) {
-	saidx_t s;
-	sauchar_t c0;
-	for (saidx_t* i = start-1; i >= end; i--) {
-		if (0 < (s = *i)) {
-			*i = ~s;
-			c0 = T[--s];
-			if ((0 < s) && (T[s-1] > c0)) { s = ~s; }
-			*(BUCKET_B(c0, c1)-- + SA) = s;
-		} else {
-			*i = ~s;
-		}
-	}
-}
 
-void fillBBSeqNoInBucket (saidx_t* start, saidx_t* end, saidx_t* bucket_B, sauchar_t c1, const sauchar_t* T, saidx_t* SA) {
-	saidx_t s;
-	sauchar_t c0;
-	for (saidx_t* i = start-1; i >= end; i--) {
-		if (0 < (s = *i)) {
-			*i = ~s;
-			c0 = T[--s];
-			if (c0 < c1) { // If no in-bucket
-				if ((0 < s) && (T[s-1] > c0)) { s = ~s; }
-				*(BUCKET_B(c0, c1)-- + SA) = s;
-			}
-		} else {
-			*i = ~s;
-		}
-	}
-}
 
 class cached_bucket_writer {
 	private:
@@ -445,6 +389,35 @@ class cached_bucket_writer {
 
 };
 
+void countBBSeq (saidx_t* start, saidx_t* end, saidx_t* bucket_B, sauchar_t c1, const sauchar_t* T) {
+	// Set counters to 0
+	memset(bucket_B, 0, sizeof(saidx_t)*BUCKET_A_SIZE);
+	saidx_t s;
+	sauchar_t c0;
+	for (saidx_t* i = start-1; i >= end; i--) {
+		if (0 < (s = *i)) {
+			c0 = T[--s];
+			if (c0 <= c1) // If is B-type suffix
+				bucket_B[c0]++;
+		}
+	}
+}
+
+void fillBBSeq (saidx_t* start, saidx_t* end, saidx_t* bucket_B, sauchar_t c1, const sauchar_t* T, saidx_t* SA) {
+	saidx_t s;
+	sauchar_t c0;
+	for (saidx_t* i = start-1; i >= end; i--) {
+		if (0 < (s = *i)) {
+			*i = ~s;
+			c0 = T[--s];
+			if ((0 < s) && (T[s-1] > c0)) { s = ~s; }
+			*(bucket_B[c0]-- + SA) = s;
+		} else {
+			*i = ~s;
+		}
+	}
+}
+
 void countASeq (saidx_t* start, saidx_t* end, saidx_t* bucket_A, const sauchar_t* T) {
 	memset(bucket_A, 0, sizeof(saidx_t)*BUCKET_A_SIZE);
 	saidx_t s;
@@ -476,18 +449,6 @@ void fillASeq (saidx_t* start, saidx_t* end, saidx_t block, const sauchar_t* T, 
 }
 
 
-struct is_in_bucket_update {
-	const sauchar_t* T;
-	saidx_t n;
-	is_in_bucket_update(const sauchar_t* T_, saidx_t n_) : T(T_), n(n_) {}
-	bool operator()(saidx_t& pos) const {
-		if (pos > 0 && T[pos] == T[pos-1]) { 
-			return true;
-		}
-		return false;
-	}	
-};
-
 
 
 /* Constructs the suffix array by using the sorted order of type B* suffixes. */
@@ -503,26 +464,12 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
   if(0 < m) {
 	/* Construct the sorted order of type B suffixes by using
  	   the sorted order of type B* suffixes. */
-	saidx_t* block_bucket_cnt = new saidx_t[num_blocks*BUCKET_B_SIZE];
+	saidx_t* block_bucket_cnt = new saidx_t[num_blocks*BUCKET_A_SIZE];
 	for (c1 = ALPHABET_SIZE-2; 0 <= c1; --c1) {
 			
 		saidx_t* start = SA + BUCKET_A(c1+1);
 		saidx_t* end = SA + BUCKET_B(c1, c1)+1;
 		saidx_t* cur_start = start;
-		// Handle in-bucket updates
-		bool old = true;
-		if (!old)
-		while (end > SA + BUCKET_BSTAR(c1,c1+1)) { // While complete bucket not initialized
-			// First parameter is start of sequence to filter, second is end of result sequence
-			saidx_t count_init = sequence::filter_rev(end, end, (cur_start-end), is_in_bucket_update(T,n));
-			cur_start = end;
-			end -= count_init;
-			BUCKET_B(c1,c1) -= count_init;
-			parallel_for (saidx_t* i = cur_start-1; i >= end; i--) {
-				saidx_t s = --(*i);
-				if((s == 0) || (T[s-1] > T[s]))  *i = ~s; // Mark A bucket
-			}	
-		}
 		// Handle cross-bucket updates
 		if (start > end) {
 		saidx_t block_size = (start-end) / num_blocks +1;
@@ -530,35 +477,29 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 		parallel_for (saidx_t b = num_blocks-1; 0 <= b; b--) {
 			saidx_t* s = std::min((b+1)*block_size + end, start);
 			saidx_t* e = b * block_size + end;
-			if (old)
-			countBBSeq(s, e, block_bucket_cnt + BUCKET_B_SIZE*b, c1, T);
-			else
-			countBBSeqNoInBucket(s, e, block_bucket_cnt + BUCKET_B_SIZE*b, c1, T);
+			countBBSeq(s, e, block_bucket_cnt + BUCKET_A_SIZE*b, c1, T);
 		}
 		// Make explusive prefix sum to calculate offsets of the bucket
-		parallel_for (saidx_t i = 0; i < BUCKET_B_SIZE; i++) {
-			saidx_t sum = bucket_B[i];
+		parallel_for (saidx_t i = 0; i < BUCKET_A_SIZE; i++) {
+			saidx_t sum = BUCKET_B(i, c1);
 			for (saidx_t b = num_blocks-1; 0 <= b; b--) {
-				sum -= block_bucket_cnt[b*BUCKET_B_SIZE + i];			
-				block_bucket_cnt[b*BUCKET_B_SIZE + i] = sum + block_bucket_cnt[b*BUCKET_B_SIZE + i];
+				sum -= block_bucket_cnt[b*BUCKET_A_SIZE + i];			
+				block_bucket_cnt[b*BUCKET_A_SIZE + i] = sum + block_bucket_cnt[b*BUCKET_A_SIZE + i];
 			}
 		}
 		// Put B suffixes into the correct buckets
 		parallel_for (saidx_t b = num_blocks-1; 0 <= b; b--) {
 			saidx_t* s = std::min((b+1)*block_size + end, start);
 			saidx_t* e = b * block_size + end;
-			if (old)
-			fillBBSeq(s, e, block_bucket_cnt + BUCKET_B_SIZE*b, c1, T, SA);
-			else
-			fillBBSeqNoInBucket(s, e, block_bucket_cnt + BUCKET_B_SIZE*b, c1, T, SA);
-		}
-		// Update new B Bucket counts
-		parallel_for (saidx_t i = 0; i < BUCKET_B_SIZE; i++) {
-			bucket_B[i] = block_bucket_cnt[i];	
+			fillBBSeq(s, e, block_bucket_cnt + BUCKET_A_SIZE*b, c1, T, SA);
 		}
 		// Handle rest of the bucket sequentially
-		if (old)
-		fillBBSeq(end, SA + BUCKET_BSTAR(c1, c1+1), bucket_B, c1, T, SA); 
+		fillBBSeq(end, SA + BUCKET_BSTAR(c1, c1+1), block_bucket_cnt, c1, T, SA); 
+
+		// Update new B Bucket counts
+		parallel_for (saidx_t i = 0; i < BUCKET_A_SIZE; i++) {
+			BUCKET_B(i,c1) = block_bucket_cnt[i];	
+		}
 		
 		}
 		//fillBBSeq(SA + BUCKET_A(c1 + 1), SA + BUCKET_BSTAR(c1, c1+1), bucket_B, c1, T, SA);
