@@ -351,7 +351,21 @@ class cached_bucket_writer {
 		memcpy(SA + offset, buffers[block] + BUF_SIZE*bucket, sizeof(saidx_t) * buffer_pos[block][bucket]);
 		buffer_pos[block][bucket] = 0;
 	}
-
+	void flush_rev(saidx_t block, saidx_t bucket) {
+		if (buffer_pos[block][bucket] == 0) {
+			return;
+		}
+		// Reverse values
+		saidx_t* s = buffers[block] + BUF_SIZE*bucket;
+		saidx_t* e = s + buffer_pos[block][bucket]-1;	
+		while (s < e) {
+			std::swap(*s, *e);
+			s++; e--;
+		}
+		saidx_t offset = bucket_offsets[block * num_buckets + bucket] + 1;
+		memcpy(SA + offset, buffers[block] + BUF_SIZE*bucket, sizeof(saidx_t) * buffer_pos[block][bucket]);
+		buffer_pos[block][bucket] = 0;
+	}
 	public:
 	cached_bucket_writer(saidx_t num_blocks_, saidx_t* bucket_offsets_, saidx_t num_buckets_, saidx_t* SA_) : 
 		num_blocks(num_blocks_), 
@@ -380,13 +394,23 @@ class cached_bucket_writer {
 		buffers[block][bucket*BUF_SIZE + buffer_pos[block][bucket]++] = value;
 		bucket_offsets[block*num_buckets + bucket]++;
 	}
+	inline void write_rev(saidx_t block, saint_t bucket, saidx_t value) {
+		if (buffer_pos[block][bucket] == BUF_SIZE) {
+			flush_rev(block, bucket);
+		}			
+		buffers[block][bucket*BUF_SIZE + buffer_pos[block][bucket]++] = value;
+		bucket_offsets[block*num_buckets + bucket]--;
+	}
 	void flush() {
 		parallel_for (saidx_t bucket = 0; bucket < num_buckets; bucket++) {
 			for (saidx_t block = 0; block < num_blocks; block++) flush(block, bucket);
 		}
 	}
-	
-
+	void flush_rev() {
+		parallel_for (saidx_t bucket = 0; bucket < num_buckets; bucket++) {
+			for (saidx_t block = 0; block < num_blocks; block++) flush_rev(block, bucket);
+		}
+	}
 };
 
 void countBBSeq (saidx_t* start, saidx_t* end, saidx_t* bucket_B, sauchar_t c1, const sauchar_t* T) {
@@ -412,7 +436,7 @@ void fillBBSeq (saidx_t* start, saidx_t* end, saidx_t block, const sauchar_t* T,
 			c0 = T[--s];
 			if ((0 < s) && (T[s-1] > c0)) { s = ~s; }
 			//*(BUCKET_B(c0,c1)-- + SA) = s;
-			bucket_writer.write(block, c0, s);
+			bucket_writer.write_rev(block, c0, s);
 		} else {
 			*i = ~s;
 		}
@@ -488,9 +512,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 
 		  saidx_t* start = SA + BUCKET_A(c1+1);
 		  saidx_t* end = SA + BUCKET_B(c1, c1)+1;
-		  saidx_t* cur_start = start;
-		  // Handle cross-bucket updates
-		  while (start > end) {
+		  if (start > end) {
 			  saidx_t block_size = (start-end) / num_blocks +1;
 			  // Count for each block how many items are put into the b buckets
 			  parallel_for (saidx_t b = num_blocks-1; 0 <= b; b--) {
@@ -512,7 +534,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 				  saidx_t* e = b * block_size + end;
 				  fillBBSeq(s, e, b, T, bucket_writer);
 			  }
-			  bucket_writer.flush();
+			  bucket_writer.flush_rev();
 
 			  // Update new B Bucket counts
 			  parallel_for (saidx_t i = 0; i < BUCKET_A_SIZE; i++) {
