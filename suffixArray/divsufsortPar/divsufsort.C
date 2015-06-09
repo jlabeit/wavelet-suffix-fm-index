@@ -392,6 +392,54 @@ void fillBBSeqNoInBucket (saidx_t* start, saidx_t* end, saidx_t* bucket_B, sauch
 	}
 }
 
+class cached_bucket_writer {
+	private:
+	static const saidx_t BUF_SIZE = 1024*512;
+	std::pair<saint_t, saidx_t>** buffers; // Für each block, for earch bucket BUF_SIZE spots
+	saidx_t *buffer_pos;
+	saidx_t num_blocks;
+	saidx_t num_buckets;
+	saidx_t* bucket_offsets;
+	saidx_t* SA;
+
+	void flush(saidx_t block) {
+		for (saidx_t i = 0; i < buffer_pos[block]; i++) {
+			SA[buffers[block][i].first] = buffers[block][i].second;
+		}
+		buffer_pos[block] = 0;
+	}
+
+	public:
+	cached_bucket_writer(saidx_t num_blocks_, saidx_t* bucket_offsets_, saidx_t num_buckets_, saidx_t* SA_) : 
+		num_blocks(num_blocks_), 
+		bucket_offsets(bucket_offsets_),
+       		num_buckets(num_buckets_), SA(SA_) {
+			buffers = new std::pair<saint_t,saidx_t>*[num_blocks];
+			buffer_pos = new saidx_t[num_blocks];
+			parallel_for (saidx_t b = 0; b < num_blocks; b++) {
+				buffers[b] = new std::pair<saint_t, saidx_t>[BUF_SIZE];		
+				buffer_pos[b] = 0;
+			}
+	}
+	~cached_bucket_writer() {
+		parallel_for (saidx_t b = 0; b < num_blocks; b++) delete[] buffers[b];
+		delete [] buffers;
+		delete [] buffer_pos;
+	}
+	inline void write(saidx_t block, saint_t bucket, saidx_t value) {
+		if (buffer_pos[block] == BUF_SIZE) {
+			flush(block);
+		}			
+		buffers[block][buffer_pos[block]++] = std::pair<saint_t, saidx_t>(bucket_offsets[block*num_buckets + bucket]++, value);
+	}
+	void flush() {
+		parallel_for(saidx_t i = 0; i < num_blocks; i++) flush(i);
+
+	}
+	
+
+};
+
 void countASeq (saidx_t* start, saidx_t* end, saidx_t* bucket_A, const sauchar_t* T) {
 	memset(bucket_A, 0, sizeof(saidx_t)*BUCKET_A_SIZE);
 	saidx_t s;
@@ -406,7 +454,7 @@ void countASeq (saidx_t* start, saidx_t* end, saidx_t* bucket_A, const sauchar_t
 
 }
 
-void fillASeq (saidx_t* start, saidx_t* end, saidx_t* bucket_A, const sauchar_t* T, saidx_t* SA) {
+void fillASeq (saidx_t* start, saidx_t* end, saidx_t block, const sauchar_t* T, cached_bucket_writer &bucket_writer) {
 	saidx_t s;
 	sauchar_t c0;
 	for (saidx_t* i = start; i < end; i++) {
@@ -414,7 +462,8 @@ void fillASeq (saidx_t* start, saidx_t* end, saidx_t* bucket_A, const sauchar_t*
 			assert(T[s - 1] >= T[s]);
 			c0 = T[--s];
 		        if((s == 0) || (T[s - 1] < c0)) { s = ~s; }
-			*(SA + BUCKET_A(c0)++) = s;
+			bucket_writer.write(block, c0, s);
+			//*(SA + BUCKET_A(c0)++) = s;
 		} else {
 			*i = ~s;
 		}
@@ -434,33 +483,7 @@ struct is_in_bucket_update {
 	}	
 };
 
-class cached_bucket_writer {
-	private:
-	static const saidx_t BUF_SIZE = 1024;
-	saidx_t** buffers; // Für each block, for earch bucket BUF_SIZE spots
-	saidx_t num_blocks;
-	saidx_t num_buckets;
-	saidx_t* bucket_offsets;
 
-	public:
-	cached_bucket_writer(saidx_t num_blocks_, saidx_t* bucket_offsets_, saidx_t num_buckets_) : 
-		num_blocks(num_blocks_), 
-		bucket_offsets_(bucket_offsets),
-       		num_buckets(num_buckets_)	{
-			buffers = new saidx_t*[num_blocks];
-			parallel_for (saidx_t b = 0; b < num_blocks; b++) {
-				buffers[b] = new saidx_t[BUF_SIZE*num_buckets];		
-			}
-	}
-	~cached_bucket_writer() {
-		parallel_for (saidx_t b = 0; b < num_blocks; b++) delete[] buffers[b];
-		delete [] buffers;
-	}
-	inline void writeToBucket(saidx_t block, saint_t bucket) {
-			
-
-	}
-};
 
 /* Constructs the suffix array by using the sorted order of type B* suffixes. */
 static
@@ -550,6 +573,8 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
   saidx_t* block_bucket_cnt = new saidx_t[num_blocks*BUCKET_A_SIZE];
   saidx_t *start = SA;
   saidx_t *end;
+  // Use buffered writing to handle chache invalidations
+  cached_bucket_writer bucket_writer(num_blocks, block_bucket_cnt, BUCKET_A_SIZE, SA); 
   for (c1 = 0; c1 < ALPHABET_SIZE; c1++) {
 	  // If not initialized part of bucket
 	  while (BUCKET_A(c1) <= BUCKET_B(c1,c1) || c1 == ALPHABET_SIZE-1) { // If hit uninitialized block or the end
@@ -573,19 +598,20 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 		  parallel_for (saidx_t b = 0; b < num_blocks; b++) {
 			  saidx_t* s = start + b*block_size;
 			  saidx_t* e = start + std::min((b+1)*block_size, (saidx_t)(end-start));
-			  fillASeq(s, e, block_bucket_cnt + BUCKET_A_SIZE*b, T, SA);
+			  fillASeq(s, e, b, T, bucket_writer);
 		  }
+		  bucket_writer.flush();
 		  // Update block positions
 		  for (saidx_t i = 0; i < BUCKET_A_SIZE; i++)
 			  bucket_A[i] = block_bucket_cnt[(num_blocks-1)*BUCKET_A_SIZE + i];		  
 		  start = end;
 		  if (start - SA == n) break;
 		  // if not much left of the block do sequentially
-		  if ( SA + BUCKET_B(c1,c1) - start <  64 * 1024) {
-			  end = SA + BUCKET_B(c1,c1)+1;
-			  fillASeq(start, end, bucket_A, T, SA);
-			  start = end;
-		  }
+		  //if ( SA + BUCKET_B(c1,c1) - start <  64 * 1024) {
+	 		  //end = SA + BUCKET_B(c1,c1)+1;
+			  //fillASeq(start, end, bucket_A, T, SA);
+			  //start = end;
+		 //}
 	  }
   }
   delete[] block_bucket_cnt;
