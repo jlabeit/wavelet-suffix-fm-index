@@ -394,19 +394,19 @@ void fillBBSeqNoInBucket (saidx_t* start, saidx_t* end, saidx_t* bucket_B, sauch
 
 class cached_bucket_writer {
 	private:
-	static const saidx_t BUF_SIZE = 1024;
-	std::pair<saint_t, saidx_t>** buffers; // Für each block, for earch bucket BUF_SIZE spots
-	saidx_t *buffer_pos;
+	static const saidx_t BUF_SIZE = 16*1024;
+	std::pair<saidx_t, saidx_t>*** buffers; // Für each block, for earch bucket BUF_SIZE spots
+	saidx_t **buffer_pos;
 	saidx_t num_blocks;
 	saidx_t num_buckets;
 	saidx_t* bucket_offsets;
 	saidx_t* SA;
 
-	void flush(saidx_t block) {
-		for (saidx_t i = 0; i < buffer_pos[block]; i++) {
-			SA[buffers[block][i].first] = buffers[block][i].second;
+	void flush(saidx_t block, saidx_t bucket) {
+		for (saidx_t i = 0; i < buffer_pos[block][bucket]; i++) {
+			SA[buffers[block][bucket][i].first] = buffers[block][bucket][i].second;
 		}
-		buffer_pos[block] = 0;
+		buffer_pos[block][bucket] = 0;
 	}
 
 	public:
@@ -414,27 +414,36 @@ class cached_bucket_writer {
 		num_blocks(num_blocks_), 
 		bucket_offsets(bucket_offsets_),
        		num_buckets(num_buckets_), SA(SA_) {
-			buffers = new std::pair<saint_t,saidx_t>*[num_blocks];
-			buffer_pos = new saidx_t[num_blocks];
+			buffers = new std::pair<saidx_t,saidx_t>**[num_blocks];
+			buffer_pos = new saidx_t*[num_blocks];
 			parallel_for (saidx_t b = 0; b < num_blocks; b++) {
-				buffers[b] = new std::pair<saint_t, saidx_t>[BUF_SIZE];		
-				buffer_pos[b] = 0;
+				buffers[b] = new std::pair<saint_t, saidx_t>*[num_buckets];		
+				buffer_pos[b] = new saidx_t[num_buckets];
+				memset(buffer_pos[b], 0, sizeof(saidx_t) * num_buckets);
+				for (saidx_t bucket = 0; bucket < num_buckets; bucket++) {
+					buffers[b][bucket] = new std::pair<saidx_t, saidx_t>[BUF_SIZE];
+				}
 			}
 	}
 	~cached_bucket_writer() {
-		parallel_for (saidx_t b = 0; b < num_blocks; b++) delete[] buffers[b];
+		parallel_for (saidx_t b = 0; b < num_blocks; b++) {
+			for (saidx_t bucket = 0; bucket < num_buckets; bucket++) delete[] buffers[b][bucket];	
+			delete[] buffers[b];
+			delete [] buffer_pos[b];
+		}
 		delete [] buffers;
 		delete [] buffer_pos;
 	}
 	inline void write(saidx_t block, saint_t bucket, saidx_t value) {
-		if (buffer_pos[block] == BUF_SIZE) {
-			flush(block);
+		if (buffer_pos[block][bucket] == BUF_SIZE) {
+			flush(block, bucket);
 		}			
-		buffers[block][buffer_pos[block]++] = std::pair<saint_t, saidx_t>(bucket_offsets[block*num_buckets + bucket]++, value);
+		buffers[block][bucket][buffer_pos[block][bucket]++] = std::pair<saidx_t, saidx_t>(bucket_offsets[block*num_buckets + bucket]++, value);
 	}
 	void flush() {
-		parallel_for(saidx_t i = 0; i < num_blocks; i++) flush(i);
-
+		parallel_for (saidx_t bucket = 0; bucket < num_buckets; bucket++) {
+			for (saidx_t block = 0; block < num_blocks; block++) flush(block, bucket);
+		}
 	}
 	
 
