@@ -394,8 +394,8 @@ void fillBBSeqNoInBucket (saidx_t* start, saidx_t* end, saidx_t* bucket_B, sauch
 
 class cached_bucket_writer {
 	private:
-	static const saidx_t BUF_SIZE = 64;
-	saidx_t*** buffers; // Für each block, for earch bucket BUF_SIZE spots
+	static const saidx_t BUF_SIZE = 1024;
+	saidx_t** buffers; // Für each block, for earch bucket BUF_SIZE spots
 	saidx_t **buffer_pos;
 	saidx_t num_blocks;
 	saidx_t num_buckets;
@@ -404,7 +404,7 @@ class cached_bucket_writer {
 
 	void flush(saidx_t block, saidx_t bucket) {
 		saidx_t offset = bucket_offsets[block * num_buckets + bucket] - buffer_pos[block][bucket];
-		memcpy(SA + offset, buffers[block][bucket], sizeof(saidx_t) * buffer_pos[block][bucket]);
+		memcpy(SA + offset, buffers[block] + BUF_SIZE*bucket, sizeof(saidx_t) * buffer_pos[block][bucket]);
 		buffer_pos[block][bucket] = 0;
 	}
 
@@ -413,20 +413,16 @@ class cached_bucket_writer {
 		num_blocks(num_blocks_), 
 		bucket_offsets(bucket_offsets_),
        		num_buckets(num_buckets_), SA(SA_) {
-			buffers = new saidx_t**[num_blocks];
+			buffers = new saidx_t*[num_blocks];
 			buffer_pos = new saidx_t*[num_blocks];
 			parallel_for (saidx_t b = 0; b < num_blocks; b++) {
-				buffers[b] = new saidx_t*[num_buckets];		
+				buffers[b] = new saidx_t[num_buckets * BUF_SIZE];		
 				buffer_pos[b] = new saidx_t[num_buckets];
 				memset(buffer_pos[b], 0, sizeof(saidx_t) * num_buckets);
-				for (saidx_t bucket = 0; bucket < num_buckets; bucket++) {
-					buffers[b][bucket] = new saidx_t[BUF_SIZE];
-				}
 			}
 	}
 	~cached_bucket_writer() {
 		parallel_for (saidx_t b = 0; b < num_blocks; b++) {
-			for (saidx_t bucket = 0; bucket < num_buckets; bucket++) delete[] buffers[b][bucket];	
 			delete[] buffers[b];
 			delete [] buffer_pos[b];
 		}
@@ -437,12 +433,12 @@ class cached_bucket_writer {
 		if (buffer_pos[block][bucket] == BUF_SIZE) {
 			flush(block, bucket);
 		}			
-		buffers[block][bucket][buffer_pos[block][bucket]++] = value;
+		buffers[block][bucket*BUF_SIZE + buffer_pos[block][bucket]++] = value;
 		bucket_offsets[block*num_buckets + bucket]++;
 	}
 	void flush() {
 		parallel_for (saidx_t bucket = 0; bucket < num_buckets; bucket++) {
-			parallel_for (saidx_t block = 0; block < num_blocks; block++) flush(block, bucket);
+			for (saidx_t block = 0; block < num_blocks; block++) flush(block, bucket);
 		}
 	}
 	
