@@ -394,7 +394,7 @@ void fillBBSeqNoInBucket (saidx_t* start, saidx_t* end, saidx_t* bucket_B, sauch
 
 class cached_bucket_writer {
 	private:
-	static const saidx_t BUF_SIZE = 1024;
+	static const saidx_t BUF_SIZE = 32;
 	saidx_t** buffers; // Für each block, for earch bucket BUF_SIZE spots
 	saidx_t **buffer_pos;
 	saidx_t num_blocks;
