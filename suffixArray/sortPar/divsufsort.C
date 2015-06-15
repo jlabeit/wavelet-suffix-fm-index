@@ -31,6 +31,7 @@
 #include "sequence.h"
 #include <sdsl/int_vector.hpp>
 #include <sdsl/rank_support_v.hpp>
+#include <stack>
 #ifdef _OPENMP
 # include <omp.h>
 #endif
@@ -294,11 +295,72 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
   return m;
 }
 
-
-
+static
+void
+construct_SA(const sauchar_t *T, saidx_t *SA,
+             saidx_t *bucket_A, saidx_t *bucket_B,
+             saidx_t n, saidx_t m, sdsl::bit_vector& bstar_flags) {
+	saidx_t num_blocks = getWorkers();
+	// Fill first m+1 values of SA with BStar suffixes in sorted order and last suffix
+	saidx_t cntBStar = 0;
+	SA[0] = n-1;
+	for (saidx_t i = 0; i < n; i++) {
+		if (bstar_flags[i] & 1) {
+			SA[SA[m+cntBStar]+1] = i;
+			cntBStar++;
+		}			
+	}
+	// Fill SA with all suffixes sorted by their length to the next bstar flag	
+	saidx_t s = 0;
+	saidx_t e = m+1;
+	std::stack<saidx_t> borders;
+	borders.push(0);
+	borders.push(1);
+	saidx_t* buffer = new saidx_t[n];
+	saidx_t len = 0;
+	while (s < e) {
+		saidx_t cur_end = e;	
+		saidx_t t;
+		for (saidx_t i = s; i < e; i++) {
+			t = SA[i]-1;				
+			if (t >= 0 && (bstar_flags[t] & 1) == 0) {
+				SA[cur_end++] = t; // write index of suffix before BSTAR
+			}
+		}
+		len++;
+		borders.push(e);
+		s = e;
+		e = cur_end;
+	}
+	e = borders.top();borders.pop();
+	saidx_t buckets[ALPHABET_SIZE];
+	while (!borders.empty()) {
+		s = borders.top(); borders.pop();
+		// Make one round radixsort with [s,e)	
+		memset(buckets, 0, sizeof(buckets));		
+		//printf("%d %d\n", s, e);
+		for (saidx_t i = s; i < e; i++) {
+			buckets[T[SA[i]+len]]++;
+		}
+		// prefix sum
+		saidx_t sum = 0;
+		for (saidx_t i = 0; i < ALPHABET_SIZE; i++) {
+			sum += buckets[i];
+			buckets[i] = sum - buckets[i];
+		}
+		// fill buckets
+		for (saidx_t i = s; i < e; i++) {
+			buffer[buckets[T[SA[i]+len]]++] = SA[i];
+		}
+		memcpy(SA + s, buffer, sizeof(saidx_t) * (e-s));
+		len--;
+	}
+	delete [] buffer;
+}
 
 
 /* Constructs the suffix array by using the sorted order of type B* suffixes. */
+/*
 static
 void
 construct_SA(const sauchar_t *T, saidx_t *SA,
@@ -332,7 +394,6 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 		buckets[i] = buckets[i-1];
 	}
 	buckets[0] = 0;
-	printf("%d %d\n", n, buckets[ALPHABET_SIZE * ALPHABET_SIZE]);
 	// Init rank support
 	sdsl::rank_support_v<1> rs;
 	sdsl::util::init_support(rs, &bstar_flags);
@@ -361,7 +422,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 		});
 	}
 	delete [] ISAb;
-}
+}*/
 
 /* Constructs the burrows-wheeler transformed string directly
    by using the sorted order of type B* suffixes. */
@@ -456,7 +517,6 @@ divsufsort(const sauchar_t *T, saidx_t *SA, saidx_t n) {
   bucket_B = (saidx_t *)malloc(BUCKET_B_SIZE * sizeof(saidx_t));
   sdsl::bit_vector bstar_flags(n,0);
   
-  /* Suffixsort. */
   if((bucket_A != NULL) && (bucket_B != NULL)) {
     startTime();    
     m = sort_typeBstar(T, SA, bucket_A, bucket_B, n, bstar_flags);
