@@ -489,6 +489,21 @@ void fillASeq (saidx_t* start, saidx_t* end, saidx_t block, const sauchar_t* T, 
 	}
 }
 
+void fillASeq (saidx_t* start, saidx_t* end, saidx_t* bucket_A, const sauchar_t* T, saidx_t* SA) {
+	saidx_t s;
+	sauchar_t c0;
+	for (saidx_t* i = start; i < end; i++) {
+		if(0 < (s = *i)) {
+			assert(T[s - 1] >= T[s]);
+			c0 = T[--s];
+		        if((s == 0) || (T[s - 1] < c0)) { s = ~s; }
+			*(SA + BUCKET_A(c0)++) = s;
+		} else {
+			*i = ~s;
+		}
+	}
+}
+
 
 
 
@@ -560,6 +575,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 	  // If not initialized part of bucket
 	  while (BUCKET_A(c1) <= BUCKET_B(c1,c1) || c1 == ALPHABET_SIZE-1) { // If hit uninitialized block or the end
 		  end = SA + BUCKET_A(c1);
+		  if (end - start > 1024) {
 		  saidx_t block_size = (end-start)/num_blocks + 1;
 		  // Count A type suffixes  
 		  parallel_for (saidx_t b = 0; b < num_blocks; b++) {
@@ -586,13 +602,12 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 		  for (saidx_t i = 0; i < BUCKET_A_SIZE; i++)
 			  bucket_A[i] = block_bucket_cnt[(num_blocks-1)*BUCKET_A_SIZE + i];		  
 		  start = end;
-		  if (start - SA == n) break;
-		  // if not much left of the block do sequentially
-		  //if ( SA + BUCKET_B(c1,c1) - start <  64 * 1024) {
-	 		  //end = SA + BUCKET_B(c1,c1)+1;
-			  //fillASeq(start, end, bucket_A, T, SA);
-			  //start = end;
-		 //}
+		  } else {
+			  if (start - SA == n) break;
+			  // if not much left of the block do sequentially
+			  fillASeq(start, end, bucket_A, T, SA);
+			  start = end;
+		  }
 	  }
   }
   delete[] block_bucket_cnt;
