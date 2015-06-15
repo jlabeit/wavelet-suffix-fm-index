@@ -308,13 +308,39 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 	// Make copy of ranks of B* suffixes
 	saidx_t* ISAb = new saidx_t[m];
 	memcpy(ISAb, SA + m, sizeof(saidx_t) *m);
+	// Init with bucket sort
+	saidx_t buckets[ALPHABET_SIZE*ALPHABET_SIZE+1];	
+	memset(buckets, 0, sizeof(buckets));
+	// Count
+	buckets[T[n-1] * ALPHABET_SIZE]++;	
+	for (saidx_t i = 0; i < n-1; i++) {
+		buckets[T[i]*ALPHABET_SIZE + T[i+1]]++;
+	}
+	// Exclusive prefix sum
+	saidx_t sum = 0;
+	for (saidx_t i = 0; i <= ALPHABET_SIZE * ALPHABET_SIZE; i++) {
+		sum += buckets[i];		
+		buckets[i] = sum - buckets[i];
+	}	
+	// Filling buckets
+	SA[buckets[T[n-1]*ALPHABET_SIZE]++] = n-1;
+	for (saidx_t i = 0; i < n-1; i++) {
+		SA[buckets[T[i]*ALPHABET_SIZE + T[i+1]]++] = i;
+	}
+	// Move buckets positions to start again
+	for (saidx_t i = ALPHABET_SIZE*ALPHABET_SIZE; i > 0; i--) {
+		buckets[i] = buckets[i-1];
+	}
+	buckets[0] = 0;
+	printf("%d %d\n", n, buckets[ALPHABET_SIZE * ALPHABET_SIZE]);
 	// Init rank support
 	sdsl::rank_support_v<1> rs;
 	sdsl::util::init_support(rs, &bstar_flags);
-	parallel_for (saidx_t i = 0; i < n; i++) SA[i] = i; // init all suffixes
 	// Sort all of them
-	std::sort(SA, SA + n, 
+	parallel_for (saidx_t b = 0; b < ALPHABET_SIZE*ALPHABET_SIZE; b++) {
+		std::sort(SA + buckets[b], SA + buckets[b+1], 
 		[&] (saidx_t a, saidx_t b) -> bool {
+			a += 2; b += 2;
 			while (a < n && b < n) {
 				if (T[a] != T[b]) return T[a] < T[b];
 				// Look if bstar rank can break the tie
@@ -333,6 +359,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 			if (a == n && b < n) return true;
 			return false;
 		});
+	}
 	delete [] ISAb;
 }
 
