@@ -526,8 +526,9 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 	  for (c1 = ALPHABET_SIZE-2; 0 <= c1; --c1) {
 
 		  saidx_t* start = SA + BUCKET_A(c1+1);
-		  saidx_t* end = SA + BUCKET_B(c1, c1)+1;
+		  saidx_t* end = SA + BUCKET_B(c1,c1)+1;
 		  if (start > end) {
+			  //if (start - end > 1024) {
 			  saidx_t block_size = (start-end) / num_blocks +1;
 			  // Count for each block how many items are put into the b buckets
 			  parallel_for (saidx_t b = num_blocks-1; 0 <= b; b--) {
