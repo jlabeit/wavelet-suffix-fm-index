@@ -1,6 +1,6 @@
-20 : trigramString_10000000 :  -r 1 -o /tmp/ofile4954_767487 : '3.5'
-6 : chr22.dna :  -r 1 -o /tmp/ofile461484_730355 : '7.14'
-1 : etext99 :  -r 1 -o /tmp/ofile53248_350854 : '37.'
-1 : proteins :  -r 1 -o /tmp/ofile40570_234841 : '113.'
-1 : wikisamp.xml :  -r 1 -o /tmp/ofile245290_971126 : '34.5'
-divsufsortPar : 0 : weighted time, min=10.253 median=10.253 mean=10.253
+20 : trigramString_10000000 :  -r 1 -o /tmp/ofile792699_55752 : '2.69', '2.63'
+6 : chr22.dna :  -r 1 -o /tmp/ofile865059_29928 : '7.99', '7.85'
+1 : etext99 :  -r 1 -o /tmp/ofile196993_816683 : '35.2', '34.7'
+1 : proteins :  -r 1 -o /tmp/ofile969029_696558 : '116.', '116.'
+1 : wikisamp.xml :  -r 1 -o /tmp/ofile958779_773675 : '30.9', '30.5'
+divsufsortPar : 0 : weighted time, min=9.686 median=9.686 mean=9.736
