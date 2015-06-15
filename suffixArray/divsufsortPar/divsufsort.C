@@ -576,8 +576,8 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 	  // If not initialized part of bucket
 	  while (BUCKET_A(c1) <= BUCKET_B(c1,c1) || c1 == ALPHABET_SIZE-1) { // If hit uninitialized block or the end
 		  end = SA + BUCKET_A(c1);
-		  if (end - start > 1024) {
 		  saidx_t block_size = (end-start)/num_blocks + 1;
+		  if (block_size > 512) {
 		  // Count A type suffixes  
 		  parallel_for (saidx_t b = 0; b < num_blocks; b++) {
 			  saidx_t* s = start + b*block_size;
