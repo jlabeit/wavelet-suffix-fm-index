@@ -215,7 +215,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
     PAb = SA + n - m; ISAb = SA + m;
   if(0 < m) {
     initBStarBuckets(T, SA, bucket_B, n, m, PAb);
-    nextTime("BSTARSORT, Init buck\t\t");
+    //nextTime("BSTARSORT, Init buck\t\t");
 
     /* Sort the type B* substrings using sssort. */
     buf = SA + m, bufsize = n - (2 * m);
@@ -235,7 +235,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
         }
       }
     }
-  nextTime("BSTARSORT, sssort\t\t");
+  //nextTime("BSTARSORT, sssort\t\t");
     /* Compute ranks of type B* substrings. */
     saidx_t block_size = m / num_blocks + 1;
     saidx_t* block_start_rank = new saidx_t[num_blocks];
@@ -280,14 +280,14 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
     }
     delete []block_start_rank;
 
-    nextTime("BSTARSORT, ranks\t\t");
+    //nextTime("BSTARSORT, ranks\t\t");
     buf = SA + (2*m);
     bufsize = n - (2*m);
-    paralleltrsort(ISAb, SA, m, buf, bufsize);
-    //trsort(ISAb, SA, m, 1);
+    //paralleltrsort(ISAb, SA, m, buf, bufsize);
+    trsort(ISAb, SA, m, 1);
 
     // TODO is the next step neccessary if SA is already sorted by paralleltrsort?
-    nextTime("BSTARSORT, trsort\t\t");
+    //nextTime("BSTARSORT, trsort\t\t");
     block_size = n / num_blocks + 1; // Use same blocks as when initializing bstar_count !
     /* Set the sorted order of type B* suffixes. */
     parallel_for (saidx_t b = 0; b < num_blocks; b++) {
@@ -329,7 +329,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
       BUCKET_B(c0, c0) = i; /* end point */
     }
   }
-  nextTime("BSTARSORT, finishing\t\t");
+  //nextTime("BSTARSORT, finishing\t\t");
   return m;
 }
 
@@ -560,7 +560,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 		  }
 	  }
   }
-  nextTime("Construct_SA, B suff\t\t");
+  //nextTime("Construct_SA, B suff\t\t");
 
   /* Construct the suffix array by using
      the sorted order of type B suffixes. */
@@ -612,7 +612,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 	  }
   }
   delete[] block_bucket_cnt;
-  nextTime("Construct_SA, A suf\t\t");
+  //nextTime("Construct_SA, A suf\t\t");
 
 }
 
