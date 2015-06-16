@@ -769,21 +769,22 @@ sssort(const sauchar_t *T, const saidx_t *PA,
   saidx_t i;
   
   if(lastsuffix != 0) { ++first; }
-  if (last - first > 4*1024*1024) {
+  //if(false) {
+  //if (last - first > 4*1024*1024) {
 	// Parallel sort
 	  //std::sort(first, last, 
 		  //[=] (const saidx_t& a, const saidx_t& b) { return 0 > ss_compare(T, PA + a, PA + b, depth);});
-	ss_compare_class F(T, PA, depth);		
-	quickSort(first, last-first, F); 
-	parallel_for (saidx_t* it = first+1; it < last; ++it) {
-		saidx_t a = *(it-1);
-		if (a < 0)
-			a = ~a;
-		saidx_t b = *it;
-		if (ss_compare(T, PA + a, PA + b, depth) == 0)
-			*it = ~*it;
-	}
-  } else { 
+//	ss_compare_class F(T, PA, depth);		
+	//quickSort(first, last-first, F); 
+	//parallel_for (saidx_t* it = first+1; it < last; ++it) {
+		//saidx_t a = *(it-1);
+		//if (a < 0)
+		//	a = ~a;
+		//saidx_t b = *it;
+		//if (ss_compare(T, PA + a, PA + b, depth) == 0)
+		//	*it = ~*it;
+	//}
+  //} else { 
 #if SS_BLOCKSIZE == 0
     ss_mintrosort(T, PA, first, last, depth);
 #else
@@ -828,7 +829,7 @@ ss_insertionsort(T, PA, a, middle, depth);
     ss_inplacemerge(T, PA, first, middle, last, depth);
   }
 #endif
-  }
+  //}
 
   if(lastsuffix != 0) {
     /* Insert last type B* suffix. */
