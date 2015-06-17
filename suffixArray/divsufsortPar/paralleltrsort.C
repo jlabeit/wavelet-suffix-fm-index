@@ -24,6 +24,7 @@
 #include "divsufsort_private.h"
 #include "parallel.h"
 #include <sdsl/select_support_mcl.hpp>
+#include <sdsl/rank_support_v.hpp>
 #include <sdsl/int_vector.hpp>
 
 #include <iostream>
@@ -67,10 +68,23 @@ struct cmp_offset {
 };
 
 
+inline void setStartSeg(saidx_t i, sdsl::bit_vector& segBounds) {
+	segBounds[i] = 1;
+}
+inline void setEndSeg(saidx_t i, sdsl::bit_vector& segBounds) {
+	segBounds[i] = segBounds[i] & 1 ? 0 : 1;	
+}
+inline uintT getStartSeg(uintT i, sdsl::select_support_mcl<1,1>& ss) {
+	return ss.select(2*i+1);
+}
+inline uintT getEndSeg(uintT i, sdsl::select_support_mcl<1,1>& ss) {
+	return ss.select(2*i+2)+1;
+}
+
+/*
 void splitSegment(saidx_t start, saidx_t l, saidx_t* ISA, saidx_t* ISA_buf, saidx_t *SA,
 		  bool addRanks, cmp_offset F, sdsl::bit_vector& segBounds) {
   if (l < 1000) { // sequential version
-
     if (addRanks) {
       // if following two loops are fused performance goes way down?
       saidx_t name = start;
@@ -82,93 +96,123 @@ void splitSegment(saidx_t start, saidx_t l, saidx_t* ISA, saidx_t* ISA_buf, said
     }
 
     saidx_t name = start;
+    setStartSeg(start, segBounds);
     for (saidx_t i=start+1; i < start + l; i++) {
       if (F(SA[i-1]) != F(SA[i])) {
-	segBounds[i-1] = 1;
+	setEndSeg(i-1, segBounds);
+	setStartSeg(i, segBounds);
 	name = i;
-      } else segBounds[i-1] = 0;
+      } //else segBounds[i-1] = 0;
     }
-    segBounds[start+l-1] = 1;
-
+    setEndSeg(start+l-1, segBounds);
   } else { // parallel version
     uintT *names = newA(uintT,l);
 
-    parallel_for (uintT i = start+1;  i < l;  i++) 
-	names[i] = (F(SA[i]) != F(SA[i-1])) ? (i-start) : 0;
+    parallel_for (uintT i = start+1;  i < start + l;  i++) 
+	names[i-start] = (F(SA[i]) != F(SA[i-1])) ? (i-start) : 0;
     names[0] = 0;
     sequence::scanI(names,names,l,utils::maxF<uintT>(),(uintT)0);
     if (addRanks) 
       parallel_for (uintT i = start;  i < start + l;  i++) 
 	ISA_buf[SA[i]] = names[i-start]+start+1;
 
+    setStartSeg(start, segBounds);
     parallel_for (uintT i =1;  i < l;  i++)
-      if (names[i] == i) 
-	segBounds[i-1 + start] = 1;
-      else segBounds[i-1 + start] = 0;
-    segBounds[l-1+start] = 1;
+      if (names[i] == i) {
+	setEndSeg(i-1 + start, segBounds);
+    	setStartSeg(i+start, segBounds);
+      } //else segBounds[i-1 + start] = 0;
+    setEndSeg(l-1+start, segBounds);
 
     free(names);
   }
-}  
+}*/  
 
-uintT getStartSeg(uintT i, sdsl::select_support_mcl<1,1>& ss) {
-	return ss.select(2*i+1);
-}
-uintT getEndSeg(uintT i, sdsl::select_support_mcl<1,1>& ss) {
-	return ss.select(2*i+2)+1;
+const uintT BLOCK_SIZE = 1024*512;
+
+
+void splitSegmentsParallel(sdsl::bit_vector& segBounds, sdsl::select_support_mcl<1,1>& ss, sdsl::rank_support_v<1,1>& rs, saidx_t* ISA, saidx_t* SA, saidx_t n, saidx_t offset, cmp_offset F) {
+	uintT nSegs = rs.rank(n) / 2;
+	printf("%d\n", nSegs);
+	sdsl::bit_vector segBoundsBuf(n,0);
+	// First round do all comparisons
+	for (uintT seg = 0; seg < nSegs; seg++) {
+		saidx_t start = getStartSeg(seg, ss);
+		saidx_t end = getEndSeg(seg, ss);
+		// By definition first value is a 1
+		segBoundsBuf[start] = 1;
+		for (saidx_t i = start + 1; i < end; i++) {
+			if (F(SA[i-1]) != F(SA[i])) segBoundsBuf[i] = 1;
+		}
+	}
+	// Second run update ISA
+	for (uintT seg = 0; seg < nSegs; seg++) {
+		saidx_t start = getStartSeg(seg, ss);
+		saidx_t end = getEndSeg(seg, ss);
+		saidx_t name = start;
+		for (saidx_t i = start; i < end; i++) {
+			if (segBoundsBuf[i]&1) name = i;
+			ISA[SA[i]] = name;
+		}	
+	}
+	sdsl::bit_vector segBoundsBuf2(n,0);
+	// Third round mark beginning end end of new segments 
+	for (uintT seg = 0; seg < nSegs; seg++) {
+		saidx_t start = getStartSeg(seg, ss);
+		saidx_t end = getEndSeg(seg, ss);
+		// Extra case for start
+		if ((segBoundsBuf[start+1] & 1) == 0) segBoundsBuf2[start] = 1;
+		for (saidx_t i = start; i < end-1; i++) {
+			// Is beginnign of zero run
+			if ( (segBoundsBuf[i]&1) && !(segBoundsBuf[i+1]&1)) segBoundsBuf2[i] = 1;					
+			// End of a zero run
+			if ( !(segBoundsBuf[i]&1) && (segBoundsBuf[i+1]&1)) segBoundsBuf2[i] = 1;
+		}
+		// Extra case for end
+		if (!(segBoundsBuf[end-1]&1)) segBoundsBuf2[end-1] = 1;
+	}
+	segBounds = segBoundsBuf2;
 }
 
-bool brokenCilk(saidx_t *SA, saidx_t offset, saidx_t n, saidx_t* ISA, saidx_t* ISA_buf, sdsl::bit_vector& segBounds, sdsl::bit_vector& segBoundsBuf) {
-  // TODO do this in parallel and fast
-  uintT nSegs = 0;
-  for (uintT i = 0; i < n; i++) {
-	if (segBounds[i] & 1) nSegs++;
-  }
-  nSegs /= 2;
-  if(nSegs == 0) return false;
+void sortSegmentsParallel(uintT nSegs, sdsl::select_support_mcl<1,1>& ss, saidx_t* ISA, saidx_t* SA, saidx_t n, saidx_t offset) {
+	parallel_for (uintT i=0; i < nSegs; i++) {
+		saidx_t start = getStartSeg(i, ss);
+		saidx_t *SAi = SA + start;
+		saidx_t l = getEndSeg(i, ss) - start;
+		if (l >= 256) 
+			intSort::iSort(SAi, l, n , cmp_offset(SA, ISA, n, offset));
+		else
+			quickSort(SAi,l,cmp_offset(SA, ISA, n, offset));
+	}
+}
+
+bool brokenCilk(saidx_t *SA, saidx_t offset, saidx_t n, saidx_t* ISA, sdsl::bit_vector& segBounds, sdsl::select_support_mcl<1,1>& ss, sdsl::rank_support_v<1,1>& rs) {
+  saidx_t nSegs = rs.rank(n) / 2;
   // Init select/rank support on segBounds
-  sdsl::select_support_mcl<1,1> ss(&segBounds);
-  parallel_for (uintT i=0; i < nSegs; i++) {
-    saidx_t start = getStartSeg(i, ss);
-    saidx_t *SAi = SA + start;
-    saidx_t l = getEndSeg(i, ss) - start;
-    if (l >= 256) 
-      intSort::iSort(SAi, l, n , cmp_offset(SA, ISA, n, offset));
-    else
-      quickSort(SAi,l,cmp_offset(SA, ISA, n, offset));
-  }
+  sortSegmentsParallel(nSegs, ss, ISA, SA, n, offset);
   // Write new seg bounds to buffer
-  memset(segBoundsBuf.data(), 0, segBoundsBuf.bit_size() / 8); // Fill with zeros
-
-  parallel_for (uintT i=0; i < nSegs; i++) {
-    uintT start = getStartSeg(i, ss);
-    uintT length = getEndSeg(i, ss)-start;
-    splitSegment(start, length, 
-		 ISA, ISA_buf, SA, 1, cmp_offset(SA, ISA, n, offset), segBoundsBuf);
-  }
-  parallel_for(saidx_t i = 0; i < n; i++) ISA[i] = ISA_buf[i];
-
-  swap(segBounds, segBoundsBuf);
+  splitSegmentsParallel(segBounds, ss, rs, ISA, SA, n, offset, cmp_offset(SA, ISA, n, offset));
+  // Rebuild rank and select support
+  rs = sdsl::rank_support_v<1,1>(&segBounds);
+  if (rs.rank(n) == 0) return false;
+  ss = sdsl::select_support_mcl<1,1>(&segBounds);
   return true;
 }
 
 void paralleltrsort(saidx_t* ISA, saidx_t* SA, saidx_t n, saidx_t* buf, saidx_t buffer_len) {
 	saidx_t offset = 1;
-	saidx_t *ISA_buf = (buffer_len >= n) ? buf : newA(saidx_t,n);
-	parallel_for(saidx_t i = 0; i < n; i++) ISA_buf[i] = ++ISA[i]; // Make 1 based index
 	sdsl::bit_vector segBounds(n,0);
-	sdsl::bit_vector segBoundsBuf(n,0); 
+	segBounds[0] = 1; segBounds[n-1] = 1;
+	sdsl::select_support_mcl<1,1> ss(&segBounds);
+	sdsl::rank_support_v<1,1> rs(&segBounds);
 	// Init segBounds
-	splitSegment(0, n, ISA, ISA_buf, SA, 0, cmp_offset(SA, ISA, n, 0), segBoundsBuf);
+	splitSegmentsParallel(segBounds, ss, rs, ISA,  SA, n, 0, cmp_offset(SA, ISA, n, 0));
+	ss = sdsl::select_support_mcl<1,1>(&segBounds);
+	rs = sdsl::rank_support_v<1,1>(&segBounds);
 	while (true) {
 		utils::myAssert(offset <= n,  "Suffix Array:  Too many rounds");
-		if (!brokenCilk(SA, offset, n, ISA, ISA_buf, segBounds, segBoundsBuf)) break;
+		if (!brokenCilk(SA, offset, n, ISA, segBounds, ss, rs)) break;
 		// double offset		
 	    	offset = 2 * offset;			
 	}
-	// Use 0 based index again
-	parallel_for (saidx_t i = 0; i < n; i++) {
-		ISA[i]--;
-	}
-	if (buffer_len < n) free(ISA_buf);
 }

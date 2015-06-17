@@ -283,8 +283,8 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
     //nextTime("BSTARSORT, ranks\t\t");
     buf = SA + (2*m);
     bufsize = n - (2*m);
-    //paralleltrsort(ISAb, SA, m, buf, bufsize);
-    trsort(ISAb, SA, m, 1);
+    paralleltrsort(ISAb, SA, m, buf, bufsize);
+    //trsort(ISAb, SA, m, 1);
 
     // TODO is the next step neccessary if SA is already sorted by paralleltrsort?
     //nextTime("BSTARSORT, trsort\t\t");
