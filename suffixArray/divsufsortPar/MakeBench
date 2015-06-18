@@ -48,7 +48,7 @@ $(TIME).o : $(TIME).C $(TIME_GLOBAL_REQUIRE) $(TIME_REQUIRE)
 
 # Make benchmark
 $(BNCHMRK) : $(TIME).o $(OBJS)
-	$(PCC) $(PLFLAGS) -o $@ $(TIME).o $(OBJS)
+	$(PCC) $(PLFLAGS) -o $@ $(TIME).o $(OBJS) $(LIBS)
 
 clean :
 	rm -f $(BNCHMRK) *.o *.pyc
