@@ -74,10 +74,10 @@ inline void setStartSeg(saidx_t i, sdsl::bit_vector& segBounds) {
 inline void setEndSeg(saidx_t i, sdsl::bit_vector& segBounds) {
 	segBounds[i] = segBounds[i] & 1 ? 0 : 1;	
 }
-inline uintT getStartSeg(uintT i, sdsl::select_support_mcl<1,1>& ss) {
+inline saidx_t getStartSeg(uintT i, sdsl::select_support_mcl<1,1>& ss) {
 	return ss.select(2*i+1);
 }
-inline uintT getEndSeg(uintT i, sdsl::select_support_mcl<1,1>& ss) {
+inline saidx_t getEndSeg(uintT i, sdsl::select_support_mcl<1,1>& ss) {
 	return ss.select(2*i+2)+1;
 }
 
@@ -128,50 +128,117 @@ void splitSegment(saidx_t start, saidx_t l, saidx_t* ISA, saidx_t* ISA_buf, said
   }
 }*/  
 
-const uintT BLOCK_SIZE = 1024*512;
+const saidx_t BLOCK_SIZE = 1024;
 
 
 void splitSegmentsParallel(sdsl::bit_vector& segBounds, sdsl::select_support_mcl<1,1>& ss, sdsl::rank_support_v<1,1>& rs, saidx_t* ISA, saidx_t* SA, saidx_t n, saidx_t offset, cmp_offset F) {
 	uintT nSegs = rs.rank(n) / 2;
-	printf("%d\n", nSegs);
 	sdsl::bit_vector segBoundsBuf(n,0);
+	saidx_t num_blocks = n / BLOCK_SIZE +1;
+	saidx_t* names = new saidx_t[num_blocks]; // Keep track of last name of segments spanning blocks
+	bool* first_comp = new bool[num_blocks];
+
 	// First round do all comparisons
-	for (uintT seg = 0; seg < nSegs; seg++) {
-		saidx_t start = getStartSeg(seg, ss);
-		saidx_t end = getEndSeg(seg, ss);
-		// By definition first value is a 1
-		segBoundsBuf[start] = 1;
-		for (saidx_t i = start + 1; i < end; i++) {
-			if (F(SA[i-1]) != F(SA[i])) segBoundsBuf[i] = 1;
+	parallel_for (saidx_t b = 0; b < num_blocks; b++) {
+		saidx_t bs = b * BLOCK_SIZE;
+		saidx_t be = std::min(n, (b+1)*BLOCK_SIZE);
+		// Get first/last segment in block
+		saidx_t sb = rs.rank(bs)/2;
+		saidx_t se = (rs.rank(be)+1) / 2;
+		names[b] = -1;// -1 means not set
+		for (saidx_t seg = sb; seg < se; seg++) { // Go over all segments
+			saidx_t start = getStartSeg(seg,ss);
+			saidx_t end = std::min(be, getEndSeg(seg,ss));
+			if (start >= bs) {
+				// By definition first value is 1
+				segBoundsBuf[start] = 1;
+				names[b] = start;
+			} else {  // segments starts in previous block
+				start = bs-1;
+				first_comp[b] = F(SA[start]) != F(SA[start+1]); // Save comparison with element from previous block
+			}
+			for (saidx_t i = start + 1; i < end; i++) {
+				if (F(SA[i-1]) != F(SA[i])) { segBoundsBuf[i] = 1; names[b] = i;}
+			}
 		}
 	}
-	// Second run update ISA
+	// Pass names across multiple blocks TODO : in paralle
+	for (saidx_t b = 1; b < num_blocks; b++) {
+		if (names[b] == -1)  names[b] = names[b-1];
+	}
+	
+	// Second round mark beginning end end of new segments, update ISA 
+	parallel_for (saidx_t b = 0; b < num_blocks; b++) {
+		saidx_t bs = b * BLOCK_SIZE;
+		saidx_t be = std::min(n, (b+1)*BLOCK_SIZE);
+		// Get first/last segment in block
+		saidx_t sb = rs.rank(bs)/2;
+		saidx_t se = (rs.rank(be)+1) / 2;
+		bool eval;
+		saidx_t name, start, end;
+		saidx_t tmp_seg_end;
+		for (saidx_t seg = sb; seg < se; seg++) {
+			start = std::max(bs, getStartSeg(seg,ss));
+			tmp_seg_end = getEndSeg(seg,ss);
+			end = std::min(be, tmp_seg_end);
+			name = b == 0 ? start : names[b-1];
+			for (saidx_t i = start; i < end-1; i++) {
+				eval = segBoundsBuf[i] & 1;
+				// Update name and isa
+				if (eval) name = i;
+				ISA[SA[i]] = name;
+				// Is beginning of zero run
+				if (eval && !(segBoundsBuf[i+1]&1)) segBoundsBuf[i] = 1;
+				// End of zero run
+				else if( !eval && (segBoundsBuf[i+1]&1)) segBoundsBuf[i] = 1;
+				else if (eval) segBoundsBuf[i] = 0;
+			}
+			eval = segBoundsBuf[end-1];
+			if (eval) name = end-1;
+			ISA[SA[end-1]] = name;
+			// Extra case for end
+			if (end == tmp_seg_end) { // If really end of segment
+				segBoundsBuf[end-1] = eval ? 0 : 1;
+			} else { // if segment continues in next block
+				if (eval && !first_comp[b+1]) segBoundsBuf[end-1] = 1;
+				else if (!eval && first_comp[b+1]) segBoundsBuf[end-1] = 1;
+				else if (eval) segBoundsBuf[end-1] = 0;
+			}
+		}
+	}
+	
+/*		
+	// Second round mark beginning end end of new segments, update ISA 
 	for (uintT seg = 0; seg < nSegs; seg++) {
 		saidx_t start = getStartSeg(seg, ss);
 		saidx_t end = getEndSeg(seg, ss);
 		saidx_t name = start;
-		for (saidx_t i = start; i < end; i++) {
-			if (segBoundsBuf[i]&1) name = i;
-			ISA[SA[i]] = name;
-		}	
-	}
-	sdsl::bit_vector segBoundsBuf2(n,0);
-	// Third round mark beginning end end of new segments 
-	for (uintT seg = 0; seg < nSegs; seg++) {
-		saidx_t start = getStartSeg(seg, ss);
-		saidx_t end = getEndSeg(seg, ss);
-		// Extra case for start
-		if ((segBoundsBuf[start+1] & 1) == 0) segBoundsBuf2[start] = 1;
+		bool eval;
 		for (saidx_t i = start; i < end-1; i++) {
+			eval = segBoundsBuf[i] & 1;
+			// ISA
+			if (eval) name = i;
+			ISA[SA[i]] = name;
 			// Is beginnign of zero run
-			if ( (segBoundsBuf[i]&1) && !(segBoundsBuf[i+1]&1)) segBoundsBuf2[i] = 1;					
+			if ( eval && !(segBoundsBuf[i+1]&1)) segBoundsBuf[i] = 1;					
 			// End of a zero run
-			if ( !(segBoundsBuf[i]&1) && (segBoundsBuf[i+1]&1)) segBoundsBuf2[i] = 1;
+			else if ( !eval && (segBoundsBuf[i+1]&1)) segBoundsBuf[i] = 1;
+			else if (eval) segBoundsBuf[i] = 0;
 		}
+		eval = segBoundsBuf[end-1];
+		// ISA
+		if (eval) name = end-1;
+		ISA[SA[end-1]] = name;
 		// Extra case for end
-		if (!(segBoundsBuf[end-1]&1)) segBoundsBuf2[end-1] = 1;
+		if (!eval) segBoundsBuf[end-1] = 1;
+		else segBoundsBuf[end-1] = 0;
 	}
-	segBounds = segBoundsBuf2;
+*/
+	//for (int i = 0; i < n; i++) printf("%d ", segBoundsBuf[i]&1); printf("\n");
+	//for (int i = 0; i < n; i++) printf("%d ", ISA[SA[i]]); printf("\n");
+	swap(segBounds, segBoundsBuf);
+	delete [] names;
+	delete [] first_comp;
 }
 
 void sortSegmentsParallel(uintT nSegs, sdsl::select_support_mcl<1,1>& ss, saidx_t* ISA, saidx_t* SA, saidx_t n, saidx_t offset) {
