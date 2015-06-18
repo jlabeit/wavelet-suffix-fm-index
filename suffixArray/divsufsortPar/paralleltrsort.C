@@ -128,7 +128,7 @@ void splitSegment(saidx_t start, saidx_t l, saidx_t* ISA, saidx_t* ISA_buf, said
   }
 }*/  
 
-const saidx_t BLOCK_SIZE = 1024;
+const saidx_t BLOCK_SIZE = 128*1024;
 
 
 void splitSegmentsParallel(sdsl::bit_vector& segBounds, sdsl::select_support_mcl<1,1>& ss, sdsl::rank_support_v<1,1>& rs, saidx_t* ISA, saidx_t* SA, saidx_t n, saidx_t offset, cmp_offset F) {
