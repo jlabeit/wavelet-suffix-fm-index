@@ -3,7 +3,7 @@
 bnchmrk="SA"
 benchmark="Suffix Array"
 checkProgram="../common/SACheck"
-dataDir = "../sequenceData/data"
+dataDir = "../../sequenceData/data"
 
 tests = [
     [20, "trigramString_10000000", "", ""],
