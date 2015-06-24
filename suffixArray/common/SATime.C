@@ -37,13 +37,14 @@ void timeSuffixArray(unsigned char* s, long n, int rounds, char* outFile) {
   R = suffixArray(s, n); 
   for (int i=0; i < rounds; i++) {
     startTime();
+    delete[] R;
     R = suffixArray(s, n);
     nextTimeN();
   }
   cout<<"Peak-memory: " <<getPeakRSS() / (1024*1024) << endl;
   cout << endl;
   if (outFile != NULL) writeIntArrayToFile((uintT*) R, (uintT) n, outFile);
-  delete R;
+  delete[] R;
 }
 
 int parallel_main(int argc, char* argv[]) {
