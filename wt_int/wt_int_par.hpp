@@ -31,10 +31,10 @@ Copyright (C) 2009 Simon Gog
 //#include "util.hpp"
 #include <sdsl/sdsl_concepts.hpp>
 #include <sdsl/int_vector.hpp>
-#include "rank_support_v_par.hpp"
-//#include <sdsl/rank_support_v.hpp>
-#include "select_support_mcl_par.hpp"
-//#include <sdsl/select_support_mcl.hpp>
+//#include "rank_support_v_par.hpp"
+#include <sdsl/rank_support_v.hpp>
+//#include "select_support_mcl_par.hpp"
+#include <sdsl/select_support_mcl.hpp>
 #include <sdsl/wt_helper.hpp>
 #include <sdsl/util.hpp>
 
@@ -512,6 +512,8 @@ class wt_int
         bool empty()const {
             return m_size == 0;
         }
+	// TODO remove this again
+	bit_vector* get_m_tree() { return &m_tree; }
 
         //! Recovers the i-th symbol of the original vector.
         /*! \param i The index of the symbol in the original vector.
