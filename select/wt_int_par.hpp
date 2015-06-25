@@ -512,6 +512,8 @@ class wt_int
         bool empty()const {
             return m_size == 0;
         }
+	// TODO remove this again
+	bit_vector* get_m_tree() { return &m_tree; }
 
         //! Recovers the i-th symbol of the original vector.
         /*! \param i The index of the symbol in the original vector.
