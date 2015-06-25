@@ -232,6 +232,7 @@ class wt_int
 		wt_end =  my_offset + length -1;
 		// input offset is negative offset
 		size_type right_start = sequence::pack2Bit(source, -level_offset, destination, start, tree_data, wt_begin, wt_end +1);
+
 		if (right_start) {
 			size_type left_child_start = start;
 			size_type left_child_length = right_start;
@@ -375,6 +376,7 @@ class wt_int
         template<uint8_t int_width>
         wt_int(int_vector<int_width>& buf, size_type size, 
                uint32_t max_level=0) : m_size(size) {
+	    assert(int_width == 8 || int_width == 16 || int_width == 32 || int_width == 64); // Alphabet has to be full words, or parallel writing makes problems
             init_buffers(m_max_level);
             if (0 == m_size)
                 return;
@@ -415,6 +417,7 @@ class wt_int
         template<uint8_t int_width>
         wt_int(int_vector_buffer<int_width>& buf, size_type size,
                uint32_t max_level=0) : m_size(size) { 
+	    assert(int_width == 8 || int_width == 16 || int_width == 32 || int_width == 64); // Alphabet has to be full words, or parallel writing makes problems
 	    init_buffers(m_max_level);
             if (0 == m_size)
                 return;
@@ -522,7 +525,7 @@ class wt_int
          *       \f$ i < size() \f$
          */
         value_type operator[](size_type i)const {
-            assert(i < size());
+            assert(i <= size());
             size_type offset = 0;
             value_type res = 0;
             size_type node_size = m_size;

@@ -113,6 +113,8 @@ namespace sequence {
 
 
 
+
+
   template <class OT, class intT, class F, class G> 
   OT reduceSerial(intT s, intT e, F f, G g) {
     OT r = g(s);
