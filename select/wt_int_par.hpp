@@ -1,5 +1,5 @@
 /* sdsl - succinct data structures library
-    Copyright (C) 2009 Simon Gog
+Copyright (C) 2009 Simon Gog
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -31,9 +31,9 @@
 //#include "util.hpp"
 #include <sdsl/sdsl_concepts.hpp>
 #include <sdsl/int_vector.hpp>
-//#include "rank_support_v_par.hpp"
+#include "rank_support_v_par.hpp"
 //#include <sdsl/rank_support_v.hpp>
-//#include "select_support_mcl_par.hpp"
+#include "select_support_mcl_par.hpp"
 //#include <sdsl/select_support_mcl.hpp>
 #include <sdsl/wt_helper.hpp>
 #include <sdsl/util.hpp>
@@ -389,9 +389,9 @@ class wt_int
 
             value_type x = 1;  // variable for the biggest value in rac
             for (size_type i=0; i < m_size; ++i) {
-                if (buf[i] > x)
-                    x = buf[i];
                 s1[i] = buf[i];
+                if (s1[i] > x)
+                    x = s1[i];
             }
 
             if (max_level == 0) {
@@ -400,7 +400,6 @@ class wt_int
                 m_max_level = max_level;
             }
             init_buffers(m_max_level);
-
             size_type bit_size = m_size*m_max_level;
 	    m_tree = bit_vector_type(bit_size);
 	    std::atomic<size_type> sigma(0); 
@@ -430,11 +429,10 @@ class wt_int
 
             value_type x = 1;  // variable for the biggest value in rac
             for (size_type i=0; i < m_size; ++i) {
-                if (buf[i] > x)
-                    x = buf[i];
                 s1[i] = buf[i];
+                if (s1[i] > x)
+                    x = s1[i];
             }
-
             if (max_level == 0) {
                 m_max_level = bits::hi(x)+1; // max_level bits to represent all values range [0..x]
             } else {
@@ -447,7 +445,6 @@ class wt_int
 	    std::atomic<size_type> sigma(0); 
 	    build_recursive(0, m_size, s1, s2, (uint64_t*)m_tree.data(), sigma, 0);
 	    m_sigma = sigma.load();
-                            
             util::init_support(m_tree_rank, &m_tree);
             util::init_support(m_tree_select0, &m_tree);
             util::init_support(m_tree_select1, &m_tree);
@@ -510,9 +507,6 @@ class wt_int
         size_type size()const {
             return m_size;
         }
-
-	bit_vector* get_m_tree() { return &m_tree; }
-
 
         //! Returns whether the wavelet tree contains no data.
         bool empty()const {
