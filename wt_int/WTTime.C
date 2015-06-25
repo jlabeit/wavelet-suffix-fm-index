@@ -100,7 +100,7 @@ void timeWT(symbol* s, long n, int rounds, char* outFile, int check) {
   }
   string input_file = "@input.sdsl"; 
   sdsl::store_to_file(input, input_file);
-  sdsl::wt_int<> wt(input, n);
+  sdsl::wt_int<> wt;
   sdsl::construct(wt, input_file);
   for (int i=0; i < rounds; i++) {
     startTime();
