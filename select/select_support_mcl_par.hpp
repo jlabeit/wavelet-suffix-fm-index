@@ -334,6 +334,7 @@ void select_support_mcl<t_b,t_pat_len>::init_superblock_serial(
 		}
 		s++;
 	}
+	if (arg_cnt == m_arg_cnt) return; 
 	// get carry
 	if (s > 63) {
 		select_support_trait<t_b, t_pat_len>::args_in_the_word(data[s/64-1], carry);	
@@ -518,34 +519,34 @@ blocked_for (i, s, e, _SCAN_BSIZE<<3,
 	);
 // Calculate long/miniblocks 
 parallel_for (uint32_t i = 0; i < sb; ++i) {
-size_type cnt_s = m_superblock[i];
-size_type cnt_e = superblockend[i];
-if (cnt_e - cnt_s > m_logn4) { // Long
-    m_longsuperblock[i] = int_vector<0>(SUPER_BLOCK_SIZE, 0, bits::hi(cnt_e) + 1);
-    // Do chunks in parallel
-    parallel_for (uint32_t c = sb_to_chunk[i].first; c <= sb_to_chunk[i].second; ++c) {
-	    size_type cur_start = std::max(cnt_s, (size_type)c * (_SCAN_BSIZE<<3));
-	    size_type cur_end = std::min(cnt_e +1, (size_type)(c+1)*(_SCAN_BSIZE<<3));
-	    size_type cur_offset = cur_start == cnt_s ? 0 : (block_sum_arg[c] - i*SUPER_BLOCK_SIZE); 
-	    init_longblock_serial(m_longsuperblock[i], cur_start, cur_end, cur_offset);
-    }
-} else { // Miniblock
-    m_miniblock[i] = int_vector<0>(64, 0, bits::hi(cnt_e-cnt_s)+1);
-    init_miniblock_serial(m_miniblock[i], cnt_s, cnt_e+1);
+	size_type cnt_s = m_superblock[i];
+	size_type cnt_e = superblockend[i];
+	if (cnt_e - cnt_s > m_logn4) { // Long
+		m_longsuperblock[i] = int_vector<0>(SUPER_BLOCK_SIZE, 0, bits::hi(cnt_e) + 1);
+		// Do chunks in parallel
+		parallel_for (uint32_t c = sb_to_chunk[i].first; c <= sb_to_chunk[i].second; ++c) {
+			size_type cur_start = std::max(cnt_s, (size_type)c * (_SCAN_BSIZE<<3));
+			size_type cur_end = std::min(cnt_e +1, (size_type)(c+1)*(_SCAN_BSIZE<<3));
+			size_type cur_offset = cur_start == cnt_s ? 0 : (block_sum_arg[c] - i*SUPER_BLOCK_SIZE); 
+			init_longblock_serial(m_longsuperblock[i], cur_start, cur_end, cur_offset);
+		}
+	} else { // Miniblock
+		m_miniblock[i] = int_vector<0>(64, 0, bits::hi(cnt_e-cnt_s)+1);
+		init_miniblock_serial(m_miniblock[i], cnt_s, cnt_e+1);
 	}
-    }
-    delete[] sb_to_chunk;
-    delete []block_sum_arg;
-    // TODO do this in parallel
-    bool empty = true;
-    for (uint32_t i = 0; i < sb && empty; i++) {
+}
+delete[] sb_to_chunk;
+delete []block_sum_arg;
+// TODO do this in parallel
+bool empty = true;
+for (uint32_t i = 0; i < sb && empty; i++) {
 	if (m_longsuperblock[i].size() > 0)
 		empty = false;
-    }
-    if (empty) {
+}
+if (empty) {
 	delete []m_longsuperblock;
 	m_longsuperblock = nullptr;
-    }
+}
 }
 
 
