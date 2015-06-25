@@ -376,7 +376,7 @@ class wt_int
         template<uint8_t int_width>
         wt_int(int_vector<int_width>& buf, size_type size, 
                uint32_t max_level=0) : m_size(size) {
-	    assert(int_width > 0 && int_width % 8 == 0); // Alphabet has to be full words, or parallel writing makes problems
+	    assert(int_width == 8 || int_width == 16 || int_width == 32 || int_width == 64); // Alphabet has to be full words, or parallel writing makes problems
             init_buffers(m_max_level);
             if (0 == m_size)
                 return;
