@@ -94,7 +94,7 @@ void timeWT(symbol* s, long n, int rounds, char* outFile, int check) {
   free(A);
 
   // Version for sdsl
-  sdsl::int_vector<0> input(n, 0, sizeof(symbol)*8);
+  sdsl::int_vector<sizeof(symbol)*8> input(n, 0, sizeof(symbol)*8);
   for (uint64_t i = 0; i < n; i++) {
 	input[i] = s[i];
   }
