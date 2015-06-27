@@ -33,6 +33,9 @@
 # include <omp.h>
 #endif
 /*- Private Functions -*/
+// Input: 	The sizes if A and B buckets
+// Output: 	Bucket_A has the starting point of all A buckets
+// 		The bstar part of bucket_B has now all the ending points of the bstar buckets in the reduced problem 
 void calculateBucketOffsets(saidx_t * bucket_A, saidx_t* bucket_B) {
 /*
 note:
@@ -41,8 +44,10 @@ note:
 */
   saidx_t i,j,t;
   saint_t c0,c1;
+
   /* Calculate the index of start/end point of each bucket. */
   for(c0 = 0, i = 0, j = 0; c0 < ALPHABET_SIZE; ++c0) {
+    // i += A(c0) + B(c0,c0)
     t = i + BUCKET_A(c0);
     BUCKET_A(c0) = i + j; /* start point */
     i = t + BUCKET_B(c0, c0);
@@ -101,7 +106,7 @@ void initBStarBuckets(const sauchar_t *T, saidx_t *SA, saidx_t* bucket_B, saidx_
     SA[--BUCKET_BSTAR(c0, c1)] = m - 1;
 }
 
-
+// Input bucket_A and bucket_B are set so 0
 void initBuckets(const sauchar_t *T, saidx_t *SA,
                saidx_t *bucket_A, saidx_t *bucket_B,
                saidx_t n, saidx_t& m,
@@ -153,7 +158,11 @@ void initBuckets(const sauchar_t *T, saidx_t *SA,
 	saidx_t* SAb = SA + n - m;
 	parallel_for(saidx_t i_ = 0; i_ < BUCKET_A_SIZE; ++i_) { bucket_A[i_] = 0; for (int b = 0; b < num_blocks; b++) bucket_A[i_] += tempBA[i_ + b*BUCKET_A_SIZE]; } 
 	parallel_for(saidx_t i_ = 0; i_ < BUCKET_B_SIZE; ++i_) { bucket_B[i_] = 0; for (int b = 0; b < num_blocks; b++) bucket_B[i_] += tempBB[i_ + b*BUCKET_B_SIZE]; } 
+	// Now bucket_A and bucket_B hold the sizes of each bucket
 	cilk_spawn calculateBucketOffsets(bucket_A, bucket_B);	// Buckets offsets can be calculated during the second pass
+	// After calculateBucketOffsets finished, bucket_A holds starting positions of A buckets in final result and 
+	// bucket_B holds sizes of B buckets and ending position of BStart buckets in reduced problem
+	
 	delete [] tempBA;
 	delete [] tempBB;
 	// Write position of BSTAR suffixes to the end of SA array
@@ -215,6 +224,8 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
     PAb = SA + n - m; ISAb = SA + m;
   if(0 < m) {
     initBStarBuckets(T, SA, bucket_B, n, m, PAb);
+    // bucket_A has all the starting positions of A buckets in final result
+    // bucket_B has B bucket sizes and BStar starting positions in reduced problem
     //nextTime("BSTARSORT, Init buck\t\t");
 
     /* Sort the type B* substrings using sssort. */
@@ -308,7 +319,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 			if(0 <= i) {
 				t = i; // B* suffix
 				for(--i, c1 = c0; (0 <= i) && ((c0 = T[i]) <= c1); --i, c1 = c0) { } // B suffix
-				SA[ISAb[--j]] = ((t == 0) || (1 < (t - i))) ? t : ~t; // negative if the corresponding B bucket is empty
+				SA[ISAb[--j]] = t;
 			}
 		}
     }
@@ -329,227 +340,45 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
       BUCKET_B(c0, c0) = i; /* end point */
     }
   }
+  // bucket_A still has the starting positions of the A buckets
+  // bucket_B has the ending positions of the B buckets
+  // bucket_B(star) has the the starting positions of the complete B bucket of c saved at BUCKET_BSTAR(c,c+1)
   //nextTime("BSTARSORT, finishing\t\t");
   return m;
 }
 
 
-
-
-class cached_bucket_writer {
-	private:
-	static const saidx_t BUF_SIZE = 64;
-	saidx_t** buffers; // Für each block, for earch bucket BUF_SIZE spots
-	saidx_t **buffer_pos;
-	saidx_t num_blocks;
-	saidx_t num_buckets;
-	saidx_t* bucket_offsets;
-	saidx_t* SA;
-
-	void flush(saidx_t block, saidx_t bucket) {
-		saidx_t offset = bucket_offsets[block * num_buckets + bucket] - buffer_pos[block][bucket];
-		memcpy(SA + offset, buffers[block] + BUF_SIZE*bucket, sizeof(saidx_t) * buffer_pos[block][bucket]);
-		buffer_pos[block][bucket] = 0;
-	}
-	void flush_rev(saidx_t block, saidx_t bucket) {
-		if (buffer_pos[block][bucket] == 0) {
-			return;
-		}
-		// Reverse values
-		saidx_t* s = buffers[block] + BUF_SIZE*bucket;
-		saidx_t* e = s + buffer_pos[block][bucket]-1;	
-		while (s < e) {
-			std::swap(*s, *e);
-			s++; e--;
-		}
-		saidx_t offset = bucket_offsets[block * num_buckets + bucket] + 1;
-		memcpy(SA + offset, buffers[block] + BUF_SIZE*bucket, sizeof(saidx_t) * buffer_pos[block][bucket]);
-		buffer_pos[block][bucket] = 0;
-	}
-	public:
-	cached_bucket_writer(saidx_t num_blocks_, saidx_t* bucket_offsets_, saidx_t num_buckets_, saidx_t* SA_) : 
-		num_blocks(num_blocks_), 
-		bucket_offsets(bucket_offsets_),
-       		num_buckets(num_buckets_), SA(SA_) {
-			buffers = new saidx_t*[num_blocks];
-			buffer_pos = new saidx_t*[num_blocks];
-			parallel_for (saidx_t b = 0; b < num_blocks; b++) {
-				buffers[b] = new saidx_t[num_buckets * BUF_SIZE];		
-				buffer_pos[b] = new saidx_t[num_buckets];
-				memset(buffer_pos[b], 0, sizeof(saidx_t) * num_buckets);
-			}
-	}
-	~cached_bucket_writer() {
-		parallel_for (saidx_t b = 0; b < num_blocks; b++) {
-			delete[] buffers[b];
-			delete [] buffer_pos[b];
-		}
-		delete [] buffers;
-		delete [] buffer_pos;
-	}
-	inline void write(saidx_t block, saint_t bucket, saidx_t value) {
-		if (buffer_pos[block][bucket] == BUF_SIZE) {
-			flush(block, bucket);
-		}			
-		buffers[block][bucket*BUF_SIZE + buffer_pos[block][bucket]++] = value;
-		bucket_offsets[block*num_buckets + bucket]++;
-	}
-	inline void write_rev(saidx_t block, saint_t bucket, saidx_t value) {
-		if (buffer_pos[block][bucket] == BUF_SIZE) {
-			flush_rev(block, bucket);
-		}			
-		buffers[block][bucket*BUF_SIZE + buffer_pos[block][bucket]++] = value;
-		bucket_offsets[block*num_buckets + bucket]--;
-	}
-	void flush() {
-		parallel_for (saidx_t bucket = 0; bucket < num_buckets; bucket++) {
-			for (saidx_t block = 0; block < num_blocks; block++) flush(block, bucket);
-		}
-	}
-	void flush_rev() {
-		parallel_for (saidx_t bucket = 0; bucket < num_buckets; bucket++) {
-			for (saidx_t block = 0; block < num_blocks; block++) flush_rev(block, bucket);
-		}
-	}
-};
-
-void countBBSeq (saidx_t* start, saidx_t* end, saidx_t* bucket_B, const sauchar_t* T) {
-	// Set counters to 0
-	memset(bucket_B, 0, sizeof(saidx_t)*BUCKET_A_SIZE);
+void fillBBSeqIn (saidx_t* start, saidx_t* end, saidx_t* bucket_B, saint_t c1, const sauchar_t* T, saidx_t* SA) {
 	saidx_t s;
 	sauchar_t c0;
 	for (saidx_t* i = start-1; i >= end; i--) {
-		if (0 < (s = *i)) {
-			c0 = T[--s];
-			bucket_B[c0]++;
-		}
-	}
-}
-
-void fillBBSeq (saidx_t* start, saidx_t* end, saidx_t block, sauchar_t c1, const sauchar_t* T, cached_bucket_writer &bucket_writer) {
-	saidx_t s;
-	sauchar_t c0;
-	for (saidx_t* i = start-1; i >= end; i--) {
-		if (0 < (s = *i)) {
-			*i = ~s;
-			c0 = T[--s];
-			if ((0 < s) && (T[s-1] > c0)) { s = ~s; }
-			bucket_writer.write_rev(block, c0, s);
-		} else {
-			*i = ~s;
-		}
-	}
-}
-
-void fillBBSeq (saidx_t* start, saidx_t* end, saidx_t* bucket_B, saint_t c1, const sauchar_t* T, saidx_t* SA) {
-	saidx_t s;
-	sauchar_t c0;
-	for (saidx_t* i = start-1; i >= end; i--) {
-		if (0 < (s = *i)) {
-			*i = ~s;
-			c0 = T[--s];
-			if ((0 < s) && (T[s-1] > c0)) { s = ~s; }
+		s = *i;
+		if (--s >= 0 && (c0 = T[s]) == c1) { // If prev suffix is B suffix
 			*(BUCKET_B(c0,c1)-- + SA) = s;
-		} else {
-			*i = ~s;
+		}
+	}
+}
+void fillBBSeqOut (saidx_t* start, saidx_t* end, saidx_t* bucket_B, saint_t c1, const sauchar_t* T, saidx_t* SA) {
+	saidx_t s;
+	sauchar_t c0;
+	for (saidx_t* i = start-1; i >= end; i--) {
+		s = *i;
+		if (--s >= 0 && (c0 = T[s]) < c1) { // If prev suffix is B suffix
+			*(BUCKET_B(c0,c1)-- + SA) = s;
 		}
 	}
 }
 
-
-void countASeq (saidx_t* start, saidx_t* end, saidx_t* bucket_A, const sauchar_t* T) {
-	memset(bucket_A, 0, sizeof(saidx_t)*BUCKET_A_SIZE);
+void fillASeq (saidx_t* start, saidx_t* end, saidx_t* bucket_A, saint_t c1, const sauchar_t* T, saidx_t* SA) {
 	saidx_t s;
 	sauchar_t c0;
 	for (saidx_t* i = start; i < end; i++) {
-		if(0 < (s = *i)) {
-			assert(T[s - 1] >= T[s]); // previous suffix is A type
-			c0 = T[--s];
-			BUCKET_A(c0)++;
-		}
-	}
-
-}
-
-void fillASeq (saidx_t* start, saidx_t* end, saidx_t block, const sauchar_t* T, cached_bucket_writer &bucket_writer) {
-	saidx_t s;
-	sauchar_t c0;
-	for (saidx_t* i = start; i < end; i++) {
-		if(0 < (s = *i)) {
-			assert(T[s - 1] >= T[s]);
-			c0 = T[--s];
-		        if((s == 0) || (T[s - 1] < c0)) { s = ~s; }
-			bucket_writer.write(block, c0, s);
-			//*(SA + BUCKET_A(c0)++) = s;
-		} else {
-			*i = ~s;
-		}
-	}
-}
-
-void fillASeq (saidx_t* start, saidx_t* end, saidx_t* bucket_A, const sauchar_t* T, saidx_t* SA) {
-	saidx_t s;
-	sauchar_t c0;
-	for (saidx_t* i = start; i < end; i++) {
-		if(0 < (s = *i)) {
-			assert(T[s - 1] >= T[s]);
-			c0 = T[--s];
-		        if((s == 0) || (T[s - 1] < c0)) { s = ~s; }
+		s = *i;
+		if (--s >= 0 && (c0 = T[s]) >= c1) { // if prev suffix is A suffix
 			*(SA + BUCKET_A(c0)++) = s;
-		} else {
-			*i = ~s;
 		}
 	}
 }
-/*
-
-inline saidx_t getNumReps(saidx_t pos, const sauchar_t* T, saint_t c, saidx_t max_len) {
-	for (saidx_t i = 0; i < max_len; i++) {
-		if (pos < 0 || pos > n || T[pos] != c)
-			return i;	
-	}
-	return max_len;
-}
-// Init all strings with preceeding c of length smaller than len
-void init_between(saidx_t* start, saidx_t* end_init, saidx_t* end, const sauchar_t* T,  saint_t c, saidx_t len) {
-	if (len <= 1) return; // Nothing in this interval
-	// if end - end_init < THRESHOLD do sequentially
-	// sequential algorithm
-		
-	
-}
-
-void init_doubling(saidx_t* start, saidx_t* end_init, saidx_t* end, saint_t c1, const sauchar_t* T) {
-	saidx_t len = 1; // Number of repetitions 	
-	// Init every 2^n length with doubling
-	saidx_t* cur_start = start;
-	saidx_t* cur_end = end_init;
-	while (true) {
-		// Calc new position	
-		saidx_t offset = 0;
-		for (saidx_t* p = cur_end-1; p >= cur_start; p--) {
-			offset += getNumReps(*p-1, T, c1, len-1);
-		}
-		// Pack all that are long enough
-		saidx_t* new_end = cur_end - offset;
-		for (saidx_t* p = cur_end-1; p >= cur_start; p--) {
-			if (getNumReps(*p-1, T, c1, len) == len) 
-				*(new_end--) = *p - len;			
-		}
-		// Init all in-between
-		init_between(cur_start, cur_end, cur_end - offset, T, c1,  len);
-		
-
-		cur_start = cur_end - offset;
-		cur_end = new_end;
-		if (cur_start == cur_end) break;
-		len *= 2;
-	}
-
-}	*/
-
-
-
 
 /* Constructs the suffix array by using the sorted order of type B* suffixes. */
 static
@@ -557,109 +386,33 @@ void
 construct_SA(const sauchar_t *T, saidx_t *SA,
              saidx_t *bucket_A, saidx_t *bucket_B,
              saidx_t n, saidx_t m) {
-  saidx_t *i, *j, *k;
-  saidx_t s;
-  saint_t c0, c1, c2;
-  const saidx_t num_blocks = getWorkers();
-  saidx_t* block_bucket_cnt = new saidx_t[num_blocks*BUCKET_A_SIZE];
-  // Use buffered writing to handle chache invalidations
-  cached_bucket_writer bucket_writer(num_blocks, block_bucket_cnt, BUCKET_A_SIZE, SA); 
-  if(0 < m) {
-	  
-	  /* Construct the sorted order of type B suffixes by using
-	     the sorted order of type B* suffixes. */
-	  
-	  for (c1 = ALPHABET_SIZE-2; 0 <= c1; --c1) {
+	// First pass for all B suffixes
+	for (saint_t c1 = ALPHABET_SIZE-1; c1 >= 0; c1--) {
+		saidx_t start = BUCKET_A(c1+1);
+		saidx_t end_init = BUCKET_B(c1,c1)+1;
+		saidx_t end = BUCKET_BSTAR(c1, c1+1); 
+		// First pass [end, start) in block updates
+		fillBBSeqIn(SA + start, SA + end, bucket_B, c1, T, SA);
+		// Second pass [end,start) out block updates
+	  	fillBBSeqOut(SA + start, SA + end, bucket_B, c1, T, SA); 
+	}	
 
-		  saidx_t* start = SA + BUCKET_A(c1+1);
-		  saidx_t* end = SA + BUCKET_B(c1,c1)+1;
+	// Insert last suffix first 
+	*(SA + BUCKET_A(T[n - 1])++) = n-1; 
 
-		  if (start > end) {
-			  //if (start - end > 1024) {
-			  saidx_t block_size = (start-end) / num_blocks +1;
-			  // Count for each block how many items are put into the b buckets
-			  parallel_for (saidx_t b = num_blocks-1; 0 <= b; b--) {
-				  saidx_t* s = std::min((b+1)*block_size + end, start);
-				  saidx_t* e = b * block_size + end;
-				  countBBSeq(s, e, block_bucket_cnt + BUCKET_A_SIZE*b, T);
-			  }
-			  // Make explusive prefix sum to calculate offsets of the bucket
-			  parallel_for (saidx_t i = 0; i < BUCKET_A_SIZE; i++) {
-				  saidx_t sum = BUCKET_B(i, c1);
-				  for (saidx_t b = num_blocks-1; 0 <= b; b--) {
-					  sum -= block_bucket_cnt[b*BUCKET_A_SIZE + i];			
-					  block_bucket_cnt[b*BUCKET_A_SIZE + i] = sum + block_bucket_cnt[b*BUCKET_A_SIZE + i];
-				  }
-			  }
-			  // Put B suffixes into the correct buckets
-			  parallel_for (saidx_t b = num_blocks-1; 0 <= b; b--) {
-				  saidx_t* s = std::min((b+1)*block_size + end, start);
-				  saidx_t* e = b * block_size + end;
-				  fillBBSeq(s, e, b, c1, T, bucket_writer);
-			  }
-			  bucket_writer.flush_rev();
-
-			  // Update new B Bucket counts
-			  parallel_for (saidx_t i = 0; i < BUCKET_A_SIZE; i++) {
-				  BUCKET_B(i,c1) = block_bucket_cnt[i];	
-			  }
-			  fillBBSeq(end, SA + BUCKET_BSTAR(c1, c1+1), bucket_B, c1, T, SA); 
-		  }
-	  } 
-  }
-  //nextTime("Construct_SA, B suff\t\t");
-
-  /* Construct the suffix array by using
-     the sorted order of type B suffixes. */
-  
-  // First suffix is end of the string, update this first
-  k = SA + BUCKET_A(c2 = T[n - 1]); 
-  *k = (T[n - 2] < c2) ? ~(n - 1) : (n - 1);
-  BUCKET_A(c2)++;
-
-  saidx_t *start = SA;
-  saidx_t *end;
-  for (c1 = 0; c1 < ALPHABET_SIZE; c1++) {
-	  // If not initialized part of bucket
-	  while (BUCKET_A(c1) <= BUCKET_B(c1,c1) || c1 == ALPHABET_SIZE-1) { // If hit uninitialized block or the end
-		  end = SA + BUCKET_A(c1);
-		  saidx_t block_size = (end-start)/num_blocks + 1;
-		  if (block_size > 512) {
-		  // Count A type suffixes  
-		  parallel_for (saidx_t b = 0; b < num_blocks; b++) {
-			  saidx_t* s = start + b*block_size;
-			  saidx_t* e = start + std::min((b+1)*block_size, (saidx_t)(end-start));
-			  countASeq(s, e, block_bucket_cnt + BUCKET_A_SIZE*b, T);
-		  }
-		  // Prefix sum
-		  parallel_for (saidx_t i = 0; i < BUCKET_A_SIZE; i++) {
-			  saidx_t sum = bucket_A[i];
-			  for (saidx_t b = 0; b < num_blocks; b++) {
-				  sum += block_bucket_cnt[b*BUCKET_A_SIZE + i];			
-				  block_bucket_cnt[b*BUCKET_A_SIZE + i] = sum - block_bucket_cnt[b*BUCKET_A_SIZE + i];
-			  }
-		  }
-		  // Sort the A suffixes to the correct place
-		  parallel_for (saidx_t b = 0; b < num_blocks; b++) {
-			  saidx_t* s = start + b*block_size;
-			  saidx_t* e = start + std::min((b+1)*block_size, (saidx_t)(end-start));
-			  fillASeq(s, e, b, T, bucket_writer);
-		  }
-		  bucket_writer.flush();
-		  // Update block positions
-		  for (saidx_t i = 0; i < BUCKET_A_SIZE; i++)
-			  bucket_A[i] = block_bucket_cnt[(num_blocks-1)*BUCKET_A_SIZE + i];		  
-		  start = end;
-		  } else {
-			  if (start - SA == n) break;
-			  // if not much left of the block do sequentially
-			  fillASeq(start, end, bucket_A, T, SA);
-			  start = end;
-		  }
-	  }
-  }
-  delete[] block_bucket_cnt;
-  //nextTime("Construct_SA, A suf\t\t");
+	// Second pass for all A suffixes
+	saidx_t old_bucket_A[ALPHABET_SIZE+1];
+	memcpy(old_bucket_A, bucket_A, sizeof(saidx_t) * ALPHABET_SIZE);
+	old_bucket_A[ALPHABET_SIZE] = n;
+	for (saint_t c1 = 0; c1 < ALPHABET_SIZE; c1++) {
+		saidx_t start = old_bucket_A[c1]; 
+		saidx_t end_init = BUCKET_A(c1);
+		saidx_t end_a = BUCKET_B(c1,c1)+1;
+		saidx_t end_b = old_bucket_A[c1+1]; // TODO if c1 == ALPHABET_SIZE
+		// First pass [start, end_a) in block updates
+		// Second pass [start, end_b) out block updates 
+		fillASeq(SA + start, SA + end_b, bucket_A, c1, T, SA);
+	}
 }
 
 /* Constructs the burrows-wheeler transformed string directly
