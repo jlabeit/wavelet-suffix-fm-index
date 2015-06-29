@@ -394,10 +394,9 @@ void fillBBParIn (saidx_t start, saidx_t end, saint_t c1, const sauchar_t* T, sa
 	// Prefix doubling
 	saidx_t total_len = 1;	// all suffixes in [end,start) have 1 repititions of c1
 	saidx_t cmp_len = 1; // first check for only 1 repetition
+	bool* flags = newA(bool, end-start);
 	while (end - start > 0) { // While there are still suffixes left
-		bool* flags = newA(bool, end-start);
 		// Calculate offset	
-		//std::atomic<saidx_t> offset(0);
 		cilk::reducer_opadd<saidx_t> offset(0);
 		parallel_for (saidx_t i = start; i < end; i++) {
 			saidx_t len = getNumRepetitions(SA[i], T, c1, cmp_len);
@@ -416,8 +415,8 @@ void fillBBParIn (saidx_t start, saidx_t end, saint_t c1, const sauchar_t* T, sa
 		parallel_for (saidx_t i = start; i < end; i++) SA[i] -= cmp_len;
 		total_len += cmp_len;
 		//cmp_len *= 2;
-		free(flags);
 	}
+	free(flags);
 }	
 
 void fillBBSeqOut (saidx_t* start, saidx_t* end, saidx_t* bucket_B, saint_t c1, const sauchar_t* T, saidx_t* SA) {
