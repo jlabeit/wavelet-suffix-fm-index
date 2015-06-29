@@ -357,6 +357,55 @@ void fillBBSeqIn (saidx_t* start, saidx_t* end, saidx_t* bucket_B, saint_t c1, c
 			*(BUCKET_B(c0,c1)-- + SA) = s;
 	}
 }
+
+inline saidx_t getNumRepetitions (saidx_t pos, const sauchar_t* T, saint_t c, saidx_t cmp_len) {
+	saidx_t res;
+	pos--; // count number of repetitions excluding pos
+	for (res = 0; res < cmp_len; res++) { 
+		if (pos < 0 || T[pos] != c) break;
+		pos--;
+	}
+	return res;
+}
+
+saidx_t getSumPrefixes (saidx_t* start, saidx_t* end, saint_t c1, const sauchar_t* T, saidx_t cmp_len, saidx_t& offset) {
+	saidx_t res = 0;
+	for (saidx_t* i = start; i < end; i++) {
+		saidx_t l = getNumRepetitions(*i, T, c1, cmp_len);
+		if (l == cmp_len) res++;
+		offset += l;
+	}	
+	return res;
+}
+
+void packRepSuffixesB (saidx_t* dest, saidx_t* start, saidx_t* end, const sauchar_t* T, saint_t c, saidx_t cmp_len) {
+	for (saidx_t* i = start; i < end; i++) {
+		if (getNumRepetitions(*i, T, c, cmp_len) == cmp_len) {
+			*(dest++) = (*i - cmp_len);
+		}
+	}	
+}
+
+void fillBBParIn (saidx_t start, saidx_t end, saint_t c1, const sauchar_t* T, saidx_t* SA) {
+	// Prefix doubling
+	saidx_t total_len = 1;	// all suffixes in [end,start) have 1 repititions of c1
+	saidx_t cmp_len = 1; // first check for only 1 repetition
+	while (end - start > 0) { // While there are still suffixes left
+		//printf("%d %d  ", end, start);
+		// Calculate offset	
+		saidx_t offset = 0;
+		saidx_t num = getSumPrefixes(SA + start, SA + end, c1, T, cmp_len, offset);
+		// Pack all num suffixes wich have prefix atleast of length len
+		packRepSuffixesB (SA + start-offset, SA + start, SA + end, T, c1, cmp_len); 
+		// Update start/end
+		start -= offset;
+		end = start+num;
+
+		total_len += cmp_len;
+		//cmp_len *= 2;
+	}
+}	
+
 void fillBBSeqOut (saidx_t* start, saidx_t* end, saidx_t* bucket_B, saint_t c1, const sauchar_t* T, saidx_t* SA) {
 	saidx_t s;
 	sauchar_t c0;
@@ -378,8 +427,9 @@ void countBBSeqOut (saidx_t* start, saidx_t* end, saidx_t* bucket_B, saint_t c1,
 }
 
 #define BLOCK_SIZE 1024*128
-
 void fillBBParOut (saidx_t start, saidx_t end, saidx_t* bucket_B, saint_t c1, const sauchar_t* T, saidx_t* SA) {
+	// TODO bounds l with for example 2 * getNWORKERS()
+	// TODO reuse sums array such that it only has to be allocated once
 	saidx_t l = nblocks(start-end, BLOCK_SIZE);
 	saidx_t *sums = newA(saidx_t,l*ALPHABET_SIZE);
 	// Calculated starting positions of each block
@@ -394,7 +444,7 @@ void fillBBParOut (saidx_t start, saidx_t end, saidx_t* bucket_B, saint_t c1, co
 		parallel_for (saidx_t i = 0; i < ALPHABET_SIZE; i++) {
 			saidx_t val = BUCKET_B(i, c1);	
 			// Exclusive prefix sum
-			for (saidx_t j = 0; j < l; j++) {
+			for (saidx_t j = l-1; j >= 0; j--) {
 				val += sums[i + j*ALPHABET_SIZE];
 				sums[i + j*ALPHABET_SIZE] = val - sums[i+j*ALPHABET_SIZE];
 			}
@@ -435,6 +485,8 @@ void countASeqOut (saidx_t* start, saidx_t* end, saidx_t* bucket_A, saint_t c1, 
 	}
 }
 
+// TODO bounds l with for example 2 * getNWORKERS()
+// TODO reuse sums array such that it only has to be allocated once
 void fillAParOut (saidx_t start, saidx_t end, saidx_t* bucket_A, saint_t c1, const sauchar_t* T, saidx_t* SA) {
 	saidx_t l = nblocks(end-start, BLOCK_SIZE);
 	// Calculated starting positions of each block
@@ -474,8 +526,10 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 		saidx_t start = BUCKET_A(c1+1);
 		saidx_t end_init = BUCKET_B(c1,c1)+1;
 		saidx_t end = BUCKET_BSTAR(c1, c1+1); 
+		BUCKET_B(c1,c1) = BUCKET_BSTAR(c1,c1+1)-1; // these are initialized seperatly
 		// First pass [end, start) in block updates
-		fillBBSeqIn(SA + start, SA + end, bucket_B, c1, T, SA);
+		fillBBParIn (end_init, start, c1, T, SA);
+		//fillBBSeqIn(SA + start, SA + end, bucket_B, c1, T, SA);
 		// Second pass [end,start) out block updates
 	  	fillBBParOut(start, end, bucket_B, c1, T, SA); 
 	}	
