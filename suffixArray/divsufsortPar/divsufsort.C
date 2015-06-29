@@ -32,6 +32,9 @@
 #ifdef _OPENMP
 # include <omp.h>
 #endif
+#include <atomic>
+#include <cilk/reducer_opadd.h>
+
 /*- Private Functions -*/
 // Input: 	The sizes if A and B buckets
 // Output: 	Bucket_A has the starting point of all A buckets
@@ -379,6 +382,7 @@ saidx_t getSumPrefixes (saidx_t* start, saidx_t* end, saint_t c1, const sauchar_
 }
 
 void packRepSuffixesB (saidx_t* dest, saidx_t* start, saidx_t* end, const sauchar_t* T, saint_t c, saidx_t cmp_len) {
+	
 	for (saidx_t* i = start; i < end; i++) {
 		if (getNumRepetitions(*i, T, c, cmp_len) == cmp_len) {
 			*(dest++) = (*i - cmp_len);
@@ -391,18 +395,28 @@ void fillBBParIn (saidx_t start, saidx_t end, saint_t c1, const sauchar_t* T, sa
 	saidx_t total_len = 1;	// all suffixes in [end,start) have 1 repititions of c1
 	saidx_t cmp_len = 1; // first check for only 1 repetition
 	while (end - start > 0) { // While there are still suffixes left
-		//printf("%d %d  ", end, start);
+		bool* flags = newA(bool, end-start);
 		// Calculate offset	
-		saidx_t offset = 0;
-		saidx_t num = getSumPrefixes(SA + start, SA + end, c1, T, cmp_len, offset);
-		// Pack all num suffixes wich have prefix atleast of length len
-		packRepSuffixesB (SA + start-offset, SA + start, SA + end, T, c1, cmp_len); 
+		//std::atomic<saidx_t> offset(0);
+		cilk::reducer_opadd<saidx_t> offset(0);
+		parallel_for (saidx_t i = start; i < end; i++) {
+			saidx_t len = getNumRepetitions(SA[i], T, c1, cmp_len);
+			offset += len;
+			if (len == cmp_len) flags[i-start] = true;
+			else flags[i-start] = false;
+		}
+		// Pack all num suffixes which have prefix atleast of length len
+		//packRepSuffixesB (SA + start-offsetRed.get_value(), SA + start, SA + end, T, c1, cmp_len); 
+		saidx_t new_start = start - offset.get_value();
+		saidx_t num = sequence::pack(SA + start, SA + new_start, flags, end - start);
 		// Update start/end
-		start -= offset;
+		start = new_start;
 		end = start+num;
-
+		// Decrement all values correctly
+		parallel_for (saidx_t i = start; i < end; i++) SA[i] -= cmp_len;
 		total_len += cmp_len;
 		//cmp_len *= 2;
+		free(flags);
 	}
 }	
 
