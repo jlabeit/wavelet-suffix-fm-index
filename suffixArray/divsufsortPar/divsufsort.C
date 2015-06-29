@@ -377,7 +377,7 @@ void countBBSeqOut (saidx_t* start, saidx_t* end, saidx_t* bucket_B, saint_t c1,
 	}
 }
 
-#define BLOCK_SIZE 1024*1024
+#define BLOCK_SIZE 1024*128
 
 void fillBBParOut (saidx_t start, saidx_t end, saidx_t* bucket_B, saint_t c1, const sauchar_t* T, saidx_t* SA) {
 	saidx_t l = nblocks(start-end, BLOCK_SIZE);
