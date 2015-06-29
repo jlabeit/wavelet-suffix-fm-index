@@ -425,6 +425,43 @@ void fillASeqOut (saidx_t* start, saidx_t* end, saidx_t* bucket_A, saint_t c1, c
 			*(SA + BUCKET_A(c0)++) = s;
 	}
 }
+void countASeqOut (saidx_t* start, saidx_t* end, saidx_t* bucket_A, saint_t c1, const sauchar_t* T, saidx_t* SA) {
+	saidx_t s;
+	sauchar_t c0;
+	for (saidx_t* i = start; i < end; i++) {
+		s = *i;
+		if (--s >= 0 && (c0 = T[s]) > c1) // if prev suffix is A suffix in new block
+			BUCKET_A(c0)++;
+	}
+}
+
+void fillAParOut (saidx_t start, saidx_t end, saidx_t* bucket_A, saint_t c1, const sauchar_t* T, saidx_t* SA) {
+	saidx_t l = nblocks(end-start, BLOCK_SIZE);
+	// Calculated starting positions of each block
+	if (l == 1) { 
+		fillASeqOut(start+SA, end+SA, bucket_A, c1, T, SA);
+	} else {
+		saidx_t *sums = newA(saidx_t,l*ALPHABET_SIZE);
+		// Init sums
+		memset(sums, 0, sizeof(saidx_t) * ALPHABET_SIZE * l);
+		// Calculate blocked sums
+		blocked_for (i, start, end, BLOCK_SIZE, countASeqOut(start+SA, end+SA, sums + i*ALPHABET_SIZE, c1, T, SA););
+		// Make prefix sum
+		parallel_for (saidx_t i = 0; i < ALPHABET_SIZE; i++) {
+			saidx_t val = BUCKET_A(i);	
+			// Exclusive prefix sum
+			for (saidx_t j = 0; j < l; j++) {
+				val += sums[i + j*ALPHABET_SIZE];
+				sums[i + j*ALPHABET_SIZE] = val - sums[i+j*ALPHABET_SIZE];
+			}
+		}
+		// Make actuall update
+		blocked_for (i, start, end, BLOCK_SIZE, fillASeqOut(start+SA, end+SA, sums + i*ALPHABET_SIZE, c1, T, SA););
+		// Update bucket
+		for (saidx_t i = 0; i < ALPHABET_SIZE; i++) BUCKET_A(i) = sums[i + ALPHABET_SIZE*(l-1)];
+		free(sums);
+	}
+}
 
 /* Constructs the suffix array by using the sorted order of type B* suffixes. */
 static
@@ -458,7 +495,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 		// First pass [start, end_a) in block updates
 		fillASeqIn(SA + start, SA + end_a, bucket_A, c1, T, SA);
 		// Second pass [start, end_b) out block updates 
-		fillASeqOut(SA + start, SA + end_b, bucket_A, c1, T, SA);
+		fillAParOut(start, end_b, bucket_A, c1, T, SA);
 	}
 }
 
