@@ -353,7 +353,7 @@ void fillBBSeqIn (saidx_t* start, saidx_t* end, saidx_t* bucket_B, saint_t c1, c
 	sauchar_t c0;
 	for (saidx_t* i = start-1; i >= end; i--) {
 		s = *i;
-		if (--s >= 0 && (c0 = T[s]) == c1) { // If prev suffix is B suffix
+		if (--s >= 0 && (c0 = T[s]) == c1) { // If prev suffix is B suffix in same block
 			*(BUCKET_B(c0,c1)-- + SA) = s;
 		}
 	}
@@ -363,18 +363,28 @@ void fillBBSeqOut (saidx_t* start, saidx_t* end, saidx_t* bucket_B, saint_t c1, 
 	sauchar_t c0;
 	for (saidx_t* i = start-1; i >= end; i--) {
 		s = *i;
-		if (--s >= 0 && (c0 = T[s]) < c1) { // If prev suffix is B suffix
+		if (--s >= 0 && (c0 = T[s]) < c1) { // If prev suffix is B suffix in new block
 			*(BUCKET_B(c0,c1)-- + SA) = s;
 		}
 	}
 }
 
-void fillASeq (saidx_t* start, saidx_t* end, saidx_t* bucket_A, saint_t c1, const sauchar_t* T, saidx_t* SA) {
+void fillASeqIn (saidx_t* start, saidx_t* end, saidx_t* bucket_A, saint_t c1, const sauchar_t* T, saidx_t* SA) {
 	saidx_t s;
 	sauchar_t c0;
 	for (saidx_t* i = start; i < end; i++) {
 		s = *i;
-		if (--s >= 0 && (c0 = T[s]) >= c1) { // if prev suffix is A suffix
+		if (--s >= 0 && (c0 = T[s]) == c1) { // if prev suffix is A suffix in same block
+			*(SA + BUCKET_A(c0)++) = s;
+		}
+	}
+}
+void fillASeqOut (saidx_t* start, saidx_t* end, saidx_t* bucket_A, saint_t c1, const sauchar_t* T, saidx_t* SA) {
+	saidx_t s;
+	sauchar_t c0;
+	for (saidx_t* i = start; i < end; i++) {
+		s = *i;
+		if (--s >= 0 && (c0 = T[s]) > c1) { // if prev suffix is A suffix in new block
 			*(SA + BUCKET_A(c0)++) = s;
 		}
 	}
@@ -408,10 +418,11 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 		saidx_t start = old_bucket_A[c1]; 
 		saidx_t end_init = BUCKET_A(c1);
 		saidx_t end_a = BUCKET_B(c1,c1)+1;
-		saidx_t end_b = old_bucket_A[c1+1]; // TODO if c1 == ALPHABET_SIZE
+		saidx_t end_b = old_bucket_A[c1+1]; 
 		// First pass [start, end_a) in block updates
+		fillASeqIn(SA + start, SA + end_a, bucket_A, c1, T, SA);
 		// Second pass [start, end_b) out block updates 
-		fillASeq(SA + start, SA + end_b, bucket_A, c1, T, SA);
+		fillASeqOut(SA + start, SA + end_b, bucket_A, c1, T, SA);
 	}
 }
 
