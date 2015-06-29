@@ -353,9 +353,8 @@ void fillBBSeqIn (saidx_t* start, saidx_t* end, saidx_t* bucket_B, saint_t c1, c
 	sauchar_t c0;
 	for (saidx_t* i = start-1; i >= end; i--) {
 		s = *i;
-		if (--s >= 0 && (c0 = T[s]) == c1) { // If prev suffix is B suffix in same block
+		if (--s >= 0 && (c0 = T[s]) == c1) // If prev suffix is B suffix in same block
 			*(BUCKET_B(c0,c1)-- + SA) = s;
-		}
 	}
 }
 void fillBBSeqOut (saidx_t* start, saidx_t* end, saidx_t* bucket_B, saint_t c1, const sauchar_t* T, saidx_t* SA) {
@@ -363,10 +362,49 @@ void fillBBSeqOut (saidx_t* start, saidx_t* end, saidx_t* bucket_B, saint_t c1, 
 	sauchar_t c0;
 	for (saidx_t* i = start-1; i >= end; i--) {
 		s = *i;
-		if (--s >= 0 && (c0 = T[s]) < c1) { // If prev suffix is B suffix in new block
-			*(BUCKET_B(c0,c1)-- + SA) = s;
+		if (--s >= 0 && (c0 = T[s]) < c1)// If prev suffix is B suffix in new block
+			*(bucket_B[c0]-- + SA) = s;
+	}
+}
+
+void countBBSeqOut (saidx_t* start, saidx_t* end, saidx_t* bucket_B, saint_t c1, const sauchar_t* T, saidx_t* SA) {
+	saidx_t s;
+	sauchar_t c0;
+	for (saidx_t* i = start-1; i >= end; i--) {
+		s = *i;
+		if (--s >= 0 && (c0 = T[s]) < c1)  // If prev suffix is B suffix in new block
+			bucket_B[c0]--; 
+	}
+}
+
+#define BLOCK_SIZE 1024*1024
+
+void fillBBParOut (saidx_t start, saidx_t end, saidx_t* bucket_B, saint_t c1, const sauchar_t* T, saidx_t* SA) {
+	saidx_t l = nblocks(start-end, BLOCK_SIZE);
+	saidx_t *sums = newA(saidx_t,l*ALPHABET_SIZE);
+	// Calculated starting positions of each block
+	if (l == 1) 
+		for (saidx_t i = 0; i < ALPHABET_SIZE; i++) sums[i] = BUCKET_B(i, c1);	    
+	else {
+		// Init sums
+		memset(sums, 0, sizeof(saidx_t) * ALPHABET_SIZE * l);
+		// Calculate blocked sums
+		blocked_for (i, end, start, BLOCK_SIZE, countBBSeqOut(start+SA, end+SA, sums + i*ALPHABET_SIZE, c1, T, SA););
+		// Make prefix sum
+		parallel_for (saidx_t i = 0; i < ALPHABET_SIZE; i++) {
+			saidx_t val = BUCKET_B(i, c1);	
+			// Exclusive prefix sum
+			for (saidx_t j = 0; j < l; j++) {
+				val += sums[i + j*ALPHABET_SIZE];
+				sums[i + j*ALPHABET_SIZE] = val - sums[i+j*ALPHABET_SIZE];
+			}
 		}
 	}
+	// Make actuall update
+	blocked_for (i, end, start, BLOCK_SIZE, fillBBSeqOut(start+SA, end+SA, sums + i*ALPHABET_SIZE, c1, T, SA););
+	// Update bucket
+	for (saidx_t i = 0; i < ALPHABET_SIZE; i++) BUCKET_B(i,c1) = sums[i];
+	free(sums);
 }
 
 void fillASeqIn (saidx_t* start, saidx_t* end, saidx_t* bucket_A, saint_t c1, const sauchar_t* T, saidx_t* SA) {
@@ -374,9 +412,8 @@ void fillASeqIn (saidx_t* start, saidx_t* end, saidx_t* bucket_A, saint_t c1, co
 	sauchar_t c0;
 	for (saidx_t* i = start; i < end; i++) {
 		s = *i;
-		if (--s >= 0 && (c0 = T[s]) == c1) { // if prev suffix is A suffix in same block
+		if (--s >= 0 && (c0 = T[s]) == c1) // if prev suffix is A suffix in same block
 			*(SA + BUCKET_A(c0)++) = s;
-		}
 	}
 }
 void fillASeqOut (saidx_t* start, saidx_t* end, saidx_t* bucket_A, saint_t c1, const sauchar_t* T, saidx_t* SA) {
@@ -384,9 +421,8 @@ void fillASeqOut (saidx_t* start, saidx_t* end, saidx_t* bucket_A, saint_t c1, c
 	sauchar_t c0;
 	for (saidx_t* i = start; i < end; i++) {
 		s = *i;
-		if (--s >= 0 && (c0 = T[s]) > c1) { // if prev suffix is A suffix in new block
+		if (--s >= 0 && (c0 = T[s]) > c1) // if prev suffix is A suffix in new block
 			*(SA + BUCKET_A(c0)++) = s;
-		}
 	}
 }
 
@@ -404,7 +440,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 		// First pass [end, start) in block updates
 		fillBBSeqIn(SA + start, SA + end, bucket_B, c1, T, SA);
 		// Second pass [end,start) out block updates
-	  	fillBBSeqOut(SA + start, SA + end, bucket_B, c1, T, SA); 
+	  	fillBBParOut(start, end, bucket_B, c1, T, SA); 
 	}	
 
 	// Insert last suffix first 
