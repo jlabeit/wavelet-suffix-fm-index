@@ -22,8 +22,8 @@
 
 // SDSL includes
 #include "../../select/select_support_mcl_par.hpp"
-#include "../../rank/rank_support_v_par.hpp"
 //#include <sdsl/select_support_mcl.hpp>
+#include "../../rank/rank_support_v_par.hpp"
 //#include <sdsl/rank_support_v.hpp>
 #include <sdsl/int_vector.hpp>
 
