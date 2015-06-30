@@ -390,34 +390,59 @@ void packRepSuffixesB (saidx_t* dest, saidx_t* start, saidx_t* end, const saucha
 	}	
 }
 
-void fillBBParIn (saidx_t start, saidx_t end, saint_t c1, const sauchar_t* T, saidx_t* SA) {
-	// Prefix doubling
-	saidx_t total_len = 1;	// all suffixes in [end,start) have 1 repititions of c1
-	saidx_t cmp_len = 1; // first check for only 1 repetition
-	bool* flags = newA(bool, end-start);
-	while (end - start > 0) { // While there are still suffixes left
+#define THRESHOLD 1024
+void filterPack (saidx_t& start, saidx_t& end, saint_t c, const sauchar_t* T, saidx_t* SA, saidx_t cmp_len, bool reverse) {
+	if (end - start < THRESHOLD) { // Sequential
+		if (!reverse) cmp_len--;
+		saidx_t offset = 0;
+		if (cmp_len > 0)
+			for (saidx_t i = start; i < end; i++) 
+				offset += getNumRepetitions(SA[i], T, c, cmp_len);
+		if (!reverse) cmp_len++;
+		saidx_t it = reverse ? start - offset : end + offset;
+		saidx_t num = 0;
+		for (saidx_t i = start; i < end; i++) {
+			if (getNumRepetitions(SA[i], T, c, cmp_len) == cmp_len) {
+				SA[it++] = SA[i]-cmp_len;
+				num++;
+			}
+		}
+		start = reverse ? start - offset : end + offset;
+		end = start + num;
+	} else { // Parallel
+		bool* flags = newA(bool, end-start);
 		// Calculate offset	
 		cilk::reducer_opadd<saidx_t> offset(0);
 		parallel_for (saidx_t i = start; i < end; i++) {
-			saidx_t len = getNumRepetitions(SA[i], T, c1, cmp_len);
-			offset += len;
-			if (len == cmp_len) flags[i-start] = true;
+			saidx_t len = getNumRepetitions(SA[i], T, c, cmp_len);
+			if (len == cmp_len) { flags[i-start] = true;  if(!reverse) len--; }
 			else flags[i-start] = false;
+			offset += len;
 		}
 		// Pack all num suffixes which have prefix atleast of length len
 		//packRepSuffixesB (SA + start-offsetRed.get_value(), SA + start, SA + end, T, c1, cmp_len); 
-		saidx_t new_start = start - offset.get_value();
+		saidx_t new_start = reverse ? start - offset.get_value() : end + offset.get_value();
 		saidx_t num = sequence::pack(SA + start, SA + new_start, flags, end - start);
 		// Update start/end
 		start = new_start;
 		end = start+num;
 		// Decrement all values correctly
 		parallel_for (saidx_t i = start; i < end; i++) SA[i] -= cmp_len;
+		free(flags);
+	}
+}
+
+void fillParIn (saidx_t start, saidx_t end, saint_t c1, const sauchar_t* T, saidx_t* SA, bool reverse) {
+	// Prefix doubling
+	saidx_t total_len = 1;	// all suffixes in [end,start) have 1 repititions of c1
+	saidx_t cmp_len = 1; // first check for only 1 repetition
+	while (end - start > 0) { // While there are still suffixes left
+		filterPack(start, end, c1, T, SA, cmp_len, reverse);
 		total_len += cmp_len;
 		//cmp_len *= 2;
 	}
-	free(flags);
 }	
+
 
 void fillBBSeqOut (saidx_t* start, saidx_t* end, saidx_t* bucket_B, saint_t c1, const sauchar_t* T, saidx_t* SA) {
 	saidx_t s;
@@ -534,6 +559,7 @@ void
 construct_SA(const sauchar_t *T, saidx_t *SA,
              saidx_t *bucket_A, saidx_t *bucket_B,
              saidx_t n, saidx_t m) {
+	nextTime("Preprocessing");
 	// First pass for all B suffixes
 	for (saint_t c1 = ALPHABET_SIZE-1; c1 >= 0; c1--) {
 		saidx_t start = BUCKET_A(c1+1);
@@ -541,7 +567,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 		saidx_t end = BUCKET_BSTAR(c1, c1+1); 
 		BUCKET_B(c1,c1) = BUCKET_BSTAR(c1,c1+1)-1; // these are initialized seperatly
 		// First pass [end, start) in block updates
-		fillBBParIn (end_init, start, c1, T, SA);
+		fillParIn (end_init, start, c1, T, SA, true);
 		//fillBBSeqIn(SA + start, SA + end, bucket_B, c1, T, SA);
 		// Second pass [end,start) out block updates
 	  	fillBBParOut(start, end, bucket_B, c1, T, SA); 
@@ -560,10 +586,12 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 		saidx_t end_a = BUCKET_B(c1,c1)+1;
 		saidx_t end_b = old_bucket_A[c1+1]; 
 		// First pass [start, end_a) in block updates
-		fillASeqIn(SA + start, SA + end_a, bucket_A, c1, T, SA);
+		//fillASeqIn(SA + start, SA + end_a, bucket_A, c1, T, SA);
+		fillParIn(start, end_init, c1, T, SA, false);
 		// Second pass [start, end_b) out block updates 
 		fillAParOut(start, end_b, bucket_A, c1, T, SA);
 	}
+	nextTime("construct_SA");
 }
 
 /* Constructs the burrows-wheeler transformed string directly
