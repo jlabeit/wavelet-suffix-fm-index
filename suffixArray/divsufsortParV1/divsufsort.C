@@ -501,54 +501,6 @@ void fillASeq (saidx_t* start, saidx_t* end, saidx_t* bucket_A, const sauchar_t*
 		}
 	}
 }
-/*
-
-inline saidx_t getNumReps(saidx_t pos, const sauchar_t* T, saint_t c, saidx_t max_len) {
-	for (saidx_t i = 0; i < max_len; i++) {
-		if (pos < 0 || pos > n || T[pos] != c)
-			return i;	
-	}
-	return max_len;
-}
-// Init all strings with preceeding c of length smaller than len
-void init_between(saidx_t* start, saidx_t* end_init, saidx_t* end, const sauchar_t* T,  saint_t c, saidx_t len) {
-	if (len <= 1) return; // Nothing in this interval
-	// if end - end_init < THRESHOLD do sequentially
-	// sequential algorithm
-		
-	
-}
-
-void init_doubling(saidx_t* start, saidx_t* end_init, saidx_t* end, saint_t c1, const sauchar_t* T) {
-	saidx_t len = 1; // Number of repetitions 	
-	// Init every 2^n length with doubling
-	saidx_t* cur_start = start;
-	saidx_t* cur_end = end_init;
-	while (true) {
-		// Calc new position	
-		saidx_t offset = 0;
-		for (saidx_t* p = cur_end-1; p >= cur_start; p--) {
-			offset += getNumReps(*p-1, T, c1, len-1);
-		}
-		// Pack all that are long enough
-		saidx_t* new_end = cur_end - offset;
-		for (saidx_t* p = cur_end-1; p >= cur_start; p--) {
-			if (getNumReps(*p-1, T, c1, len) == len) 
-				*(new_end--) = *p - len;			
-		}
-		// Init all in-between
-		init_between(cur_start, cur_end, cur_end - offset, T, c1,  len);
-		
-
-		cur_start = cur_end - offset;
-		cur_end = new_end;
-		if (cur_start == cur_end) break;
-		len *= 2;
-	}
-
-}	*/
-
-
 
 
 /* Constructs the suffix array by using the sorted order of type B* suffixes. */
@@ -557,6 +509,7 @@ void
 construct_SA(const sauchar_t *T, saidx_t *SA,
              saidx_t *bucket_A, saidx_t *bucket_B,
              saidx_t n, saidx_t m) {
+  nextTime("Preprocessing");
   saidx_t *i, *j, *k;
   saidx_t s;
   saint_t c0, c1, c2;
@@ -659,7 +612,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 	  }
   }
   delete[] block_bucket_cnt;
-  //nextTime("Construct_SA, A suf\t\t");
+  nextTime("construct_SA");
 }
 
 /* Constructs the burrows-wheeler transformed string directly
