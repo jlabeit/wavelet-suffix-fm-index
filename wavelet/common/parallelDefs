@@ -5,8 +5,8 @@ endif
 
 ifdef OPENMP
 PCC = g++
-PCFLAGS = -std=c++11 -fopenmp -mcx16 -O3 -DOPENMP -DMCX16 -I ~/include $(INTT)
-PLFLAGS = -L ~/lib -fopenmp
+PCFLAGS = -std=c++11 -fopenmp -mcx16 -O3 -DOPENMP -DMCX16 $(INTT)
+PLFLAGS = -fopenmp
 
 else ifdef GCILK
 PCC = g++
@@ -24,7 +24,7 @@ PCFLAGS = -O3 -DCILKP $(INTT)
 PLFLAGS = 
 
 else
-PCC = g++ 
-PLFLAGS = -L ~/lib $(LFLAGS) 
+PCC = g++
+PLFLAGS = -L ~/lib $(LFLAGS)
 PCFLAGS = -std=c++11 -O2 -I ~/include $(INTT)
 endif

@@ -194,7 +194,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
                saidx_t *bucket_A, saidx_t *bucket_B,
                saidx_t n) {
   saidx_t *PAb, *ISAb, *buf;
-  saidx_t i, j, k, t, m, bufsize;
+  saidx_t k, t, m, bufsize;
   saint_t c0, c1;
 
   /* Initialize bucket arrays. */
@@ -222,6 +222,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
     bufsize = 0; // Dont use buffer when multithreadding
     parallel_for(saint_t c0_ = 0; c0_ < ALPHABET_SIZE-1; ++c0_) {
       parallel_for(saint_t c1_ = c0_+1; c1_ < ALPHABET_SIZE; ++c1_) {
+	saidx_t i,j;
         i = BUCKET_BSTAR(c0_, c1_);
 	if (c1_ < ALPHABET_SIZE -1) {
 		j = BUCKET_BSTAR(c0_, c1_+1);
@@ -314,6 +315,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
     }
     delete [] bstar_count;
 
+    saidx_t i,j;
     /* Calculate the index of start/end point of each bucket. */
     BUCKET_B(ALPHABET_SIZE - 1, ALPHABET_SIZE - 1) = n; /* end point */
     for(c0 = ALPHABET_SIZE - 2, k = m - 1; 0 <= c0; --c0) {

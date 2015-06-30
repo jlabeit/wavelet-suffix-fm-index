@@ -1,6 +1,0 @@
-20 : trigramString_10000000 :  -r 1 -o /tmp/ofile435496_544313 : '0.387', '0.269'
-6 : chr22.dna :  -r 1 -o /tmp/ofile988114_754163 : '1.61', '1.28'
-1 : etext99 :  -r 1 -o /tmp/ofile949716_282025 : '4.24', '3.98'
-1 : proteins :  -r 1 -o /tmp/ofile268502_766791 : '8.9', '8.62'
-1 : wikisamp.xml :  -r 1 -o /tmp/ofile546938_688363 : '5.88', '5.59'
-divsufsortPar : 0 : weighted time, min=1.077 median=1.077 mean=1.166
