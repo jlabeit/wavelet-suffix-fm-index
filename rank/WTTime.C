@@ -115,7 +115,7 @@ void timeWT(symbol* s, long n, int rounds, char* outFile, int check) {
 	  //TODO 
   }
   if (outFile != NULL) {
-	sdsl::store_to_file(wt, outFile);
+	sdsl::store_to_file(rs, outFile);
   }
   // if(outFile != NULL) {
   //   intT* foo = newA(intT,n); 

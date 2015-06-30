@@ -24,6 +24,7 @@
 #include "divsufsort_private.h"
 #include "parallel.h"
 #include "../../select/select_support_mcl_par.hpp"
+#include "../../rank/rank_support_v_par.hpp"
 //#include <sdsl/select_support_mcl.hpp>
 //#include <sdsl/rank_support_v.hpp>
 #include <sdsl/int_vector.hpp>
@@ -34,7 +35,6 @@
 #include "sequence.h"
 #include "blockRadixSort.h"
 #include "quickSort.h"
-#include "../../rank/rank_support_v_par.hpp"
 
 using namespace std;
 
@@ -82,53 +82,6 @@ inline saidx_t getStartSeg(uintT i, sdsl::select_support_mcl<1,1>& ss) {
 inline saidx_t getEndSeg(uintT i, sdsl::select_support_mcl<1,1>& ss) {
 	return ss.select(2*i+2)+1;
 }
-
-/*
-void splitSegment(saidx_t start, saidx_t l, saidx_t* ISA, saidx_t* ISA_buf, saidx_t *SA,
-		  bool addRanks, cmp_offset F, sdsl::bit_vector& segBounds) {
-  if (l < 1000) { // sequential version
-    if (addRanks) {
-      // if following two loops are fused performance goes way down?
-      saidx_t name = start;
-      ISA_buf[SA[start]] = name + 1;
-      for (saidx_t i=start+1; i < start + l; i++) {
-	if (F(SA[i-1]) != F(SA[i])) name = i; 
-	ISA_buf[SA[i]] = name + 1;
-      }
-    }
-
-    saidx_t name = start;
-    setStartSeg(start, segBounds);
-    for (saidx_t i=start+1; i < start + l; i++) {
-      if (F(SA[i-1]) != F(SA[i])) {
-	setEndSeg(i-1, segBounds);
-	setStartSeg(i, segBounds);
-	name = i;
-      } //else segBounds[i-1] = 0;
-    }
-    setEndSeg(start+l-1, segBounds);
-  } else { // parallel version
-    uintT *names = newA(uintT,l);
-
-    parallel_for (uintT i = start+1;  i < start + l;  i++) 
-	names[i-start] = (F(SA[i]) != F(SA[i-1])) ? (i-start) : 0;
-    names[0] = 0;
-    sequence::scanI(names,names,l,utils::maxF<uintT>(),(uintT)0);
-    if (addRanks) 
-      parallel_for (uintT i = start;  i < start + l;  i++) 
-	ISA_buf[SA[i]] = names[i-start]+start+1;
-
-    setStartSeg(start, segBounds);
-    parallel_for (uintT i =1;  i < l;  i++)
-      if (names[i] == i) {
-	setEndSeg(i-1 + start, segBounds);
-    	setStartSeg(i+start, segBounds);
-      } //else segBounds[i-1 + start] = 0;
-    setEndSeg(l-1+start, segBounds);
-
-    free(names);
-  }
-}*/  
 
 const saidx_t BLOCK_SIZE = 128*1024;
 
@@ -208,36 +161,6 @@ void splitSegmentsParallel(sdsl::bit_vector& segBounds, sdsl::select_support_mcl
 			}
 		}
 	}
-	
-/*		
-	// Second round mark beginning end end of new segments, update ISA 
-	for (uintT seg = 0; seg < nSegs; seg++) {
-		saidx_t start = getStartSeg(seg, ss);
-		saidx_t end = getEndSeg(seg, ss);
-		saidx_t name = start;
-		bool eval;
-		for (saidx_t i = start; i < end-1; i++) {
-			eval = segBoundsBuf[i] & 1;
-			// ISA
-			if (eval) name = i;
-			ISA[SA[i]] = name;
-			// Is beginnign of zero run
-			if ( eval && !(segBoundsBuf[i+1]&1)) segBoundsBuf[i] = 1;					
-			// End of a zero run
-			else if ( !eval && (segBoundsBuf[i+1]&1)) segBoundsBuf[i] = 1;
-			else if (eval) segBoundsBuf[i] = 0;
-		}
-		eval = segBoundsBuf[end-1];
-		// ISA
-		if (eval) name = end-1;
-		ISA[SA[end-1]] = name;
-		// Extra case for end
-		if (!eval) segBoundsBuf[end-1] = 1;
-		else segBoundsBuf[end-1] = 0;
-	}
-*/
-	//for (int i = 0; i < n; i++) printf("%d ", segBoundsBuf[i]&1); printf("\n");
-	//for (int i = 0; i < n; i++) printf("%d ", ISA[SA[i]]); printf("\n");
 	swap(segBounds, segBoundsBuf);
 	delete [] names;
 	delete [] first_comp;

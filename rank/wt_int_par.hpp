@@ -31,10 +31,6 @@
 //#include "util.hpp"
 #include <sdsl/sdsl_concepts.hpp>
 #include <sdsl/int_vector.hpp>
-//#include "rank_support_v_par.hpp"
-//#include <sdsl/rank_support_v.hpp>
-//#include "select_support_mcl_par.hpp"
-//#include <sdsl/select_support_mcl.hpp>
 #include <sdsl/wt_helper.hpp>
 #include <sdsl/util.hpp>
 

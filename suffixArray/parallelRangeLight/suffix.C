@@ -98,7 +98,8 @@ void splitSegmentsParallel(sdsl::bit_vector& segBounds, sdsl::select_support_mcl
 	uintT nSegs = rs.rank(n) / 2;
 	sdsl::bit_vector segBoundsBuf(n,0);
 	uint num_blocks = n / BLOCK_SIZE +1;
-	uint* names = new uint[num_blocks]; // Keep track of last name of segments spanning blocks
+	uint* names;
+        names = new uint[num_blocks]; // Keep track of last name of segments spanning blocks
 	bool* first_comp = new bool[num_blocks];
 
 	// First round do all comparisons

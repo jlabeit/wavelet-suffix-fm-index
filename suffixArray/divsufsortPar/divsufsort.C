@@ -390,7 +390,7 @@ void packRepSuffixesB (saidx_t* dest, saidx_t* start, saidx_t* end, const saucha
 	}	
 }
 
-#define THRESHOLD 1024
+#define THRESHOLD 1
 void filterPack (saidx_t& start, saidx_t& end, saint_t c, const sauchar_t* T, saidx_t* SA, saidx_t cmp_len, bool reverse) {
 	if (end - start < THRESHOLD) { // Sequential
 		if (!reverse) cmp_len--;
@@ -434,13 +434,14 @@ void filterPack (saidx_t& start, saidx_t& end, saint_t c, const sauchar_t* T, sa
 
 void fillParIn (saidx_t start, saidx_t end, saint_t c1, const sauchar_t* T, saidx_t* SA, bool reverse) {
 	// Prefix doubling
-	saidx_t total_len = 1;	// all suffixes in [end,start) have 1 repititions of c1
 	saidx_t cmp_len = 1; // first check for only 1 repetition
+	saidx_t cnt = 0;
 	while (end - start > 0) { // While there are still suffixes left
 		filterPack(start, end, c1, T, SA, cmp_len, reverse);
-		total_len += cmp_len;
 		//cmp_len *= 2;
+		cnt++;
 	}
+	printf("%d\n", cnt);
 }	
 
 
