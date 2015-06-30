@@ -111,6 +111,18 @@ namespace sequence {
 	}						\
   }
 
+#define blocked_for_seq(_i, _s, _e, _bsize, _body)  {	\
+    intT _ss = _s;					\
+    intT _ee = _e;					\
+    intT _n = _ee-_ss;					\
+    intT _l = nblocks(_n,_bsize);			\
+    for (intT _i = 0; _i < _l; _i++) {		\
+      intT _s = _ss + _i * (_bsize);			\
+      intT _e = min(_s + (_bsize), _ee);			\
+      _body						\
+	}						\
+  }
+
 
 
 
