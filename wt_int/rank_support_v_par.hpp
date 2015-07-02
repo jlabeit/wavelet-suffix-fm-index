@@ -21,7 +21,6 @@
 #ifndef INCLUDED_SDSL_RANK_SUPPORT_V
 #define INCLUDED_SDSL_RANK_SUPPORT_V
 
-//#include "rank_support.hpp"
 #include <sdsl/rank_support.hpp>
 
 //! Namespace for the succinct data structure library.
