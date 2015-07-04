@@ -11,7 +11,7 @@
 #define parallel_for_256 _Pragma("cilk_grainsize = 256") cilk_for
 
 static int getWorkers() { return -1; }
-static void setWorkers(int n) { }
+static void setWorkers(int n) { n = ~n; }
 
 // intel cilk+
 #elif defined(CILKP)
@@ -62,7 +62,7 @@ static void setWorkers(int n) { omp_set_num_threads(n); }
 #define cilk_for for
 
 static int getWorkers() { return 1; }
-static void setWorkers(int n) { }
+static void setWorkers(int n) { n = ~n; }
 
 #endif
 
