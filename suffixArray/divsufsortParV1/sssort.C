@@ -27,6 +27,7 @@
 #include "divsufsort_private.h"
 
 
+
 /*- Private Functions -*/
 
 static const saint_t lg_table[256]= {
