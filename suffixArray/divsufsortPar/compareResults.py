@@ -1,7 +1,7 @@
 from subprocess import call
 
 testProgram = "./SA"
-answerProgram = "./../parallelRange/SA"
+answerProgram = "./../divsufsort/SA"
 
 inputDir = "../../sequenceData/data/"
 inputFiles = [ "trigramString_10000000", "chr22.dna", "etext99", "proteins", "wikisamp.xml" ]
