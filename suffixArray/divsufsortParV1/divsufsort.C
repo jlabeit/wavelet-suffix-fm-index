@@ -119,13 +119,14 @@ void initBuckets(const sauchar_t *T, saidx_t *SA,
 
 		saidx_t s = std::min(n, block_size * (b+1)) - 1;
 		saidx_t e = block_size * b;
-		sauchar_t c0,c1;
 		// Go until definitly finding A type suffix 
 		if (s < n-1) // If not the last block
 			while (e < s && T[s] <= T[s+1]) s--; 
 		// it is ensured that s is set to a position of a A-type suffix
 		// loop goes past e until finding A-type suffix after a B-type suffix
-		for(saidx_t i = s, c0 = T[s]; e <= i; ) {
+		saidx_t i;
+		saint_t c0,c1;
+		for(i = s, c0 = c1 = T[s]; e <= i; ) {
 			do { 
 				if (i < e && c0 > c1) { // If next block can be sure it's a A-type suffix
 					i = -1;
@@ -161,14 +162,15 @@ void initBuckets(const sauchar_t *T, saidx_t *SA,
 	parallel_for (saidx_t b = 0; b < num_blocks; b++) {
 		saidx_t s = std::min(n, block_size * (b+1)) - 1;
 		saidx_t e = block_size * b;
-		sauchar_t c0,c1;
 		saidx_t m_ = bstar_count[b];
 		// Go until definitly finding A type suffix 
 		if (s < n-1) // If not the last block
 			while (e < s && T[s] <= T[s+1]) s--; 
 		// it is ensured that s is set to a position of a A-type suffix
 		// loop goes past e until finding A-type suffix after a B-type suffix
-		for(saidx_t i = s, c0 = T[s]; e <= i; ) {
+		saidx_t i;
+		saint_t c0,c1;
+		for(i = s, c0 = c1 = T[s]; e <= i; ) {
 			do { 
 				if (i < e && c0 > c1) { // If next block can be sure it's a A-type suffix
 					i = -1;
@@ -341,12 +343,12 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 class cached_bucket_writer {
 	private:
 	static const saidx_t BUF_SIZE = 64;
+	saidx_t num_blocks;
+	saidx_t* bucket_offsets;
+	saidx_t num_buckets;
+	saidx_t* SA;
 	saidx_t** buffers; // Für each block, for earch bucket BUF_SIZE spots
 	saidx_t **buffer_pos;
-	saidx_t num_blocks;
-	saidx_t num_buckets;
-	saidx_t* bucket_offsets;
-	saidx_t* SA;
 
 	void flush(saidx_t block, saidx_t bucket) {
 		saidx_t offset = bucket_offsets[block * num_buckets + bucket] - buffer_pos[block][bucket];
@@ -512,9 +514,6 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
              saidx_t *bucket_A, saidx_t *bucket_B,
              saidx_t n, saidx_t m) {
   nextTime("Preprocessing");
-  saidx_t *i, *j, *k;
-  saidx_t s;
-  saint_t c0, c1, c2;
   const saidx_t num_blocks = getWorkers();
   saidx_t* block_bucket_cnt = new saidx_t[num_blocks*BUCKET_A_SIZE];
   // Use buffered writing to handle chache invalidations
@@ -524,7 +523,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 	  /* Construct the sorted order of type B suffixes by using
 	     the sorted order of type B* suffixes. */
 	  
-	  for (c1 = ALPHABET_SIZE-2; 0 <= c1; --c1) {
+	  for (saint_t c1 = ALPHABET_SIZE-2; 0 <= c1; --c1) {
 
 		  saidx_t* start = SA + BUCKET_A(c1+1);
 		  saidx_t* end = SA + BUCKET_B(c1,c1)+1;
@@ -568,13 +567,14 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
      the sorted order of type B suffixes. */
   
   // First suffix is end of the string, update this first
-  k = SA + BUCKET_A(c2 = T[n - 1]); 
+  saint_t c2;
+  saidx_t* k = SA + BUCKET_A(c2 = T[n - 1]); 
   *k = (T[n - 2] < c2) ? ~(n - 1) : (n - 1);
   BUCKET_A(c2)++;
 
   saidx_t *start = SA;
   saidx_t *end;
-  for (c1 = 0; c1 < ALPHABET_SIZE; c1++) {
+  for (saint_t c1 = 0; c1 < ALPHABET_SIZE; c1++) {
 	  // If not initialized part of bucket
 	  while (BUCKET_A(c1) <= BUCKET_B(c1,c1) || c1 == ALPHABET_SIZE-1) { // If hit uninitialized block or the end
 		  end = SA + BUCKET_A(c1);
