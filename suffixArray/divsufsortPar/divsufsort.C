@@ -217,7 +217,6 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
     PAb = SA + n - m; ISAb = SA + m;
   if(0 < m) {
     initBStarBuckets(T, SA, bucket_B, n, m, PAb);
-    //nextTime("BSTARSORT, Init buck\t\t");
 
     /* Sort the type B* substrings using sssort. */
     buf = SA + m, bufsize = n - (2 * m);
@@ -238,7 +237,6 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
         }
       }
     }
-  //nextTime("BSTARSORT, sssort\t\t");
     /* Compute ranks of type B* substrings. */
     saidx_t block_size = m / num_blocks + 1;
     saidx_t* block_start_rank = newA(saidx_t,num_blocks);
@@ -283,14 +281,12 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
     }
     free(block_start_rank);
 
-    //nextTime("BSTARSORT, ranks\t\t");
     buf = SA + (2*m);
     bufsize = n - (2*m);
     paralleltrsort(ISAb, SA, m, buf, bufsize);
     //trsort(ISAb, SA, m, 1);
 
     // TODO is the next step neccessary if SA is already sorted by paralleltrsort?
-    //nextTime("BSTARSORT, trsort\t\t");
     block_size = n / num_blocks + 1; // Use same blocks as when initializing bstar_count !
     /* Set the sorted order of type B* suffixes. */
     parallel_for (saidx_t b = 0; b < num_blocks; b++) {
@@ -333,7 +329,6 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
       BUCKET_B(c0, c0) = i; /* end point */
     }
   }
-  //nextTime("BSTARSORT, finishing\t\t");
   return m;
 }
 
@@ -513,7 +508,6 @@ void
 construct_SA(const sauchar_t *T, saidx_t *SA,
              saidx_t *bucket_A, saidx_t *bucket_B,
              saidx_t n, saidx_t m) {
-  nextTime("Preprocessing");
   const saidx_t num_blocks = getWorkers();
   saidx_t* block_bucket_cnt = newA(saidx_t, num_blocks*BUCKET_A_SIZE);
   // Use buffered writing to handle chache invalidations
@@ -565,8 +559,6 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 			  }
 		  } 
   }
-  //nextTime("Construct_SA, B suff\t\t");
-
   /* Construct the suffix array by using
      the sorted order of type B suffixes. */
   
@@ -618,7 +610,6 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 	  }
   }
   free(block_bucket_cnt);
-  nextTime("construct_SA");
 }
 
 /* Constructs the burrows-wheeler transformed string directly
