@@ -27,7 +27,6 @@
 #ifndef _DIVSUFSORT_PRIVATE_H
 #define _DIVSUFSORT_PRIVATE_H 1
 
-
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -59,28 +58,7 @@ extern "C" {
 #  include <stdint.h>
 # endif
 #endif
-#if defined(BUILD_DIVSUFSORT64)
-# include "divsufsort64.h"
-# ifndef SAIDX_T
-#  define SAIDX_T
-#  define saidx_t saidx64_t
-# endif /* SAIDX_T */
-# ifndef PRIdSAIDX_T
-#  define PRIdSAIDX_T PRIdSAIDX64_T
-# endif /* PRIdSAIDX_T */
-# define divsufsort divsufsort64
-# define divbwt divbwt64
-# define divsufsort_version divsufsort64_version
-# define bw_transform bw_transform64
-# define inverse_bw_transform inverse_bw_transform64
-# define sufcheck sufcheck64
-# define sa_search sa_search64
-# define sa_simplesearch sa_simplesearch64
-# define sssort sssort64
-# define trsort trsort64
-#else
-# include "divsufsort.h"
-#endif
+#include "divsufsort.h"
 
 
 /*- Constants -*/
@@ -118,7 +96,7 @@ extern "C" {
 #endif
 /* minstacksize = log(SS_BLOCKSIZE) / log(3) * 2 */
 #if SS_BLOCKSIZE == 0
-# if defined(BUILD_DIVSUFSORT64)
+# if defined(LONG)
 #  define SS_MISORT_STACKSIZE (96)
 # else
 #  define SS_MISORT_STACKSIZE (64)
@@ -128,14 +106,14 @@ extern "C" {
 #else
 # define SS_MISORT_STACKSIZE (24)
 #endif
-#if defined(BUILD_DIVSUFSORT64)
+#if defined(LONG)
 # define SS_SMERGE_STACKSIZE (64)
 #else
 # define SS_SMERGE_STACKSIZE (32)
 #endif
 /* for trsort.c */
 #define TR_INSERTIONSORT_THRESHOLD (8)
-#if defined(BUILD_DIVSUFSORT64)
+#if defined(LONG)
 # define TR_STACKSIZE (96)
 #else
 # define TR_STACKSIZE (64)
