@@ -703,7 +703,6 @@ divsufsort(const sauchar_t *T, saidx_t *SA, saidx_t n) {
   saidx_t m;
   saint_t err = 0;
 
-
   /* Check arguments. */
   if((T == NULL) || (SA == NULL) || (n < 0)) { return -1; }
   else if(n == 0) { return 0; }

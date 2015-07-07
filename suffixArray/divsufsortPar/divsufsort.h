@@ -53,7 +53,11 @@ typedef int32_t saint_t;
 #endif /* SAINT_T */
 #ifndef SAIDX_T
 #define SAIDX_T
-typedef int32_t saidx_t;
+#ifdef LONG
+  typedef int64_t saidx_t;
+#else
+  typedef int32_t saidx_t;
+#endif
 #endif /* SAIDX_T */
 #ifndef PRIdSAINT_T
 #define PRIdSAINT_T PRId32

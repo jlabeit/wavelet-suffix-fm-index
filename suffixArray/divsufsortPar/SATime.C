@@ -20,7 +20,6 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-//#define LONG
 #include <iostream>
 #include <algorithm>
 #include "gettime.h"
@@ -30,7 +29,7 @@
 #include "parseCommandLine.h"
 #include "SA.h"
 #include "sequence.h"
-#include "divsufsort_private.h"
+#include "divsufsort.h"
 
 using namespace std;
 using namespace benchIO;
