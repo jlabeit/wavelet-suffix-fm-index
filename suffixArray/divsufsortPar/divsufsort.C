@@ -58,7 +58,7 @@ note:
 void initBStarBuckets(const sauchar_t *T, saidx_t *SA, saidx_t* bucket_B, saidx_t n, saidx_t m, saidx_t* PAb) {
     saidx_t num_blocks = getWorkers();
     saidx_t block_size = (m-1) / num_blocks + 1;    
-    saidx_t* block_bucket_cnt = new saidx_t[num_blocks*BUCKET_B_SIZE];
+    saidx_t* block_bucket_cnt = newA(saidx_t, num_blocks*BUCKET_B_SIZE);
     memset(block_bucket_cnt, 0, sizeof(saidx_t)*num_blocks*BUCKET_B_SIZE); // TODO is this faster than parallel memset?
     // First pass count buckets for each block
     parallel_for (saidx_t b = num_blocks-1; 0 <= b; b--) {
@@ -94,7 +94,7 @@ void initBStarBuckets(const sauchar_t *T, saidx_t *SA, saidx_t* bucket_B, saidx_
     }
     // Init again correctly
     parallel_for (saidx_t i = 0; i < BUCKET_B_SIZE; i++)  bucket_B[i] = block_bucket_cnt[i];
-    delete [] block_bucket_cnt;
+    free(block_bucket_cnt);
     saidx_t t;
     sauchar_t c0,c1;
     t = PAb[m - 1], c0 = T[t], c1 = T[t + 1];
@@ -107,9 +107,9 @@ void initBuckets(const sauchar_t *T, saidx_t *SA,
                saidx_t n, saidx_t& m,
 	       saidx_t num_blocks, saidx_t block_size, saidx_t* bstar_count) {
   
-	saidx_t* tempBA = new saidx_t[num_blocks*BUCKET_A_SIZE];
+	saidx_t* tempBA = newA(saidx_t, num_blocks*BUCKET_A_SIZE);
 	memset(tempBA, 0, sizeof(saidx_t)*num_blocks*BUCKET_A_SIZE);
-	saidx_t* tempBB = new saidx_t[num_blocks*BUCKET_B_SIZE];
+	saidx_t* tempBB = newA(saidx_t, num_blocks*BUCKET_B_SIZE);
 	memset(tempBB, 0, sizeof(saidx_t)*num_blocks*BUCKET_B_SIZE);
 	parallel_for (saidx_t b = 0; b < num_blocks; b++) {
 		// Init values with 0
@@ -155,8 +155,8 @@ void initBuckets(const sauchar_t *T, saidx_t *SA,
 	parallel_for(saidx_t i_ = 0; i_ < BUCKET_A_SIZE; ++i_) { bucket_A[i_] = 0; for (int b = 0; b < num_blocks; b++) bucket_A[i_] += tempBA[i_ + b*BUCKET_A_SIZE]; } 
 	parallel_for(saidx_t i_ = 0; i_ < BUCKET_B_SIZE; ++i_) { bucket_B[i_] = 0; for (int b = 0; b < num_blocks; b++) bucket_B[i_] += tempBB[i_ + b*BUCKET_B_SIZE]; } 
 	cilk_spawn calculateBucketOffsets(bucket_A, bucket_B);	// Buckets offsets can be calculated during the second pass
-	delete [] tempBA;
-	delete [] tempBB;
+	free(tempBA);
+	free(tempBB);
 	// Write position of BSTAR suffixes to the end of SA array
 	// Pack all elements i from [0,n-1] to SA+n-m such that i is a BSTAR suffix	
 	parallel_for (saidx_t b = 0; b < num_blocks; b++) {
@@ -210,7 +210,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
      type B* suffixes into the array SA. */
   saidx_t num_blocks = getWorkers();
   saidx_t block_size = n / num_blocks + 1;    
-  saidx_t* bstar_count = new saidx_t[num_blocks];
+  saidx_t* bstar_count = newA(saidx_t, num_blocks);
   memset(bstar_count, 0, sizeof(saidx_t)*num_blocks);
   initBuckets(T, SA, bucket_A, bucket_B, n, m, num_blocks, block_size, bstar_count);
 
@@ -241,7 +241,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
   //nextTime("BSTARSORT, sssort\t\t");
     /* Compute ranks of type B* substrings. */
     saidx_t block_size = m / num_blocks + 1;
-    saidx_t* block_start_rank = new saidx_t[num_blocks];
+    saidx_t* block_start_rank = newA(saidx_t,num_blocks);
     block_start_rank[0] = 0;
     // First pass calculate block start rank
     parallel_for (saidx_t b = 1; b < num_blocks; b++) {
@@ -281,7 +281,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 			ISAb[SA[i]] = j; // End of the bucket with equal suffixes
 	}
     }
-    delete []block_start_rank;
+    free(block_start_rank);
 
     //nextTime("BSTARSORT, ranks\t\t");
     buf = SA + (2*m);
@@ -315,7 +315,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 			}
 		}
     }
-    delete [] bstar_count;
+    free(bstar_count);
 
     saidx_t i,j;
     /* Calculate the index of start/end point of each bucket. */
@@ -375,21 +375,21 @@ class cached_bucket_writer {
 		num_blocks(num_blocks_), 
 		bucket_offsets(bucket_offsets_),
        		num_buckets(num_buckets_), SA(SA_) {
-			buffers = new saidx_t*[num_blocks];
-			buffer_pos = new saidx_t*[num_blocks];
+			buffers = newA(saidx_t*,num_blocks);
+			buffer_pos = newA(saidx_t*,num_blocks);
 			parallel_for (saidx_t b = 0; b < num_blocks; b++) {
-				buffers[b] = new saidx_t[num_buckets * BUF_SIZE];		
-				buffer_pos[b] = new saidx_t[num_buckets];
+				buffers[b] = newA(saidx_t,num_buckets * BUF_SIZE);		
+				buffer_pos[b] = newA(saidx_t,num_buckets);
 				memset(buffer_pos[b], 0, sizeof(saidx_t) * num_buckets);
 			}
 	}
 	~cached_bucket_writer() {
 		parallel_for (saidx_t b = 0; b < num_blocks; b++) {
-			delete[] buffers[b];
-			delete [] buffer_pos[b];
+			free(buffers[b]);
+			free(buffer_pos[b]);
 		}
-		delete [] buffers;
-		delete [] buffer_pos;
+		free(buffers);
+		free(buffer_pos);
 	}
 	inline void write(saidx_t block, saint_t bucket, saidx_t value) {
 		if (buffer_pos[block][bucket] == BUF_SIZE) {
@@ -515,7 +515,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
              saidx_t n, saidx_t m) {
   nextTime("Preprocessing");
   const saidx_t num_blocks = getWorkers();
-  saidx_t* block_bucket_cnt = new saidx_t[num_blocks*BUCKET_A_SIZE];
+  saidx_t* block_bucket_cnt = newA(saidx_t, num_blocks*BUCKET_A_SIZE);
   // Use buffered writing to handle chache invalidations
   cached_bucket_writer bucket_writer(num_blocks, block_bucket_cnt, BUCKET_A_SIZE, SA); 
   if(0 < m) {
@@ -617,7 +617,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 		  }
 	  }
   }
-  delete[] block_bucket_cnt;
+  free(block_bucket_cnt);
   nextTime("construct_SA");
 }
 
@@ -710,8 +710,8 @@ divsufsort(const sauchar_t *T, saidx_t *SA, saidx_t n) {
   else if(n == 1) { SA[0] = 0; return 0; }
   else if(n == 2) { m = (T[0] < T[1]); SA[m ^ 1] = 0, SA[m] = 1; return 0; }
 
-  bucket_A = (saidx_t *)malloc(BUCKET_A_SIZE * sizeof(saidx_t));
-  bucket_B = (saidx_t *)malloc(BUCKET_B_SIZE * sizeof(saidx_t));
+  bucket_A = newA(saidx_t, BUCKET_A_SIZE);
+  bucket_B = newA(saidx_t, BUCKET_B_SIZE);
   
   /* Suffixsort. */
   if((bucket_A != NULL) && (bucket_B != NULL)) {
