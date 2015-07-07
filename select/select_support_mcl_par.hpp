@@ -513,7 +513,6 @@ m_longsuperblock = new int_vector<0>[sb+1];
 int_vector<64> superblockstart(sb, 0, m_logn); 
 int_vector<64> superblockend(sb, 0); 
 
-const uint64_t* data = v->data();
 // Assings start and end chunk to every superblock
 std::pair<uint32_t, uint32_t>* sb_to_chunk = new std::pair<uint32_t, uint32_t>[sb];
 // Init m_superblock with blocked for 
