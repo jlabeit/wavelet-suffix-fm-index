@@ -162,10 +162,27 @@ pair<WTnode*,long*> WT(symbol* input_str, uintT n, uintT sigma) {
 	uintT e = s + num_threads -1;
 	nodes[node_id].length = node_bitmapPtrs_new[e] - node_bitmapPtrs_new[s] + node_lengths[e];
 	nodes[node_id].bitmapPtr = node_bitmapPtrs_new[s];
+ } 
+ // Add pointers
 #ifdef POINTERS
-	// TODO add points ifdef POINTER
+ nodes[0].parent = UINT_T_MAX;
+ parallel_for (uintT node_id = 0; node_id < 2*sigma; ++node_id) {
+	nodes[node_id].leftChild = nodes[node_id].rightChild = UINT_T_MAX;
+	if (2*node_id+2 < 2*sigma) {
+		// Left child
+		if (nodes[2*node_id+1].length > 0) {
+			nodes[2*node_id+1].parent = node_id;
+			nodes[node_id].leftChild = 2*node_id+1;
+		}
+		// Right child
+		if (nodes[2*node_id+2].length > 0) {
+			nodes[2*node_id+2].parent = node_id;
+			nodes[node_id].rightChild = 2*node_id+2;
+		}
+	}
+ }
 #endif
-  } 
+ 
   // Actually copy the wt data in large blocks
   {
 	  uintT block_size = result_size / (num_threads*4) / 64 *64;
