@@ -1,0 +1,2430 @@
+parallelRange 1 chr22.dna
+PBBS-time: 7.28
+PBBS-time: 7.28
+
+
+parallelRange 2 chr22.dna
+PBBS-time: 5.75
+PBBS-time: 5.75
+
+
+parallelRange 4 chr22.dna
+PBBS-time: 3.25
+PBBS-time: 3.23
+
+
+parallelRange 8 chr22.dna
+PBBS-time: 1.81
+PBBS-time: 1.83
+
+
+parallelRange 16 chr22.dna
+PBBS-time: 1.21
+PBBS-time: 1.21
+
+
+parallelRange 24 chr22.dna
+PBBS-time: 1.06
+PBBS-time: 1.06
+
+
+parallelRange 32 chr22.dna
+PBBS-time: 0.991
+PBBS-time: 0.984
+
+
+parallelRange 40 chr22.dna
+PBBS-time: 0.99
+PBBS-time: 0.986
+
+
+parallelRange 48 chr22.dna
+PBBS-time: 0.998
+PBBS-time: 0.998
+
+
+parallelRange 56 chr22.dna
+PBBS-time: 0.996
+PBBS-time: 0.981
+
+
+parallelRange 64 chr22.dna
+PBBS-time: 0.987
+PBBS-time: 0.987
+
+
+parallelRange 72 chr22.dna
+PBBS-time: 1.03
+PBBS-time: 1.01
+
+
+parallelRange 80 chr22.dna
+PBBS-time: 1.06
+PBBS-time: 1.04
+
+
+parallelRangeLight 1 chr22.dna
+PBBS-time: 22
+PBBS-time: 22
+
+
+parallelRangeLight 2 chr22.dna
+PBBS-time: 14.3
+PBBS-time: 14.3
+
+
+parallelRangeLight 4 chr22.dna
+PBBS-time: 7.48
+PBBS-time: 7.51
+
+
+parallelRangeLight 8 chr22.dna
+PBBS-time: 4
+PBBS-time: 4.03
+
+
+parallelRangeLight 16 chr22.dna
+PBBS-time: 2.35
+PBBS-time: 2.34
+
+
+parallelRangeLight 24 chr22.dna
+PBBS-time: 1.82
+PBBS-time: 1.84
+
+
+parallelRangeLight 32 chr22.dna
+PBBS-time: 1.63
+PBBS-time: 1.67
+
+
+parallelRangeLight 40 chr22.dna
+PBBS-time: 1.45
+PBBS-time: 1.49
+
+
+parallelRangeLight 48 chr22.dna
+PBBS-time: 1.41
+PBBS-time: 1.41
+
+
+parallelRangeLight 56 chr22.dna
+PBBS-time: 1.35
+PBBS-time: 1.35
+
+
+parallelRangeLight 64 chr22.dna
+PBBS-time: 1.31
+PBBS-time: 1.35
+
+
+parallelRangeLight 72 chr22.dna
+PBBS-time: 1.34
+PBBS-time: 1.34
+
+
+parallelRangeLight 80 chr22.dna
+PBBS-time: 1.37
+PBBS-time: 1.39
+
+
+parallelDivsufsort 1 chr22.dna
+PBBS-time: 9.85
+PBBS-time: 9.84
+
+
+parallelDivsufsort 2 chr22.dna
+PBBS-time: 6.96
+PBBS-time: 6.97
+
+
+parallelDivsufsort 4 chr22.dna
+PBBS-time: 3.75
+PBBS-time: 3.75
+
+
+parallelDivsufsort 8 chr22.dna
+PBBS-time: 2.09
+PBBS-time: 2.08
+
+
+parallelDivsufsort 16 chr22.dna
+PBBS-time: 1.42
+PBBS-time: 1.46
+
+
+parallelDivsufsort 24 chr22.dna
+PBBS-time: 1.21
+PBBS-time: 1.23
+
+
+parallelDivsufsort 32 chr22.dna
+PBBS-time: 1.16
+PBBS-time: 1.15
+
+
+parallelDivsufsort 40 chr22.dna
+PBBS-time: 1.19
+PBBS-time: 1.19
+
+
+parallelDivsufsort 48 chr22.dna
+PBBS-time: 1.13
+PBBS-time: 1.14
+
+
+parallelDivsufsort 56 chr22.dna
+PBBS-time: 1.11
+PBBS-time: 1.12
+
+
+parallelDivsufsort 64 chr22.dna
+PBBS-time: 1.26
+PBBS-time: 1.19
+
+
+parallelDivsufsort 72 chr22.dna
+PBBS-time: 1.23
+PBBS-time: 1.2
+
+
+parallelDivsufsort 80 chr22.dna
+PBBS-time: 1.51
+PBBS-time: 1.25
+
+
+parallelKS 1 chr22.dna
+PBBS-time: 17.6
+PBBS-time: 17.7
+
+
+parallelKS 2 chr22.dna
+PBBS-time: 14.5
+PBBS-time: 14.3
+
+
+parallelKS 4 chr22.dna
+PBBS-time: 7.38
+PBBS-time: 7.35
+
+
+parallelKS 8 chr22.dna
+PBBS-time: 3.88
+PBBS-time: 3.87
+
+
+parallelKS 16 chr22.dna
+PBBS-time: 2.4
+PBBS-time: 2.34
+
+
+parallelKS 24 chr22.dna
+PBBS-time: 2.12
+PBBS-time: 2.13
+
+
+parallelKS 32 chr22.dna
+PBBS-time: 1.77
+PBBS-time: 1.78
+
+
+parallelKS 40 chr22.dna
+PBBS-time: 1.76
+PBBS-time: 1.72
+
+
+parallelKS 48 chr22.dna
+PBBS-time: 1.59
+PBBS-time: 1.58
+
+
+parallelKS 56 chr22.dna
+PBBS-time: 1.56
+PBBS-time: 1.57
+
+
+parallelKS 64 chr22.dna
+PBBS-time: 1.52
+PBBS-time: 1.54
+
+
+parallelKS 72 chr22.dna
+PBBS-time: 1.66
+PBBS-time: 1.57
+
+
+parallelKS 80 chr22.dna
+PBBS-time: 1.64
+PBBS-time: 1.67
+
+
+serialDivsufsort chr22.dna
+PBBS-time: 4.98
+PBBS-time: 4.96
+
+
+serialKS chr22.dna
+PBBS-time: 23.1
+PBBS-time: 23.1
+
+
+parallelRange 1 etext99
+PBBS-time: 42.4
+PBBS-time: 42.4
+
+
+parallelRange 2 etext99
+PBBS-time: 50.9
+PBBS-time: 50.9
+
+
+parallelRange 4 etext99
+PBBS-time: 24.4
+PBBS-time: 24.5
+
+
+parallelRange 8 etext99
+PBBS-time: 12.9
+PBBS-time: 12.9
+
+
+parallelRange 16 etext99
+PBBS-time: 7.11
+PBBS-time: 7.06
+
+
+parallelRange 24 etext99
+PBBS-time: 5.49
+PBBS-time: 5.42
+
+
+parallelRange 32 etext99
+PBBS-time: 4.79
+PBBS-time: 4.81
+
+
+parallelRange 40 etext99
+PBBS-time: 4.43
+PBBS-time: 4.4
+
+
+parallelRange 48 etext99
+PBBS-time: 4.18
+PBBS-time: 4.12
+
+
+parallelRange 56 etext99
+PBBS-time: 3.99
+PBBS-time: 3.97
+
+
+parallelRange 64 etext99
+PBBS-time: 3.92
+PBBS-time: 3.89
+
+
+parallelRange 72 etext99
+PBBS-time: 4.01
+PBBS-time: 3.99
+
+
+parallelRange 80 etext99
+PBBS-time: 4.05
+PBBS-time: 4.03
+
+
+parallelRangeLight 1 etext99
+PBBS-time: 138
+PBBS-time: 138
+
+
+parallelRangeLight 2 etext99
+PBBS-time: 90.3
+PBBS-time: 90.3
+
+
+parallelRangeLight 4 etext99
+PBBS-time: 45.6
+PBBS-time: 45.4
+
+
+parallelRangeLight 8 etext99
+PBBS-time: 23.6
+PBBS-time: 23.5
+
+
+parallelRangeLight 16 etext99
+PBBS-time: 12.7
+PBBS-time: 12.7
+
+
+parallelRangeLight 24 etext99
+PBBS-time: 9.31
+PBBS-time: 9.18
+
+
+parallelRangeLight 32 etext99
+PBBS-time: 7.84
+PBBS-time: 7.89
+
+
+parallelRangeLight 40 etext99
+PBBS-time: 7.1
+PBBS-time: 7.06
+
+
+parallelRangeLight 48 etext99
+PBBS-time: 6.47
+PBBS-time: 6.44
+
+
+parallelRangeLight 56 etext99
+PBBS-time: 6.11
+PBBS-time: 6.15
+
+
+parallelRangeLight 64 etext99
+PBBS-time: 5.95
+PBBS-time: 5.9
+
+
+parallelRangeLight 72 etext99
+PBBS-time: 5.96
+PBBS-time: 5.95
+
+
+parallelRangeLight 80 etext99
+PBBS-time: 6.12
+PBBS-time: 6.08
+
+
+parallelDivsufsort 1 etext99
+PBBS-time: 52.9
+PBBS-time: 52.9
+
+
+parallelDivsufsort 2 etext99
+PBBS-time: 34.3
+PBBS-time: 34.3
+
+
+parallelDivsufsort 4 etext99
+PBBS-time: 18
+PBBS-time: 18
+
+
+parallelDivsufsort 8 etext99
+PBBS-time: 9.54
+PBBS-time: 9.64
+
+
+parallelDivsufsort 16 etext99
+PBBS-time: 5.31
+PBBS-time: 5.4
+
+
+parallelDivsufsort 24 etext99
+PBBS-time: 3.99
+PBBS-time: 4.04
+
+
+parallelDivsufsort 32 etext99
+PBBS-time: 3.49
+PBBS-time: 3.55
+
+
+parallelDivsufsort 40 etext99
+PBBS-time: 3.35
+PBBS-time: 3.42
+
+
+parallelDivsufsort 48 etext99
+PBBS-time: 3.12
+PBBS-time: 3.11
+
+
+parallelDivsufsort 56 etext99
+PBBS-time: 3.05
+PBBS-time: 3.04
+
+
+parallelDivsufsort 64 etext99
+PBBS-time: 2.98
+PBBS-time: 3
+
+
+parallelDivsufsort 72 etext99
+PBBS-time: 3.17
+PBBS-time: 3.18
+
+
+parallelDivsufsort 80 etext99
+PBBS-time: 3.18
+PBBS-time: 3.16
+
+
+parallelKS 1 etext99
+PBBS-time: 65.6
+PBBS-time: 65.6
+
+
+parallelKS 2 etext99
+PBBS-time: 50.3
+PBBS-time: 50.2
+
+
+parallelKS 4 etext99
+PBBS-time: 25.5
+PBBS-time: 25.5
+
+
+parallelKS 8 etext99
+PBBS-time: 13.3
+PBBS-time: 13.2
+
+
+parallelKS 16 etext99
+PBBS-time: 7.64
+PBBS-time: 7.63
+
+
+parallelKS 24 etext99
+PBBS-time: 6.19
+PBBS-time: 6.17
+
+
+parallelKS 32 etext99
+PBBS-time: 5.55
+PBBS-time: 5.53
+
+
+parallelKS 40 etext99
+PBBS-time: 5.28
+PBBS-time: 5.29
+
+
+parallelKS 48 etext99
+PBBS-time: 5.14
+PBBS-time: 5.13
+
+
+parallelKS 56 etext99
+PBBS-time: 5.03
+PBBS-time: 5.05
+
+
+parallelKS 64 etext99
+PBBS-time: 5.03
+PBBS-time: 5.01
+
+
+parallelKS 72 etext99
+PBBS-time: 5.16
+PBBS-time: 5.17
+
+
+parallelKS 80 etext99
+PBBS-time: 5.28
+PBBS-time: 5.35
+
+
+serialDivsufsort etext99
+PBBS-time: 17
+PBBS-time: 17
+
+
+serialKS etext99
+PBBS-time: 87.8
+PBBS-time: 87.9
+
+
+parallelRange 1 howto
+PBBS-time: 13.5
+PBBS-time: 13.5
+
+
+parallelRange 2 howto
+PBBS-time: 15.1
+PBBS-time: 15
+
+
+parallelRange 4 howto
+PBBS-time: 7.85
+PBBS-time: 7.9
+
+
+parallelRange 8 howto
+PBBS-time: 4.14
+PBBS-time: 4.13
+
+
+parallelRange 16 howto
+PBBS-time: 2.69
+PBBS-time: 2.7
+
+
+parallelRange 24 howto
+PBBS-time: 1.84
+PBBS-time: 1.87
+
+
+parallelRange 32 howto
+PBBS-time: 1.61
+PBBS-time: 1.66
+
+
+parallelRange 40 howto
+PBBS-time: 1.51
+PBBS-time: 1.51
+
+
+parallelRange 48 howto
+PBBS-time: 1.46
+PBBS-time: 1.46
+
+
+parallelRange 56 howto
+PBBS-time: 1.37
+PBBS-time: 1.39
+
+
+parallelRange 64 howto
+PBBS-time: 1.38
+PBBS-time: 1.36
+
+
+parallelRange 72 howto
+PBBS-time: 1.45
+PBBS-time: 1.45
+
+
+parallelRange 80 howto
+PBBS-time: 1.51
+PBBS-time: 1.51
+
+
+parallelRangeLight 1 howto
+PBBS-time: 42.8
+PBBS-time: 42.8
+
+
+parallelRangeLight 2 howto
+PBBS-time: 28
+PBBS-time: 28
+
+
+parallelRangeLight 4 howto
+PBBS-time: 14.2
+PBBS-time: 14.3
+
+
+parallelRangeLight 8 howto
+PBBS-time: 7.44
+PBBS-time: 7.49
+
+
+parallelRangeLight 16 howto
+PBBS-time: 4.15
+PBBS-time: 4.16
+
+
+parallelRangeLight 24 howto
+PBBS-time: 3.03
+PBBS-time: 3.04
+
+
+parallelRangeLight 32 howto
+PBBS-time: 2.94
+PBBS-time: 2.87
+
+
+parallelRangeLight 40 howto
+PBBS-time: 2.49
+PBBS-time: 2.49
+
+
+parallelRangeLight 48 howto
+PBBS-time: 2.3
+PBBS-time: 2.3
+
+
+parallelRangeLight 56 howto
+PBBS-time: 2.16
+PBBS-time: 2.17
+
+
+parallelRangeLight 64 howto
+PBBS-time: 2.08
+PBBS-time: 2.11
+
+
+parallelRangeLight 72 howto
+PBBS-time: 2.2
+PBBS-time: 2.2
+
+
+parallelRangeLight 80 howto
+PBBS-time: 2.25
+PBBS-time: 2.2
+
+
+parallelDivsufsort 1 howto
+PBBS-time: 15.4
+PBBS-time: 15.3
+
+
+parallelDivsufsort 2 howto
+PBBS-time: 10.1
+PBBS-time: 10.1
+
+
+parallelDivsufsort 4 howto
+PBBS-time: 5.38
+PBBS-time: 5.34
+
+
+parallelDivsufsort 8 howto
+PBBS-time: 3.02
+PBBS-time: 3.02
+
+
+parallelDivsufsort 16 howto
+PBBS-time: 1.83
+PBBS-time: 1.76
+
+
+parallelDivsufsort 24 howto
+PBBS-time: 1.64
+PBBS-time: 1.59
+
+
+parallelDivsufsort 32 howto
+PBBS-time: 1.32
+PBBS-time: 1.27
+
+
+parallelDivsufsort 40 howto
+PBBS-time: 1.27
+PBBS-time: 1.26
+
+
+parallelDivsufsort 48 howto
+PBBS-time: 1.17
+PBBS-time: 1.17
+
+
+parallelDivsufsort 56 howto
+PBBS-time: 1.15
+PBBS-time: 1.17
+
+
+parallelDivsufsort 64 howto
+PBBS-time: 1.16
+PBBS-time: 1.14
+
+
+parallelDivsufsort 72 howto
+PBBS-time: 1.22
+PBBS-time: 1.19
+
+
+parallelDivsufsort 80 howto
+PBBS-time: 1.3
+PBBS-time: 1.27
+
+
+parallelKS 1 howto
+PBBS-time: 22.1
+PBBS-time: 22.1
+
+
+parallelKS 2 howto
+PBBS-time: 16.9
+PBBS-time: 17
+
+
+parallelKS 4 howto
+PBBS-time: 9.01
+PBBS-time: 9
+
+
+parallelKS 8 howto
+PBBS-time: 4.62
+PBBS-time: 4.62
+
+
+parallelKS 16 howto
+PBBS-time: 2.75
+PBBS-time: 2.75
+
+
+parallelKS 24 howto
+PBBS-time: 2.3
+PBBS-time: 2.29
+
+
+parallelKS 32 howto
+PBBS-time: 2.32
+PBBS-time: 2.31
+
+
+parallelKS 40 howto
+PBBS-time: 1.99
+PBBS-time: 1.97
+
+
+parallelKS 48 howto
+PBBS-time: 1.95
+PBBS-time: 1.96
+
+
+parallelKS 56 howto
+PBBS-time: 1.9
+PBBS-time: 1.92
+
+
+parallelKS 64 howto
+PBBS-time: 1.9
+PBBS-time: 1.9
+
+
+parallelKS 72 howto
+PBBS-time: 1.98
+PBBS-time: 1.94
+
+
+parallelKS 80 howto
+PBBS-time: 2.12
+PBBS-time: 2.12
+
+
+serialDivsufsort howto
+PBBS-time: 5.13
+PBBS-time: 5.12
+
+
+serialKS howto
+PBBS-time: 28.6
+PBBS-time: 28.6
+
+
+parallelRange 1 jdk13c
+PBBS-time: 39
+PBBS-time: 38.9
+
+
+parallelRange 2 jdk13c
+PBBS-time: 38.5
+PBBS-time: 38.5
+
+
+parallelRange 4 jdk13c
+PBBS-time: 18.8
+PBBS-time: 18.8
+
+
+parallelRange 8 jdk13c
+PBBS-time: 9.95
+PBBS-time: 9.94
+
+
+parallelRange 16 jdk13c
+PBBS-time: 5.69
+PBBS-time: 5.61
+
+
+parallelRange 24 jdk13c
+PBBS-time: 4.4
+PBBS-time: 4.39
+
+
+parallelRange 32 jdk13c
+PBBS-time: 3.93
+PBBS-time: 3.92
+
+
+parallelRange 40 jdk13c
+PBBS-time: 3.87
+PBBS-time: 3.81
+
+
+parallelRange 48 jdk13c
+PBBS-time: 3.52
+PBBS-time: 3.5
+
+
+parallelRange 56 jdk13c
+PBBS-time: 3.36
+PBBS-time: 3.4
+
+
+parallelRange 64 jdk13c
+PBBS-time: 3.36
+PBBS-time: 3.3
+
+
+parallelRange 72 jdk13c
+PBBS-time: 3.44
+PBBS-time: 3.43
+
+
+parallelRange 80 jdk13c
+PBBS-time: 3.45
+PBBS-time: 3.48
+
+
+parallelRangeLight 1 jdk13c
+PBBS-time: 100
+PBBS-time: 101
+
+
+parallelRangeLight 2 jdk13c
+PBBS-time: 68.4
+PBBS-time: 68.4
+
+
+parallelRangeLight 4 jdk13c
+PBBS-time: 34.2
+PBBS-time: 34.3
+
+
+parallelRangeLight 8 jdk13c
+PBBS-time: 17.7
+PBBS-time: 17.7
+
+
+parallelRangeLight 16 jdk13c
+PBBS-time: 9.71
+PBBS-time: 9.7
+
+
+parallelRangeLight 24 jdk13c
+PBBS-time: 7.21
+PBBS-time: 7.21
+
+
+parallelRangeLight 32 jdk13c
+PBBS-time: 6.26
+PBBS-time: 6.3
+
+
+parallelRangeLight 40 jdk13c
+PBBS-time: 5.67
+PBBS-time: 5.71
+
+
+parallelRangeLight 48 jdk13c
+PBBS-time: 5.38
+PBBS-time: 5.42
+
+
+parallelRangeLight 56 jdk13c
+PBBS-time: 5.06
+PBBS-time: 5.01
+
+
+parallelRangeLight 64 jdk13c
+PBBS-time: 4.89
+PBBS-time: 4.96
+
+
+parallelRangeLight 72 jdk13c
+PBBS-time: 4.95
+PBBS-time: 4.98
+
+
+parallelRangeLight 80 jdk13c
+PBBS-time: 5.14
+PBBS-time: 5.13
+
+
+parallelDivsufsort 1 jdk13c
+PBBS-time: 34.7
+PBBS-time: 34.7
+
+
+parallelDivsufsort 2 jdk13c
+PBBS-time: 23.8
+PBBS-time: 23.8
+
+
+parallelDivsufsort 4 jdk13c
+PBBS-time: 12.5
+PBBS-time: 12.5
+
+
+parallelDivsufsort 8 jdk13c
+PBBS-time: 6.75
+PBBS-time: 6.72
+
+
+parallelDivsufsort 16 jdk13c
+PBBS-time: 4
+PBBS-time: 3.99
+
+
+parallelDivsufsort 24 jdk13c
+PBBS-time: 3.43
+PBBS-time: 3.41
+
+
+parallelDivsufsort 32 jdk13c
+PBBS-time: 2.73
+PBBS-time: 2.73
+
+
+parallelDivsufsort 40 jdk13c
+PBBS-time: 2.55
+PBBS-time: 2.53
+
+
+parallelDivsufsort 48 jdk13c
+PBBS-time: 2.44
+PBBS-time: 2.45
+
+
+parallelDivsufsort 56 jdk13c
+PBBS-time: 2.31
+PBBS-time: 2.3
+
+
+parallelDivsufsort 64 jdk13c
+PBBS-time: 2.34
+PBBS-time: 2.36
+
+
+parallelDivsufsort 72 jdk13c
+PBBS-time: 2.45
+PBBS-time: 2.52
+
+
+parallelDivsufsort 80 jdk13c
+PBBS-time: 2.74
+PBBS-time: 2.58
+
+
+parallelKS 1 jdk13c
+PBBS-time: 39.7
+PBBS-time: 39.7
+
+
+parallelKS 2 jdk13c
+PBBS-time: 30.6
+PBBS-time: 30.6
+
+
+parallelKS 4 jdk13c
+PBBS-time: 15.7
+PBBS-time: 15.7
+
+
+parallelKS 8 jdk13c
+PBBS-time: 8.21
+PBBS-time: 8.2
+
+
+parallelKS 16 jdk13c
+PBBS-time: 4.87
+PBBS-time: 4.85
+
+
+parallelKS 24 jdk13c
+PBBS-time: 3.99
+PBBS-time: 3.99
+
+
+parallelKS 32 jdk13c
+PBBS-time: 3.62
+PBBS-time: 3.6
+
+
+parallelKS 40 jdk13c
+PBBS-time: 3.45
+PBBS-time: 3.5
+
+
+parallelKS 48 jdk13c
+PBBS-time: 3.44
+PBBS-time: 3.44
+
+
+parallelKS 56 jdk13c
+PBBS-time: 3.26
+PBBS-time: 3.23
+
+
+parallelKS 64 jdk13c
+PBBS-time: 3.28
+PBBS-time: 3.26
+
+
+parallelKS 72 jdk13c
+PBBS-time: 3.4
+PBBS-time: 3.38
+
+
+parallelKS 80 jdk13c
+PBBS-time: 3.48
+PBBS-time: 3.57
+
+
+serialDivsufsort jdk13c
+PBBS-time: 10.3
+PBBS-time: 10.4
+
+
+serialKS jdk13c
+PBBS-time: 47.5
+PBBS-time: 47.5
+
+
+parallelRange 1 rctail96
+PBBS-time: 62.8
+PBBS-time: 62.9
+
+
+parallelRange 2 rctail96
+PBBS-time: 60.7
+PBBS-time: 60.7
+
+
+parallelRange 4 rctail96
+PBBS-time: 29.2
+PBBS-time: 29.1
+
+
+parallelRange 8 rctail96
+PBBS-time: 15.6
+PBBS-time: 15.5
+
+
+parallelRange 16 rctail96
+PBBS-time: 8.58
+PBBS-time: 8.58
+
+
+parallelRange 24 rctail96
+PBBS-time: 6.8
+PBBS-time: 6.73
+
+
+parallelRange 32 rctail96
+PBBS-time: 6.04
+PBBS-time: 5.94
+
+
+parallelRange 40 rctail96
+PBBS-time: 5.69
+PBBS-time: 5.63
+
+
+parallelRange 48 rctail96
+PBBS-time: 5.46
+PBBS-time: 5.5
+
+
+parallelRange 56 rctail96
+PBBS-time: 5.32
+PBBS-time: 5.28
+
+
+parallelRange 64 rctail96
+PBBS-time: 5.25
+PBBS-time: 5.21
+
+
+parallelRange 72 rctail96
+PBBS-time: 5.29
+PBBS-time: 5.28
+
+
+parallelRange 80 rctail96
+PBBS-time: 5.37
+PBBS-time: 5.4
+
+
+parallelRangeLight 1 rctail96
+PBBS-time: 163
+PBBS-time: 162
+
+
+parallelRangeLight 2 rctail96
+PBBS-time: 109
+PBBS-time: 109
+
+
+parallelRangeLight 4 rctail96
+PBBS-time: 56
+PBBS-time: 55.6
+
+
+parallelRangeLight 8 rctail96
+PBBS-time: 28.4
+PBBS-time: 28.4
+
+
+parallelRangeLight 16 rctail96
+PBBS-time: 15.3
+PBBS-time: 15.4
+
+
+parallelRangeLight 24 rctail96
+PBBS-time: 11.2
+PBBS-time: 11.4
+
+
+parallelRangeLight 32 rctail96
+PBBS-time: 9.82
+PBBS-time: 9.69
+
+
+parallelRangeLight 40 rctail96
+PBBS-time: 9.07
+PBBS-time: 9.06
+
+
+parallelRangeLight 48 rctail96
+PBBS-time: 8.46
+PBBS-time: 8.38
+
+
+parallelRangeLight 56 rctail96
+PBBS-time: 7.95
+PBBS-time: 7.97
+
+
+parallelRangeLight 64 rctail96
+PBBS-time: 7.86
+PBBS-time: 7.76
+
+
+parallelRangeLight 72 rctail96
+PBBS-time: 7.74
+PBBS-time: 7.86
+
+
+parallelRangeLight 80 rctail96
+PBBS-time: 7.99
+PBBS-time: 7.94
+
+
+parallelDivsufsort 1 rctail96
+PBBS-time: 58.3
+PBBS-time: 58.3
+
+
+parallelDivsufsort 2 rctail96
+PBBS-time: 40.3
+PBBS-time: 40.3
+
+
+parallelDivsufsort 4 rctail96
+PBBS-time: 21
+PBBS-time: 20.9
+
+
+parallelDivsufsort 8 rctail96
+PBBS-time: 11.3
+PBBS-time: 11.2
+
+
+parallelDivsufsort 16 rctail96
+PBBS-time: 7.3
+PBBS-time: 7.4
+
+
+parallelDivsufsort 24 rctail96
+PBBS-time: 5.43
+PBBS-time: 5.5
+
+
+parallelDivsufsort 32 rctail96
+PBBS-time: 4.63
+PBBS-time: 4.6
+
+
+parallelDivsufsort 40 rctail96
+PBBS-time: 4.06
+PBBS-time: 4.15
+
+
+parallelDivsufsort 48 rctail96
+PBBS-time: 3.81
+PBBS-time: 3.81
+
+
+parallelDivsufsort 56 rctail96
+PBBS-time: 3.77
+PBBS-time: 3.73
+
+
+parallelDivsufsort 64 rctail96
+PBBS-time: 3.8
+PBBS-time: 3.82
+
+
+parallelDivsufsort 72 rctail96
+PBBS-time: 3.87
+PBBS-time: 3.83
+
+
+parallelDivsufsort 80 rctail96
+PBBS-time: 4.08
+PBBS-time: 4.06
+
+
+parallelKS 1 rctail96
+PBBS-time: 70.1
+PBBS-time: 70.1
+
+
+parallelKS 2 rctail96
+PBBS-time: 52.9
+PBBS-time: 52.9
+
+
+parallelKS 4 rctail96
+PBBS-time: 26.9
+PBBS-time: 26.9
+
+
+parallelKS 8 rctail96
+PBBS-time: 14.1
+PBBS-time: 14.1
+
+
+parallelKS 16 rctail96
+PBBS-time: 8.19
+PBBS-time: 8.18
+
+
+parallelKS 24 rctail96
+PBBS-time: 6.67
+PBBS-time: 6.64
+
+
+parallelKS 32 rctail96
+PBBS-time: 6.02
+PBBS-time: 6.03
+
+
+parallelKS 40 rctail96
+PBBS-time: 5.75
+PBBS-time: 5.76
+
+
+parallelKS 48 rctail96
+PBBS-time: 5.46
+PBBS-time: 5.48
+
+
+parallelKS 56 rctail96
+PBBS-time: 5.43
+PBBS-time: 5.45
+
+
+parallelKS 64 rctail96
+PBBS-time: 5.38
+PBBS-time: 5.46
+
+
+parallelKS 72 rctail96
+PBBS-time: 5.63
+PBBS-time: 5.57
+
+
+parallelKS 80 rctail96
+PBBS-time: 5.75
+PBBS-time: 5.67
+
+
+serialDivsufsort rctail96
+PBBS-time: 18.1
+PBBS-time: 18
+
+
+serialKS rctail96
+PBBS-time: 88.1
+PBBS-time: 88.1
+
+
+parallelRange 1 rfc
+PBBS-time: 47.8
+PBBS-time: 47.7
+
+
+parallelRange 2 rfc
+PBBS-time: 51.1
+PBBS-time: 51.2
+
+
+parallelRange 4 rfc
+PBBS-time: 25.9
+PBBS-time: 26
+
+
+parallelRange 8 rfc
+PBBS-time: 13.5
+PBBS-time: 13.4
+
+
+parallelRange 16 rfc
+PBBS-time: 7.57
+PBBS-time: 7.54
+
+
+parallelRange 24 rfc
+PBBS-time: 5.99
+PBBS-time: 5.99
+
+
+parallelRange 32 rfc
+PBBS-time: 5.14
+PBBS-time: 5.19
+
+
+parallelRange 40 rfc
+PBBS-time: 4.86
+PBBS-time: 4.79
+
+
+parallelRange 48 rfc
+PBBS-time: 4.54
+PBBS-time: 4.5
+
+
+parallelRange 56 rfc
+PBBS-time: 4.46
+PBBS-time: 4.4
+
+
+parallelRange 64 rfc
+PBBS-time: 4.4
+PBBS-time: 4.36
+
+
+parallelRange 72 rfc
+PBBS-time: 4.38
+PBBS-time: 4.4
+
+
+parallelRange 80 rfc
+PBBS-time: 4.49
+PBBS-time: 4.41
+
+
+parallelRangeLight 1 rfc
+PBBS-time: 132
+PBBS-time: 132
+
+
+parallelRangeLight 2 rfc
+PBBS-time: 87.9
+PBBS-time: 87.9
+
+
+parallelRangeLight 4 rfc
+PBBS-time: 45
+PBBS-time: 45.1
+
+
+parallelRangeLight 8 rfc
+PBBS-time: 22.9
+PBBS-time: 22.9
+
+
+parallelRangeLight 16 rfc
+PBBS-time: 12.4
+PBBS-time: 12.4
+
+
+parallelRangeLight 24 rfc
+PBBS-time: 9.21
+PBBS-time: 9.21
+
+
+parallelRangeLight 32 rfc
+PBBS-time: 7.92
+PBBS-time: 7.9
+
+
+parallelRangeLight 40 rfc
+PBBS-time: 7.18
+PBBS-time: 7.16
+
+
+parallelRangeLight 48 rfc
+PBBS-time: 6.79
+PBBS-time: 6.76
+
+
+parallelRangeLight 56 rfc
+PBBS-time: 6.38
+PBBS-time: 6.44
+
+
+parallelRangeLight 64 rfc
+PBBS-time: 6.22
+PBBS-time: 6.27
+
+
+parallelRangeLight 72 rfc
+PBBS-time: 6.3
+PBBS-time: 6.35
+
+
+parallelRangeLight 80 rfc
+PBBS-time: 6.41
+PBBS-time: 6.39
+
+
+parallelDivsufsort 1 rfc
+PBBS-time: 44.7
+PBBS-time: 44.6
+
+
+parallelDivsufsort 2 rfc
+PBBS-time: 30.4
+PBBS-time: 30.4
+
+
+parallelDivsufsort 4 rfc
+PBBS-time: 15.9
+PBBS-time: 16.1
+
+
+parallelDivsufsort 8 rfc
+PBBS-time: 8.68
+PBBS-time: 8.66
+
+
+parallelDivsufsort 16 rfc
+PBBS-time: 4.95
+PBBS-time: 4.98
+
+
+parallelDivsufsort 24 rfc
+PBBS-time: 3.68
+PBBS-time: 3.71
+
+
+parallelDivsufsort 32 rfc
+PBBS-time: 3.3
+PBBS-time: 3.2
+
+
+parallelDivsufsort 40 rfc
+PBBS-time: 3.01
+PBBS-time: 3.05
+
+
+parallelDivsufsort 48 rfc
+PBBS-time: 3
+PBBS-time: 2.85
+
+
+parallelDivsufsort 56 rfc
+PBBS-time: 2.81
+PBBS-time: 2.78
+
+
+parallelDivsufsort 64 rfc
+PBBS-time: 3.03
+PBBS-time: 2.89
+
+
+parallelDivsufsort 72 rfc
+PBBS-time: 2.9
+PBBS-time: 2.93
+
+
+parallelDivsufsort 80 rfc
+PBBS-time: 3.16
+PBBS-time: 3.05
+
+
+parallelKS 1 rfc
+PBBS-time: 73.2
+PBBS-time: 89.7
+
+
+parallelKS 2 rfc
+PBBS-time: 54.1
+PBBS-time: 54.1
+
+
+parallelKS 4 rfc
+PBBS-time: 26.6
+PBBS-time: 26.7
+
+
+parallelKS 8 rfc
+PBBS-time: 14
+PBBS-time: 14
+
+
+parallelKS 16 rfc
+PBBS-time: 8.05
+PBBS-time: 8.06
+
+
+parallelKS 24 rfc
+PBBS-time: 6.51
+PBBS-time: 6.54
+
+
+parallelKS 32 rfc
+PBBS-time: 5.88
+PBBS-time: 5.91
+
+
+parallelKS 40 rfc
+PBBS-time: 5.55
+PBBS-time: 5.58
+
+
+parallelKS 48 rfc
+PBBS-time: 5.46
+PBBS-time: 5.5
+
+
+parallelKS 56 rfc
+PBBS-time: 5.44
+PBBS-time: 5.46
+
+
+parallelKS 64 rfc
+PBBS-time: 5.54
+PBBS-time: 5.47
+
+
+parallelKS 72 rfc
+PBBS-time: 5.62
+PBBS-time: 5.64
+
+
+parallelKS 80 rfc
+PBBS-time: 5.76
+PBBS-time: 5.87
+
+
+serialDivsufsort rfc
+PBBS-time: 15.4
+PBBS-time: 15.4
+
+
+serialKS rfc
+PBBS-time: 88.9
+PBBS-time: 89
+
+
+parallelRange 1 sprot34
+PBBS-time: 48.6
+PBBS-time: 48.6
+
+
+parallelRange 2 sprot34
+PBBS-time: 42.9
+PBBS-time: 42.9
+
+
+parallelRange 4 sprot34
+PBBS-time: 22.4
+PBBS-time: 22.4
+
+
+parallelRange 8 sprot34
+PBBS-time: 11.3
+PBBS-time: 11.3
+
+
+parallelRange 16 sprot34
+PBBS-time: 6.55
+PBBS-time: 6.56
+
+
+parallelRange 24 sprot34
+PBBS-time: 5.13
+PBBS-time: 5.14
+
+
+parallelRange 32 sprot34
+PBBS-time: 4.61
+PBBS-time: 4.59
+
+
+parallelRange 40 sprot34
+PBBS-time: 4.43
+PBBS-time: 4.38
+
+
+parallelRange 48 sprot34
+PBBS-time: 4.21
+PBBS-time: 4.19
+
+
+parallelRange 56 sprot34
+PBBS-time: 4.1
+PBBS-time: 4.12
+
+
+parallelRange 64 sprot34
+PBBS-time: 4.08
+PBBS-time: 4.09
+
+
+parallelRange 72 sprot34
+PBBS-time: 4.09
+PBBS-time: 4.04
+
+
+parallelRange 80 sprot34
+PBBS-time: 4.13
+PBBS-time: 4.12
+
+
+parallelRangeLight 1 sprot34
+PBBS-time: 122
+PBBS-time: 122
+
+
+parallelRangeLight 2 sprot34
+PBBS-time: 80.8
+PBBS-time: 81
+
+
+parallelRangeLight 4 sprot34
+PBBS-time: 41.4
+PBBS-time: 41.5
+
+
+parallelRangeLight 8 sprot34
+PBBS-time: 21.2
+PBBS-time: 21.2
+
+
+parallelRangeLight 16 sprot34
+PBBS-time: 11.6
+PBBS-time: 11.6
+
+
+parallelRangeLight 24 sprot34
+PBBS-time: 9.02
+PBBS-time: 9.11
+
+
+parallelRangeLight 32 sprot34
+PBBS-time: 7.52
+PBBS-time: 7.52
+
+
+parallelRangeLight 40 sprot34
+PBBS-time: 6.85
+PBBS-time: 6.88
+
+
+parallelRangeLight 48 sprot34
+PBBS-time: 6.41
+PBBS-time: 6.42
+
+
+parallelRangeLight 56 sprot34
+PBBS-time: 6.17
+PBBS-time: 6.13
+
+
+parallelRangeLight 64 sprot34
+PBBS-time: 5.97
+PBBS-time: 5.97
+
+
+parallelRangeLight 72 sprot34
+PBBS-time: 5.97
+PBBS-time: 5.98
+
+
+parallelRangeLight 80 sprot34
+PBBS-time: 6.14
+PBBS-time: 6.1
+
+
+parallelDivsufsort 1 sprot34
+PBBS-time: 46.4
+PBBS-time: 46.4
+
+
+parallelDivsufsort 2 sprot34
+PBBS-time: 30.9
+PBBS-time: 30.9
+
+
+parallelDivsufsort 4 sprot34
+PBBS-time: 16.2
+PBBS-time: 16.2
+
+
+parallelDivsufsort 8 sprot34
+PBBS-time: 8.52
+PBBS-time: 8.56
+
+
+parallelDivsufsort 16 sprot34
+PBBS-time: 4.81
+PBBS-time: 4.89
+
+
+parallelDivsufsort 24 sprot34
+PBBS-time: 3.91
+PBBS-time: 3.92
+
+
+parallelDivsufsort 32 sprot34
+PBBS-time: 3.31
+PBBS-time: 3.31
+
+
+parallelDivsufsort 40 sprot34
+PBBS-time: 3.02
+PBBS-time: 2.99
+
+
+parallelDivsufsort 48 sprot34
+PBBS-time: 2.77
+PBBS-time: 2.76
+
+
+parallelDivsufsort 56 sprot34
+PBBS-time: 2.62
+PBBS-time: 2.62
+
+
+parallelDivsufsort 64 sprot34
+PBBS-time: 2.7
+PBBS-time: 2.59
+
+
+parallelDivsufsort 72 sprot34
+PBBS-time: 2.67
+PBBS-time: 2.74
+
+
+parallelDivsufsort 80 sprot34
+PBBS-time: 2.87
+PBBS-time: 2.87
+
+
+parallelKS 1 sprot34
+PBBS-time: 67
+PBBS-time: 67
+
+
+parallelKS 2 sprot34
+PBBS-time: 50.5
+PBBS-time: 50.4
+
+
+parallelKS 4 sprot34
+PBBS-time: 25.8
+PBBS-time: 25.8
+
+
+parallelKS 8 sprot34
+PBBS-time: 13.4
+PBBS-time: 13.4
+
+
+parallelKS 16 sprot34
+PBBS-time: 7.58
+PBBS-time: 7.57
+
+
+parallelKS 24 sprot34
+PBBS-time: 7.11
+PBBS-time: 7.14
+
+
+parallelKS 32 sprot34
+PBBS-time: 5.62
+PBBS-time: 5.58
+
+
+parallelKS 40 sprot34
+PBBS-time: 5.28
+PBBS-time: 5.28
+
+
+parallelKS 48 sprot34
+PBBS-time: 5.17
+PBBS-time: 5.16
+
+
+parallelKS 56 sprot34
+PBBS-time: 5.11
+PBBS-time: 5.08
+
+
+parallelKS 64 sprot34
+PBBS-time: 5.12
+PBBS-time: 5.13
+
+
+parallelKS 72 sprot34
+PBBS-time: 5.28
+PBBS-time: 5.25
+
+
+parallelKS 80 sprot34
+PBBS-time: 5.4
+PBBS-time: 5.38
+
+
+serialDivsufsort sprot34
+PBBS-time: 16.6
+PBBS-time: 16.7
+
+
+serialKS sprot34
+PBBS-time: 86.1
+PBBS-time: 86.1
+
+
+parallelRange 1 w3c2
+PBBS-time: 75.9
+PBBS-time: 75.8
+
+
+parallelRange 2 w3c2
+PBBS-time: 109
+PBBS-time: 106
+
+
+parallelRange 4 w3c2
+PBBS-time: 53.9
+PBBS-time: 53.7
+
+
+parallelRange 8 w3c2
+PBBS-time: 27.3
+PBBS-time: 27.2
+
+
+parallelRange 16 w3c2
+PBBS-time: 14.8
+PBBS-time: 14.8
+
+
+parallelRange 24 w3c2
+PBBS-time: 11
+PBBS-time: 11
+
+
+parallelRange 32 w3c2
+PBBS-time: 9.22
+PBBS-time: 9.29
+
+
+parallelRange 40 w3c2
+PBBS-time: 8.82
+PBBS-time: 8.76
+
+
+parallelRange 48 w3c2
+PBBS-time: 7.86
+PBBS-time: 7.84
+
+
+parallelRange 56 w3c2
+PBBS-time: 7.4
+PBBS-time: 7.37
+
+
+parallelRange 64 w3c2
+PBBS-time: 7.7
+PBBS-time: 7.19
+
+
+parallelRange 72 w3c2
+PBBS-time: 7.24
+PBBS-time: 7.24
+
+
+parallelRange 80 w3c2
+PBBS-time: 7.42
+PBBS-time: 7.43
+
+
+parallelRangeLight 1 w3c2
+PBBS-time: 243
+PBBS-time: 243
+
+
+parallelRangeLight 2 w3c2
+PBBS-time: 165
+PBBS-time: 165
+
+
+parallelRangeLight 4 w3c2
+PBBS-time: 83.3
+PBBS-time: 82.6
+
+
+parallelRangeLight 8 w3c2
+PBBS-time: 42.6
+PBBS-time: 42.7
+
+
+parallelRangeLight 16 w3c2
+PBBS-time: 22.8
+PBBS-time: 22.8
+
+
+parallelRangeLight 24 w3c2
+PBBS-time: 16.3
+PBBS-time: 16.4
+
+
+parallelRangeLight 32 w3c2
+PBBS-time: 13.8
+PBBS-time: 13.9
+
+
+parallelRangeLight 40 w3c2
+PBBS-time: 12.7
+PBBS-time: 12.8
+
+
+parallelRangeLight 48 w3c2
+PBBS-time: 11.6
+PBBS-time: 11.6
+
+
+parallelRangeLight 56 w3c2
+PBBS-time: 10.6
+PBBS-time: 10.6
+
+
+parallelRangeLight 64 w3c2
+PBBS-time: 10.5
+PBBS-time: 10.5
+
+
+parallelRangeLight 72 w3c2
+PBBS-time: 10.4
+PBBS-time: 10.3
+
+
+parallelRangeLight 80 w3c2
+PBBS-time: 10.5
+PBBS-time: 10.5
+
+
+parallelDivsufsort 1 w3c2
+PBBS-time: 76.2
+PBBS-time: 76.2
+
+
+parallelDivsufsort 2 w3c2
+PBBS-time: 50.1
+PBBS-time: 50.1
+
+
+parallelDivsufsort 4 w3c2
+PBBS-time: 26.6
+PBBS-time: 26.5
+
+
+parallelDivsufsort 8 w3c2
+PBBS-time: 14.1
+PBBS-time: 14.1
+
+
+parallelDivsufsort 16 w3c2
+PBBS-time: 7.94
+PBBS-time: 7.93
+
+
+parallelDivsufsort 24 w3c2
+PBBS-time: 6.41
+PBBS-time: 6.44
+
+
+parallelDivsufsort 32 w3c2
+PBBS-time: 5.23
+PBBS-time: 5.21
+
+
+parallelDivsufsort 40 w3c2
+PBBS-time: 4.93
+PBBS-time: 4.98
+
+
+parallelDivsufsort 48 w3c2
+PBBS-time: 4.59
+PBBS-time: 4.56
+
+
+parallelDivsufsort 56 w3c2
+PBBS-time: 4.36
+PBBS-time: 4.33
+
+
+parallelDivsufsort 64 w3c2
+PBBS-time: 4.36
+PBBS-time: 4.3
+
+
+parallelDivsufsort 72 w3c2
+PBBS-time: 4.53
+PBBS-time: 4.57
+
+
+parallelDivsufsort 80 w3c2
+PBBS-time: 4.66
+PBBS-time: 4.61
+
+
+parallelKS 1 w3c2
+PBBS-time: 63.1
+PBBS-time: 63.2
+
+
+parallelKS 2 w3c2
+PBBS-time: 48.1
+PBBS-time: 48.2
+
+
+parallelKS 4 w3c2
+PBBS-time: 25.4
+PBBS-time: 25.3
+
+
+parallelKS 8 w3c2
+PBBS-time: 13
+PBBS-time: 13
+
+
+parallelKS 16 w3c2
+PBBS-time: 7.61
+PBBS-time: 7.59
+
+
+parallelKS 24 w3c2
+PBBS-time: 6.16
+PBBS-time: 6.19
+
+
+parallelKS 32 w3c2
+PBBS-time: 5.86
+PBBS-time: 5.89
+
+
+parallelKS 40 w3c2
+PBBS-time: 5.34
+PBBS-time: 5.37
+
+
+parallelKS 48 w3c2
+PBBS-time: 5.25
+PBBS-time: 5.27
+
+
+parallelKS 56 w3c2
+PBBS-time: 5.2
+PBBS-time: 5.26
+
+
+parallelKS 64 w3c2
+PBBS-time: 5.25
+PBBS-time: 5.23
+
+
+parallelKS 72 w3c2
+PBBS-time: 5.33
+PBBS-time: 5.37
+
+
+parallelKS 80 w3c2
+PBBS-time: 5.51
+PBBS-time: 5.56
+
+
+serialDivsufsort w3c2
+PBBS-time: 13.8
+PBBS-time: 13.8
+
+
+serialKS w3c2
+PBBS-time: 76.7
+PBBS-time: 76.6
+
+
+parallelRange 1 wikisamp.xml
+PBBS-time: 43.2
+PBBS-time: 43.2
+
+
+parallelRange 2 wikisamp.xml
+PBBS-time: 35.2
+PBBS-time: 35.2
+
+
+parallelRange 4 wikisamp.xml
+PBBS-time: 17.6
+PBBS-time: 17.6
+
+
+parallelRange 8 wikisamp.xml
+PBBS-time: 9.61
+PBBS-time: 9.56
+
+
+parallelRange 16 wikisamp.xml
+PBBS-time: 5.88
+PBBS-time: 5.92
+
+
+parallelRange 24 wikisamp.xml
+PBBS-time: 4.97
+PBBS-time: 4.93
+
+
+parallelRange 32 wikisamp.xml
+PBBS-time: 4.68
+PBBS-time: 4.65
+
+
+parallelRange 40 wikisamp.xml
+PBBS-time: 4.55
+PBBS-time: 4.57
+
+
+parallelRange 48 wikisamp.xml
+PBBS-time: 4.45
+PBBS-time: 4.46
+
+
+parallelRange 56 wikisamp.xml
+PBBS-time: 4.43
+PBBS-time: 4.41
+
+
+parallelRange 64 wikisamp.xml
+PBBS-time: 4.39
+PBBS-time: 4.4
+
+
+parallelRange 72 wikisamp.xml
+PBBS-time: 4.52
+PBBS-time: 4.47
+
+
+parallelRange 80 wikisamp.xml
+PBBS-time: 4.55
+PBBS-time: 4.57
+
+
+parallelRangeLight 1 wikisamp.xml
+PBBS-time: 95.9
+PBBS-time: 95.3
+
+
+parallelRangeLight 2 wikisamp.xml
+PBBS-time: 69.1
+PBBS-time: 69.5
+
+
+parallelRangeLight 4 wikisamp.xml
+PBBS-time: 34.6
+PBBS-time: 34.8
+
+
+parallelRangeLight 8 wikisamp.xml
+PBBS-time: 18.1
+PBBS-time: 18.3
+
+
+parallelRangeLight 16 wikisamp.xml
+PBBS-time: 10.5
+PBBS-time: 10.3
+
+
+parallelRangeLight 24 wikisamp.xml
+PBBS-time: 7.99
+PBBS-time: 8.08
+
+
+parallelRangeLight 32 wikisamp.xml
+PBBS-time: 7.3
+PBBS-time: 7.24
+
+
+parallelRangeLight 40 wikisamp.xml
+PBBS-time: 6.83
+PBBS-time: 6.84
+
+
+parallelRangeLight 48 wikisamp.xml
+PBBS-time: 6.57
+PBBS-time: 6.57
+
+
+parallelRangeLight 56 wikisamp.xml
+PBBS-time: 6.43
+PBBS-time: 6.44
+
+
+parallelRangeLight 64 wikisamp.xml
+PBBS-time: 6.31
+PBBS-time: 6.29
+
+
+parallelRangeLight 72 wikisamp.xml
+PBBS-time: 6.47
+PBBS-time: 6.43
+
+
+parallelRangeLight 80 wikisamp.xml
+PBBS-time: 6.49
+PBBS-time: 6.56
+
+
+parallelDivsufsort 1 wikisamp.xml
+PBBS-time: 36.8
+PBBS-time: 36.8
+
+
+parallelDivsufsort 2 wikisamp.xml
+PBBS-time: 29.1
+PBBS-time: 29
+
+
+parallelDivsufsort 4 wikisamp.xml
+PBBS-time: 15.4
+PBBS-time: 15.3
+
+
+parallelDivsufsort 8 wikisamp.xml
+PBBS-time: 8.79
+PBBS-time: 8.72
+
+
+parallelDivsufsort 16 wikisamp.xml
+PBBS-time: 5.61
+PBBS-time: 5.61
+
+
+parallelDivsufsort 24 wikisamp.xml
+PBBS-time: 4.79
+PBBS-time: 4.72
+
+
+parallelDivsufsort 32 wikisamp.xml
+PBBS-time: 4.39
+PBBS-time: 4.41
+
+
+parallelDivsufsort 40 wikisamp.xml
+PBBS-time: 4.1
+PBBS-time: 4.14
+
+
+parallelDivsufsort 48 wikisamp.xml
+PBBS-time: 4.01
+PBBS-time: 3.94
+
+
+parallelDivsufsort 56 wikisamp.xml
+PBBS-time: 3.86
+PBBS-time: 3.82
+
+
+parallelDivsufsort 64 wikisamp.xml
+PBBS-time: 3.8
+PBBS-time: 3.92
+
+
+parallelDivsufsort 72 wikisamp.xml
+PBBS-time: 3.93
+PBBS-time: 4.12
+
+
+parallelDivsufsort 80 wikisamp.xml
+PBBS-time: 4.27
+PBBS-time: 4.3
+
+
+parallelKS 1 wikisamp.xml
+PBBS-time: 57.2
+PBBS-time: 57.2
+
+
+parallelKS 2 wikisamp.xml
+PBBS-time: 45.4
+PBBS-time: 45.4
+
+
+parallelKS 4 wikisamp.xml
+PBBS-time: 22.5
+PBBS-time: 22.6
+
+
+parallelKS 8 wikisamp.xml
+PBBS-time: 12
+PBBS-time: 12
+
+
+parallelKS 16 wikisamp.xml
+PBBS-time: 7.2
+PBBS-time: 7.21
+
+
+parallelKS 24 wikisamp.xml
+PBBS-time: 5.92
+PBBS-time: 5.93
+
+
+parallelKS 32 wikisamp.xml
+PBBS-time: 5.37
+PBBS-time: 5.37
+
+
+parallelKS 40 wikisamp.xml
+PBBS-time: 5.15
+PBBS-time: 5.15
+
+
+parallelKS 48 wikisamp.xml
+PBBS-time: 5.01
+PBBS-time: 5.04
+
+
+parallelKS 56 wikisamp.xml
+PBBS-time: 4.92
+PBBS-time: 4.95
+
+
+parallelKS 64 wikisamp.xml
+PBBS-time: 4.93
+PBBS-time: 4.96
+
+
+parallelKS 72 wikisamp.xml
+PBBS-time: 5.13
+PBBS-time: 5.04
+
+
+parallelKS 80 wikisamp.xml
+PBBS-time: 5.22
+PBBS-time: 5.25
+
+
+serialDivsufsort wikisamp.xml
+PBBS-time: 15.2
+PBBS-time: 15.2
+
+
+serialKS wikisamp.xml
+PBBS-time: 68.8
+PBBS-time: 68.7
+
+

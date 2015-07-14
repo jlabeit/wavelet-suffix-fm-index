@@ -48,12 +48,12 @@ with  open(input_file_name, "r") as ins:
             
 line = "file & "
 serial_algo = ["serialDivsufsort", "serialKS"]
-algos.remove("parallelRangeLight")
+#algos.remove("parallelRangeLight")
 for algo in algos:
     if algo in serial_algo:
         line += makeShort(algo) + " & "
     else:
-        line += makeShort(algo) + "($T_1$) & " + makeShort(algo) + "($T_{64}$) & "
+        line += makeShort(algo) + "($T_1$) & " + makeShort(algo) + "($T_{20}$) & "
 print line[:-2] + "\\\\"
 print "\hline"
 for fname in file_names:
