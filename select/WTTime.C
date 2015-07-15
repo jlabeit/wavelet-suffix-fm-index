@@ -108,7 +108,7 @@ void timeWT(symbol* s, long n, int rounds, char* outFile, int check) {
     sdsl::util::init_support(rs, wt.get_m_tree());
     nextTimeN();
   }
-  cout<<"Peak-memory: " << getPeakRSS() / (1024*1024)<< endl;
+  //cout<<"Peak-memory: " << getPeakRSS() / (1024*1024)<< endl;
 
   if(check) {
 	  std::cout<<"Checking...";
