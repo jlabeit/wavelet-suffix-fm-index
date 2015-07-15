@@ -19,35 +19,16 @@
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#include "parallel.h"
+#include "utils.h"
+#include <iostream>
+#include "sequence.h"
+#include "WT.h"
+
 using namespace std;
 
-#define POINTERS 1
-//#define INT 1
-#include <sdsl/select_support_mcl.hpp>
-#include <sdsl/rank_support_v.hpp>
-#include <sdsl/wt_int.hpp>
-//#include "select_support_mcl_par.hpp"
-//#include "rank_support_v_par.hpp"
-//#include "wt_int_par.hpp"
-//#include <sdsl/wt_int.hpp>
-#include <sdsl/construct.hpp>
-#include <sdsl/util.hpp>
+#define THRESHOLD 10000
 
-//#include <sdsl/wt_int.hpp>
-//typedef ulong intOffset;
-typedef uintT intOffset;
 
-struct WTnode {
-  intOffset bitmapPtr; uintT length;
-#ifdef POINTERS
-  uintT parent, leftChild, rightChild;
-#endif
-};
 
-#ifdef INT
-typedef uintT symbol;
-#else
-typedef unsigned char symbol;
-#endif
-
-pair<WTnode*,long*> WT(symbol* s, uintT n, uintT sigma);
+void WT() {}

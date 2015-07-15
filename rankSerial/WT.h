@@ -23,13 +23,13 @@ using namespace std;
 
 #define POINTERS 1
 //#define INT 1
+
+#include "rank_support_v.hpp"
 #include <sdsl/select_support_mcl.hpp>
-#include <sdsl/rank_support_v.hpp>
 #include <sdsl/wt_int.hpp>
-//#include "select_support_mcl_par.hpp"
 //#include "rank_support_v_par.hpp"
+//#include "select_support_mcl_par.hpp"
 //#include "wt_int_par.hpp"
-//#include <sdsl/wt_int.hpp>
 #include <sdsl/construct.hpp>
 #include <sdsl/util.hpp>
 
