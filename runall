@@ -29,7 +29,9 @@ def shellGetOutput(str) :
 applications = ["select", "rank"]
 serial_applications=["selectSerial", "rankSerial"]
 
-testfiles = ["chr22.dna","etext99","howto","jdk13c","rctail96","rfc","sprot34","w3c2","wikisamp.xml"]
+#testfiles = ["chr22.dna","etext99","howto","jdk13c","rctail96","rfc","sprot34","w3c2","wikisamp.xml"]
+
+testfiles = ["sources", "pitches", "proteins", "dna", "english", "dblp.xml"]
 
 processors = [1,2,4]+range(8,80+1,8)
 #processors = range(40,81,8)
@@ -39,20 +41,20 @@ for testfile in testfiles :
     for p in processors : #parallel
       if p == 1:
         os.system("unset GCILK; cd "+app+"; make clean -s; make -s; cd ..");
-        ss = "./" + app + "/WT -r 5 ~/testdata/"+testfile
+        ss = "./" + app + "/WT -r 5 ~/testdataBig/"+testfile
         print app+" 1 " + testfile
         print shellGetOutput(ss)
         sys.stdout.flush()
         os.system("export GCILK=1; cd "+app+"; make clean -s; make -s; cd ..");
       else:
-        ss = "CILK_NWORKERS="+`p`+" numactl -i all ./" + app + "/WT -r 5  ~/testdata/"+testfile
+        ss = "CILK_NWORKERS="+`p`+" numactl -i all ./" + app + "/WT -r 5  ~/testdataBig/"+testfile
         print app+" "+`p` + " " + testfile
         print shellGetOutput(ss)
         sys.stdout.flush()
 
   for app in serial_applications:
     os.system("cd "+app+"; make -s; cd ..");
-    ss = "./" + app + "/WT -r 5  ~/testdata/"+testfile
+    ss = "./" + app + "/WT -r 5  ~/testdataBig/"+testfile
     print app + " " + testfile
     print shellGetOutput(ss)
     sys.stdout.flush()
