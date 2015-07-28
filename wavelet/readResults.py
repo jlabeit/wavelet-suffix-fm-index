@@ -68,8 +68,8 @@ with  open(input_file_name, "r") as ins:
             
 write_memory = True
 line = "file & "
-serial_algo = ["serialDivsufsort", "serialKS"]
-algos.remove("parallelRangeLight")
+serial_algo = ["serialWT"]
+algos.remove("levelWTOptLight")
 for algo in algos:
     if algo in serial_algo:
         line += makeShort(algo) + " & "
