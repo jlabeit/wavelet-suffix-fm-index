@@ -25,5 +25,5 @@ PLFLAGS =
 else
 PCC = g++
 PLFLAGS = $(LFLAGS)
-PCFLAGS = -O2 $(INTT)
+PCFLAGS = -g -O2 $(INTT)
 endif

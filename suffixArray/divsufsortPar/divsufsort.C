@@ -232,9 +232,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 	} else {
 		j = m;
 	}
-        if(1 < (j - i)) {
-         sssort(T, PAb, SA + i, SA + j, buf, bufsize, 2, n, *(SA + i) == (m - 1));
-        }
+	 sssort(T, PAb, SA + i, SA + j, buf, bufsize, 2, n, *(SA + i) == (m - 1));
       }
     }
     /* Compute ranks of type B* substrings. */
@@ -312,7 +310,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 		}
     }
     free(bstar_count);
-
+    // Can be parallized but time is neglectable compared to the rest
     saidx_t i,j;
     /* Calculate the index of start/end point of each bucket. */
     BUCKET_B(ALPHABET_SIZE - 1, ALPHABET_SIZE - 1) = n; /* end point */

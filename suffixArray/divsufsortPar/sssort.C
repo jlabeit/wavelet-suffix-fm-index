@@ -742,7 +742,6 @@ ss_swapmerge(const sauchar_t *T, const saidx_t *PA,
 /*---------------------------------------------------------------------------*/
 
 /*- Function -*/
-
 /* Substring sort */
 void
 sssort(const sauchar_t *T, const saidx_t *PA,

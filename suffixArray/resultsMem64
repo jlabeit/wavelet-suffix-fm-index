@@ -1,0 +1,270 @@
+parallelKS 64 chr22.dna
+PBBS-time: 1.53
+Peak-memory: 709
+
+
+parallelRange 64 chr22.dna
+PBBS-time: 0.985
+Peak-memory: 925
+
+
+parallelDivsufsort 64 chr22.dna
+PBBS-time: 1.12
+Peak-memory: 214
+
+
+parallelRangeLight 64 chr22.dna
+PBBS-time: 1.18
+Peak-memory: 517
+
+
+serialDivsufsort chr22.dna
+PBBS-time: 4.9
+Peak-memory: 166
+
+
+serialKS chr22.dna
+PBBS-time: 22.3
+Peak-memory: 1084
+
+
+parallelKS 64 etext99
+PBBS-time: 5.13
+Peak-memory: 2160
+
+
+parallelRange 64 etext99
+PBBS-time: 3.9
+Peak-memory: 2882
+
+
+parallelDivsufsort 64 etext99
+PBBS-time: 2.87
+Peak-memory: 550
+
+
+parallelRangeLight 64 etext99
+PBBS-time: 5.29
+Peak-memory: 1596
+
+
+serialDivsufsort etext99
+PBBS-time: 16.8
+Peak-memory: 503
+
+
+serialKS etext99
+PBBS-time: 85.3
+Peak-memory: 3300
+
+
+parallelKS 64 howto
+PBBS-time: 1.93
+Peak-memory: 839
+
+
+parallelRange 64 howto
+PBBS-time: 1.37
+Peak-memory: 1093
+
+
+parallelDivsufsort 64 howto
+PBBS-time: 1.17
+Peak-memory: 227
+
+
+parallelRangeLight 64 howto
+PBBS-time: 1.87
+Peak-memory: 618
+
+
+serialDivsufsort howto
+PBBS-time: 5.06
+Peak-memory: 189
+
+
+serialKS howto
+PBBS-time: 27.9
+Peak-memory: 1233
+
+
+parallelKS 64 jdk13c
+PBBS-time: 3.27
+Peak-memory: 1431
+
+
+parallelRange 64 jdk13c
+PBBS-time: 3.3
+Peak-memory: 1900
+
+
+parallelDivsufsort 64 jdk13c
+PBBS-time: 2.27
+Peak-memory: 392
+
+
+parallelRangeLight 64 jdk13c
+PBBS-time: 4.67
+Peak-memory: 1065
+
+
+serialDivsufsort jdk13c
+PBBS-time: 9.17
+Peak-memory: 334
+
+
+serialKS jdk13c
+PBBS-time: 46.2
+Peak-memory: 2174
+
+
+parallelKS 64 rctail96
+PBBS-time: 5.44
+Peak-memory: 2353
+
+
+parallelRange 64 rctail96
+PBBS-time: 5.2
+Peak-memory: 3105
+
+
+parallelDivsufsort 64 rctail96
+PBBS-time: 3.57
+Peak-memory: 620
+
+
+parallelRangeLight 64 rctail96
+PBBS-time: 7.31
+Peak-memory: 1733
+
+
+serialDivsufsort rctail96
+PBBS-time: 29.2
+Peak-memory: 548
+
+
+serialKS rctail96
+PBBS-time: 85.8
+Peak-memory: 3577
+
+
+parallelKS 64 rfc
+PBBS-time: 5.47
+Peak-memory: 2388
+
+
+parallelRange 64 rfc
+PBBS-time: 4.29
+Peak-memory: 3270
+
+
+parallelDivsufsort 64 rfc
+PBBS-time: 2.67
+Peak-memory: 605
+
+
+parallelRangeLight 64 rfc
+PBBS-time: 5.78
+Peak-memory: 1810
+
+
+serialDivsufsort rfc
+PBBS-time: 15.2
+Peak-memory: 556
+
+
+serialKS rfc
+PBBS-time: 86.8
+Peak-memory: 3587
+
+
+parallelKS 64 sprot34
+PBBS-time: 5.14
+Peak-memory: 2241
+
+
+parallelRange 64 sprot34
+PBBS-time: 4.04
+Peak-memory: 2945
+
+
+parallelDivsufsort 64 sprot34
+PBBS-time: 2.52
+Peak-memory: 579
+
+
+parallelRangeLight 64 sprot34
+PBBS-time: 5.6
+Peak-memory: 1638
+
+
+serialDivsufsort sprot34
+PBBS-time: 16.6
+Peak-memory: 524
+
+
+serialKS sprot34
+PBBS-time: 82.5
+Peak-memory: 3402
+
+
+parallelKS 64 w3c2
+PBBS-time: 5.23
+Peak-memory: 2138
+
+
+parallelRange 64 w3c2
+PBBS-time: 7.21
+Peak-memory: 2847
+
+
+parallelDivsufsort 64 w3c2
+PBBS-time: 4.12
+Peak-memory: 552
+
+
+parallelRangeLight 64 w3c2
+PBBS-time: 9.6
+Peak-memory: 1575
+
+
+serialDivsufsort w3c2
+PBBS-time: 13.7
+Peak-memory: 498
+
+
+serialKS w3c2
+PBBS-time: 73.6
+Peak-memory: 3271
+
+
+parallelKS 64 wikisamp.xml
+PBBS-time: 4.91
+Peak-memory: 2052
+
+
+parallelRange 64 wikisamp.xml
+PBBS-time: 4.4
+Peak-memory: 2891
+
+
+parallelDivsufsort 64 wikisamp.xml
+PBBS-time: 3.72
+Peak-memory: 620
+
+
+parallelRangeLight 64 wikisamp.xml
+PBBS-time: 6.05
+Peak-memory: 1643
+
+
+serialDivsufsort wikisamp.xml
+PBBS-time: 15.1
+Peak-memory: 478
+
+
+serialKS wikisamp.xml
+PBBS-time: 66.1
+Peak-memory: 3047
+
+

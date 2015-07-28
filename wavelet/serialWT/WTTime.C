@@ -122,15 +122,6 @@ void timeWT(symbol* s, long n, int rounds, char* outFile, int check) {
     out.close();
   }
 
-  // if(outFile != NULL) {
-  //   intT* foo = newA(intT,n); 
-  //   parallel_for(long i=0;i<n;i++) foo[i] = (intT) s[i];
-  //   ofstream out(outFile, ofstream::out | ios::binary);
-  //   out.write((char*)foo, sizeof(intT)*n);
-  //   free(foo);
-  //   out.close();
-  // }
-
   //if (outFile != NULL) writeIntArrayToFile((intT*) R, (intT) n, outFile);
   free(R.first); free(R.second);
 }

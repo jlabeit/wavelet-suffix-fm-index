@@ -22,7 +22,7 @@
 using namespace std;
 
 #define POINTERS 1
-#define INT 1
+//#define INT 1
 
 //typedef ulong intOffset;
 typedef uintT intOffset;

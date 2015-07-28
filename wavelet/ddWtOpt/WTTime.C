@@ -113,25 +113,16 @@ void timeWT(symbol* s, long n, int rounds, char* outFile, int check) {
     cout << "done checking...\n";
   }
 
-  if(outFile != NULL) {
-    symbol* foo = newA(symbol,n); 
-    parallel_for(long i=0;i<n;i++) foo[i] = (symbol) s[i];
-    ofstream out(outFile, ofstream::out | ios::binary);
-    out.write((char*)foo, sizeof(symbol)*n);
-    free(foo);
-    out.close();
-  }
+   if(outFile != NULL) {
+     intT* foo = newA(intT,n); 
+     parallel_for(long i=0;i<n;i++) foo[i] = (intT) s[i];
+     ofstream out(outFile, ofstream::out | ios::binary);
+     out.write((char*)foo, sizeof(intT)*n);
+     free(foo);
+     out.close();
+   }
 
-  // if(outFile != NULL) {
-  //   intT* foo = newA(intT,n); 
-  //   parallel_for(long i=0;i<n;i++) foo[i] = (intT) s[i];
-  //   ofstream out(outFile, ofstream::out | ios::binary);
-  //   out.write((char*)foo, sizeof(intT)*n);
-  //   free(foo);
-  //   out.close();
-  // }
-
-  //if (outFile != NULL) writeIntArrayToFile((intT*) R, (intT) n, outFile);
+  //if (outFile != NULL) writeIntArrayToFile((intT*) R.second, (intT) n, outFile);
   free(R.first); free(R.second);
 }
 
