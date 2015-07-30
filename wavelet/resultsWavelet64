@@ -6199,3 +6199,5502 @@ PBBS-time: 16.1
 Peak-memory: 3091
 
 
+levelWTOpt 1 sources
+PBBS-time: 18.8
+PBBS-time: 18.8
+PBBS-time: 18.8
+PBBS-time: 18.8
+PBBS-time: 18.8
+Peak-memory: 1611
+
+
+levelWTOpt 2 sources
+PBBS-time: 9.72
+PBBS-time: 9.72
+PBBS-time: 9.73
+PBBS-time: 9.75
+PBBS-time: 9.74
+Peak-memory: 1612
+
+
+levelWTOpt 4 sources
+PBBS-time: 4.79
+PBBS-time: 4.8
+PBBS-time: 4.79
+PBBS-time: 4.81
+PBBS-time: 4.81
+Peak-memory: 1612
+
+
+levelWTOpt 8 sources
+PBBS-time: 2.56
+PBBS-time: 2.55
+PBBS-time: 2.54
+PBBS-time: 2.55
+PBBS-time: 2.54
+Peak-memory: 1612
+
+
+levelWTOpt 16 sources
+PBBS-time: 1.48
+PBBS-time: 1.48
+PBBS-time: 1.48
+PBBS-time: 1.48
+PBBS-time: 1.48
+Peak-memory: 1613
+
+
+levelWTOpt 24 sources
+PBBS-time: 1.16
+PBBS-time: 1.16
+PBBS-time: 1.16
+PBBS-time: 1.16
+PBBS-time: 1.16
+Peak-memory: 1615
+
+
+levelWTOpt 32 sources
+PBBS-time: 1.18
+PBBS-time: 1.18
+PBBS-time: 1.18
+PBBS-time: 1.18
+PBBS-time: 1.18
+Peak-memory: 1615
+
+
+levelWTOpt 40 sources
+PBBS-time: 0.989
+PBBS-time: 0.989
+PBBS-time: 0.989
+PBBS-time: 0.99
+PBBS-time: 0.988
+Peak-memory: 1616
+
+
+levelWTOpt 48 sources
+PBBS-time: 0.957
+PBBS-time: 0.956
+PBBS-time: 0.955
+PBBS-time: 0.956
+PBBS-time: 0.956
+Peak-memory: 1617
+
+
+levelWTOpt 56 sources
+PBBS-time: 0.896
+PBBS-time: 0.909
+PBBS-time: 0.903
+PBBS-time: 0.9
+PBBS-time: 0.902
+Peak-memory: 1618
+
+
+levelWTOpt 64 sources
+PBBS-time: 0.88
+PBBS-time: 0.885
+PBBS-time: 0.88
+PBBS-time: 0.88
+PBBS-time: 0.884
+Peak-memory: 1618
+
+
+levelWTOpt 72 sources
+PBBS-time: 0.891
+PBBS-time: 0.91
+PBBS-time: 0.898
+PBBS-time: 0.902
+PBBS-time: 0.89
+Peak-memory: 1618
+
+
+levelWTOpt 80 sources
+PBBS-time: 0.899
+PBBS-time: 0.909
+PBBS-time: 0.912
+PBBS-time: 0.916
+PBBS-time: 0.932
+Peak-memory: 1619
+
+
+levelWTRec 1 sources
+PBBS-time: 12.2
+PBBS-time: 12.2
+PBBS-time: 12.2
+PBBS-time: 12.2
+PBBS-time: 12.2
+Peak-memory: 807
+
+
+levelWTRec 2 sources
+PBBS-time: 6.14
+PBBS-time: 6.14
+PBBS-time: 6.14
+PBBS-time: 6.14
+PBBS-time: 6.14
+Peak-memory: 809
+
+
+levelWTRec 4 sources
+PBBS-time: 3.07
+PBBS-time: 3.07
+PBBS-time: 3.07
+PBBS-time: 3.07
+PBBS-time: 3.07
+Peak-memory: 809
+
+
+levelWTRec 8 sources
+PBBS-time: 1.54
+PBBS-time: 1.55
+PBBS-time: 1.54
+PBBS-time: 1.54
+PBBS-time: 1.54
+Peak-memory: 810
+
+
+levelWTRec 16 sources
+PBBS-time: 0.779
+PBBS-time: 0.778
+PBBS-time: 0.777
+PBBS-time: 0.777
+PBBS-time: 0.778
+Peak-memory: 810
+
+
+levelWTRec 24 sources
+PBBS-time: 0.525
+PBBS-time: 0.525
+PBBS-time: 0.525
+PBBS-time: 0.524
+PBBS-time: 0.525
+Peak-memory: 811
+
+
+levelWTRec 32 sources
+PBBS-time: 0.452
+PBBS-time: 0.416
+PBBS-time: 0.417
+PBBS-time: 0.417
+PBBS-time: 0.417
+Peak-memory: 813
+
+
+levelWTRec 40 sources
+PBBS-time: 0.376
+PBBS-time: 0.376
+PBBS-time: 0.376
+PBBS-time: 0.376
+PBBS-time: 0.377
+Peak-memory: 814
+
+
+levelWTRec 48 sources
+PBBS-time: 0.32
+PBBS-time: 0.319
+PBBS-time: 0.32
+PBBS-time: 0.32
+PBBS-time: 0.32
+Peak-memory: 814
+
+
+levelWTRec 56 sources
+PBBS-time: 0.283
+PBBS-time: 0.284
+PBBS-time: 0.284
+PBBS-time: 0.283
+PBBS-time: 0.284
+Peak-memory: 815
+
+
+levelWTRec 64 sources
+PBBS-time: 0.27
+PBBS-time: 0.288
+PBBS-time: 0.264
+PBBS-time: 0.262
+PBBS-time: 0.267
+Peak-memory: 816
+
+
+levelWTRec 72 sources
+PBBS-time: 0.273
+PBBS-time: 0.269
+PBBS-time: 0.277
+PBBS-time: 0.276
+PBBS-time: 0.273
+Peak-memory: 817
+
+
+levelWTRec 80 sources
+PBBS-time: 0.273
+PBBS-time: 0.283
+PBBS-time: 0.274
+PBBS-time: 0.279
+PBBS-time: 0.284
+Peak-memory: 818
+
+
+ddWt 1 sources
+PBBS-time: 15.8
+PBBS-time: 15.8
+PBBS-time: 15.8
+PBBS-time: 15.9
+PBBS-time: 15.8
+Peak-memory: 1007
+
+
+ddWt 2 sources
+PBBS-time: 8.55
+PBBS-time: 8.57
+PBBS-time: 8.56
+PBBS-time: 8.55
+PBBS-time: 8.55
+Peak-memory: 1007
+
+
+ddWt 4 sources
+PBBS-time: 4.26
+PBBS-time: 4.33
+PBBS-time: 4.34
+PBBS-time: 4.27
+PBBS-time: 4.29
+Peak-memory: 1007
+
+
+ddWt 8 sources
+PBBS-time: 2.21
+PBBS-time: 2.26
+PBBS-time: 2.23
+PBBS-time: 2.21
+PBBS-time: 2.23
+Peak-memory: 1006
+
+
+ddWt 16 sources
+PBBS-time: 1.13
+PBBS-time: 1.11
+PBBS-time: 1.14
+PBBS-time: 1.12
+PBBS-time: 1.13
+Peak-memory: 1008
+
+
+ddWt 24 sources
+PBBS-time: 0.765
+PBBS-time: 0.758
+PBBS-time: 0.78
+PBBS-time: 0.754
+PBBS-time: 0.766
+Peak-memory: 1006
+
+
+ddWt 32 sources
+PBBS-time: 0.666
+PBBS-time: 0.661
+PBBS-time: 0.659
+PBBS-time: 0.644
+PBBS-time: 0.66
+Peak-memory: 1008
+
+
+ddWt 40 sources
+PBBS-time: 0.589
+PBBS-time: 0.59
+PBBS-time: 0.592
+PBBS-time: 0.595
+PBBS-time: 0.597
+Peak-memory: 1005
+
+
+ddWt 48 sources
+PBBS-time: 0.488
+PBBS-time: 0.499
+PBBS-time: 0.504
+PBBS-time: 0.487
+PBBS-time: 0.489
+Peak-memory: 1011
+
+
+ddWt 56 sources
+PBBS-time: 0.471
+PBBS-time: 0.46
+PBBS-time: 0.476
+PBBS-time: 0.461
+PBBS-time: 0.452
+Peak-memory: 1007
+
+
+ddWt 64 sources
+PBBS-time: 0.497
+PBBS-time: 0.532
+PBBS-time: 0.531
+PBBS-time: 0.482
+PBBS-time: 0.446
+Peak-memory: 1004
+
+
+ddWt 72 sources
+PBBS-time: 0.552
+PBBS-time: 0.508
+PBBS-time: 0.495
+PBBS-time: 0.487
+PBBS-time: 0.501
+Peak-memory: 1010
+
+
+ddWt 80 sources
+PBBS-time: 0.537
+PBBS-time: 0.532
+PBBS-time: 0.528
+PBBS-time: 0.515
+PBBS-time: 0.52
+Peak-memory: 1014
+
+
+serialWT sources
+PBBS-time: 9.22
+PBBS-time: 9.22
+PBBS-time: 9.21
+PBBS-time: 9.21
+PBBS-time: 9.22
+Peak-memory: 805
+
+
+levelWTOpt 1 pitches
+PBBS-time: 4.71
+PBBS-time: 4.71
+PBBS-time: 4.71
+PBBS-time: 4.71
+PBBS-time: 4.71
+Peak-memory: 427
+
+
+levelWTOpt 2 pitches
+PBBS-time: 2.38
+PBBS-time: 2.38
+PBBS-time: 2.37
+PBBS-time: 2.37
+PBBS-time: 2.37
+Peak-memory: 427
+
+
+levelWTOpt 4 pitches
+PBBS-time: 1.22
+PBBS-time: 1.21
+PBBS-time: 1.22
+PBBS-time: 1.22
+PBBS-time: 1.22
+Peak-memory: 428
+
+
+levelWTOpt 8 pitches
+PBBS-time: 0.643
+PBBS-time: 0.643
+PBBS-time: 0.643
+PBBS-time: 0.645
+PBBS-time: 0.646
+Peak-memory: 429
+
+
+levelWTOpt 16 pitches
+PBBS-time: 0.378
+PBBS-time: 0.378
+PBBS-time: 0.379
+PBBS-time: 0.38
+PBBS-time: 0.378
+Peak-memory: 430
+
+
+levelWTOpt 24 pitches
+PBBS-time: 0.352
+PBBS-time: 0.35
+PBBS-time: 0.351
+PBBS-time: 0.349
+PBBS-time: 0.351
+Peak-memory: 430
+
+
+levelWTOpt 32 pitches
+PBBS-time: 0.272
+PBBS-time: 0.271
+PBBS-time: 0.271
+PBBS-time: 0.27
+PBBS-time: 0.27
+Peak-memory: 430
+
+
+levelWTOpt 40 pitches
+PBBS-time: 0.257
+PBBS-time: 0.257
+PBBS-time: 0.256
+PBBS-time: 0.256
+PBBS-time: 0.257
+Peak-memory: 431
+
+
+levelWTOpt 48 pitches
+PBBS-time: 0.242
+PBBS-time: 0.246
+PBBS-time: 0.244
+PBBS-time: 0.244
+PBBS-time: 0.245
+Peak-memory: 431
+
+
+levelWTOpt 56 pitches
+PBBS-time: 0.244
+PBBS-time: 0.244
+PBBS-time: 0.245
+PBBS-time: 0.243
+PBBS-time: 0.244
+Peak-memory: 430
+
+
+levelWTOpt 64 pitches
+PBBS-time: 0.235
+PBBS-time: 0.235
+PBBS-time: 0.232
+PBBS-time: 0.234
+PBBS-time: 0.234
+Peak-memory: 430
+
+
+levelWTOpt 72 pitches
+PBBS-time: 0.233
+PBBS-time: 0.235
+PBBS-time: 0.234
+PBBS-time: 0.232
+PBBS-time: 0.235
+Peak-memory: 432
+
+
+levelWTOpt 80 pitches
+PBBS-time: 0.234
+PBBS-time: 0.256
+PBBS-time: 0.237
+PBBS-time: 0.234
+PBBS-time: 0.238
+Peak-memory: 432
+
+
+levelWTRec 1 pitches
+PBBS-time: 2.8
+PBBS-time: 2.8
+PBBS-time: 2.75
+PBBS-time: 2.75
+PBBS-time: 2.75
+Peak-memory: 214
+
+
+levelWTRec 2 pitches
+PBBS-time: 1.4
+PBBS-time: 1.4
+PBBS-time: 1.4
+PBBS-time: 1.39
+PBBS-time: 1.39
+Peak-memory: 215
+
+
+levelWTRec 4 pitches
+PBBS-time: 0.695
+PBBS-time: 0.695
+PBBS-time: 0.696
+PBBS-time: 0.696
+PBBS-time: 0.695
+Peak-memory: 215
+
+
+levelWTRec 8 pitches
+PBBS-time: 0.352
+PBBS-time: 0.353
+PBBS-time: 0.352
+PBBS-time: 0.352
+PBBS-time: 0.352
+Peak-memory: 216
+
+
+levelWTRec 16 pitches
+PBBS-time: 0.189
+PBBS-time: 0.189
+PBBS-time: 0.189
+PBBS-time: 0.188
+PBBS-time: 0.189
+Peak-memory: 217
+
+
+levelWTRec 24 pitches
+PBBS-time: 0.123
+PBBS-time: 0.122
+PBBS-time: 0.122
+PBBS-time: 0.122
+PBBS-time: 0.122
+Peak-memory: 218
+
+
+levelWTRec 32 pitches
+PBBS-time: 0.102
+PBBS-time: 0.1
+PBBS-time: 0.0999
+PBBS-time: 0.0988
+PBBS-time: 0.0989
+Peak-memory: 219
+
+
+levelWTRec 40 pitches
+PBBS-time: 0.0877
+PBBS-time: 0.0868
+PBBS-time: 0.0873
+PBBS-time: 0.0876
+PBBS-time: 0.0875
+Peak-memory: 219
+
+
+levelWTRec 48 pitches
+PBBS-time: 0.0782
+PBBS-time: 0.0782
+PBBS-time: 0.0782
+PBBS-time: 0.0778
+PBBS-time: 0.0784
+Peak-memory: 220
+
+
+levelWTRec 56 pitches
+PBBS-time: 0.0747
+PBBS-time: 0.0742
+PBBS-time: 0.0737
+PBBS-time: 0.0731
+PBBS-time: 0.0734
+Peak-memory: 220
+
+
+levelWTRec 64 pitches
+PBBS-time: 0.0765
+PBBS-time: 0.0733
+PBBS-time: 0.0717
+PBBS-time: 0.0723
+PBBS-time: 0.0715
+Peak-memory: 222
+
+
+levelWTRec 72 pitches
+PBBS-time: 0.074
+PBBS-time: 0.0704
+PBBS-time: 0.0697
+PBBS-time: 0.0692
+PBBS-time: 0.0699
+Peak-memory: 221
+
+
+levelWTRec 80 pitches
+PBBS-time: 0.0704
+PBBS-time: 0.0715
+PBBS-time: 0.0693
+PBBS-time: 0.0677
+PBBS-time: 0.0689
+Peak-memory: 222
+
+
+ddWt 1 pitches
+PBBS-time: 3.69
+PBBS-time: 3.7
+PBBS-time: 3.7
+PBBS-time: 3.7
+PBBS-time: 3.7
+Peak-memory: 267
+
+
+ddWt 2 pitches
+PBBS-time: 1.94
+PBBS-time: 1.94
+PBBS-time: 1.94
+PBBS-time: 1.94
+PBBS-time: 1.94
+Peak-memory: 267
+
+
+ddWt 4 pitches
+PBBS-time: 1.02
+PBBS-time: 1.02
+PBBS-time: 0.99
+PBBS-time: 0.996
+PBBS-time: 1.01
+Peak-memory: 267
+
+
+ddWt 8 pitches
+PBBS-time: 0.519
+PBBS-time: 0.509
+PBBS-time: 0.518
+PBBS-time: 0.512
+PBBS-time: 0.524
+Peak-memory: 268
+
+
+ddWt 16 pitches
+PBBS-time: 0.313
+PBBS-time: 0.319
+PBBS-time: 0.314
+PBBS-time: 0.279
+PBBS-time: 0.26
+Peak-memory: 267
+
+
+ddWt 24 pitches
+PBBS-time: 0.177
+PBBS-time: 0.179
+PBBS-time: 0.178
+PBBS-time: 0.18
+PBBS-time: 0.182
+Peak-memory: 267
+
+
+ddWt 32 pitches
+PBBS-time: 0.152
+PBBS-time: 0.152
+PBBS-time: 0.156
+PBBS-time: 0.155
+PBBS-time: 0.153
+Peak-memory: 267
+
+
+ddWt 40 pitches
+PBBS-time: 0.13
+PBBS-time: 0.134
+PBBS-time: 0.131
+PBBS-time: 0.132
+PBBS-time: 0.133
+Peak-memory: 265
+
+
+ddWt 48 pitches
+PBBS-time: 0.12
+PBBS-time: 0.121
+PBBS-time: 0.119
+PBBS-time: 0.118
+PBBS-time: 0.118
+Peak-memory: 270
+
+
+ddWt 56 pitches
+PBBS-time: 0.108
+PBBS-time: 0.106
+PBBS-time: 0.105
+PBBS-time: 0.106
+PBBS-time: 0.107
+Peak-memory: 264
+
+
+ddWt 64 pitches
+PBBS-time: 0.139
+PBBS-time: 0.136
+PBBS-time: 0.132
+PBBS-time: 0.13
+PBBS-time: 0.137
+Peak-memory: 262
+
+
+ddWt 72 pitches
+PBBS-time: 0.125
+PBBS-time: 0.14
+PBBS-time: 0.132
+PBBS-time: 0.125
+PBBS-time: 0.125
+Peak-memory: 269
+
+
+ddWt 80 pitches
+PBBS-time: 0.123
+PBBS-time: 0.126
+PBBS-time: 0.152
+PBBS-time: 0.133
+PBBS-time: 0.128
+Peak-memory: 260
+
+
+serialWT pitches
+PBBS-time: 2.18
+PBBS-time: 2.18
+PBBS-time: 2.17
+PBBS-time: 2.18
+PBBS-time: 2.18
+Peak-memory: 214
+
+
+levelWTOpt 1 proteins
+PBBS-time: 71.7
+PBBS-time: 71.7
+PBBS-time: 71.6
+PBBS-time: 71.6
+PBBS-time: 71.6
+Peak-memory: 8616
+
+
+levelWTOpt 2 proteins
+PBBS-time: 36.3
+PBBS-time: 36.3
+PBBS-time: 36.3
+PBBS-time: 36.3
+PBBS-time: 36.3
+Peak-memory: 8619
+
+
+levelWTOpt 4 proteins
+PBBS-time: 18.4
+PBBS-time: 18.4
+PBBS-time: 18.4
+PBBS-time: 18.5
+PBBS-time: 18.5
+Peak-memory: 8621
+
+
+levelWTOpt 8 proteins
+PBBS-time: 9.68
+PBBS-time: 9.66
+PBBS-time: 9.68
+PBBS-time: 9.65
+PBBS-time: 9.67
+Peak-memory: 8622
+
+
+levelWTOpt 16 proteins
+PBBS-time: 5.44
+PBBS-time: 5.43
+PBBS-time: 5.42
+PBBS-time: 5.43
+PBBS-time: 5.44
+Peak-memory: 8623
+
+
+levelWTOpt 24 proteins
+PBBS-time: 4.18
+PBBS-time: 4.17
+PBBS-time: 4.18
+PBBS-time: 4.17
+PBBS-time: 4.16
+Peak-memory: 8623
+
+
+levelWTOpt 32 proteins
+PBBS-time: 3.6
+PBBS-time: 3.58
+PBBS-time: 3.59
+PBBS-time: 3.61
+PBBS-time: 3.59
+Peak-memory: 8624
+
+
+levelWTOpt 40 proteins
+PBBS-time: 3.31
+PBBS-time: 3.32
+PBBS-time: 3.32
+PBBS-time: 3.3
+PBBS-time: 3.32
+Peak-memory: 8627
+
+
+levelWTOpt 48 proteins
+PBBS-time: 3.19
+PBBS-time: 3.2
+PBBS-time: 3.2
+PBBS-time: 3.2
+PBBS-time: 3.2
+Peak-memory: 8624
+
+
+levelWTOpt 56 proteins
+PBBS-time: 2.97
+PBBS-time: 2.97
+PBBS-time: 2.96
+PBBS-time: 2.96
+PBBS-time: 2.97
+Peak-memory: 8626
+
+
+levelWTOpt 64 proteins
+PBBS-time: 2.86
+PBBS-time: 2.87
+PBBS-time: 2.86
+PBBS-time: 2.87
+PBBS-time: 2.86
+Peak-memory: 8624
+
+
+levelWTOpt 72 proteins
+PBBS-time: 2.88
+PBBS-time: 2.87
+PBBS-time: 2.88
+PBBS-time: 2.87
+PBBS-time: 2.9
+Peak-memory: 8627
+
+
+levelWTOpt 80 proteins
+PBBS-time: 2.9
+PBBS-time: 2.9
+PBBS-time: 2.89
+PBBS-time: 2.89
+PBBS-time: 2.89
+Peak-memory: 8625
+
+
+levelWTRec 1 proteins
+PBBS-time: 55.9
+PBBS-time: 55.9
+PBBS-time: 55.9
+PBBS-time: 55.9
+PBBS-time: 55.9
+Peak-memory: 4104
+
+
+levelWTRec 2 proteins
+PBBS-time: 27.9
+PBBS-time: 27.9
+PBBS-time: 27.9
+PBBS-time: 27.9
+PBBS-time: 27.9
+Peak-memory: 4108
+
+
+levelWTRec 4 proteins
+PBBS-time: 14
+PBBS-time: 14
+PBBS-time: 14
+PBBS-time: 14
+PBBS-time: 14
+Peak-memory: 4113
+
+
+levelWTRec 8 proteins
+PBBS-time: 7.01
+PBBS-time: 7.01
+PBBS-time: 7.02
+PBBS-time: 7.01
+PBBS-time: 7.01
+Peak-memory: 4117
+
+
+levelWTRec 16 proteins
+PBBS-time: 3.52
+PBBS-time: 3.52
+PBBS-time: 3.52
+PBBS-time: 3.52
+PBBS-time: 3.52
+Peak-memory: 4115
+
+
+levelWTRec 24 proteins
+PBBS-time: 2.36
+PBBS-time: 2.36
+PBBS-time: 2.36
+PBBS-time: 2.36
+PBBS-time: 2.36
+Peak-memory: 4116
+
+
+levelWTRec 32 proteins
+PBBS-time: 1.84
+PBBS-time: 1.85
+PBBS-time: 1.84
+PBBS-time: 1.84
+PBBS-time: 1.84
+Peak-memory: 4116
+
+
+levelWTRec 40 proteins
+PBBS-time: 1.58
+PBBS-time: 1.57
+PBBS-time: 1.57
+PBBS-time: 1.57
+PBBS-time: 1.57
+Peak-memory: 4116
+
+
+levelWTRec 48 proteins
+PBBS-time: 1.38
+PBBS-time: 1.38
+PBBS-time: 1.38
+PBBS-time: 1.38
+PBBS-time: 1.38
+Peak-memory: 4116
+
+
+levelWTRec 56 proteins
+PBBS-time: 1.22
+PBBS-time: 1.21
+PBBS-time: 1.22
+PBBS-time: 1.21
+PBBS-time: 1.22
+Peak-memory: 4119
+
+
+levelWTRec 64 proteins
+PBBS-time: 1.11
+PBBS-time: 1.11
+PBBS-time: 1.11
+PBBS-time: 1.11
+PBBS-time: 1.11
+Peak-memory: 4117
+
+
+levelWTRec 72 proteins
+PBBS-time: 1.11
+PBBS-time: 1.11
+PBBS-time: 1.1
+PBBS-time: 1.11
+PBBS-time: 1.11
+Peak-memory: 4117
+
+
+levelWTRec 80 proteins
+PBBS-time: 1.13
+PBBS-time: 1.11
+PBBS-time: 1.12
+PBBS-time: 1.11
+PBBS-time: 1.11
+Peak-memory: 4117
+
+
+ddWt 1 proteins
+PBBS-time: 69.4
+PBBS-time: 69.7
+PBBS-time: 70
+PBBS-time: 69.8
+PBBS-time: 69.4
+Peak-memory: 4454
+
+
+ddWt 2 proteins
+PBBS-time: 36.6
+PBBS-time: 36.3
+PBBS-time: 36.5
+PBBS-time: 36.2
+PBBS-time: 36.5
+Peak-memory: 4605
+
+
+ddWt 4 proteins
+PBBS-time: 19.2
+PBBS-time: 19.1
+PBBS-time: 18.8
+PBBS-time: 18.9
+PBBS-time: 18.6
+Peak-memory: 4602
+
+
+ddWt 8 proteins
+PBBS-time: 9.77
+PBBS-time: 9.82
+PBBS-time: 9.71
+PBBS-time: 9.89
+PBBS-time: 9.69
+Peak-memory: 4602
+
+
+ddWt 16 proteins
+PBBS-time: 5.17
+PBBS-time: 5.18
+PBBS-time: 5.21
+PBBS-time: 5.11
+PBBS-time: 5.19
+Peak-memory: 4599
+
+
+ddWt 24 proteins
+PBBS-time: 3.55
+PBBS-time: 3.56
+PBBS-time: 3.53
+PBBS-time: 3.56
+PBBS-time: 3.53
+Peak-memory: 4600
+
+
+ddWt 32 proteins
+PBBS-time: 2.85
+PBBS-time: 2.84
+PBBS-time: 2.86
+PBBS-time: 2.86
+PBBS-time: 2.85
+Peak-memory: 4605
+
+
+ddWt 40 proteins
+PBBS-time: 2.3
+PBBS-time: 2.34
+PBBS-time: 2.31
+PBBS-time: 2.34
+PBBS-time: 2.31
+Peak-memory: 4601
+
+
+ddWt 48 proteins
+PBBS-time: 2.05
+PBBS-time: 2.03
+PBBS-time: 2.03
+PBBS-time: 2.05
+PBBS-time: 2.07
+Peak-memory: 4606
+
+
+ddWt 56 proteins
+PBBS-time: 1.82
+PBBS-time: 1.84
+PBBS-time: 1.84
+PBBS-time: 1.85
+PBBS-time: 1.88
+Peak-memory: 4596
+
+
+ddWt 64 proteins
+PBBS-time: 1.74
+PBBS-time: 1.79
+PBBS-time: 1.8
+PBBS-time: 1.72
+PBBS-time: 1.86
+Peak-memory: 4599
+
+
+ddWt 72 proteins
+PBBS-time: 1.96
+PBBS-time: 1.92
+PBBS-time: 1.92
+PBBS-time: 1.9
+PBBS-time: 1.84
+Peak-memory: 4605
+
+
+ddWt 80 proteins
+PBBS-time: 1.91
+PBBS-time: 1.97
+PBBS-time: 1.92
+PBBS-time: 1.96
+PBBS-time: 1.99
+Peak-memory: 4609
+
+
+serialWT proteins
+PBBS-time: 38.8
+PBBS-time: 38.9
+PBBS-time: 38.6
+PBBS-time: 38.8
+PBBS-time: 38.9
+Peak-memory: 3945
+
+
+levelWTOpt 1 dna
+PBBS-time: 16.2
+PBBS-time: 16.2
+PBBS-time: 16.2
+PBBS-time: 16.2
+PBBS-time: 16.2
+Peak-memory: 2892
+
+
+levelWTOpt 2 dna
+PBBS-time: 8.62
+PBBS-time: 8.62
+PBBS-time: 8.63
+PBBS-time: 8.63
+PBBS-time: 8.63
+Peak-memory: 2892
+
+
+levelWTOpt 4 dna
+PBBS-time: 4.32
+PBBS-time: 4.31
+PBBS-time: 4.31
+PBBS-time: 4.31
+PBBS-time: 4.31
+Peak-memory: 2894
+
+
+levelWTOpt 8 dna
+PBBS-time: 2.25
+PBBS-time: 2.26
+PBBS-time: 2.25
+PBBS-time: 2.25
+PBBS-time: 2.25
+Peak-memory: 2894
+
+
+levelWTOpt 16 dna
+PBBS-time: 1.31
+PBBS-time: 1.32
+PBBS-time: 1.31
+PBBS-time: 1.32
+PBBS-time: 1.32
+Peak-memory: 2895
+
+
+levelWTOpt 24 dna
+PBBS-time: 0.996
+PBBS-time: 1
+PBBS-time: 1
+PBBS-time: 0.999
+PBBS-time: 0.999
+Peak-memory: 2895
+
+
+levelWTOpt 32 dna
+PBBS-time: 0.924
+PBBS-time: 0.919
+PBBS-time: 0.918
+PBBS-time: 0.918
+PBBS-time: 0.917
+Peak-memory: 2895
+
+
+levelWTOpt 40 dna
+PBBS-time: 0.892
+PBBS-time: 0.89
+PBBS-time: 0.894
+PBBS-time: 0.89
+PBBS-time: 0.892
+Peak-memory: 2895
+
+
+levelWTOpt 48 dna
+PBBS-time: 0.777
+PBBS-time: 0.775
+PBBS-time: 0.774
+PBBS-time: 0.778
+PBBS-time: 0.774
+Peak-memory: 2896
+
+
+levelWTOpt 56 dna
+PBBS-time: 0.748
+PBBS-time: 0.747
+PBBS-time: 0.747
+PBBS-time: 0.748
+PBBS-time: 0.745
+Peak-memory: 2895
+
+
+levelWTOpt 64 dna
+PBBS-time: 0.73
+PBBS-time: 0.727
+PBBS-time: 0.733
+PBBS-time: 0.734
+PBBS-time: 0.725
+Peak-memory: 2895
+
+
+levelWTOpt 72 dna
+PBBS-time: 0.736
+PBBS-time: 0.741
+PBBS-time: 0.731
+PBBS-time: 0.732
+PBBS-time: 0.739
+Peak-memory: 2895
+
+
+levelWTOpt 80 dna
+PBBS-time: 0.752
+PBBS-time: 0.745
+PBBS-time: 0.738
+PBBS-time: 0.741
+PBBS-time: 0.759
+Peak-memory: 2895
+
+
+levelWTRec 1 dna
+PBBS-time: 11.8
+PBBS-time: 11.8
+PBBS-time: 11.8
+PBBS-time: 11.8
+PBBS-time: 11.8
+Peak-memory: 1353
+
+
+levelWTRec 2 dna
+PBBS-time: 5.91
+PBBS-time: 5.91
+PBBS-time: 5.91
+PBBS-time: 5.91
+PBBS-time: 5.91
+Peak-memory: 1355
+
+
+levelWTRec 4 dna
+PBBS-time: 2.96
+PBBS-time: 2.97
+PBBS-time: 2.97
+PBBS-time: 2.97
+PBBS-time: 2.97
+Peak-memory: 1356
+
+
+levelWTRec 8 dna
+PBBS-time: 1.49
+PBBS-time: 1.5
+PBBS-time: 1.49
+PBBS-time: 1.5
+PBBS-time: 1.49
+Peak-memory: 1357
+
+
+levelWTRec 16 dna
+PBBS-time: 0.754
+PBBS-time: 0.758
+PBBS-time: 0.753
+PBBS-time: 0.752
+PBBS-time: 0.754
+Peak-memory: 1357
+
+
+levelWTRec 24 dna
+PBBS-time: 0.508
+PBBS-time: 0.508
+PBBS-time: 0.507
+PBBS-time: 0.506
+PBBS-time: 0.508
+Peak-memory: 1357
+
+
+levelWTRec 32 dna
+PBBS-time: 0.399
+PBBS-time: 0.4
+PBBS-time: 0.398
+PBBS-time: 0.398
+PBBS-time: 0.401
+Peak-memory: 1357
+
+
+levelWTRec 40 dna
+PBBS-time: 0.344
+PBBS-time: 0.345
+PBBS-time: 0.345
+PBBS-time: 0.345
+PBBS-time: 0.346
+Peak-memory: 1357
+
+
+levelWTRec 48 dna
+PBBS-time: 0.302
+PBBS-time: 0.301
+PBBS-time: 0.303
+PBBS-time: 0.303
+PBBS-time: 0.298
+Peak-memory: 1357
+
+
+levelWTRec 56 dna
+PBBS-time: 0.264
+PBBS-time: 0.263
+PBBS-time: 0.263
+PBBS-time: 0.264
+PBBS-time: 0.264
+Peak-memory: 1357
+
+
+levelWTRec 64 dna
+PBBS-time: 0.258
+PBBS-time: 0.249
+PBBS-time: 0.247
+PBBS-time: 0.248
+PBBS-time: 0.246
+Peak-memory: 1357
+
+
+levelWTRec 72 dna
+PBBS-time: 0.269
+PBBS-time: 0.241
+PBBS-time: 0.252
+PBBS-time: 0.248
+PBBS-time: 0.245
+Peak-memory: 1358
+
+
+levelWTRec 80 dna
+PBBS-time: 0.259
+PBBS-time: 0.244
+PBBS-time: 0.256
+PBBS-time: 0.249
+PBBS-time: 0.243
+Peak-memory: 1356
+
+
+ddWt 1 dna
+PBBS-time: 15.4
+PBBS-time: 15.5
+PBBS-time: 15.5
+PBBS-time: 15.5
+PBBS-time: 15.5
+Peak-memory: 1542
+
+
+ddWt 2 dna
+PBBS-time: 8.34
+PBBS-time: 8.32
+PBBS-time: 8.33
+PBBS-time: 8.33
+PBBS-time: 8.33
+Peak-memory: 1542
+
+
+ddWt 4 dna
+PBBS-time: 4.35
+PBBS-time: 4.36
+PBBS-time: 4.35
+PBBS-time: 4.23
+PBBS-time: 4.36
+Peak-memory: 1542
+
+
+ddWt 8 dna
+PBBS-time: 2.21
+PBBS-time: 2.28
+PBBS-time: 2.2
+PBBS-time: 2.27
+PBBS-time: 2.27
+Peak-memory: 1543
+
+
+ddWt 16 dna
+PBBS-time: 1.16
+PBBS-time: 1.14
+PBBS-time: 1.12
+PBBS-time: 1.13
+PBBS-time: 1.17
+Peak-memory: 1542
+
+
+ddWt 24 dna
+PBBS-time: 0.837
+PBBS-time: 0.835
+PBBS-time: 0.823
+PBBS-time: 0.815
+PBBS-time: 0.839
+Peak-memory: 1544
+
+
+ddWt 32 dna
+PBBS-time: 0.628
+PBBS-time: 0.647
+PBBS-time: 0.63
+PBBS-time: 0.661
+PBBS-time: 0.637
+Peak-memory: 1541
+
+
+ddWt 40 dna
+PBBS-time: 0.55
+PBBS-time: 0.536
+PBBS-time: 0.544
+PBBS-time: 0.546
+PBBS-time: 0.543
+Peak-memory: 1543
+
+
+ddWt 48 dna
+PBBS-time: 0.498
+PBBS-time: 0.51
+PBBS-time: 0.507
+PBBS-time: 0.509
+PBBS-time: 0.506
+Peak-memory: 1540
+
+
+ddWt 56 dna
+PBBS-time: 0.494
+PBBS-time: 0.478
+PBBS-time: 0.466
+PBBS-time: 0.474
+PBBS-time: 0.481
+Peak-memory: 1535
+
+
+ddWt 64 dna
+PBBS-time: 0.573
+PBBS-time: 0.503
+PBBS-time: 0.57
+PBBS-time: 0.49
+PBBS-time: 0.548
+Peak-memory: 1544
+
+
+ddWt 72 dna
+PBBS-time: 0.565
+PBBS-time: 0.489
+PBBS-time: 0.538
+PBBS-time: 0.553
+PBBS-time: 0.536
+Peak-memory: 1524
+
+
+ddWt 80 dna
+PBBS-time: 0.527
+PBBS-time: 0.485
+PBBS-time: 0.546
+PBBS-time: 0.494
+PBBS-time: 0.526
+Peak-memory: 1488
+
+
+serialWT dna
+PBBS-time: 8.71
+PBBS-time: 8.67
+PBBS-time: 8.65
+PBBS-time: 8.77
+PBBS-time: 8.77
+Peak-memory: 1349
+
+
+levelWTOpt 1 english
+PBBS-time: 98.9
+PBBS-time: 98.8
+PBBS-time: 98.8
+PBBS-time: 98.8
+PBBS-time: 98.8
+Peak-memory: 8198
+
+
+levelWTOpt 2 english
+PBBS-time: 51.9
+PBBS-time: 51.9
+PBBS-time: 51.4
+PBBS-time: 49.6
+PBBS-time: 49.6
+Peak-memory: 8205
+
+
+levelWTOpt 4 english
+PBBS-time: 25.3
+PBBS-time: 25.2
+PBBS-time: 25.2
+PBBS-time: 25.3
+PBBS-time: 25.2
+Peak-memory: 8204
+
+
+levelWTOpt 8 english
+PBBS-time: 13.4
+PBBS-time: 13.4
+PBBS-time: 13.4
+PBBS-time: 13.4
+PBBS-time: 13.3
+Peak-memory: 8203
+
+
+levelWTOpt 16 english
+PBBS-time: 7.68
+PBBS-time: 7.66
+PBBS-time: 7.67
+PBBS-time: 7.67
+PBBS-time: 7.68
+Peak-memory: 8204
+
+
+levelWTOpt 24 english
+PBBS-time: 5.96
+PBBS-time: 5.96
+PBBS-time: 5.95
+PBBS-time: 5.94
+PBBS-time: 5.97
+Peak-memory: 8205
+
+
+levelWTOpt 32 english
+PBBS-time: 5.26
+PBBS-time: 5.26
+PBBS-time: 5.26
+PBBS-time: 5.26
+PBBS-time: 5.25
+Peak-memory: 8205
+
+
+levelWTOpt 40 english
+PBBS-time: 5.04
+PBBS-time: 5.03
+PBBS-time: 5.05
+PBBS-time: 5.04
+PBBS-time: 5.02
+Peak-memory: 8206
+
+
+levelWTOpt 48 english
+PBBS-time: 4.72
+PBBS-time: 4.7
+PBBS-time: 4.64
+PBBS-time: 4.63
+PBBS-time: 4.63
+Peak-memory: 8207
+
+
+levelWTOpt 56 english
+PBBS-time: 4.56
+PBBS-time: 4.53
+PBBS-time: 4.52
+PBBS-time: 4.51
+PBBS-time: 4.51
+Peak-memory: 8207
+
+
+levelWTOpt 64 english
+PBBS-time: 4.43
+PBBS-time: 4.43
+PBBS-time: 4.43
+PBBS-time: 4.42
+PBBS-time: 4.42
+Peak-memory: 8208
+
+
+levelWTOpt 72 english
+PBBS-time: 4.47
+PBBS-time: 4.53
+PBBS-time: 4.5
+PBBS-time: 4.42
+PBBS-time: 4.43
+Peak-memory: 8208
+
+
+levelWTOpt 80 english
+PBBS-time: 4.45
+PBBS-time: 4.46
+PBBS-time: 4.44
+PBBS-time: 4.49
+PBBS-time: 4.46
+Peak-memory: 8209
+
+
+levelWTRec 1 english
+PBBS-time: 64.9
+PBBS-time: 64.9
+PBBS-time: 64.9
+PBBS-time: 64.9
+PBBS-time: 64.9
+Peak-memory: 4106
+
+
+levelWTRec 2 english
+PBBS-time: 32.5
+PBBS-time: 32.5
+PBBS-time: 32.5
+PBBS-time: 32.5
+PBBS-time: 32.5
+Peak-memory: 4118
+
+
+levelWTRec 4 english
+PBBS-time: 16.3
+PBBS-time: 16.3
+PBBS-time: 16.3
+PBBS-time: 16.3
+PBBS-time: 16.3
+Peak-memory: 4116
+
+
+levelWTRec 8 english
+PBBS-time: 8.14
+PBBS-time: 8.15
+PBBS-time: 8.15
+PBBS-time: 8.14
+PBBS-time: 8.14
+Peak-memory: 4115
+
+
+levelWTRec 16 english
+PBBS-time: 4.1
+PBBS-time: 4.1
+PBBS-time: 4.1
+PBBS-time: 4.1
+PBBS-time: 4.1
+Peak-memory: 4121
+
+
+levelWTRec 24 english
+PBBS-time: 2.76
+PBBS-time: 2.76
+PBBS-time: 2.76
+PBBS-time: 2.76
+PBBS-time: 2.76
+Peak-memory: 4117
+
+
+levelWTRec 32 english
+PBBS-time: 2.3
+PBBS-time: 2.31
+PBBS-time: 2.3
+PBBS-time: 2.31
+PBBS-time: 2.31
+Peak-memory: 4117
+
+
+levelWTRec 40 english
+PBBS-time: 1.91
+PBBS-time: 1.91
+PBBS-time: 1.91
+PBBS-time: 1.91
+PBBS-time: 1.91
+Peak-memory: 4118
+
+
+levelWTRec 48 english
+PBBS-time: 1.61
+PBBS-time: 1.61
+PBBS-time: 1.6
+PBBS-time: 1.6
+PBBS-time: 1.61
+Peak-memory: 4120
+
+
+levelWTRec 56 english
+PBBS-time: 1.46
+PBBS-time: 1.45
+PBBS-time: 1.45
+PBBS-time: 1.45
+PBBS-time: 1.45
+Peak-memory: 4119
+
+
+levelWTRec 64 english
+PBBS-time: 1.32
+PBBS-time: 1.33
+PBBS-time: 1.33
+PBBS-time: 1.34
+PBBS-time: 1.32
+Peak-memory: 4120
+
+
+levelWTRec 72 english
+PBBS-time: 1.33
+PBBS-time: 1.33
+PBBS-time: 1.33
+PBBS-time: 1.33
+PBBS-time: 1.34
+Peak-memory: 4121
+
+
+levelWTRec 80 english
+PBBS-time: 1.35
+PBBS-time: 1.34
+PBBS-time: 1.34
+PBBS-time: 1.34
+PBBS-time: 1.34
+Peak-memory: 4122
+
+
+ddWt 1 english
+PBBS-time: 108
+PBBS-time: 108
+PBBS-time: 108
+PBBS-time: 108
+PBBS-time: 108
+Peak-memory: 4098
+
+
+ddWt 2 english
+PBBS-time: 45.4
+PBBS-time: 45.4
+PBBS-time: 45.4
+PBBS-time: 45.4
+PBBS-time: 45.4
+Peak-memory: 4471
+
+
+ddWt 4 english
+PBBS-time: 22.9
+PBBS-time: 22.5
+PBBS-time: 22.9
+PBBS-time: 22.9
+PBBS-time: 22.9
+Peak-memory: 4610
+
+
+ddWt 8 english
+PBBS-time: 11.7
+PBBS-time: 11.8
+PBBS-time: 11.7
+PBBS-time: 11.7
+PBBS-time: 11.8
+Peak-memory: 4611
+
+
+ddWt 16 english
+PBBS-time: 6.11
+PBBS-time: 6.21
+PBBS-time: 6.18
+PBBS-time: 6.39
+PBBS-time: 6.2
+Peak-memory: 4610
+
+
+ddWt 24 english
+PBBS-time: 4.2
+PBBS-time: 4.23
+PBBS-time: 4.24
+PBBS-time: 4.19
+PBBS-time: 4.16
+Peak-memory: 4609
+
+
+ddWt 32 english
+PBBS-time: 3.51
+PBBS-time: 3.47
+PBBS-time: 3.46
+PBBS-time: 3.43
+PBBS-time: 3.34
+Peak-memory: 4608
+
+
+ddWt 40 english
+PBBS-time: 2.98
+PBBS-time: 2.96
+PBBS-time: 2.95
+PBBS-time: 2.91
+PBBS-time: 2.96
+Peak-memory: 4612
+
+
+ddWt 48 english
+PBBS-time: 2.56
+PBBS-time: 2.55
+PBBS-time: 2.53
+PBBS-time: 2.57
+PBBS-time: 2.56
+Peak-memory: 4614
+
+
+ddWt 56 english
+PBBS-time: 2.31
+PBBS-time: 2.27
+PBBS-time: 2.34
+PBBS-time: 2.34
+PBBS-time: 2.34
+Peak-memory: 4609
+
+
+ddWt 64 english
+PBBS-time: 2.2
+PBBS-time: 2.28
+PBBS-time: 2.26
+PBBS-time: 2.25
+PBBS-time: 2.19
+Peak-memory: 4607
+
+
+ddWt 72 english
+PBBS-time: 2.41
+PBBS-time: 2.42
+PBBS-time: 2.4
+PBBS-time: 2.32
+PBBS-time: 2.4
+Peak-memory: 4607
+
+
+ddWt 80 english
+PBBS-time: 2.37
+PBBS-time: 2.32
+PBBS-time: 2.41
+PBBS-time: 2.39
+PBBS-time: 2.44
+Peak-memory: 4608
+
+
+serialWT english
+PBBS-time: 49.5
+PBBS-time: 49.6
+PBBS-time: 49.5
+PBBS-time: 49.5
+PBBS-time: 49.5
+Peak-memory: 3585
+
+
+levelWTOpt 1 dblp.xml
+PBBS-time: 23.8
+PBBS-time: 23.8
+PBBS-time: 23.8
+PBBS-time: 23.8
+PBBS-time: 23.8
+Peak-memory: 2226
+
+
+levelWTOpt 2 dblp.xml
+PBBS-time: 11.8
+PBBS-time: 11.8
+PBBS-time: 11.8
+PBBS-time: 11.8
+PBBS-time: 11.8
+Peak-memory: 2227
+
+
+levelWTOpt 4 dblp.xml
+PBBS-time: 5.97
+PBBS-time: 5.97
+PBBS-time: 5.97
+PBBS-time: 5.96
+PBBS-time: 5.97
+Peak-memory: 2228
+
+
+levelWTOpt 8 dblp.xml
+PBBS-time: 3.18
+PBBS-time: 3.18
+PBBS-time: 3.17
+PBBS-time: 3.19
+PBBS-time: 3.17
+Peak-memory: 2228
+
+
+levelWTOpt 16 dblp.xml
+PBBS-time: 1.81
+PBBS-time: 1.81
+PBBS-time: 1.81
+PBBS-time: 1.8
+PBBS-time: 1.81
+Peak-memory: 2229
+
+
+levelWTOpt 24 dblp.xml
+PBBS-time: 1.42
+PBBS-time: 1.42
+PBBS-time: 1.42
+PBBS-time: 1.42
+PBBS-time: 1.42
+Peak-memory: 2230
+
+
+levelWTOpt 32 dblp.xml
+PBBS-time: 1.29
+PBBS-time: 1.28
+PBBS-time: 1.25
+PBBS-time: 1.25
+PBBS-time: 1.25
+Peak-memory: 2232
+
+
+levelWTOpt 40 dblp.xml
+PBBS-time: 1.19
+PBBS-time: 1.2
+PBBS-time: 1.2
+PBBS-time: 1.2
+PBBS-time: 1.19
+Peak-memory: 2233
+
+
+levelWTOpt 48 dblp.xml
+PBBS-time: 1.14
+PBBS-time: 1.13
+PBBS-time: 1.13
+PBBS-time: 1.14
+PBBS-time: 1.13
+Peak-memory: 2232
+
+
+levelWTOpt 56 dblp.xml
+PBBS-time: 1.08
+PBBS-time: 1.08
+PBBS-time: 1.08
+PBBS-time: 1.08
+PBBS-time: 1.08
+Peak-memory: 2233
+
+
+levelWTOpt 64 dblp.xml
+PBBS-time: 1.05
+PBBS-time: 1.05
+PBBS-time: 1.07
+PBBS-time: 1.05
+PBBS-time: 1.05
+Peak-memory: 2234
+
+
+levelWTOpt 72 dblp.xml
+PBBS-time: 1.06
+PBBS-time: 1.07
+PBBS-time: 1.06
+PBBS-time: 1.06
+PBBS-time: 1.06
+Peak-memory: 2235
+
+
+levelWTOpt 80 dblp.xml
+PBBS-time: 1.1
+PBBS-time: 1.09
+PBBS-time: 1.09
+PBBS-time: 1.06
+PBBS-time: 1.08
+Peak-memory: 2235
+
+
+levelWTRec 1 dblp.xml
+PBBS-time: 16.4
+PBBS-time: 16.4
+PBBS-time: 16.4
+PBBS-time: 16.4
+PBBS-time: 16.4
+Peak-memory: 1098
+
+
+levelWTRec 2 dblp.xml
+PBBS-time: 8.21
+PBBS-time: 8.21
+PBBS-time: 8.21
+PBBS-time: 8.21
+PBBS-time: 8.21
+Peak-memory: 1099
+
+
+levelWTRec 4 dblp.xml
+PBBS-time: 4.11
+PBBS-time: 4.11
+PBBS-time: 4.11
+PBBS-time: 4.12
+PBBS-time: 4.11
+Peak-memory: 1101
+
+
+levelWTRec 8 dblp.xml
+PBBS-time: 2.07
+PBBS-time: 2.06
+PBBS-time: 2.07
+PBBS-time: 2.06
+PBBS-time: 2.06
+Peak-memory: 1102
+
+
+levelWTRec 16 dblp.xml
+PBBS-time: 1.04
+PBBS-time: 1.04
+PBBS-time: 1.04
+PBBS-time: 1.04
+PBBS-time: 1.04
+Peak-memory: 1102
+
+
+levelWTRec 24 dblp.xml
+PBBS-time: 0.699
+PBBS-time: 0.7
+PBBS-time: 0.698
+PBBS-time: 0.699
+PBBS-time: 0.699
+Peak-memory: 1103
+
+
+levelWTRec 32 dblp.xml
+PBBS-time: 0.59
+PBBS-time: 0.588
+PBBS-time: 0.59
+PBBS-time: 0.588
+PBBS-time: 0.589
+Peak-memory: 1104
+
+
+levelWTRec 40 dblp.xml
+PBBS-time: 0.492
+PBBS-time: 0.492
+PBBS-time: 0.493
+PBBS-time: 0.492
+PBBS-time: 0.494
+Peak-memory: 1104
+
+
+levelWTRec 48 dblp.xml
+PBBS-time: 0.425
+PBBS-time: 0.425
+PBBS-time: 0.424
+PBBS-time: 0.424
+PBBS-time: 0.423
+Peak-memory: 1106
+
+
+levelWTRec 56 dblp.xml
+PBBS-time: 0.373
+PBBS-time: 0.373
+PBBS-time: 0.373
+PBBS-time: 0.371
+PBBS-time: 0.372
+Peak-memory: 1106
+
+
+levelWTRec 64 dblp.xml
+PBBS-time: 0.366
+PBBS-time: 0.345
+PBBS-time: 0.341
+PBBS-time: 0.34
+PBBS-time: 0.343
+Peak-memory: 1107
+
+
+levelWTRec 72 dblp.xml
+PBBS-time: 0.369
+PBBS-time: 0.345
+PBBS-time: 0.341
+PBBS-time: 0.343
+PBBS-time: 0.342
+Peak-memory: 1109
+
+
+levelWTRec 80 dblp.xml
+PBBS-time: 0.349
+PBBS-time: 0.361
+PBBS-time: 0.349
+PBBS-time: 0.349
+PBBS-time: 0.349
+Peak-memory: 1108
+
+
+ddWt 1 dblp.xml
+PBBS-time: 20.3
+PBBS-time: 20
+PBBS-time: 20.3
+PBBS-time: 20.5
+PBBS-time: 20.5
+Peak-memory: 1343
+
+
+ddWt 2 dblp.xml
+PBBS-time: 10.7
+PBBS-time: 10.7
+PBBS-time: 10.7
+PBBS-time: 10.8
+PBBS-time: 10.8
+Peak-memory: 1343
+
+
+ddWt 4 dblp.xml
+PBBS-time: 5.73
+PBBS-time: 5.48
+PBBS-time: 5.51
+PBBS-time: 5.54
+PBBS-time: 5.65
+Peak-memory: 1343
+
+
+ddWt 8 dblp.xml
+PBBS-time: 2.89
+PBBS-time: 2.85
+PBBS-time: 2.95
+PBBS-time: 2.91
+PBBS-time: 2.91
+Peak-memory: 1343
+
+
+ddWt 16 dblp.xml
+PBBS-time: 1.48
+PBBS-time: 1.47
+PBBS-time: 1.45
+PBBS-time: 1.45
+PBBS-time: 1.48
+Peak-memory: 1342
+
+
+ddWt 24 dblp.xml
+PBBS-time: 1.21
+PBBS-time: 1.21
+PBBS-time: 1.18
+PBBS-time: 1.19
+PBBS-time: 1.21
+Peak-memory: 1341
+
+
+ddWt 32 dblp.xml
+PBBS-time: 0.839
+PBBS-time: 0.86
+PBBS-time: 0.842
+PBBS-time: 0.848
+PBBS-time: 0.851
+Peak-memory: 1345
+
+
+ddWt 40 dblp.xml
+PBBS-time: 0.736
+PBBS-time: 0.764
+PBBS-time: 0.749
+PBBS-time: 0.75
+PBBS-time: 0.737
+Peak-memory: 1343
+
+
+ddWt 48 dblp.xml
+PBBS-time: 0.638
+PBBS-time: 0.639
+PBBS-time: 0.638
+PBBS-time: 0.642
+PBBS-time: 0.628
+Peak-memory: 1345
+
+
+ddWt 56 dblp.xml
+PBBS-time: 0.6
+PBBS-time: 0.594
+PBBS-time: 0.582
+PBBS-time: 0.586
+PBBS-time: 0.584
+Peak-memory: 1339
+
+
+ddWt 64 dblp.xml
+PBBS-time: 0.577
+PBBS-time: 0.578
+PBBS-time: 0.607
+PBBS-time: 0.57
+PBBS-time: 0.608
+Peak-memory: 1339
+
+
+ddWt 72 dblp.xml
+PBBS-time: 0.648
+PBBS-time: 0.672
+PBBS-time: 0.67
+PBBS-time: 0.674
+PBBS-time: 0.709
+Peak-memory: 1340
+
+
+ddWt 80 dblp.xml
+PBBS-time: 0.689
+PBBS-time: 0.641
+PBBS-time: 0.632
+PBBS-time: 0.631
+PBBS-time: 0.636
+Peak-memory: 1339
+
+
+serialWT dblp.xml
+PBBS-time: 12.1
+PBBS-time: 12.1
+PBBS-time: 12.2
+PBBS-time: 12.2
+PBBS-time: 12.1
+Peak-memory: 1095
+
+
+levelWTOpt 1 randomSeq_100M_256_int
+PBBS-time: 10.1
+PBBS-time: 10.1
+PBBS-time: 10.1
+PBBS-time: 10.1
+PBBS-time: 10.1
+Peak-memory: 2972
+
+
+levelWTOpt 2 randomSeq_100M_256_int
+PBBS-time: 4.95
+PBBS-time: 4.95
+PBBS-time: 4.95
+PBBS-time: 4.95
+PBBS-time: 4.95
+Peak-memory: 2972
+
+
+levelWTOpt 4 randomSeq_100M_256_int
+PBBS-time: 2.58
+PBBS-time: 2.58
+PBBS-time: 2.58
+PBBS-time: 2.58
+PBBS-time: 2.58
+Peak-memory: 2973
+
+
+levelWTOpt 8 randomSeq_100M_256_int
+PBBS-time: 1.39
+PBBS-time: 1.39
+PBBS-time: 1.39
+PBBS-time: 1.39
+PBBS-time: 1.39
+Peak-memory: 2974
+
+
+levelWTOpt 16 randomSeq_100M_256_int
+PBBS-time: 0.814
+PBBS-time: 0.818
+PBBS-time: 0.817
+PBBS-time: 0.82
+PBBS-time: 0.817
+Peak-memory: 2974
+
+
+levelWTOpt 24 randomSeq_100M_256_int
+PBBS-time: 0.722
+PBBS-time: 0.721
+PBBS-time: 0.72
+PBBS-time: 0.705
+PBBS-time: 0.7
+Peak-memory: 2975
+
+
+levelWTOpt 32 randomSeq_100M_256_int
+PBBS-time: 0.666
+PBBS-time: 0.666
+PBBS-time: 0.661
+PBBS-time: 0.666
+PBBS-time: 0.664
+Peak-memory: 2975
+
+
+levelWTOpt 40 randomSeq_100M_256_int
+PBBS-time: 0.624
+PBBS-time: 0.627
+PBBS-time: 0.626
+PBBS-time: 0.625
+PBBS-time: 0.622
+Peak-memory: 2975
+
+
+levelWTOpt 48 randomSeq_100M_256_int
+PBBS-time: 0.612
+PBBS-time: 0.612
+PBBS-time: 0.611
+PBBS-time: 0.614
+PBBS-time: 0.613
+Peak-memory: 2976
+
+
+levelWTOpt 56 randomSeq_100M_256_int
+PBBS-time: 0.594
+PBBS-time: 0.593
+PBBS-time: 0.596
+PBBS-time: 0.598
+PBBS-time: 0.598
+Peak-memory: 2976
+
+
+levelWTOpt 64 randomSeq_100M_256_int
+PBBS-time: 0.592
+PBBS-time: 0.582
+PBBS-time: 0.583
+PBBS-time: 0.583
+PBBS-time: 0.581
+Peak-memory: 2975
+
+
+levelWTOpt 72 randomSeq_100M_256_int
+PBBS-time: 0.592
+PBBS-time: 0.589
+PBBS-time: 0.587
+PBBS-time: 0.593
+PBBS-time: 0.583
+Peak-memory: 2976
+
+
+levelWTOpt 80 randomSeq_100M_256_int
+PBBS-time: 0.61
+PBBS-time: 0.621
+PBBS-time: 0.59
+PBBS-time: 0.612
+PBBS-time: 0.622
+Peak-memory: 2976
+
+
+levelWTOptLight 1 randomSeq_100M_256_int
+PBBS-time: 10.2
+PBBS-time: 10.2
+PBBS-time: 10.2
+PBBS-time: 10.2
+PBBS-time: 10.2
+Peak-memory: 2591
+
+
+levelWTOptLight 2 randomSeq_100M_256_int
+PBBS-time: 5.13
+PBBS-time: 5.13
+PBBS-time: 5.13
+PBBS-time: 5.13
+PBBS-time: 5.13
+Peak-memory: 2591
+
+
+levelWTOptLight 4 randomSeq_100M_256_int
+PBBS-time: 2.56
+PBBS-time: 2.55
+PBBS-time: 2.55
+PBBS-time: 2.56
+PBBS-time: 2.56
+Peak-memory: 2591
+
+
+levelWTOptLight 8 randomSeq_100M_256_int
+PBBS-time: 1.28
+PBBS-time: 1.28
+PBBS-time: 1.28
+PBBS-time: 1.28
+PBBS-time: 1.28
+Peak-memory: 2592
+
+
+levelWTOptLight 16 randomSeq_100M_256_int
+PBBS-time: 0.647
+PBBS-time: 0.647
+PBBS-time: 0.647
+PBBS-time: 0.646
+PBBS-time: 0.647
+Peak-memory: 2593
+
+
+levelWTOptLight 24 randomSeq_100M_256_int
+PBBS-time: 0.438
+PBBS-time: 0.438
+PBBS-time: 0.438
+PBBS-time: 0.438
+PBBS-time: 0.438
+Peak-memory: 2594
+
+
+levelWTOptLight 32 randomSeq_100M_256_int
+PBBS-time: 0.401
+PBBS-time: 0.4
+PBBS-time: 0.401
+PBBS-time: 0.4
+PBBS-time: 0.401
+Peak-memory: 2594
+
+
+levelWTOptLight 40 randomSeq_100M_256_int
+PBBS-time: 0.321
+PBBS-time: 0.321
+PBBS-time: 0.32
+PBBS-time: 0.321
+PBBS-time: 0.321
+Peak-memory: 2594
+
+
+levelWTOptLight 48 randomSeq_100M_256_int
+PBBS-time: 0.304
+PBBS-time: 0.306
+PBBS-time: 0.306
+PBBS-time: 0.305
+PBBS-time: 0.304
+Peak-memory: 2595
+
+
+levelWTOptLight 56 randomSeq_100M_256_int
+PBBS-time: 0.277
+PBBS-time: 0.281
+PBBS-time: 0.279
+PBBS-time: 0.282
+PBBS-time: 0.278
+Peak-memory: 2595
+
+
+levelWTOptLight 64 randomSeq_100M_256_int
+PBBS-time: 0.273
+PBBS-time: 0.279
+PBBS-time: 0.272
+PBBS-time: 0.273
+PBBS-time: 0.271
+Peak-memory: 2595
+
+
+levelWTOptLight 72 randomSeq_100M_256_int
+PBBS-time: 0.301
+PBBS-time: 0.284
+PBBS-time: 0.273
+PBBS-time: 0.287
+PBBS-time: 0.308
+Peak-memory: 2596
+
+
+levelWTOptLight 80 randomSeq_100M_256_int
+PBBS-time: 0.298
+PBBS-time: 0.306
+PBBS-time: 0.306
+PBBS-time: 0.311
+PBBS-time: 0.29
+Peak-memory: 2596
+
+
+levelWTRec 1 randomSeq_100M_256_int
+PBBS-time: 9.91
+PBBS-time: 9.91
+PBBS-time: 9.91
+PBBS-time: 9.91
+PBBS-time: 9.91
+Peak-memory: 2591
+
+
+levelWTRec 2 randomSeq_100M_256_int
+PBBS-time: 4.98
+PBBS-time: 4.97
+PBBS-time: 4.96
+PBBS-time: 4.96
+PBBS-time: 4.96
+Peak-memory: 2591
+
+
+levelWTRec 4 randomSeq_100M_256_int
+PBBS-time: 2.5
+PBBS-time: 2.5
+PBBS-time: 2.5
+PBBS-time: 2.5
+PBBS-time: 2.5
+Peak-memory: 2591
+
+
+levelWTRec 8 randomSeq_100M_256_int
+PBBS-time: 1.24
+PBBS-time: 1.24
+PBBS-time: 1.24
+PBBS-time: 1.24
+PBBS-time: 1.24
+Peak-memory: 2592
+
+
+levelWTRec 16 randomSeq_100M_256_int
+PBBS-time: 0.628
+PBBS-time: 0.628
+PBBS-time: 0.628
+PBBS-time: 0.627
+PBBS-time: 0.628
+Peak-memory: 2594
+
+
+levelWTRec 24 randomSeq_100M_256_int
+PBBS-time: 0.426
+PBBS-time: 0.425
+PBBS-time: 0.425
+PBBS-time: 0.426
+PBBS-time: 0.425
+Peak-memory: 2594
+
+
+levelWTRec 32 randomSeq_100M_256_int
+PBBS-time: 0.349
+PBBS-time: 0.349
+PBBS-time: 0.348
+PBBS-time: 0.348
+PBBS-time: 0.348
+Peak-memory: 2595
+
+
+levelWTRec 40 randomSeq_100M_256_int
+PBBS-time: 0.311
+PBBS-time: 0.314
+PBBS-time: 0.316
+PBBS-time: 0.315
+PBBS-time: 0.316
+Peak-memory: 2596
+
+
+levelWTRec 48 randomSeq_100M_256_int
+PBBS-time: 0.288
+PBBS-time: 0.286
+PBBS-time: 0.288
+PBBS-time: 0.287
+PBBS-time: 0.285
+Peak-memory: 2597
+
+
+levelWTRec 56 randomSeq_100M_256_int
+PBBS-time: 0.275
+PBBS-time: 0.276
+PBBS-time: 0.277
+PBBS-time: 0.275
+PBBS-time: 0.277
+Peak-memory: 2979
+
+
+levelWTRec 64 randomSeq_100M_256_int
+PBBS-time: 0.275
+PBBS-time: 0.267
+PBBS-time: 0.275
+PBBS-time: 0.266
+PBBS-time: 0.266
+Peak-memory: 2598
+
+
+levelWTRec 72 randomSeq_100M_256_int
+PBBS-time: 0.275
+PBBS-time: 0.273
+PBBS-time: 0.267
+PBBS-time: 0.271
+PBBS-time: 0.271
+Peak-memory: 2599
+
+
+levelWTRec 80 randomSeq_100M_256_int
+PBBS-time: 0.278
+PBBS-time: 0.274
+PBBS-time: 0.289
+PBBS-time: 0.268
+PBBS-time: 0.275
+Peak-memory: 2600
+
+
+ddWt 1 randomSeq_100M_256_int
+PBBS-time: 12.5
+PBBS-time: 12.5
+PBBS-time: 12.5
+PBBS-time: 12.5
+PBBS-time: 12.5
+Peak-memory: 2591
+
+
+ddWt 2 randomSeq_100M_256_int
+PBBS-time: 6.68
+PBBS-time: 6.68
+PBBS-time: 6.68
+PBBS-time: 6.68
+PBBS-time: 6.68
+Peak-memory: 2591
+
+
+ddWt 4 randomSeq_100M_256_int
+PBBS-time: 3.46
+PBBS-time: 3.46
+PBBS-time: 3.46
+PBBS-time: 3.46
+PBBS-time: 3.45
+Peak-memory: 2781
+
+
+ddWt 8 randomSeq_100M_256_int
+PBBS-time: 1.79
+PBBS-time: 1.8
+PBBS-time: 1.79
+PBBS-time: 1.79
+PBBS-time: 1.79
+Peak-memory: 2877
+
+
+ddWt 16 randomSeq_100M_256_int
+PBBS-time: 0.915
+PBBS-time: 0.913
+PBBS-time: 0.913
+PBBS-time: 0.912
+PBBS-time: 0.918
+Peak-memory: 2924
+
+
+ddWt 24 randomSeq_100M_256_int
+PBBS-time: 0.748
+PBBS-time: 0.751
+PBBS-time: 0.752
+PBBS-time: 0.751
+PBBS-time: 0.752
+Peak-memory: 2939
+
+
+ddWt 32 randomSeq_100M_256_int
+PBBS-time: 0.582
+PBBS-time: 0.581
+PBBS-time: 0.584
+PBBS-time: 0.581
+PBBS-time: 0.583
+Peak-memory: 2951
+
+
+ddWt 40 randomSeq_100M_256_int
+PBBS-time: 0.526
+PBBS-time: 0.524
+PBBS-time: 0.525
+PBBS-time: 0.524
+PBBS-time: 0.525
+Peak-memory: 2952
+
+
+ddWt 48 randomSeq_100M_256_int
+PBBS-time: 0.486
+PBBS-time: 0.483
+PBBS-time: 0.485
+PBBS-time: 0.483
+PBBS-time: 0.483
+Peak-memory: 2959
+
+
+ddWt 56 randomSeq_100M_256_int
+PBBS-time: 0.453
+PBBS-time: 0.454
+PBBS-time: 0.453
+PBBS-time: 0.452
+PBBS-time: 0.455
+Peak-memory: 2958
+
+
+ddWt 64 randomSeq_100M_256_int
+PBBS-time: 0.525
+PBBS-time: 0.554
+PBBS-time: 0.531
+PBBS-time: 0.48
+PBBS-time: 0.453
+Peak-memory: 2954
+
+
+ddWt 72 randomSeq_100M_256_int
+PBBS-time: 0.513
+PBBS-time: 0.536
+PBBS-time: 0.531
+PBBS-time: 0.51
+PBBS-time: 0.506
+Peak-memory: 2957
+
+
+ddWt 80 randomSeq_100M_256_int
+PBBS-time: 0.5
+PBBS-time: 0.517
+PBBS-time: 0.503
+PBBS-time: 0.491
+PBBS-time: 0.508
+Peak-memory: 2957
+
+
+serialWT randomSeq_100M_256_int
+PBBS-time: 6.37
+PBBS-time: 6.37
+PBBS-time: 6.37
+PBBS-time: 6.37
+PBBS-time: 6.37
+Peak-memory: 2590
+
+
+levelWTOpt 1 randomSeq_100M_1024_int
+PBBS-time: 12.5
+PBBS-time: 12.5
+PBBS-time: 12.5
+PBBS-time: 12.5
+PBBS-time: 12.5
+Peak-memory: 3038
+
+
+levelWTOpt 2 randomSeq_100M_1024_int
+PBBS-time: 6.22
+PBBS-time: 6.22
+PBBS-time: 6.23
+PBBS-time: 6.21
+PBBS-time: 6.21
+Peak-memory: 3038
+
+
+levelWTOpt 4 randomSeq_100M_1024_int
+PBBS-time: 3.19
+PBBS-time: 3.19
+PBBS-time: 3.2
+PBBS-time: 3.19
+PBBS-time: 3.19
+Peak-memory: 3039
+
+
+levelWTOpt 8 randomSeq_100M_1024_int
+PBBS-time: 1.7
+PBBS-time: 1.71
+PBBS-time: 1.7
+PBBS-time: 1.71
+PBBS-time: 1.7
+Peak-memory: 3040
+
+
+levelWTOpt 16 randomSeq_100M_1024_int
+PBBS-time: 1.01
+PBBS-time: 1.01
+PBBS-time: 1.01
+PBBS-time: 1.01
+PBBS-time: 1.01
+Peak-memory: 3040
+
+
+levelWTOpt 24 randomSeq_100M_1024_int
+PBBS-time: 0.847
+PBBS-time: 0.845
+PBBS-time: 0.849
+PBBS-time: 0.848
+PBBS-time: 0.849
+Peak-memory: 3040
+
+
+levelWTOpt 32 randomSeq_100M_1024_int
+PBBS-time: 0.812
+PBBS-time: 0.811
+PBBS-time: 0.81
+PBBS-time: 0.808
+PBBS-time: 0.812
+Peak-memory: 3041
+
+
+levelWTOpt 40 randomSeq_100M_1024_int
+PBBS-time: 0.809
+PBBS-time: 0.809
+PBBS-time: 0.808
+PBBS-time: 0.807
+PBBS-time: 0.809
+Peak-memory: 3423
+
+
+levelWTOpt 48 randomSeq_100M_1024_int
+PBBS-time: 0.762
+PBBS-time: 0.762
+PBBS-time: 0.762
+PBBS-time: 0.76
+PBBS-time: 0.761
+Peak-memory: 3041
+
+
+levelWTOpt 56 randomSeq_100M_1024_int
+PBBS-time: 0.746
+PBBS-time: 0.743
+PBBS-time: 0.746
+PBBS-time: 0.75
+PBBS-time: 0.751
+Peak-memory: 3041
+
+
+levelWTOpt 64 randomSeq_100M_1024_int
+PBBS-time: 0.743
+PBBS-time: 0.738
+PBBS-time: 0.74
+PBBS-time: 0.751
+PBBS-time: 0.744
+Peak-memory: 3041
+
+
+levelWTOpt 72 randomSeq_100M_1024_int
+PBBS-time: 0.753
+PBBS-time: 0.761
+PBBS-time: 0.758
+PBBS-time: 0.76
+PBBS-time: 0.798
+Peak-memory: 3042
+
+
+levelWTOpt 80 randomSeq_100M_1024_int
+PBBS-time: 0.78
+PBBS-time: 0.783
+PBBS-time: 0.761
+PBBS-time: 0.764
+PBBS-time: 0.792
+Peak-memory: 3042
+
+
+levelWTOptLight 1 randomSeq_100M_1024_int
+PBBS-time: 13
+PBBS-time: 12.9
+PBBS-time: 12.9
+PBBS-time: 12.9
+PBBS-time: 12.9
+Peak-memory: 2657
+
+
+levelWTOptLight 2 randomSeq_100M_1024_int
+PBBS-time: 6.47
+PBBS-time: 6.47
+PBBS-time: 6.47
+PBBS-time: 6.47
+PBBS-time: 6.47
+Peak-memory: 2657
+
+
+levelWTOptLight 4 randomSeq_100M_1024_int
+PBBS-time: 3.23
+PBBS-time: 3.24
+PBBS-time: 3.24
+PBBS-time: 3.24
+PBBS-time: 3.24
+Peak-memory: 2657
+
+
+levelWTOptLight 8 randomSeq_100M_1024_int
+PBBS-time: 1.61
+PBBS-time: 1.62
+PBBS-time: 1.62
+PBBS-time: 1.62
+PBBS-time: 1.62
+Peak-memory: 2658
+
+
+levelWTOptLight 16 randomSeq_100M_1024_int
+PBBS-time: 0.816
+PBBS-time: 0.818
+PBBS-time: 0.817
+PBBS-time: 0.817
+PBBS-time: 0.817
+Peak-memory: 2659
+
+
+levelWTOptLight 24 randomSeq_100M_1024_int
+PBBS-time: 0.555
+PBBS-time: 0.554
+PBBS-time: 0.554
+PBBS-time: 0.555
+PBBS-time: 0.555
+Peak-memory: 2659
+
+
+levelWTOptLight 32 randomSeq_100M_1024_int
+PBBS-time: 0.475
+PBBS-time: 0.476
+PBBS-time: 0.476
+PBBS-time: 0.476
+PBBS-time: 0.478
+Peak-memory: 2659
+
+
+levelWTOptLight 40 randomSeq_100M_1024_int
+PBBS-time: 0.405
+PBBS-time: 0.403
+PBBS-time: 0.403
+PBBS-time: 0.404
+PBBS-time: 0.404
+Peak-memory: 2661
+
+
+levelWTOptLight 48 randomSeq_100M_1024_int
+PBBS-time: 0.371
+PBBS-time: 0.37
+PBBS-time: 0.371
+PBBS-time: 0.371
+PBBS-time: 0.37
+Peak-memory: 2661
+
+
+levelWTOptLight 56 randomSeq_100M_1024_int
+PBBS-time: 0.354
+PBBS-time: 0.353
+PBBS-time: 0.352
+PBBS-time: 0.357
+PBBS-time: 0.357
+Peak-memory: 2661
+
+
+levelWTOptLight 64 randomSeq_100M_1024_int
+PBBS-time: 0.369
+PBBS-time: 0.346
+PBBS-time: 0.351
+PBBS-time: 0.347
+PBBS-time: 0.346
+Peak-memory: 2661
+
+
+levelWTOptLight 72 randomSeq_100M_1024_int
+PBBS-time: 0.365
+PBBS-time: 0.366
+PBBS-time: 0.363
+PBBS-time: 0.353
+PBBS-time: 0.349
+Peak-memory: 2662
+
+
+levelWTOptLight 80 randomSeq_100M_1024_int
+PBBS-time: 0.36
+PBBS-time: 0.384
+PBBS-time: 0.366
+PBBS-time: 0.381
+PBBS-time: 0.382
+Peak-memory: 2662
+
+
+levelWTRec 1 randomSeq_100M_1024_int
+PBBS-time: 12.6
+PBBS-time: 12.5
+PBBS-time: 12.5
+PBBS-time: 12.5
+PBBS-time: 12.5
+Peak-memory: 2657
+
+
+levelWTRec 2 randomSeq_100M_1024_int
+PBBS-time: 6.24
+PBBS-time: 6.24
+PBBS-time: 6.24
+PBBS-time: 6.24
+PBBS-time: 6.24
+Peak-memory: 2657
+
+
+levelWTRec 4 randomSeq_100M_1024_int
+PBBS-time: 3.13
+PBBS-time: 3.13
+PBBS-time: 3.13
+PBBS-time: 3.13
+PBBS-time: 3.13
+Peak-memory: 2658
+
+
+levelWTRec 8 randomSeq_100M_1024_int
+PBBS-time: 1.58
+PBBS-time: 1.57
+PBBS-time: 1.57
+PBBS-time: 1.57
+PBBS-time: 1.57
+Peak-memory: 2659
+
+
+levelWTRec 16 randomSeq_100M_1024_int
+PBBS-time: 0.794
+PBBS-time: 0.794
+PBBS-time: 0.794
+PBBS-time: 0.794
+PBBS-time: 0.794
+Peak-memory: 2659
+
+
+levelWTRec 24 randomSeq_100M_1024_int
+PBBS-time: 0.539
+PBBS-time: 0.54
+PBBS-time: 0.54
+PBBS-time: 0.54
+PBBS-time: 0.539
+Peak-memory: 2661
+
+
+levelWTRec 32 randomSeq_100M_1024_int
+PBBS-time: 0.437
+PBBS-time: 0.437
+PBBS-time: 0.44
+PBBS-time: 0.436
+PBBS-time: 0.433
+Peak-memory: 2662
+
+
+levelWTRec 40 randomSeq_100M_1024_int
+PBBS-time: 0.39
+PBBS-time: 0.393
+PBBS-time: 0.392
+PBBS-time: 0.391
+PBBS-time: 0.393
+Peak-memory: 2662
+
+
+levelWTRec 48 randomSeq_100M_1024_int
+PBBS-time: 0.37
+PBBS-time: 0.369
+PBBS-time: 0.367
+PBBS-time: 0.37
+PBBS-time: 0.371
+Peak-memory: 2663
+
+
+levelWTRec 56 randomSeq_100M_1024_int
+PBBS-time: 0.344
+PBBS-time: 0.345
+PBBS-time: 0.344
+PBBS-time: 0.347
+PBBS-time: 0.344
+Peak-memory: 2663
+
+
+levelWTRec 64 randomSeq_100M_1024_int
+PBBS-time: 0.335
+PBBS-time: 0.336
+PBBS-time: 0.334
+PBBS-time: 0.335
+PBBS-time: 0.336
+Peak-memory: 2665
+
+
+levelWTRec 72 randomSeq_100M_1024_int
+PBBS-time: 0.339
+PBBS-time: 0.348
+PBBS-time: 0.338
+PBBS-time: 0.344
+PBBS-time: 0.335
+Peak-memory: 2666
+
+
+levelWTRec 80 randomSeq_100M_1024_int
+PBBS-time: 0.341
+PBBS-time: 0.337
+PBBS-time: 0.347
+PBBS-time: 0.338
+PBBS-time: 0.348
+Peak-memory: 2666
+
+
+ddWt 1 randomSeq_100M_1024_int
+PBBS-time: 15.6
+PBBS-time: 15.6
+PBBS-time: 15.6
+PBBS-time: 15.6
+PBBS-time: 15.6
+Peak-memory: 2657
+
+
+ddWt 2 randomSeq_100M_1024_int
+PBBS-time: 8.28
+PBBS-time: 8.28
+PBBS-time: 8.28
+PBBS-time: 8.27
+PBBS-time: 8.27
+Peak-memory: 2657
+
+
+ddWt 4 randomSeq_100M_1024_int
+PBBS-time: 4.2
+PBBS-time: 4.2
+PBBS-time: 4.2
+PBBS-time: 4.2
+PBBS-time: 4.2
+Peak-memory: 2847
+
+
+ddWt 8 randomSeq_100M_1024_int
+PBBS-time: 2.18
+PBBS-time: 2.19
+PBBS-time: 2.19
+PBBS-time: 2.18
+PBBS-time: 2.18
+Peak-memory: 2943
+
+
+ddWt 16 randomSeq_100M_1024_int
+PBBS-time: 1.12
+PBBS-time: 1.12
+PBBS-time: 1.12
+PBBS-time: 1.12
+PBBS-time: 1.12
+Peak-memory: 2990
+
+
+ddWt 24 randomSeq_100M_1024_int
+PBBS-time: 0.804
+PBBS-time: 0.807
+PBBS-time: 0.805
+PBBS-time: 0.805
+PBBS-time: 0.81
+Peak-memory: 3006
+
+
+ddWt 32 randomSeq_100M_1024_int
+PBBS-time: 0.713
+PBBS-time: 0.715
+PBBS-time: 0.713
+PBBS-time: 0.715
+PBBS-time: 0.716
+Peak-memory: 3017
+
+
+ddWt 40 randomSeq_100M_1024_int
+PBBS-time: 0.63
+PBBS-time: 0.63
+PBBS-time: 0.629
+PBBS-time: 0.628
+PBBS-time: 0.632
+Peak-memory: 3018
+
+
+ddWt 48 randomSeq_100M_1024_int
+PBBS-time: 0.572
+PBBS-time: 0.569
+PBBS-time: 0.57
+PBBS-time: 0.571
+PBBS-time: 0.57
+Peak-memory: 3025
+
+
+ddWt 56 randomSeq_100M_1024_int
+PBBS-time: 0.531
+PBBS-time: 0.531
+PBBS-time: 0.532
+PBBS-time: 0.533
+PBBS-time: 0.529
+Peak-memory: 3024
+
+
+ddWt 64 randomSeq_100M_1024_int
+PBBS-time: 0.608
+PBBS-time: 0.585
+PBBS-time: 0.635
+PBBS-time: 0.604
+PBBS-time: 0.556
+Peak-memory: 3024
+
+
+ddWt 72 randomSeq_100M_1024_int
+PBBS-time: 0.701
+PBBS-time: 0.63
+PBBS-time: 0.601
+PBBS-time: 0.616
+PBBS-time: 0.609
+Peak-memory: 3026
+
+
+ddWt 80 randomSeq_100M_1024_int
+PBBS-time: 0.604
+PBBS-time: 0.632
+PBBS-time: 0.605
+PBBS-time: 0.616
+PBBS-time: 0.608
+Peak-memory: 3027
+
+
+serialWT randomSeq_100M_1024_int
+PBBS-time: 7.98
+PBBS-time: 7.97
+PBBS-time: 7.98
+PBBS-time: 7.97
+PBBS-time: 7.97
+Peak-memory: 2656
+
+
+levelWTOpt 1 randomSeq_100M_4096_int
+PBBS-time: 14.2
+PBBS-time: 14.2
+PBBS-time: 14.2
+PBBS-time: 14.2
+PBBS-time: 14.2
+Peak-memory: 2955
+
+
+levelWTOpt 2 randomSeq_100M_4096_int
+PBBS-time: 7.56
+PBBS-time: 7.58
+PBBS-time: 7.58
+PBBS-time: 7.59
+PBBS-time: 7.59
+Peak-memory: 2955
+
+
+levelWTOpt 4 randomSeq_100M_4096_int
+PBBS-time: 3.78
+PBBS-time: 3.77
+PBBS-time: 3.79
+PBBS-time: 3.77
+PBBS-time: 3.77
+Peak-memory: 2956
+
+
+levelWTOpt 8 randomSeq_100M_4096_int
+PBBS-time: 1.97
+PBBS-time: 1.97
+PBBS-time: 1.97
+PBBS-time: 1.97
+PBBS-time: 1.97
+Peak-memory: 2956
+
+
+levelWTOpt 16 randomSeq_100M_4096_int
+PBBS-time: 1.16
+PBBS-time: 1.16
+PBBS-time: 1.16
+PBBS-time: 1.16
+PBBS-time: 1.16
+Peak-memory: 2957
+
+
+levelWTOpt 24 randomSeq_100M_4096_int
+PBBS-time: 1.16
+PBBS-time: 1.16
+PBBS-time: 1.16
+PBBS-time: 1.16
+PBBS-time: 1.16
+Peak-memory: 2958
+
+
+levelWTOpt 32 randomSeq_100M_4096_int
+PBBS-time: 0.906
+PBBS-time: 0.904
+PBBS-time: 0.906
+PBBS-time: 0.905
+PBBS-time: 0.904
+Peak-memory: 2958
+
+
+levelWTOpt 40 randomSeq_100M_4096_int
+PBBS-time: 0.887
+PBBS-time: 0.888
+PBBS-time: 0.886
+PBBS-time: 0.888
+PBBS-time: 0.889
+Peak-memory: 2959
+
+
+levelWTOpt 48 randomSeq_100M_4096_int
+PBBS-time: 0.859
+PBBS-time: 0.859
+PBBS-time: 0.861
+PBBS-time: 0.859
+PBBS-time: 0.855
+Peak-memory: 2959
+
+
+levelWTOpt 56 randomSeq_100M_4096_int
+PBBS-time: 0.84
+PBBS-time: 0.842
+PBBS-time: 0.839
+PBBS-time: 0.84
+PBBS-time: 0.843
+Peak-memory: 2960
+
+
+levelWTOpt 64 randomSeq_100M_4096_int
+PBBS-time: 0.838
+PBBS-time: 0.84
+PBBS-time: 0.842
+PBBS-time: 0.838
+PBBS-time: 0.841
+Peak-memory: 2959
+
+
+levelWTOpt 72 randomSeq_100M_4096_int
+PBBS-time: 0.86
+PBBS-time: 0.862
+PBBS-time: 0.867
+PBBS-time: 0.857
+PBBS-time: 0.852
+Peak-memory: 2959
+
+
+levelWTOpt 80 randomSeq_100M_4096_int
+PBBS-time: 0.887
+PBBS-time: 0.864
+PBBS-time: 0.862
+PBBS-time: 0.855
+PBBS-time: 0.879
+Peak-memory: 2960
+
+
+levelWTOptLight 1 randomSeq_100M_4096_int
+PBBS-time: 15.7
+PBBS-time: 15.7
+PBBS-time: 15.7
+PBBS-time: 15.7
+PBBS-time: 15.7
+Peak-memory: 2574
+
+
+levelWTOptLight 2 randomSeq_100M_4096_int
+PBBS-time: 7.84
+PBBS-time: 7.84
+PBBS-time: 7.84
+PBBS-time: 7.84
+PBBS-time: 7.84
+Peak-memory: 2574
+
+
+levelWTOptLight 4 randomSeq_100M_4096_int
+PBBS-time: 3.92
+PBBS-time: 3.92
+PBBS-time: 3.91
+PBBS-time: 3.92
+PBBS-time: 3.91
+Peak-memory: 2574
+
+
+levelWTOptLight 8 randomSeq_100M_4096_int
+PBBS-time: 1.97
+PBBS-time: 1.97
+PBBS-time: 1.96
+PBBS-time: 1.97
+PBBS-time: 1.96
+Peak-memory: 2575
+
+
+levelWTOptLight 16 randomSeq_100M_4096_int
+PBBS-time: 0.993
+PBBS-time: 0.992
+PBBS-time: 0.994
+PBBS-time: 0.994
+PBBS-time: 0.993
+Peak-memory: 2576
+
+
+levelWTOptLight 24 randomSeq_100M_4096_int
+PBBS-time: 0.673
+PBBS-time: 0.673
+PBBS-time: 0.674
+PBBS-time: 0.673
+PBBS-time: 0.673
+Peak-memory: 2577
+
+
+levelWTOptLight 32 randomSeq_100M_4096_int
+PBBS-time: 0.541
+PBBS-time: 0.541
+PBBS-time: 0.542
+PBBS-time: 0.541
+PBBS-time: 0.542
+Peak-memory: 2577
+
+
+levelWTOptLight 40 randomSeq_100M_4096_int
+PBBS-time: 0.502
+PBBS-time: 0.5
+PBBS-time: 0.49
+PBBS-time: 0.49
+PBBS-time: 0.491
+Peak-memory: 2577
+
+
+levelWTOptLight 48 randomSeq_100M_4096_int
+PBBS-time: 0.446
+PBBS-time: 0.447
+PBBS-time: 0.447
+PBBS-time: 0.447
+PBBS-time: 0.446
+Peak-memory: 2578
+
+
+levelWTOptLight 56 randomSeq_100M_4096_int
+PBBS-time: 0.421
+PBBS-time: 0.427
+PBBS-time: 0.423
+PBBS-time: 0.422
+PBBS-time: 0.425
+Peak-memory: 2578
+
+
+levelWTOptLight 64 randomSeq_100M_4096_int
+PBBS-time: 0.414
+PBBS-time: 0.421
+PBBS-time: 0.41
+PBBS-time: 0.414
+PBBS-time: 0.413
+Peak-memory: 2579
+
+
+levelWTOptLight 72 randomSeq_100M_4096_int
+PBBS-time: 0.416
+PBBS-time: 0.426
+PBBS-time: 0.425
+PBBS-time: 0.424
+PBBS-time: 0.424
+Peak-memory: 2580
+
+
+levelWTOptLight 80 randomSeq_100M_4096_int
+PBBS-time: 0.468
+PBBS-time: 0.446
+PBBS-time: 0.447
+PBBS-time: 0.455
+PBBS-time: 0.447
+Peak-memory: 2580
+
+
+levelWTRec 1 randomSeq_100M_4096_int
+PBBS-time: 15.1
+PBBS-time: 15.1
+PBBS-time: 15.1
+PBBS-time: 15.1
+PBBS-time: 15.1
+Peak-memory: 2574
+
+
+levelWTRec 2 randomSeq_100M_4096_int
+PBBS-time: 7.55
+PBBS-time: 7.55
+PBBS-time: 7.55
+PBBS-time: 7.55
+PBBS-time: 7.55
+Peak-memory: 2574
+
+
+levelWTRec 4 randomSeq_100M_4096_int
+PBBS-time: 3.81
+PBBS-time: 3.8
+PBBS-time: 3.8
+PBBS-time: 3.79
+PBBS-time: 3.78
+Peak-memory: 2575
+
+
+levelWTRec 8 randomSeq_100M_4096_int
+PBBS-time: 1.91
+PBBS-time: 1.9
+PBBS-time: 1.9
+PBBS-time: 1.9
+PBBS-time: 1.9
+Peak-memory: 2575
+
+
+levelWTRec 16 randomSeq_100M_4096_int
+PBBS-time: 0.96
+PBBS-time: 0.96
+PBBS-time: 0.959
+PBBS-time: 0.96
+PBBS-time: 0.96
+Peak-memory: 2577
+
+
+levelWTRec 24 randomSeq_100M_4096_int
+PBBS-time: 0.65
+PBBS-time: 0.65
+PBBS-time: 0.649
+PBBS-time: 0.65
+PBBS-time: 0.65
+Peak-memory: 2578
+
+
+levelWTRec 32 randomSeq_100M_4096_int
+PBBS-time: 0.524
+PBBS-time: 0.523
+PBBS-time: 0.525
+PBBS-time: 0.522
+PBBS-time: 0.524
+Peak-memory: 2579
+
+
+levelWTRec 40 randomSeq_100M_4096_int
+PBBS-time: 0.494
+PBBS-time: 0.49
+PBBS-time: 0.493
+PBBS-time: 0.484
+PBBS-time: 0.477
+Peak-memory: 2579
+
+
+levelWTRec 48 randomSeq_100M_4096_int
+PBBS-time: 0.422
+PBBS-time: 0.421
+PBBS-time: 0.422
+PBBS-time: 0.423
+PBBS-time: 0.423
+Peak-memory: 2579
+
+
+levelWTRec 56 randomSeq_100M_4096_int
+PBBS-time: 0.399
+PBBS-time: 0.397
+PBBS-time: 0.398
+PBBS-time: 0.396
+PBBS-time: 0.401
+Peak-memory: 2581
+
+
+levelWTRec 64 randomSeq_100M_4096_int
+PBBS-time: 0.385
+PBBS-time: 0.385
+PBBS-time: 0.387
+PBBS-time: 0.38
+PBBS-time: 0.402
+Peak-memory: 2582
+
+
+levelWTRec 72 randomSeq_100M_4096_int
+PBBS-time: 0.401
+PBBS-time: 0.386
+PBBS-time: 0.387
+PBBS-time: 0.393
+PBBS-time: 0.385
+Peak-memory: 2582
+
+
+levelWTRec 80 randomSeq_100M_4096_int
+PBBS-time: 0.409
+PBBS-time: 0.397
+PBBS-time: 0.398
+PBBS-time: 0.385
+PBBS-time: 0.387
+Peak-memory: 2584
+
+
+ddWt 1 randomSeq_100M_4096_int
+PBBS-time: 18.6
+PBBS-time: 18.6
+PBBS-time: 18.6
+PBBS-time: 18.6
+PBBS-time: 18.6
+Peak-memory: 2812
+
+
+ddWt 2 randomSeq_100M_4096_int
+PBBS-time: 9.83
+PBBS-time: 9.83
+PBBS-time: 9.83
+PBBS-time: 9.83
+PBBS-time: 9.84
+Peak-memory: 2812
+
+
+ddWt 4 randomSeq_100M_4096_int
+PBBS-time: 5.03
+PBBS-time: 5.03
+PBBS-time: 5.03
+PBBS-time: 5.03
+PBBS-time: 5.03
+Peak-memory: 3003
+
+
+ddWt 8 randomSeq_100M_4096_int
+PBBS-time: 2.58
+PBBS-time: 2.59
+PBBS-time: 2.58
+PBBS-time: 2.59
+PBBS-time: 2.58
+Peak-memory: 3098
+
+
+ddWt 16 randomSeq_100M_4096_int
+PBBS-time: 1.32
+PBBS-time: 1.33
+PBBS-time: 1.32
+PBBS-time: 1.33
+PBBS-time: 1.32
+Peak-memory: 3146
+
+
+ddWt 24 randomSeq_100M_4096_int
+PBBS-time: 0.949
+PBBS-time: 0.948
+PBBS-time: 0.941
+PBBS-time: 0.948
+PBBS-time: 0.948
+Peak-memory: 3165
+
+
+ddWt 32 randomSeq_100M_4096_int
+PBBS-time: 0.837
+PBBS-time: 0.837
+PBBS-time: 0.836
+PBBS-time: 0.838
+PBBS-time: 0.838
+Peak-memory: 3172
+
+
+ddWt 40 randomSeq_100M_4096_int
+PBBS-time: 0.718
+PBBS-time: 0.718
+PBBS-time: 0.719
+PBBS-time: 0.721
+PBBS-time: 0.719
+Peak-memory: 3174
+
+
+ddWt 48 randomSeq_100M_4096_int
+PBBS-time: 0.673
+PBBS-time: 0.673
+PBBS-time: 0.672
+PBBS-time: 0.671
+PBBS-time: 0.674
+Peak-memory: 3180
+
+
+ddWt 56 randomSeq_100M_4096_int
+PBBS-time: 0.622
+PBBS-time: 0.614
+PBBS-time: 0.614
+PBBS-time: 0.613
+PBBS-time: 0.615
+Peak-memory: 3180
+
+
+ddWt 64 randomSeq_100M_4096_int
+PBBS-time: 0.667
+PBBS-time: 0.684
+PBBS-time: 0.636
+PBBS-time: 0.65
+PBBS-time: 0.671
+Peak-memory: 3182
+
+
+ddWt 72 randomSeq_100M_4096_int
+PBBS-time: 0.679
+PBBS-time: 0.716
+PBBS-time: 0.665
+PBBS-time: 0.702
+PBBS-time: 0.715
+Peak-memory: 3183
+
+
+ddWt 80 randomSeq_100M_4096_int
+PBBS-time: 0.675
+PBBS-time: 0.687
+PBBS-time: 0.729
+PBBS-time: 0.684
+PBBS-time: 0.714
+Peak-memory: 3183
+
+
+serialWT randomSeq_100M_4096_int
+PBBS-time: 9.62
+PBBS-time: 9.62
+PBBS-time: 9.62
+PBBS-time: 9.62
+PBBS-time: 9.62
+Peak-memory: 2573
+
+
+levelWTOpt 1 randomSeq_100M_16384_int
+PBBS-time: 16.5
+PBBS-time: 16.5
+PBBS-time: 16.5
+PBBS-time: 16.5
+PBBS-time: 16.5
+Peak-memory: 3092
+
+
+levelWTOpt 2 randomSeq_100M_16384_int
+PBBS-time: 8.77
+PBBS-time: 8.78
+PBBS-time: 8.77
+PBBS-time: 8.78
+PBBS-time: 8.78
+Peak-memory: 3092
+
+
+levelWTOpt 4 randomSeq_100M_16384_int
+PBBS-time: 4.4
+PBBS-time: 4.39
+PBBS-time: 4.4
+PBBS-time: 4.4
+PBBS-time: 4.41
+Peak-memory: 3093
+
+
+levelWTOpt 8 randomSeq_100M_16384_int
+PBBS-time: 2.3
+PBBS-time: 2.3
+PBBS-time: 2.3
+PBBS-time: 2.3
+PBBS-time: 2.3
+Peak-memory: 3093
+
+
+levelWTOpt 16 randomSeq_100M_16384_int
+PBBS-time: 1.4
+PBBS-time: 1.38
+PBBS-time: 1.38
+PBBS-time: 1.38
+PBBS-time: 1.37
+Peak-memory: 3094
+
+
+levelWTOpt 24 randomSeq_100M_16384_int
+PBBS-time: 1.09
+PBBS-time: 1.1
+PBBS-time: 1.1
+PBBS-time: 1.1
+PBBS-time: 1.1
+Peak-memory: 3094
+
+
+levelWTOpt 32 randomSeq_100M_16384_int
+PBBS-time: 1.02
+PBBS-time: 1.02
+PBBS-time: 1.02
+PBBS-time: 1.02
+PBBS-time: 1.02
+Peak-memory: 3096
+
+
+levelWTOpt 40 randomSeq_100M_16384_int
+PBBS-time: 0.995
+PBBS-time: 0.996
+PBBS-time: 0.993
+PBBS-time: 0.997
+PBBS-time: 0.995
+Peak-memory: 3096
+
+
+levelWTOpt 48 randomSeq_100M_16384_int
+PBBS-time: 0.946
+PBBS-time: 0.948
+PBBS-time: 0.95
+PBBS-time: 0.953
+PBBS-time: 0.947
+Peak-memory: 3096
+
+
+levelWTOpt 56 randomSeq_100M_16384_int
+PBBS-time: 0.944
+PBBS-time: 0.945
+PBBS-time: 0.942
+PBBS-time: 0.947
+PBBS-time: 0.946
+Peak-memory: 3096
+
+
+levelWTOpt 64 randomSeq_100M_16384_int
+PBBS-time: 0.937
+PBBS-time: 0.93
+PBBS-time: 0.956
+PBBS-time: 0.926
+PBBS-time: 0.922
+Peak-memory: 3097
+
+
+levelWTOpt 72 randomSeq_100M_16384_int
+PBBS-time: 0.94
+PBBS-time: 0.942
+PBBS-time: 0.96
+PBBS-time: 0.938
+PBBS-time: 0.934
+Peak-memory: 3096
+
+
+levelWTOpt 80 randomSeq_100M_16384_int
+PBBS-time: 1
+PBBS-time: 0.981
+PBBS-time: 0.963
+PBBS-time: 0.978
+PBBS-time: 0.966
+Peak-memory: 3097
+
+
+levelWTOptLight 1 randomSeq_100M_16384_int
+PBBS-time: 18.3
+PBBS-time: 18.3
+PBBS-time: 18.3
+PBBS-time: 18.3
+PBBS-time: 18.3
+Peak-memory: 2711
+
+
+levelWTOptLight 2 randomSeq_100M_16384_int
+PBBS-time: 9.16
+PBBS-time: 9.16
+PBBS-time: 9.16
+PBBS-time: 9.16
+PBBS-time: 9.16
+Peak-memory: 2711
+
+
+levelWTOptLight 4 randomSeq_100M_16384_int
+PBBS-time: 4.61
+PBBS-time: 4.61
+PBBS-time: 4.61
+PBBS-time: 4.6
+PBBS-time: 4.6
+Peak-memory: 2712
+
+
+levelWTOptLight 8 randomSeq_100M_16384_int
+PBBS-time: 2.32
+PBBS-time: 2.32
+PBBS-time: 2.32
+PBBS-time: 2.32
+PBBS-time: 2.32
+Peak-memory: 2712
+
+
+levelWTOptLight 16 randomSeq_100M_16384_int
+PBBS-time: 1.18
+PBBS-time: 1.18
+PBBS-time: 1.18
+PBBS-time: 1.18
+PBBS-time: 1.18
+Peak-memory: 2713
+
+
+levelWTOptLight 24 randomSeq_100M_16384_int
+PBBS-time: 0.804
+PBBS-time: 0.804
+PBBS-time: 0.803
+PBBS-time: 0.804
+PBBS-time: 0.804
+Peak-memory: 2713
+
+
+levelWTOptLight 32 randomSeq_100M_16384_int
+PBBS-time: 0.679
+PBBS-time: 0.672
+PBBS-time: 0.669
+PBBS-time: 0.669
+PBBS-time: 0.67
+Peak-memory: 2714
+
+
+levelWTOptLight 40 randomSeq_100M_16384_int
+PBBS-time: 0.573
+PBBS-time: 0.573
+PBBS-time: 0.573
+PBBS-time: 0.573
+PBBS-time: 0.573
+Peak-memory: 2714
+
+
+levelWTOptLight 48 randomSeq_100M_16384_int
+PBBS-time: 0.552
+PBBS-time: 0.554
+PBBS-time: 0.552
+PBBS-time: 0.552
+PBBS-time: 0.552
+Peak-memory: 2714
+
+
+levelWTOptLight 56 randomSeq_100M_16384_int
+PBBS-time: 0.5
+PBBS-time: 0.508
+PBBS-time: 0.5
+PBBS-time: 0.501
+PBBS-time: 0.501
+Peak-memory: 2715
+
+
+levelWTOptLight 64 randomSeq_100M_16384_int
+PBBS-time: 0.476
+PBBS-time: 0.48
+PBBS-time: 0.475
+PBBS-time: 0.475
+PBBS-time: 0.474
+Peak-memory: 2717
+
+
+levelWTOptLight 72 randomSeq_100M_16384_int
+PBBS-time: 0.495
+PBBS-time: 0.5
+PBBS-time: 0.49
+PBBS-time: 0.492
+PBBS-time: 0.502
+Peak-memory: 2717
+
+
+levelWTOptLight 80 randomSeq_100M_16384_int
+PBBS-time: 0.521
+PBBS-time: 0.509
+PBBS-time: 0.504
+PBBS-time: 0.493
+PBBS-time: 0.505
+Peak-memory: 2717
+
+
+levelWTRec 1 randomSeq_100M_16384_int
+PBBS-time: 17.8
+PBBS-time: 17.8
+PBBS-time: 17.8
+PBBS-time: 17.8
+PBBS-time: 17.8
+Peak-memory: 2711
+
+
+levelWTRec 2 randomSeq_100M_16384_int
+PBBS-time: 8.9
+PBBS-time: 8.9
+PBBS-time: 8.9
+PBBS-time: 8.9
+PBBS-time: 8.9
+Peak-memory: 2711
+
+
+levelWTRec 4 randomSeq_100M_16384_int
+PBBS-time: 4.47
+PBBS-time: 4.47
+PBBS-time: 4.46
+PBBS-time: 4.46
+PBBS-time: 4.46
+Peak-memory: 2712
+
+
+levelWTRec 8 randomSeq_100M_16384_int
+PBBS-time: 2.25
+PBBS-time: 2.24
+PBBS-time: 2.24
+PBBS-time: 2.24
+PBBS-time: 2.24
+Peak-memory: 2713
+
+
+levelWTRec 16 randomSeq_100M_16384_int
+PBBS-time: 1.14
+PBBS-time: 1.14
+PBBS-time: 1.14
+PBBS-time: 1.14
+PBBS-time: 1.14
+Peak-memory: 2714
+
+
+levelWTRec 24 randomSeq_100M_16384_int
+PBBS-time: 0.826
+PBBS-time: 0.826
+PBBS-time: 0.827
+PBBS-time: 0.826
+PBBS-time: 0.824
+Peak-memory: 2715
+
+
+levelWTRec 32 randomSeq_100M_16384_int
+PBBS-time: 0.614
+PBBS-time: 0.614
+PBBS-time: 0.617
+PBBS-time: 0.617
+PBBS-time: 0.613
+Peak-memory: 2715
+
+
+levelWTRec 40 randomSeq_100M_16384_int
+PBBS-time: 0.544
+PBBS-time: 0.55
+PBBS-time: 0.546
+PBBS-time: 0.545
+PBBS-time: 0.544
+Peak-memory: 2717
+
+
+levelWTRec 48 randomSeq_100M_16384_int
+PBBS-time: 0.51
+PBBS-time: 0.5
+PBBS-time: 0.495
+PBBS-time: 0.495
+PBBS-time: 0.492
+Peak-memory: 2718
+
+
+levelWTRec 56 randomSeq_100M_16384_int
+PBBS-time: 0.455
+PBBS-time: 0.458
+PBBS-time: 0.451
+PBBS-time: 0.455
+PBBS-time: 0.459
+Peak-memory: 2719
+
+
+levelWTRec 64 randomSeq_100M_16384_int
+PBBS-time: 0.436
+PBBS-time: 0.441
+PBBS-time: 0.439
+PBBS-time: 0.435
+PBBS-time: 0.436
+Peak-memory: 2720
+
+
+levelWTRec 72 randomSeq_100M_16384_int
+PBBS-time: 0.435
+PBBS-time: 0.437
+PBBS-time: 0.456
+PBBS-time: 0.454
+PBBS-time: 0.441
+Peak-memory: 2720
+
+
+levelWTRec 80 randomSeq_100M_16384_int
+PBBS-time: 0.447
+PBBS-time: 0.441
+PBBS-time: 0.449
+PBBS-time: 0.443
+PBBS-time: 0.442
+Peak-memory: 2721
+
+
+ddWt 1 randomSeq_100M_16384_int
+PBBS-time: 22
+PBBS-time: 22
+PBBS-time: 22
+PBBS-time: 22
+PBBS-time: 22
+Peak-memory: 2925
+
+
+ddWt 2 randomSeq_100M_16384_int
+PBBS-time: 11.5
+PBBS-time: 11.5
+PBBS-time: 11.5
+PBBS-time: 11.5
+PBBS-time: 11.5
+Peak-memory: 2926
+
+
+ddWt 4 randomSeq_100M_16384_int
+PBBS-time: 5.79
+PBBS-time: 5.79
+PBBS-time: 5.78
+PBBS-time: 5.79
+PBBS-time: 5.79
+Peak-memory: 3117
+
+
+ddWt 8 randomSeq_100M_16384_int
+PBBS-time: 3
+PBBS-time: 2.99
+PBBS-time: 3
+PBBS-time: 3
+PBBS-time: 3
+Peak-memory: 3213
+
+
+ddWt 16 randomSeq_100M_16384_int
+PBBS-time: 1.53
+PBBS-time: 1.53
+PBBS-time: 1.53
+PBBS-time: 1.53
+PBBS-time: 1.53
+Peak-memory: 3263
+
+
+ddWt 24 randomSeq_100M_16384_int
+PBBS-time: 1.11
+PBBS-time: 1.11
+PBBS-time: 1.11
+PBBS-time: 1.11
+PBBS-time: 1.11
+Peak-memory: 3278
+
+
+ddWt 32 randomSeq_100M_16384_int
+PBBS-time: 0.959
+PBBS-time: 0.957
+PBBS-time: 0.954
+PBBS-time: 0.956
+PBBS-time: 0.954
+Peak-memory: 3286
+
+
+ddWt 40 randomSeq_100M_16384_int
+PBBS-time: 0.883
+PBBS-time: 0.885
+PBBS-time: 0.882
+PBBS-time: 0.885
+PBBS-time: 0.885
+Peak-memory: 3288
+
+
+ddWt 48 randomSeq_100M_16384_int
+PBBS-time: 0.769
+PBBS-time: 0.766
+PBBS-time: 0.762
+PBBS-time: 0.769
+PBBS-time: 0.764
+Peak-memory: 3294
+
+
+ddWt 56 randomSeq_100M_16384_int
+PBBS-time: 0.717
+PBBS-time: 0.711
+PBBS-time: 0.716
+PBBS-time: 0.714
+PBBS-time: 0.713
+Peak-memory: 3294
+
+
+ddWt 64 randomSeq_100M_16384_int
+PBBS-time: 0.772
+PBBS-time: 0.765
+PBBS-time: 0.771
+PBBS-time: 0.756
+PBBS-time: 0.775
+Peak-memory: 3304
+
+
+ddWt 72 randomSeq_100M_16384_int
+PBBS-time: 0.771
+PBBS-time: 0.826
+PBBS-time: 0.858
+PBBS-time: 0.847
+PBBS-time: 0.843
+Peak-memory: 3296
+
+
+ddWt 80 randomSeq_100M_16384_int
+PBBS-time: 0.818
+PBBS-time: 0.792
+PBBS-time: 0.79
+PBBS-time: 0.773
+PBBS-time: 0.793
+Peak-memory: 3298
+
+
+serialWT randomSeq_100M_16384_int
+PBBS-time: 11.2
+PBBS-time: 11.2
+PBBS-time: 11.2
+PBBS-time: 11.2
+PBBS-time: 11.2
+Peak-memory: 2710
+
+
+levelWTOpt 1 randomSeq_100M_65536_int
+PBBS-time: 19.5
+PBBS-time: 19.5
+PBBS-time: 19.5
+PBBS-time: 19.5
+PBBS-time: 19.5
+Peak-memory: 3213
+
+
+levelWTOpt 2 randomSeq_100M_65536_int
+PBBS-time: 9.93
+PBBS-time: 9.92
+PBBS-time: 9.93
+PBBS-time: 9.92
+PBBS-time: 9.93
+Peak-memory: 3214
+
+
+levelWTOpt 4 randomSeq_100M_65536_int
+PBBS-time: 5.1
+PBBS-time: 5.09
+PBBS-time: 5.1
+PBBS-time: 5.09
+PBBS-time: 5.1
+Peak-memory: 3214
+
+
+levelWTOpt 8 randomSeq_100M_65536_int
+PBBS-time: 2.68
+PBBS-time: 2.68
+PBBS-time: 2.68
+PBBS-time: 2.68
+PBBS-time: 2.68
+Peak-memory: 3214
+
+
+levelWTOpt 16 randomSeq_100M_65536_int
+PBBS-time: 1.51
+PBBS-time: 1.51
+PBBS-time: 1.51
+PBBS-time: 1.51
+PBBS-time: 1.51
+Peak-memory: 3216
+
+
+levelWTOpt 24 randomSeq_100M_65536_int
+PBBS-time: 1.4
+PBBS-time: 1.4
+PBBS-time: 1.4
+PBBS-time: 1.4
+PBBS-time: 1.4
+Peak-memory: 3216
+
+
+levelWTOpt 32 randomSeq_100M_65536_int
+PBBS-time: 1.26
+PBBS-time: 1.26
+PBBS-time: 1.26
+PBBS-time: 1.26
+PBBS-time: 1.26
+Peak-memory: 3216
+
+
+levelWTOpt 40 randomSeq_100M_65536_int
+PBBS-time: 1.16
+PBBS-time: 1.16
+PBBS-time: 1.15
+PBBS-time: 1.14
+PBBS-time: 1.14
+Peak-memory: 3217
+
+
+levelWTOpt 48 randomSeq_100M_65536_int
+PBBS-time: 1.11
+PBBS-time: 1.11
+PBBS-time: 1.11
+PBBS-time: 1.11
+PBBS-time: 1.11
+Peak-memory: 3218
+
+
+levelWTOpt 56 randomSeq_100M_65536_int
+PBBS-time: 1.04
+PBBS-time: 1.05
+PBBS-time: 1.04
+PBBS-time: 1.04
+PBBS-time: 1.04
+Peak-memory: 3218
+
+
+levelWTOpt 64 randomSeq_100M_65536_int
+PBBS-time: 1.02
+PBBS-time: 1.02
+PBBS-time: 1.01
+PBBS-time: 1.02
+PBBS-time: 1.02
+Peak-memory: 3218
+
+
+levelWTOpt 72 randomSeq_100M_65536_int
+PBBS-time: 1.03
+PBBS-time: 1.05
+PBBS-time: 1.04
+PBBS-time: 1.04
+PBBS-time: 1.05
+Peak-memory: 3219
+
+
+levelWTOpt 80 randomSeq_100M_65536_int
+PBBS-time: 1.09
+PBBS-time: 1.06
+PBBS-time: 1.07
+PBBS-time: 1.07
+PBBS-time: 1.09
+Peak-memory: 3217
+
+
+levelWTOptLight 1 randomSeq_100M_65536_int
+PBBS-time: 21.1
+PBBS-time: 21.1
+PBBS-time: 21.1
+PBBS-time: 21.1
+PBBS-time: 21.1
+Peak-memory: 2832
+
+
+levelWTOptLight 2 randomSeq_100M_65536_int
+PBBS-time: 10.6
+PBBS-time: 10.6
+PBBS-time: 10.6
+PBBS-time: 10.6
+PBBS-time: 10.6
+Peak-memory: 2832
+
+
+levelWTOptLight 4 randomSeq_100M_65536_int
+PBBS-time: 5.31
+PBBS-time: 5.32
+PBBS-time: 5.31
+PBBS-time: 5.32
+PBBS-time: 5.31
+Peak-memory: 2833
+
+
+levelWTOptLight 8 randomSeq_100M_65536_int
+PBBS-time: 2.68
+PBBS-time: 2.68
+PBBS-time: 2.67
+PBBS-time: 2.68
+PBBS-time: 2.67
+Peak-memory: 2833
+
+
+levelWTOptLight 16 randomSeq_100M_65536_int
+PBBS-time: 1.35
+PBBS-time: 1.35
+PBBS-time: 1.35
+PBBS-time: 1.35
+PBBS-time: 1.35
+Peak-memory: 2834
+
+
+levelWTOptLight 24 randomSeq_100M_65536_int
+PBBS-time: 0.923
+PBBS-time: 0.922
+PBBS-time: 0.922
+PBBS-time: 0.921
+PBBS-time: 0.922
+Peak-memory: 2835
+
+
+levelWTOptLight 32 randomSeq_100M_65536_int
+PBBS-time: 0.741
+PBBS-time: 0.741
+PBBS-time: 0.741
+PBBS-time: 0.738
+PBBS-time: 0.74
+Peak-memory: 2835
+
+
+levelWTOptLight 40 randomSeq_100M_65536_int
+PBBS-time: 0.651
+PBBS-time: 0.654
+PBBS-time: 0.652
+PBBS-time: 0.653
+PBBS-time: 0.653
+Peak-memory: 2835
+
+
+levelWTOptLight 48 randomSeq_100M_65536_int
+PBBS-time: 0.595
+PBBS-time: 0.598
+PBBS-time: 0.597
+PBBS-time: 0.596
+PBBS-time: 0.597
+Peak-memory: 2836
+
+
+levelWTOptLight 56 randomSeq_100M_65536_int
+PBBS-time: 0.555
+PBBS-time: 0.557
+PBBS-time: 0.556
+PBBS-time: 0.558
+PBBS-time: 0.559
+Peak-memory: 2837
+
+
+levelWTOptLight 64 randomSeq_100M_65536_int
+PBBS-time: 0.541
+PBBS-time: 0.534
+PBBS-time: 0.53
+PBBS-time: 0.538
+PBBS-time: 0.536
+Peak-memory: 2837
+
+
+levelWTOptLight 72 randomSeq_100M_65536_int
+PBBS-time: 0.556
+PBBS-time: 0.556
+PBBS-time: 0.548
+PBBS-time: 0.557
+PBBS-time: 0.56
+Peak-memory: 2837
+
+
+levelWTOptLight 80 randomSeq_100M_65536_int
+PBBS-time: 0.577
+PBBS-time: 0.598
+PBBS-time: 0.574
+PBBS-time: 0.599
+PBBS-time: 0.583
+Peak-memory: 2839
+
+
+levelWTRec 1 randomSeq_100M_65536_int
+PBBS-time: 20.4
+PBBS-time: 20.4
+PBBS-time: 20.4
+PBBS-time: 20.4
+PBBS-time: 20.4
+Peak-memory: 2832
+
+
+levelWTRec 2 randomSeq_100M_65536_int
+PBBS-time: 10.3
+PBBS-time: 10.2
+PBBS-time: 10.2
+PBBS-time: 10.2
+PBBS-time: 10.2
+Peak-memory: 2832
+
+
+levelWTRec 4 randomSeq_100M_65536_int
+PBBS-time: 5.14
+PBBS-time: 5.14
+PBBS-time: 5.13
+PBBS-time: 5.14
+PBBS-time: 5.13
+Peak-memory: 2833
+
+
+levelWTRec 8 randomSeq_100M_65536_int
+PBBS-time: 2.58
+PBBS-time: 2.58
+PBBS-time: 2.58
+PBBS-time: 2.58
+PBBS-time: 2.58
+Peak-memory: 2834
+
+
+levelWTRec 16 randomSeq_100M_65536_int
+PBBS-time: 1.3
+PBBS-time: 1.3
+PBBS-time: 1.3
+PBBS-time: 1.3
+PBBS-time: 1.3
+Peak-memory: 2835
+
+
+levelWTRec 24 randomSeq_100M_65536_int
+PBBS-time: 0.885
+PBBS-time: 0.886
+PBBS-time: 0.885
+PBBS-time: 0.884
+PBBS-time: 0.885
+Peak-memory: 2836
+
+
+levelWTRec 32 randomSeq_100M_65536_int
+PBBS-time: 0.757
+PBBS-time: 0.757
+PBBS-time: 0.757
+PBBS-time: 0.758
+PBBS-time: 0.756
+Peak-memory: 2836
+
+
+levelWTRec 40 randomSeq_100M_65536_int
+PBBS-time: 0.615
+PBBS-time: 0.62
+PBBS-time: 0.618
+PBBS-time: 0.618
+PBBS-time: 0.619
+Peak-memory: 2838
+
+
+levelWTRec 48 randomSeq_100M_65536_int
+PBBS-time: 0.566
+PBBS-time: 0.565
+PBBS-time: 0.568
+PBBS-time: 0.568
+PBBS-time: 0.568
+Peak-memory: 2838
+
+
+levelWTRec 56 randomSeq_100M_65536_int
+PBBS-time: 0.512
+PBBS-time: 0.507
+PBBS-time: 0.516
+PBBS-time: 0.51
+PBBS-time: 0.516
+Peak-memory: 2840
+
+
+levelWTRec 64 randomSeq_100M_65536_int
+PBBS-time: 0.484
+PBBS-time: 0.482
+PBBS-time: 0.479
+PBBS-time: 0.481
+PBBS-time: 0.483
+Peak-memory: 2840
+
+
+levelWTRec 72 randomSeq_100M_65536_int
+PBBS-time: 0.487
+PBBS-time: 0.492
+PBBS-time: 0.489
+PBBS-time: 0.489
+PBBS-time: 0.489
+Peak-memory: 2841
+
+
+levelWTRec 80 randomSeq_100M_65536_int
+PBBS-time: 0.491
+PBBS-time: 0.487
+PBBS-time: 0.489
+PBBS-time: 0.493
+PBBS-time: 0.489
+Peak-memory: 2842
+
+
+ddWt 1 randomSeq_100M_65536_int
+PBBS-time: 25.1
+PBBS-time: 25.1
+PBBS-time: 25.1
+PBBS-time: 25.1
+PBBS-time: 25.1
+Peak-memory: 3022
+
+
+ddWt 2 randomSeq_100M_65536_int
+PBBS-time: 13.1
+PBBS-time: 13.1
+PBBS-time: 13.1
+PBBS-time: 13.1
+PBBS-time: 13.1
+Peak-memory: 3024
+
+
+ddWt 4 randomSeq_100M_65536_int
+PBBS-time: 6.64
+PBBS-time: 6.64
+PBBS-time: 6.64
+PBBS-time: 6.64
+PBBS-time: 6.64
+Peak-memory: 3216
+
+
+ddWt 8 randomSeq_100M_65536_int
+PBBS-time: 3.39
+PBBS-time: 3.4
+PBBS-time: 3.4
+PBBS-time: 3.4
+PBBS-time: 3.39
+Peak-memory: 3314
+
+
+ddWt 16 randomSeq_100M_65536_int
+PBBS-time: 1.76
+PBBS-time: 1.76
+PBBS-time: 1.76
+PBBS-time: 1.75
+PBBS-time: 1.75
+Peak-memory: 3368
+
+
+ddWt 24 randomSeq_100M_65536_int
+PBBS-time: 1.5
+PBBS-time: 1.49
+PBBS-time: 1.5
+PBBS-time: 1.5
+PBBS-time: 1.5
+Peak-memory: 3378
+
+
+ddWt 32 randomSeq_100M_65536_int
+PBBS-time: 1.1
+PBBS-time: 1.08
+PBBS-time: 1.09
+PBBS-time: 1.09
+PBBS-time: 1.08
+Peak-memory: 3396
+
+
+ddWt 40 randomSeq_100M_65536_int
+PBBS-time: 0.971
+PBBS-time: 0.987
+PBBS-time: 0.984
+PBBS-time: 0.988
+PBBS-time: 0.988
+Peak-memory: 3397
+
+
+ddWt 48 randomSeq_100M_65536_int
+PBBS-time: 0.87
+PBBS-time: 0.865
+PBBS-time: 0.869
+PBBS-time: 0.863
+PBBS-time: 0.866
+Peak-memory: 3397
+
+
+ddWt 56 randomSeq_100M_65536_int
+PBBS-time: 0.826
+PBBS-time: 0.823
+PBBS-time: 0.83
+PBBS-time: 0.82
+PBBS-time: 0.809
+Peak-memory: 3394
+
+
+ddWt 64 randomSeq_100M_65536_int
+PBBS-time: 0.835
+PBBS-time: 0.833
+PBBS-time: 0.926
+PBBS-time: 0.864
+PBBS-time: 0.845
+Peak-memory: 3411
+
+
+ddWt 72 randomSeq_100M_65536_int
+PBBS-time: 0.933
+PBBS-time: 0.94
+PBBS-time: 0.929
+PBBS-time: 0.895
+PBBS-time: 0.936
+Peak-memory: 3411
+
+
+ddWt 80 randomSeq_100M_65536_int
+PBBS-time: 0.898
+PBBS-time: 0.935
+PBBS-time: 0.944
+PBBS-time: 0.901
+PBBS-time: 0.882
+Peak-memory: 3404
+
+
+serialWT randomSeq_100M_65536_int
+PBBS-time: 12.9
+PBBS-time: 12.9
+PBBS-time: 12.9
+PBBS-time: 12.9
+PBBS-time: 12.9
+Peak-memory: 2832
+
+
+levelWTOpt 1 randomSeq_100M_262144_int
+PBBS-time: 22.4
+PBBS-time: 22.4
+PBBS-time: 22.4
+PBBS-time: 22.4
+PBBS-time: 22.4
+Peak-memory: 3165
+
+
+levelWTOpt 2 randomSeq_100M_262144_int
+PBBS-time: 11.5
+PBBS-time: 11.5
+PBBS-time: 11.5
+PBBS-time: 11.5
+PBBS-time: 11.5
+Peak-memory: 3165
+
+
+levelWTOpt 4 randomSeq_100M_262144_int
+PBBS-time: 5.88
+PBBS-time: 5.88
+PBBS-time: 5.9
+PBBS-time: 5.9
+PBBS-time: 5.91
+Peak-memory: 3166
+
+
+levelWTOpt 8 randomSeq_100M_262144_int
+PBBS-time: 3.07
+PBBS-time: 3.06
+PBBS-time: 3.06
+PBBS-time: 3.06
+PBBS-time: 3.06
+Peak-memory: 3166
+
+
+levelWTOpt 16 randomSeq_100M_262144_int
+PBBS-time: 1.78
+PBBS-time: 1.79
+PBBS-time: 1.78
+PBBS-time: 1.78
+PBBS-time: 1.78
+Peak-memory: 3167
+
+
+levelWTOpt 24 randomSeq_100M_262144_int
+PBBS-time: 1.34
+PBBS-time: 1.34
+PBBS-time: 1.34
+PBBS-time: 1.34
+PBBS-time: 1.34
+Peak-memory: 3168
+
+
+levelWTOpt 32 randomSeq_100M_262144_int
+PBBS-time: 1.3
+PBBS-time: 1.3
+PBBS-time: 1.3
+PBBS-time: 1.31
+PBBS-time: 1.31
+Peak-memory: 3168
+
+
+levelWTOpt 40 randomSeq_100M_262144_int
+PBBS-time: 1.31
+PBBS-time: 1.3
+PBBS-time: 1.3
+PBBS-time: 1.31
+PBBS-time: 1.31
+Peak-memory: 3168
+
+
+levelWTOpt 48 randomSeq_100M_262144_int
+PBBS-time: 1.23
+PBBS-time: 1.23
+PBBS-time: 1.23
+PBBS-time: 1.23
+PBBS-time: 1.23
+Peak-memory: 3169
+
+
+levelWTOpt 56 randomSeq_100M_262144_int
+PBBS-time: 1.12
+PBBS-time: 1.11
+PBBS-time: 1.12
+PBBS-time: 1.11
+PBBS-time: 1.11
+Peak-memory: 3170
+
+
+levelWTOpt 64 randomSeq_100M_262144_int
+PBBS-time: 1.14
+PBBS-time: 1.14
+PBBS-time: 1.14
+PBBS-time: 1.15
+PBBS-time: 1.15
+Peak-memory: 3169
+
+
+levelWTOpt 72 randomSeq_100M_262144_int
+PBBS-time: 1.17
+PBBS-time: 1.15
+PBBS-time: 1.15
+PBBS-time: 1.13
+PBBS-time: 1.13
+Peak-memory: 3551
+
+
+levelWTOpt 80 randomSeq_100M_262144_int
+PBBS-time: 1.18
+PBBS-time: 1.19
+PBBS-time: 1.19
+PBBS-time: 1.18
+PBBS-time: 1.21
+Peak-memory: 3171
+
+
+levelWTOptLight 1 randomSeq_100M_262144_int
+PBBS-time: 24.1
+PBBS-time: 24.1
+PBBS-time: 24.1
+PBBS-time: 24.1
+PBBS-time: 24.1
+Peak-memory: 2783
+
+
+levelWTOptLight 2 randomSeq_100M_262144_int
+PBBS-time: 12
+PBBS-time: 12
+PBBS-time: 12
+PBBS-time: 12
+PBBS-time: 12
+Peak-memory: 2784
+
+
+levelWTOptLight 4 randomSeq_100M_262144_int
+PBBS-time: 6.07
+PBBS-time: 6.08
+PBBS-time: 6.07
+PBBS-time: 6.07
+PBBS-time: 6.07
+Peak-memory: 2784
+
+
+levelWTOptLight 8 randomSeq_100M_262144_int
+PBBS-time: 3.05
+PBBS-time: 3.05
+PBBS-time: 3.05
+PBBS-time: 3.05
+PBBS-time: 3.05
+Peak-memory: 2785
+
+
+levelWTOptLight 16 randomSeq_100M_262144_int
+PBBS-time: 1.54
+PBBS-time: 1.55
+PBBS-time: 1.55
+PBBS-time: 1.55
+PBBS-time: 1.54
+Peak-memory: 2786
+
+
+levelWTOptLight 24 randomSeq_100M_262144_int
+PBBS-time: 1.05
+PBBS-time: 1.05
+PBBS-time: 1.05
+PBBS-time: 1.05
+PBBS-time: 1.06
+Peak-memory: 2786
+
+
+levelWTOptLight 32 randomSeq_100M_262144_int
+PBBS-time: 0.844
+PBBS-time: 0.843
+PBBS-time: 0.844
+PBBS-time: 0.843
+PBBS-time: 0.844
+Peak-memory: 2786
+
+
+levelWTOptLight 40 randomSeq_100M_262144_int
+PBBS-time: 0.761
+PBBS-time: 0.762
+PBBS-time: 0.762
+PBBS-time: 0.762
+PBBS-time: 0.763
+Peak-memory: 2787
+
+
+levelWTOptLight 48 randomSeq_100M_262144_int
+PBBS-time: 0.663
+PBBS-time: 0.664
+PBBS-time: 0.664
+PBBS-time: 0.663
+PBBS-time: 0.664
+Peak-memory: 2788
+
+
+levelWTOptLight 56 randomSeq_100M_262144_int
+PBBS-time: 0.626
+PBBS-time: 0.631
+PBBS-time: 0.632
+PBBS-time: 0.631
+PBBS-time: 0.628
+Peak-memory: 2789
+
+
+levelWTOptLight 64 randomSeq_100M_262144_int
+PBBS-time: 0.6
+PBBS-time: 0.599
+PBBS-time: 0.598
+PBBS-time: 0.595
+PBBS-time: 0.6
+Peak-memory: 2790
+
+
+levelWTOptLight 72 randomSeq_100M_262144_int
+PBBS-time: 0.614
+PBBS-time: 0.615
+PBBS-time: 0.625
+PBBS-time: 0.621
+PBBS-time: 0.622
+Peak-memory: 2789
+
+
+levelWTOptLight 80 randomSeq_100M_262144_int
+PBBS-time: 0.638
+PBBS-time: 0.643
+PBBS-time: 0.638
+PBBS-time: 0.622
+PBBS-time: 0.642
+Peak-memory: 2790
+
+
+levelWTRec 1 randomSeq_100M_262144_int
+PBBS-time: 23.2
+PBBS-time: 23.2
+PBBS-time: 23.2
+PBBS-time: 23.2
+PBBS-time: 23.2
+Peak-memory: 2783
+
+
+levelWTRec 2 randomSeq_100M_262144_int
+PBBS-time: 11.7
+PBBS-time: 11.7
+PBBS-time: 11.7
+PBBS-time: 11.7
+PBBS-time: 11.7
+Peak-memory: 2784
+
+
+levelWTRec 4 randomSeq_100M_262144_int
+PBBS-time: 5.85
+PBBS-time: 5.85
+PBBS-time: 5.85
+PBBS-time: 5.85
+PBBS-time: 5.85
+Peak-memory: 2785
+
+
+levelWTRec 8 randomSeq_100M_262144_int
+PBBS-time: 2.94
+PBBS-time: 2.94
+PBBS-time: 2.94
+PBBS-time: 2.94
+PBBS-time: 2.94
+Peak-memory: 2785
+
+
+levelWTRec 16 randomSeq_100M_262144_int
+PBBS-time: 1.49
+PBBS-time: 1.48
+PBBS-time: 1.49
+PBBS-time: 1.49
+PBBS-time: 1.49
+Peak-memory: 2787
+
+
+levelWTRec 24 randomSeq_100M_262144_int
+PBBS-time: 1
+PBBS-time: 1.01
+PBBS-time: 1.01
+PBBS-time: 1
+PBBS-time: 1
+Peak-memory: 2788
+
+
+levelWTRec 32 randomSeq_100M_262144_int
+PBBS-time: 0.797
+PBBS-time: 0.794
+PBBS-time: 0.794
+PBBS-time: 0.794
+PBBS-time: 0.794
+Peak-memory: 2788
+
+
+levelWTRec 40 randomSeq_100M_262144_int
+PBBS-time: 0.738
+PBBS-time: 0.739
+PBBS-time: 0.735
+PBBS-time: 0.738
+PBBS-time: 0.739
+Peak-memory: 2789
+
+
+levelWTRec 48 randomSeq_100M_262144_int
+PBBS-time: 0.619
+PBBS-time: 0.619
+PBBS-time: 0.616
+PBBS-time: 0.617
+PBBS-time: 0.618
+Peak-memory: 2791
+
+
+levelWTRec 56 randomSeq_100M_262144_int
+PBBS-time: 0.576
+PBBS-time: 0.575
+PBBS-time: 0.574
+PBBS-time: 0.574
+PBBS-time: 0.568
+Peak-memory: 2792
+
+
+levelWTRec 64 randomSeq_100M_262144_int
+PBBS-time: 0.536
+PBBS-time: 0.542
+PBBS-time: 0.538
+PBBS-time: 0.541
+PBBS-time: 0.539
+Peak-memory: 2791
+
+
+levelWTRec 72 randomSeq_100M_262144_int
+PBBS-time: 0.541
+PBBS-time: 0.546
+PBBS-time: 0.551
+PBBS-time: 0.537
+PBBS-time: 0.547
+Peak-memory: 2793
+
+
+levelWTRec 80 randomSeq_100M_262144_int
+PBBS-time: 0.539
+PBBS-time: 0.545
+PBBS-time: 0.533
+PBBS-time: 0.559
+PBBS-time: 0.547
+Peak-memory: 2794
+
+
+ddWt 1 randomSeq_100M_262144_int
+PBBS-time: 28.3
+PBBS-time: 28.3
+PBBS-time: 28.3
+PBBS-time: 28.3
+PBBS-time: 28.3
+Peak-memory: 3165
+
+
+ddWt 2 randomSeq_100M_262144_int
+PBBS-time: 14.5
+PBBS-time: 14.5
+PBBS-time: 14.5
+PBBS-time: 14.5
+PBBS-time: 14.5
+Peak-memory: 3168
+
+
+ddWt 4 randomSeq_100M_262144_int
+PBBS-time: 7.45
+PBBS-time: 7.47
+PBBS-time: 7.47
+PBBS-time: 7.47
+PBBS-time: 7.48
+Peak-memory: 3365
+
+
+ddWt 8 randomSeq_100M_262144_int
+PBBS-time: 3.85
+PBBS-time: 3.86
+PBBS-time: 3.87
+PBBS-time: 3.86
+PBBS-time: 3.87
+Peak-memory: 3472
+
+
+ddWt 16 randomSeq_100M_262144_int
+PBBS-time: 2.01
+PBBS-time: 2
+PBBS-time: 2.01
+PBBS-time: 2
+PBBS-time: 2
+Peak-memory: 3545
+
+
+ddWt 24 randomSeq_100M_262144_int
+PBBS-time: 1.44
+PBBS-time: 1.43
+PBBS-time: 1.43
+PBBS-time: 1.45
+PBBS-time: 1.44
+Peak-memory: 3583
+
+
+ddWt 32 randomSeq_100M_262144_int
+PBBS-time: 1.29
+PBBS-time: 1.29
+PBBS-time: 1.29
+PBBS-time: 1.29
+PBBS-time: 1.29
+Peak-memory: 3721
+
+
+ddWt 40 randomSeq_100M_262144_int
+PBBS-time: 1.2
+PBBS-time: 1.2
+PBBS-time: 1.2
+PBBS-time: 1.22
+PBBS-time: 1.2
+Peak-memory: 3860
+
+
+ddWt 48 randomSeq_100M_262144_int
+PBBS-time: 1.05
+PBBS-time: 1.06
+PBBS-time: 1.06
+PBBS-time: 1.05
+PBBS-time: 1.06
+Peak-memory: 4141
+
+
+ddWt 56 randomSeq_100M_262144_int
+PBBS-time: 1
+PBBS-time: 0.987
+PBBS-time: 0.991
+PBBS-time: 0.998
+PBBS-time: 1.01
+Peak-memory: 4230
+
+
+ddWt 64 randomSeq_100M_262144_int
+PBBS-time: 1.22
+PBBS-time: 1.14
+PBBS-time: 1.06
+PBBS-time: 1.08
+PBBS-time: 1.12
+Peak-memory: 4429
+
+
+ddWt 72 randomSeq_100M_262144_int
+PBBS-time: 1.19
+PBBS-time: 1.16
+PBBS-time: 1.1
+PBBS-time: 1.11
+PBBS-time: 1.13
+Peak-memory: 4671
+
+
+ddWt 80 randomSeq_100M_262144_int
+PBBS-time: 1.16
+PBBS-time: 1.1
+PBBS-time: 1.1
+PBBS-time: 1.17
+PBBS-time: 1.14
+Peak-memory: 4759
+
+
+serialWT randomSeq_100M_262144_int
+PBBS-time: 14.5
+PBBS-time: 14.5
+PBBS-time: 14.5
+PBBS-time: 14.5
+PBBS-time: 14.5
+Peak-memory: 2783
+
+
+levelWTOpt 1 randomSeq_100M_1048576_int
+PBBS-time: 24.3
+PBBS-time: 24.3
+PBBS-time: 24.3
+PBBS-time: 24.3
+PBBS-time: 24.3
+Peak-memory: 3473
+
+
+levelWTOpt 2 randomSeq_100M_1048576_int
+PBBS-time: 12.7
+PBBS-time: 12.7
+PBBS-time: 12.7
+PBBS-time: 12.7
+PBBS-time: 12.7
+Peak-memory: 3473
+
+
+levelWTOpt 4 randomSeq_100M_1048576_int
+PBBS-time: 6.29
+PBBS-time: 6.28
+PBBS-time: 6.28
+PBBS-time: 6.28
+PBBS-time: 6.28
+Peak-memory: 3474
+
+
+levelWTOpt 8 randomSeq_100M_1048576_int
+PBBS-time: 3.29
+PBBS-time: 3.3
+PBBS-time: 3.28
+PBBS-time: 3.28
+PBBS-time: 3.28
+Peak-memory: 3474
+
+
+levelWTOpt 16 randomSeq_100M_1048576_int
+PBBS-time: 1.85
+PBBS-time: 1.86
+PBBS-time: 1.86
+PBBS-time: 1.85
+PBBS-time: 1.86
+Peak-memory: 3475
+
+
+levelWTOpt 24 randomSeq_100M_1048576_int
+PBBS-time: 1.49
+PBBS-time: 1.49
+PBBS-time: 1.49
+PBBS-time: 1.49
+PBBS-time: 1.49
+Peak-memory: 3476
+
+
+levelWTOpt 32 randomSeq_100M_1048576_int
+PBBS-time: 1.42
+PBBS-time: 1.42
+PBBS-time: 1.42
+PBBS-time: 1.42
+PBBS-time: 1.42
+Peak-memory: 3476
+
+
+levelWTOpt 40 randomSeq_100M_1048576_int
+PBBS-time: 1.25
+PBBS-time: 1.25
+PBBS-time: 1.25
+PBBS-time: 1.25
+PBBS-time: 1.25
+Peak-memory: 3476
+
+
+levelWTOpt 48 randomSeq_100M_1048576_int
+PBBS-time: 1.21
+PBBS-time: 1.21
+PBBS-time: 1.22
+PBBS-time: 1.21
+PBBS-time: 1.21
+Peak-memory: 3477
+
+
+levelWTOpt 56 randomSeq_100M_1048576_int
+PBBS-time: 1.2
+PBBS-time: 1.2
+PBBS-time: 1.2
+PBBS-time: 1.2
+PBBS-time: 1.2
+Peak-memory: 3478
+
+
+levelWTOpt 64 randomSeq_100M_1048576_int
+PBBS-time: 1.18
+PBBS-time: 1.19
+PBBS-time: 1.2
+PBBS-time: 1.2
+PBBS-time: 1.21
+Peak-memory: 3476
+
+
+levelWTOpt 72 randomSeq_100M_1048576_int
+PBBS-time: 1.21
+PBBS-time: 1.21
+PBBS-time: 1.22
+PBBS-time: 1.22
+PBBS-time: 1.2
+Peak-memory: 3478
+
+
+levelWTOpt 80 randomSeq_100M_1048576_int
+PBBS-time: 1.26
+PBBS-time: 1.25
+PBBS-time: 1.23
+PBBS-time: 1.24
+PBBS-time: 1.22
+Peak-memory: 3479
+
+
+levelWTOptLight 1 randomSeq_100M_1048576_int
+PBBS-time: 27.9
+PBBS-time: 27.8
+PBBS-time: 27.7
+PBBS-time: 27.7
+PBBS-time: 27.6
+Peak-memory: 3092
+
+
+levelWTOptLight 2 randomSeq_100M_1048576_int
+PBBS-time: 14.1
+PBBS-time: 14.1
+PBBS-time: 14.1
+PBBS-time: 14.1
+PBBS-time: 14.1
+Peak-memory: 3092
+
+
+levelWTOptLight 4 randomSeq_100M_1048576_int
+PBBS-time: 7.05
+PBBS-time: 7.04
+PBBS-time: 7.04
+PBBS-time: 7.04
+PBBS-time: 7.04
+Peak-memory: 3092
+
+
+levelWTOptLight 8 randomSeq_100M_1048576_int
+PBBS-time: 3.55
+PBBS-time: 3.54
+PBBS-time: 3.55
+PBBS-time: 3.55
+PBBS-time: 3.54
+Peak-memory: 3093
+
+
+levelWTOptLight 16 randomSeq_100M_1048576_int
+PBBS-time: 1.81
+PBBS-time: 1.81
+PBBS-time: 1.81
+PBBS-time: 1.81
+PBBS-time: 1.81
+Peak-memory: 3094
+
+
+levelWTOptLight 24 randomSeq_100M_1048576_int
+PBBS-time: 1.36
+PBBS-time: 1.35
+PBBS-time: 1.36
+PBBS-time: 1.36
+PBBS-time: 1.36
+Peak-memory: 3238
+
+
+levelWTOptLight 32 randomSeq_100M_1048576_int
+PBBS-time: 0.984
+PBBS-time: 0.985
+PBBS-time: 0.985
+PBBS-time: 0.985
+PBBS-time: 0.983
+Peak-memory: 3095
+
+
+levelWTOptLight 40 randomSeq_100M_1048576_int
+PBBS-time: 0.872
+PBBS-time: 0.874
+PBBS-time: 0.875
+PBBS-time: 0.875
+PBBS-time: 0.874
+Peak-memory: 3096
+
+
+levelWTOptLight 48 randomSeq_100M_1048576_int
+PBBS-time: 0.766
+PBBS-time: 0.769
+PBBS-time: 0.769
+PBBS-time: 0.77
+PBBS-time: 0.767
+Peak-memory: 3095
+
+
+levelWTOptLight 56 randomSeq_100M_1048576_int
+PBBS-time: 0.718
+PBBS-time: 0.72
+PBBS-time: 0.72
+PBBS-time: 0.72
+PBBS-time: 0.719
+Peak-memory: 3097
+
+
+levelWTOptLight 64 randomSeq_100M_1048576_int
+PBBS-time: 0.686
+PBBS-time: 0.687
+PBBS-time: 0.687
+PBBS-time: 0.69
+PBBS-time: 0.687
+Peak-memory: 3098
+
+
+levelWTOptLight 72 randomSeq_100M_1048576_int
+PBBS-time: 0.69
+PBBS-time: 0.716
+PBBS-time: 0.689
+PBBS-time: 0.689
+PBBS-time: 0.706
+Peak-memory: 3098
+
+
+levelWTOptLight 80 randomSeq_100M_1048576_int
+PBBS-time: 0.722
+PBBS-time: 0.719
+PBBS-time: 0.719
+PBBS-time: 0.732
+PBBS-time: 0.712
+Peak-memory: 3098
+
+
+levelWTRec 1 randomSeq_100M_1048576_int
+PBBS-time: 26.7
+PBBS-time: 26.7
+PBBS-time: 26.7
+PBBS-time: 26.7
+PBBS-time: 26.8
+Peak-memory: 2853
+
+
+levelWTRec 2 randomSeq_100M_1048576_int
+PBBS-time: 13.5
+PBBS-time: 13.5
+PBBS-time: 13.5
+PBBS-time: 13.5
+PBBS-time: 13.5
+Peak-memory: 2854
+
+
+levelWTRec 4 randomSeq_100M_1048576_int
+PBBS-time: 6.77
+PBBS-time: 6.79
+PBBS-time: 6.79
+PBBS-time: 6.79
+PBBS-time: 6.78
+Peak-memory: 2854
+
+
+levelWTRec 8 randomSeq_100M_1048576_int
+PBBS-time: 3.41
+PBBS-time: 3.41
+PBBS-time: 3.41
+PBBS-time: 3.41
+PBBS-time: 3.41
+Peak-memory: 2855
+
+
+levelWTRec 16 randomSeq_100M_1048576_int
+PBBS-time: 1.72
+PBBS-time: 1.72
+PBBS-time: 1.72
+PBBS-time: 1.72
+PBBS-time: 1.72
+Peak-memory: 2856
+
+
+levelWTRec 24 randomSeq_100M_1048576_int
+PBBS-time: 1.17
+PBBS-time: 1.17
+PBBS-time: 1.17
+PBBS-time: 1.16
+PBBS-time: 1.16
+Peak-memory: 2858
+
+
+levelWTRec 32 randomSeq_100M_1048576_int
+PBBS-time: 0.917
+PBBS-time: 0.916
+PBBS-time: 0.917
+PBBS-time: 0.922
+PBBS-time: 0.919
+Peak-memory: 2858
+
+
+levelWTRec 40 randomSeq_100M_1048576_int
+PBBS-time: 0.826
+PBBS-time: 0.824
+PBBS-time: 0.822
+PBBS-time: 0.826
+PBBS-time: 0.823
+Peak-memory: 2860
+
+
+levelWTRec 48 randomSeq_100M_1048576_int
+PBBS-time: 0.709
+PBBS-time: 0.706
+PBBS-time: 0.705
+PBBS-time: 0.708
+PBBS-time: 0.708
+Peak-memory: 2860
+
+
+levelWTRec 56 randomSeq_100M_1048576_int
+PBBS-time: 0.649
+PBBS-time: 0.649
+PBBS-time: 0.655
+PBBS-time: 0.653
+PBBS-time: 0.653
+Peak-memory: 2860
+
+
+levelWTRec 64 randomSeq_100M_1048576_int
+PBBS-time: 0.612
+PBBS-time: 0.612
+PBBS-time: 0.608
+PBBS-time: 0.614
+PBBS-time: 0.611
+Peak-memory: 2863
+
+
+levelWTRec 72 randomSeq_100M_1048576_int
+PBBS-time: 0.618
+PBBS-time: 0.611
+PBBS-time: 0.613
+PBBS-time: 0.617
+PBBS-time: 0.619
+Peak-memory: 2863
+
+
+levelWTRec 80 randomSeq_100M_1048576_int
+PBBS-time: 0.613
+PBBS-time: 0.611
+PBBS-time: 0.617
+PBBS-time: 0.615
+PBBS-time: 0.615
+Peak-memory: 2864
+
+
+ddWt 1 randomSeq_100M_1048576_int
+PBBS-time: 31.9
+PBBS-time: 31.5
+PBBS-time: 31.5
+PBBS-time: 31.5
+PBBS-time: 31.5
+Peak-memory: 3616
+
+
+ddWt 2 randomSeq_100M_1048576_int
+PBBS-time: 16.4
+PBBS-time: 16.4
+PBBS-time: 16.4
+PBBS-time: 16.4
+PBBS-time: 16.4
+Peak-memory: 3247
+
+
+ddWt 4 randomSeq_100M_1048576_int
+PBBS-time: 8.48
+PBBS-time: 8.47
+PBBS-time: 8.47
+PBBS-time: 8.47
+PBBS-time: 8.43
+Peak-memory: 3461
+
+
+ddWt 8 randomSeq_100M_1048576_int
+PBBS-time: 4.42
+PBBS-time: 4.42
+PBBS-time: 4.43
+PBBS-time: 4.45
+PBBS-time: 4.45
+Peak-memory: 3733
+
+
+ddWt 16 randomSeq_100M_1048576_int
+PBBS-time: 2.53
+PBBS-time: 2.58
+PBBS-time: 2.5
+PBBS-time: 2.49
+PBBS-time: 2.48
+Peak-memory: 4518
+
+
+ddWt 24 randomSeq_100M_1048576_int
+PBBS-time: 1.83
+PBBS-time: 1.84
+PBBS-time: 1.81
+PBBS-time: 1.85
+PBBS-time: 1.83
+Peak-memory: 5251
+
+
+ddWt 32 randomSeq_100M_1048576_int
+PBBS-time: 1.65
+PBBS-time: 1.67
+PBBS-time: 1.66
+PBBS-time: 1.64
+PBBS-time: 1.65
+Peak-memory: 5941
+
+
+ddWt 40 randomSeq_100M_1048576_int
+PBBS-time: 1.62
+PBBS-time: 1.62
+PBBS-time: 1.64
+PBBS-time: 1.64
+PBBS-time: 1.62
+Peak-memory: 6914
+
+
+ddWt 48 randomSeq_100M_1048576_int
+PBBS-time: 1.51
+PBBS-time: 1.55
+PBBS-time: 1.54
+PBBS-time: 1.6
+PBBS-time: 1.52
+Peak-memory: 7631
+
+
+ddWt 56 randomSeq_100M_1048576_int
+PBBS-time: 1.52
+PBBS-time: 1.45
+PBBS-time: 1.47
+PBBS-time: 1.5
+PBBS-time: 1.48
+Peak-memory: 8431
+
+
+ddWt 64 randomSeq_100M_1048576_int
+PBBS-time: 1.6
+PBBS-time: 1.63
+PBBS-time: 1.62
+PBBS-time: 1.61
+PBBS-time: 1.7
+Peak-memory: 9320
+
+
+ddWt 72 randomSeq_100M_1048576_int
+PBBS-time: 1.63
+PBBS-time: 1.65
+PBBS-time: 1.65
+PBBS-time: 1.64
+PBBS-time: 1.67
+Peak-memory: 9763
+
+
+ddWt 80 randomSeq_100M_1048576_int
+PBBS-time: 1.84
+PBBS-time: 1.79
+PBBS-time: 1.79
+PBBS-time: 1.87
+PBBS-time: 1.77
+Peak-memory: 10305
+
+
+serialWT randomSeq_100M_1048576_int
+PBBS-time: 16.1
+PBBS-time: 16.1
+PBBS-time: 16.1
+PBBS-time: 16.1
+PBBS-time: 16.1
+Peak-memory: 3091
+
+
