@@ -1,6 +1,15 @@
 #!/usr/bin/python
 
 import sys
+import math
+import collections
+
+def round_sigfigs(num, sig_figs = 2):
+    if num != 0:
+        return round(num, -int(math.floor(math.log10(abs(num))) - (sig_figs - 1)))
+    else:
+        return 0  # Can't take the log of 0
+
 
 input_file_name = sys.argv[1]
 
@@ -69,7 +78,13 @@ with  open(input_file_name, "r") as ins:
 write_memory = True
 line = "file & "
 serial_algo = ["serialDivsufsort", "serialKS"]
-algos.remove("parallelRangeLight")
+for algo in algos:
+    if algo not in serial_algo:
+        for p in sorted(times[algo]["english"]):
+            base = float(times["serialDivsufsort"]["english"][1])
+            #print "(%s,%s)" % (p,str(base / float(times[algo]["english"][p])))
+        #print ""
+#exit()
 for algo in algos:
     if algo in serial_algo:
         line += makeShort(algo) + " & "
@@ -77,7 +92,7 @@ for algo in algos:
         if write_memory:
             line += makeShort(algo) + " & "
         else:
-            line += makeShort(algo) + "($T_1$) & " + makeShort(algo) + "($T_{40}$) & "
+            line += makeShort(algo) + "($T_1$) & " + makeShort(algo) + "($T_{40}$) & S & "
 print line[:-2] + "\\\\"
 print "\\midrule"
 for fname in file_names:
@@ -90,8 +105,14 @@ for fname in file_names:
                 line += times[algo][fname][1] + " & "
         else:
             if write_memory:
-                line += getMin(memory[algo][fname].values()) + " & "
+                line += memory[algo][fname][64] + " & "
             else:
-                line += times[algo][fname][1] + " & " + getMin(times[algo][fname].values()) + " & "
+                seq = float(times[algo][fname][1])
+                par = float(getMin(times[algo][fname].values()))
+                speedup = seq / par
+                seq = round_sigfigs(seq)
+                par = round_sigfigs(par)
+                speedup = round_sigfigs(speedup)
+                line += str(seq) + " & " + str(par) + " & " + str(speedup) + " & "
     print line[:-2] + "\\\\"
 print "\\bottomrule"

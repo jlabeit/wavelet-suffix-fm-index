@@ -44,4 +44,5 @@ typedef uintT symbol;
 typedef unsigned char symbol;
 #endif
 
-pair<WTnode*,long*> WT(symbol* s, uintT n, uintT sigma);
+//pair<WTnode*,long*> WT(symbol* s, uintT n, uintT sigma);
+void FMIndex(symbol* s, int32_t* data, long n);

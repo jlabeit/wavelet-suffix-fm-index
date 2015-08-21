@@ -33,9 +33,10 @@
 using namespace benchIO;
 
 
-//void timeWT(symbol* s, long n, int rounds, char* outFile, int check) {
-void timeWT(char* input_file, int rounds, char* outFile, int check) {
-/*
+void timeWT(symbol* s, long n, int rounds, char* outFile, int check) {
+//void timeWT(char* input_file, int rounds, char* outFile, int check) {
+
+  /*
   //sigma
   long k = 1 + sequence::reduce(s, n, utils::maxF<symbol>());
   int* A = newA(int,k+1);
@@ -58,19 +59,15 @@ void timeWT(char* input_file, int rounds, char* outFile, int check) {
   for (uint64_t i = 0; i < n; i++) {
 	input[i] = s[i];
   }
-  string input_file = "@input.sdsl"; 
-  sdsl::store_to_file(input, input_file);
-  */
-  {
-	  sdsl::csa_wt<> csa;
-	  sdsl::construct(csa, input_file,1);
-  }
+*/  
+  int32_t *data = newA(int32_t, n); 
+  FMIndex(s,data, n); 
   for (int i=0; i < rounds; i++) {
-    sdsl::csa_wt<> csa;
     startTime();
-    sdsl::construct(csa, input_file, 1);
+    FMIndex(s,data,n);
     nextTimeN();
   }
+  free(data);
   cout<<"Peak-memory: " << getPeakRSS() / (1024*1024)<< endl;
 
   if(check) {
@@ -90,22 +87,22 @@ int parallel_main(int argc, char* argv[]) {
   bool binary = P.getOption("-b");
   int check = P.getOptionIntValue("-c",0);
   if(binary) {
-    //ifstream in(iFile,ifstream::in |ios::binary);
-    //in.seekg(0,ios::end);
-    //long n = in.tellg();
-    //in.seekg(0);
-    //char* s = newA(char, n);
-    //in.read(s,n);
-  //  in.close(); 
-    //timeWT((symbol*)s, n/sizeof(symbol), rounds, oFile, check);
-    timeWT(iFile, rounds, oFile, check);
+    ifstream in(iFile,ifstream::in |ios::binary);
+    in.seekg(0,ios::end);
+    long n = in.tellg();
+    in.seekg(0);
+    char* s = newA(char, n);
+    in.read(s,n);
+    in.close(); 
+    timeWT((symbol*)s, n/sizeof(symbol), rounds, oFile, check);
+    //timeWT(iFile, rounds, oFile, check);
 //    free(s);
   }
   else {
-    //_seq<char> S = readStringFromFile(iFile);
-    //uintT n = S.n;
-    //timeWT((unsigned char*) S.A, n, rounds, oFile, check);
-    timeWT(iFile, rounds, oFile, check);
-    //S.del();
+    _seq<char> S = readStringFromFile(iFile);
+    uintT n = S.n;
+    timeWT((unsigned char*) S.A, n, rounds, oFile, check);
+    //timeWT(iFile, rounds, oFile, check);
+    S.del();
   }
 }
