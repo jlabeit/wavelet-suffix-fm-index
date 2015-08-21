@@ -29,14 +29,6 @@
 
 //#include <sdsl/wt_int.hpp>
 //typedef ulong intOffset;
-typedef uintT intOffset;
-
-struct WTnode {
-  intOffset bitmapPtr; uintT length;
-#ifdef POINTERS
-  uintT parent, leftChild, rightChild;
-#endif
-};
 
 #ifdef INT
 typedef uintT symbol;
