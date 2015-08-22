@@ -1,34 +1,34 @@
-fm-index sources
+fm-index-ser sources
 PBBS-time: 45.3
 PBBS-time: 45.2
 PBBS-time: 45.3
 Peak-memory: 1442
 
-fm-index pitches
+fm-index-ser pitches
 PBBS-time: 10.7
 PBBS-time: 10.7
 PBBS-time: 10.7
 Peak-memory: 384
 
-fm-index proteins
+fm-index-ser proteins
 PBBS-time: 415
 PBBS-time: 415
 PBBS-time: 415
 Peak-memory: 7791
 
-fm-index dna
+fm-index-ser dna
 PBBS-time: 114
 PBBS-time: 114
 PBBS-time: 114
 Peak-memory: 2493
 
-fm-index english
+fm-index-ser english
 PBBS-time: 362
 PBBS-time: 362
 PBBS-time: 362
 Peak-memory: 7138
 
-fm-index dblp.xml
+fm-index-ser dblp.xml
 PBBS-time: 72.2
 PBBS-time: 72.1
 PBBS-time: 72.4
