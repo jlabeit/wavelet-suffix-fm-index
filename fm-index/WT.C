@@ -19,6 +19,7 @@
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#include <divsufsort.h>
 #include "WT.h"
 #include "parallel.h"
 #include "utils.h"
@@ -31,8 +32,7 @@
 
 void FMIndex(symbol* s, int32_t* data, long n) {
 	// Calculate SA
-	divsufsort<int32_t>(s, data, n);	
-        //divsufsort(s, (int32_t*)data, n);
+    divsufsort(s, (int32_t*)data, n);
 	sdsl::int_vector<sizeof(symbol)*8> bwt(n);
 	// Calculate BWT
 	int32_t to_add[2] = {(int32_t)-1,(int32_t)n-1};

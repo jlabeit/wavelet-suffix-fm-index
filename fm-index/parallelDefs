@@ -1,4 +1,4 @@
-LIBS = -lsdsl -ldivsufsort -ldivsufsort64
+LIBS = -lsdsl -ldivsufsort -llibprange
 ifdef LONG
 INTT = -DLONG
 endif
