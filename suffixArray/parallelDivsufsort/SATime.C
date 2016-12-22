@@ -23,6 +23,7 @@
 //#define LONG
 #include <iostream>
 #include <algorithm>
+#include <divsufsort.h>
 #include "gettime.h"
 #include "getmemory.h"
 #include "parallel.h"
@@ -30,7 +31,6 @@
 #include "parseCommandLine.h"
 #include "SA.h"
 #include "sequence.h"
-#include "divsufsort_private.h"
 
 using namespace std;
 using namespace benchIO;
@@ -39,10 +39,12 @@ void timeSuffixArray(unsigned char* s, long n, int rounds, char* outFile) {
   intT* R;
   R = (intT*)malloc(sizeof(uintT)*n);
   //R = suffixArray(s, n); 
-  divsufsort(s, R, n);
+  divsufsort((sauchar_t*) s, R, n);
   for (int i=0; i < rounds; i++) {
     //R = suffixArray(s, n);
-    divsufsort(s, R, n);
+    startTime();
+    divsufsort((sauchar_t*)s, R, n);
+    nextTimeN();
   }
   cout<<"Peak-memory: " <<getPeakRSS() / (1024*1024) << endl;
   cout << endl;

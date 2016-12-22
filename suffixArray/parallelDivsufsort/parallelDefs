@@ -1,4 +1,4 @@
-LIBS = -lsdsl
+LIBS = -ldivsufsort -llibprange
 ifdef LONG
 INTT = -DLONG
 endif
@@ -11,7 +11,7 @@ PLFLAGS = -L ~/lib -fopenmp
 else ifdef GCILK
 PCC = g++
 PCFLAGS = -std=c++14 -I ~/include -lcilkrts -fcilkplus -mcx16 -O2 -DCILKP -DMCX16 $(INTT)
-PLFLAGS = -L ~/lib -lcilkrts -fcilkplus
+PLFLAGS = -L ~/lib   -lcilkrts -fcilkplus
 
 else ifdef CILK
 PCC = cilk++
