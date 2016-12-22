@@ -105,7 +105,7 @@ void timeWT(symbol* s, long n, int rounds, char* outFile, int check) {
   sdsl::select_support_mcl<1> rs;
   for (int i=0; i < rounds; i++) {
     startTime();
-    sdsl::util::init_support(rs, wt.get_m_tree());
+    sdsl::util::init_support(rs, &wt.tree);
     nextTimeN();
   }
   cout<<"Peak-memory: " << getPeakRSS() / (1024*1024)<< endl;

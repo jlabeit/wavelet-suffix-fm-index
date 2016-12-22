@@ -97,7 +97,7 @@ pair<WTnode*,long*> WT(symbol* s, uintT n, uintT sigma) {
     swap(offsets,offsets2);
     swap(s1,s2);
   }
-  for (int i = 0; i < ((long)n*levels+63)/64; ++i) printf("%d\n", wt[i]);
+  //for (int i = 0; i < ((long)n*levels+63)/64; ++i) printf("%d\n", wt[i]);
   free(s1); free(s2); free(offsets); free(offsets2);
   return make_pair(nodes,wt);
 }

@@ -143,7 +143,7 @@ void brokenCilk(uintT nSegs, seg *segments, intpair *C, uintT offset, uintT n, u
 
 uintT* suffixArrayInternal(unsigned char* ss, long n) { 
   // following line is used to fool icpc into starting the scheduler
-  if (n < 0) cilk_spawn printf("ouch");
+  //if (n < 0) cilk_spawn printf("ouch");
   //for (int i=0; i < n; i++) cout << "str[" << i << "] = " << s[i] << endl;
   intpair *C = newA(intpair,n);
   uintT *ranks = newA(uintT,n);

@@ -108,12 +108,12 @@ class select_support_mcl : public select_support
 template<uint8_t t_b, uint8_t t_pat_len>
 select_support_mcl<t_b,t_pat_len>::select_support_mcl(const bit_vector* f_v):select_support(f_v)
 {
-        init_slow(v);
+        init_slow(f_v);
 	return;
-    if (t_pat_len>1 or(v!=nullptr and  v->size() < 100000))
-        init_slow(v);
+    if (t_pat_len>1 or(f_v!=nullptr and  f_v->size() < 100000))
+        init_slow(f_v);
     else
-        init_fast(v);
+        init_fast(f_v);
     return;
 }
 
