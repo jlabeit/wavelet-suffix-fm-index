@@ -1,7 +1,7 @@
 # Divsufsort
 mkdir libdivsufsort/build
 cd libdivsufsort/build
-cmake -DCMAKE_INSTALL_PREFIX=.. ..
+cmake -DCMAKE_INSTALL_PREFIX=..  -DBUILD_DIVSUFSORT64=ON ..
 make
 make install
 cd ../../
