@@ -239,7 +239,7 @@ pair<uintT*,uintT*> suffixArrayRec(uintT* s, long n, long K, bool findLCPs) {
 
 pair<uintT*,uintT*> suffixArray(unsigned char* s, long n, bool findLCPs) {
   // following line is used to fool icpc into starting the scheduler
-  if (n < 0) cilk_spawn printf("ouch");
+  //if (n < 0) cilk_spawn printf("ouch");
   uintT *ss = newA(uintT, n+3); 
   ss[n] = ss[n+1] = ss[n+2] = 0;
   parallel_for (long i=0; i < n; i++) ss[i] = ((uintT) s[i])+1;
