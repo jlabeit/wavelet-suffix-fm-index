@@ -56,7 +56,7 @@ int parallel_main(int argc, char* argv[]) {
   commandLine P(argc,argv,"[-o <outFile>] [-r <rounds>] <inFile>");
   char* iFile = P.getArgument(0);
   char* oFile = P.getOptionValue("-o");
-  int rounds = P.getOptionIntValue("-r",1);
+  int rounds = P.getOptionIntValue("-r",3);
   _seq<char> S = readStringFromFile(iFile);
   
   timeSuffixArray((unsigned char*) S.A, S.n, rounds, oFile);

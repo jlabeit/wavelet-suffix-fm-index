@@ -7,9 +7,8 @@ def download(url, files):
         if not os.path.isfile(f):
             wget.download(url + f + '.gz')
             os.system('gzip -d -f ' + f + '.gz')
-            os.system('../suffixArray/pScan/tools/delete-bytes-255/delete255 ' + f + " >> " +  f)
-
-download('http://pizzachili.dcc.uchile.cl/texts/music/', ['pitches'])
+            os.system('../suffixArray/pScan/tools/delete-bytes-255/delete255 ' + f + " > " +  f + '.zero')
+            os.system('mv ' + f +'.zero ' + f)
 
 artificial = ['fib41', 'rs.13', 'tm29']
 artificial_url = 'http://pizzachili.dcc.uchile.cl/repcorpus/artificial/'
