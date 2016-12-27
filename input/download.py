@@ -9,6 +9,8 @@ def download(url, files):
             os.system('gzip -d -f ' + f + '.gz')
             os.system('../suffixArray/pScan/tools/delete-bytes-255/delete255 ' + f + " > " +  f + '.zero')
             os.system('mv ' + f +'.zero ' + f)
+        if not os.path.isfile(f + '.bwt'):
+            os.system('../tools/BWT ' + f + ' ' + f + '.bwt')
 
 artificial = ['fib41', 'rs.13', 'tm29']
 artificial_url = 'http://pizzachili.dcc.uchile.cl/repcorpus/artificial/'
