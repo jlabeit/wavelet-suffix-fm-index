@@ -4,10 +4,12 @@ import os
 def download(url, files):
     for f in files:
         print url + f + '.gz'
-        if not os.path.isfile(f+'.gz'):
+        if not os.path.isfile(f):
             wget.download(url + f + '.gz')
-        os.system('gzip -d -f ' + f + '.gz')
+            os.system('gzip -d -f ' + f + '.gz')
+            os.system('../suffixArray/pScan/tools/delete-bytes-255/delete255 ' + f + " >> " +  f)
 
+download('http://pizzachili.dcc.uchile.cl/texts/music/', ['pitches'])
 
 artificial = ['fib41', 'rs.13', 'tm29']
 artificial_url = 'http://pizzachili.dcc.uchile.cl/repcorpus/artificial/'
