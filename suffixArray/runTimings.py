@@ -29,7 +29,8 @@ def get_env(algo, p):
     result["CILK_NWORKERS"] = str(p)
     result["OMP_NUM_THREADS"] = str(p)
     if algo == 'pScan':
-        result["LD_LIBRARY_PATH"] = '/home/julian/wavelet/libdivsufsort/lib'
+        result["LD_LIBRARY_PATH"] = ':'.join(['/home/julian/wavelet/libdivsufsort/lib',
+            result["LD_LIBRARY_PATH"]])
     return result
 
 def parse_output(s):
