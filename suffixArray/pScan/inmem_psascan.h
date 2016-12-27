@@ -43,21 +43,21 @@
 #include <limits>
 #include <algorithm>
 
-#include "../src/psascan_src/bitvector.h"
-#include "../src/psascan_src/multifile.h"
-#include "../src/psascan_src/background_block_reader.h"
-#include "../src/psascan_src/inmem_psascan_src/inmem_gap_array.h"
-#include "../src/psascan_src/inmem_psascan_src/compute_initial_gt_bitvectors.h"
-#include "../src/psascan_src/inmem_psascan_src/initial_partial_sufsort.h"
-#include "../src/psascan_src/inmem_psascan_src/change_gt_reference_point.h"
-#include "../src/psascan_src/inmem_psascan_src/inmem_bwt_from_sa.h"
-#include "../src/psascan_src/inmem_psascan_src/inmem_compute_initial_ranks.h"
-#include "../src/psascan_src/inmem_psascan_src/parallel_merge.h"
-#include "../src/psascan_src/inmem_psascan_src/inmem_bwtsa_merge.h"
-#include "../src/psascan_src/inmem_psascan_src/pagearray.h"
-#include "../src/psascan_src/inmem_psascan_src/bwtsa.h"
-#include "../src/psascan_src/inmem_psascan_src/parallel_shrink.h"
-#include "../src/psascan_src/inmem_psascan_src/merge_schedule.h"
+#include "src/psascan_src/bitvector.h"
+#include "src/psascan_src/multifile.h"
+#include "src/psascan_src/background_block_reader.h"
+#include "src/psascan_src/inmem_psascan_src/inmem_gap_array.h"
+#include "src/psascan_src/inmem_psascan_src/compute_initial_gt_bitvectors.h"
+#include "src/psascan_src/inmem_psascan_src/initial_partial_sufsort.h"
+#include "src/psascan_src/inmem_psascan_src/change_gt_reference_point.h"
+#include "src/psascan_src/inmem_psascan_src/inmem_bwt_from_sa.h"
+#include "src/psascan_src/inmem_psascan_src/inmem_compute_initial_ranks.h"
+#include "src/psascan_src/inmem_psascan_src/parallel_merge.h"
+#include "src/psascan_src/inmem_psascan_src/inmem_bwtsa_merge.h"
+#include "src/psascan_src/inmem_psascan_src/pagearray.h"
+#include "src/psascan_src/inmem_psascan_src/bwtsa.h"
+#include "src/psascan_src/inmem_psascan_src/parallel_shrink.h"
+#include "src/psascan_src/inmem_psascan_src/merge_schedule.h"
 
 
 namespace psascan_private {
