@@ -43,7 +43,7 @@ def parse_output(s):
             if tokens[0].strip() == 'PBBS-time':
                 times = tokens[1] 
             elif tokens[0].strip() == 'Peak-memory':
-                mems += tokens[1]
+                mems = tokens[1]
             else:
                 print "error ", tokens[0]
     return (times, mems)
@@ -51,6 +51,7 @@ def parse_output(s):
 def write_output(s, algo, f, p):
     (time,mem) = parse_output(s)
     result_file.write(algo + ", " + f + ", " + str(p) + ", " + mem + ", " + time + '\n')
+    result_file.flush()
 
     
 def run_test(algo, f, p):
