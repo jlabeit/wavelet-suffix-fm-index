@@ -13,3 +13,8 @@ cmake -DCMAKE_INSTALL_PREFIX=.. ..
 make
 make install
 cd ../../
+
+# All suffix arrays.
+cd suffixArray
+sh install.sh
+cd ../

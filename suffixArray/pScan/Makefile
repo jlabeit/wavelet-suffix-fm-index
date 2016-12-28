@@ -9,7 +9,7 @@ SA:
 	$(CC) -I ../../libdivsufsort/include $(CFLAGS) -o SA main.cpp utils.cpp src/psascan_src/utils.cpp -fopenmp -L ../../libdivsufsort/lib -ldivsufsort -ldivsufsort64
 
 clean:
-	/bin/rm -f *.o
+	/bin/rm -f *.o SA
 
 nuclear:
 	/bin/rm -f *.o SA
