@@ -12,6 +12,17 @@ def download(url, files):
         if not os.path.isfile(f + '.bwt'):
             os.system('../tools/BWT ' + f + ' ' + f + '.bwt')
 
+def writeRep(char, count, filename, prefix):
+    f = open(filename, 'w')
+    f.write(prefix)
+    for i in range(0, count):
+        f.write(char)
+    f.close()
+
+# Writing 100 mio as.
+writeRep('a', 10000000, 'aaa', '')
+writeRep('a', 10000000, 'aaa.bwt', '')
+
 artificial = ['fib41', 'rs.13', 'tm29']
 artificial_url = 'http://pizzachili.dcc.uchile.cl/repcorpus/artificial/'
 print 'Downloading artificial repetitive collection'
@@ -37,3 +48,5 @@ download('http://pizzachili.dcc.uchile.cl/texts/protein/', ['proteins'])
 download('http://pizzachili.dcc.uchile.cl/texts/dna/', ['dna'])
 download('http://pizzachili.dcc.uchile.cl/texts/nlang/', ['english'])
 download('http://pizzachili.dcc.uchile.cl/texts/xml/', ['dblp.xml'])
+
+
