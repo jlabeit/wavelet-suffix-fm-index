@@ -14,6 +14,10 @@ make
 make install
 cd ../../
 
+cd tools
+make
+cd ..
+
 # All suffix arrays.
 cd suffixArray
 sh install.sh
