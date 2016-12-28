@@ -6,7 +6,7 @@ real = ['Escherichia_Coli', 'cere', 'coreutils', 'einstein.de.txt',
         'influenza', 'kernel', 'para', 'world_leaders']
 pseudo= ['dblp.xml.00001.1', 'dblp.xml.00001.2', 'dblp.xml.0001.1', 'dblp.xml.0001.2',
         'dna.001.1', 'english.001.2', 'proteins.001.1', 'sources.001.2']
-classic = ['sources', 'pitches', 'proteins', 'dna', 'english', 'dblp.xml']
+classic = ['aaa', 'sources', 'pitches', 'proteins', 'dna', 'english', 'dblp.xml']
 
 inputs = [classic, real, peudo, artificial]
 #inputs = [['pitches']]
