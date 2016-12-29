@@ -100,7 +100,7 @@ void timeWT(symbol* s, long n, int rounds, char* outFile, int check) {
   }
   string input_file = "@input.sdsl"; 
   sdsl::store_to_file(input, input_file);
-#ifdef LONG
+#ifdef INT
   sdsl::wt_int<sdsl::bit_vector,
       sdsl::rank_support_scan<>,
       sdsl::select_support_scan<>,

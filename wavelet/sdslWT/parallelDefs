@@ -2,6 +2,9 @@ LIBS = -lsdsl -ldivsufsort -ldivsufsort64
 ifdef LONG
 INTT = -DLONG
 endif
+ifdef INT
+INTT += -DINT
+endif
 
 ifdef OPENMP
 PCC = g++
