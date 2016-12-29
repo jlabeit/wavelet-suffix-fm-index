@@ -12,16 +12,19 @@ def download(url, files):
         if not os.path.isfile(f + '.bwt'):
             os.system('../tools/BWT ' + f + ' ' + f + '.bwt')
 
-def writeRep(char, count, filename, prefix):
-    f = open(filename, 'w')
-    f.write(prefix)
-    for i in range(0, count):
-        f.write(char)
-    f.close()
+def writeRep(pat, count, filename):
+    if not os.path.isfile(filename):
+        f = open(filename, 'w')
+        for i in range(0, count):
+            f.write(pat)
+        f.close()
+    if not os.path.isfile(filename + '.bwt'):
+        os.system('../tools/BWT ' + filename + ' ' + filename + '.bwt')
 
-# Writing 100 mio as.
-writeRep('a', 100000000, 'aaa', '')
-writeRep('a', 100000000, 'aaa.bwt', '')
+# Writing 100 MB of some pattern.
+writeRep('a', 1024*1024*100, 'aaa')
+writeRep(('a'*512*1024)+('b'*512*1024) ,100, 'aabbaabb')
+writeRep('ab',1024*1024*50, 'abab')
 
 artificial = ['fib41', 'rs.13', 'tm29']
 artificial_url = 'http://pizzachili.dcc.uchile.cl/repcorpus/artificial/'

@@ -6,10 +6,10 @@ real = ['Escherichia_Coli', 'cere', 'coreutils', 'einstein.de.txt',
         'influenza', 'kernel', 'para', 'world_leaders']
 pseudo= ['dblp.xml.00001.1', 'dblp.xml.00001.2', 'dblp.xml.0001.1', 'dblp.xml.0001.2',
         'dna.001.1', 'english.001.2', 'proteins.001.1', 'sources.001.2']
-classic = ['aaa', 'sources', 'pitches', 'proteins', 'dna', 'english', 'dblp.xml']
+classic = ['sources', 'pitches', 'proteins', 'dna', 'english.1024MB', 'dblp.xml']
+special = ['aaa', 'abab', 'aabbaabb']
 
-inputs = [classic, real, pseudo, artificial]
-#inputs = [['fib41']]
+inputs = [special, real, pseudo, artificial, classic]
 threads = [1, 2, 4, 8, 12, 16, 24, 32, 40, 48, 56, 64]
 salgos = ['serialWT', 'sdslWT']
 palgos = ['ddWT', 'levelWT', 'recWT']
