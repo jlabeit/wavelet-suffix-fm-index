@@ -1,20 +1,7 @@
-cd divsufsort
-make clean
-make
-cd ..
-cd parallelDivsufsort
-make clean 
-make 
-cd ..
-cd parallelKS
-make clean
-make
-cd ..
-cd parallelRange
-make clean
-make
-cd ..
-cd pScan
-make clean 
-make
-cd ..
+for algo in divsufsort parallelDivsufsort parallelKS parallelRange pScan
+do
+    cd $algo
+    make clean
+    make
+    cd ..
+done
