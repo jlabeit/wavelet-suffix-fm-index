@@ -20,8 +20,8 @@ def writeRep(char, count, filename, prefix):
     f.close()
 
 # Writing 100 mio as.
-writeRep('a', 10000000, 'aaa', '')
-writeRep('a', 10000000, 'aaa.bwt', '')
+writeRep('a', 100000000, 'aaa', '')
+writeRep('a', 100000000, 'aaa.bwt', '')
 
 artificial = ['fib41', 'rs.13', 'tm29']
 artificial_url = 'http://pizzachili.dcc.uchile.cl/repcorpus/artificial/'

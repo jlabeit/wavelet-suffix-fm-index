@@ -94,29 +94,33 @@ void timeWT(symbol* s, long n, int rounds, char* outFile, int check) {
   free(A);
 
   // Version for sdsl
-  sdsl::int_vector<sizeof(symbol)*8> input(n, 0);
+  typedef sdsl::int_vector<sizeof(symbol)*8> input_type;
+  input_type input(n, 0);
   for (uint64_t i = 0; i < n; i++) {
 	input[i] = s[i];
   }
-  string input_file = "@input.sdsl"; 
-  sdsl::store_to_file(input, input_file);
 #ifdef INT
-  sdsl::wt_int<sdsl::bit_vector,
+  typedef sdsl::wt_int<sdsl::bit_vector,
       sdsl::rank_support_scan<>,
       sdsl::select_support_scan<>,
-      sdsl::select_support_scan<0>> wt;
+      sdsl::select_support_scan<0>> wt_type;
 #else
-  sdsl::wt_pc<sdsl::balanced_shape,
+  typedef sdsl::wt_pc<sdsl::balanced_shape,
       sdsl::bit_vector,
       sdsl::rank_support_scan<>,
       sdsl::select_support_scan<>,
-      sdsl::select_support_scan<0>> wt;
+      sdsl::select_support_scan<0>> wt_type;
 #endif
-
+  string input_file = "@input.sdsl"; 
+  sdsl::store_to_file(input, input_file);
+  input = input_type();
   // Timing is done directly in construct method.
+  wt_type wt;
   sdsl::construct(wt, input_file);
+  wt = wt_type();
   for (int i=0; i < rounds; i++) {
     sdsl::construct(wt, input_file);
+    wt = wt_type();
   }
   cout<<"Peak-memory: " << getPeakRSS() / (1024*1024)<< endl;
 
