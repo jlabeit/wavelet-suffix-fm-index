@@ -100,12 +100,23 @@ void timeWT(symbol* s, long n, int rounds, char* outFile, int check) {
   }
   string input_file = "@input.sdsl"; 
   sdsl::store_to_file(input, input_file);
-  sdsl::wt_blcd<> wt;
+#ifdef LONG
+  sdsl::wt_int<sdsl::bit_vector,
+      sdsl::rank_support_scan<>,
+      sdsl::select_support_scan<>,
+      sdsl::select_support_scan<0>> wt;
+#else
+  sdsl::wt_pc<sdsl::balanced_shape,
+      sdsl::bit_vector,
+      sdsl::rank_support_scan<>,
+      sdsl::select_support_scan<>,
+      sdsl::select_support_scan<0>> wt;
+#endif
+
+  // Timing is done directly in construct method.
   sdsl::construct(wt, input_file);
   for (int i=0; i < rounds; i++) {
-    startTime();
     sdsl::construct(wt, input_file);
-    nextTimeN();
   }
   cout<<"Peak-memory: " << getPeakRSS() / (1024*1024)<< endl;
 

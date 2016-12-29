@@ -24,6 +24,8 @@ using namespace std;
 #define POINTERS 1
 //#define INT 1
 
+#include "wt_pc.hpp"
+#include "wt_int.hpp"
 #include <sdsl/wt_blcd.hpp>
 #include <sdsl/construct.hpp>
 
