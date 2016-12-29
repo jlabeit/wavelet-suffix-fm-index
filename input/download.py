@@ -41,12 +41,12 @@ print 'Downloading pseudo-real repetitive collection'
 download(pseudo_url, pseudo)
 
 print 'Downloading classic collection'
-classic = ['sources', 'pitches', 'proteins', 'dna', 'english', 'dblp.xml']
+classic = ['sources', 'pitches', 'proteins', 'dna', 'english.1024MB', 'dblp.xml']
 download('http://pizzachili.dcc.uchile.cl/texts/code/', ['sources'])
 download('http://pizzachili.dcc.uchile.cl/texts/music/', ['pitches'])
 download('http://pizzachili.dcc.uchile.cl/texts/protein/', ['proteins'])
 download('http://pizzachili.dcc.uchile.cl/texts/dna/', ['dna'])
-download('http://pizzachili.dcc.uchile.cl/texts/nlang/', ['english'])
+download('http://pizzachili.dcc.uchile.cl/texts/nlang/', ['english.1024MB'])
 download('http://pizzachili.dcc.uchile.cl/texts/xml/', ['dblp.xml'])
 
 
