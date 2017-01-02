@@ -1,3 +1,6 @@
 *.o
 **/SA
 **/WT
+*.tex
+*.eps
+input
