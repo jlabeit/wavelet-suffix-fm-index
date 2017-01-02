@@ -23,18 +23,10 @@ Copyright (C) 2009 Simon Gog
 #ifndef INCLUDED_SDSL_INT_WAVELET_TREE_PAR
 #define INCLUDED_SDSL_INT_WAVELET_TREE_PAR
 
-//#include "sdsl_concepts.hpp"
-//#include "int_vector.hpp"
-//#include "rank_support_v.hpp"
-//#include "select_support_mcl.hpp"
-//#include "wt_helper.hpp"
-//#include "util.hpp"
+#include "../rank/rank_support_v_par.hpp"
+#include "../select/select_support_mcl_par.hpp"
 #include <sdsl/sdsl_concepts.hpp>
 #include <sdsl/int_vector.hpp>
-#include "rank_support_v_par.hpp"
-//#include <sdsl/rank_support_v.hpp>
-#include "select_support_mcl_par.hpp"
-//#include <sdsl/select_support_mcl.hpp>
 #include <sdsl/wt_helper.hpp>
 #include <sdsl/util.hpp>
 
@@ -1048,13 +1040,13 @@ class wt_int
             //for (auto& r : ranges) {
 	    for (auto it = ranges.begin(); it != ranges.end(); ++it) {
 		auto& r = *it;
-                auto sp_rank    = m_tree_rank(v.offset + r.first);
-                auto right_size = m_tree_rank(v.offset + r.second + 1)
+                auto sp_rank    = m_tree_rank(v.offset + std::get<0>(r));
+                auto right_size = m_tree_rank(v.offset + std::get<1>(r) + 1)
                                   - sp_rank;
-                auto left_size  = (r.second-r.first+1)-right_size;
+                auto left_size  = (std::get<1>(r)-std::get<0>(r)+1)-right_size;
 
                 auto right_sp = sp_rank - v_sp_rank;
-                auto left_sp  = r.first - right_sp;
+                auto left_sp  = std::get<0>(r) - right_sp;
 
                 r = range_type(left_sp, left_sp + left_size - 1);
                 res[i++] = range_type(right_sp, right_sp + right_size - 1);
@@ -1075,13 +1067,13 @@ class wt_int
         std::pair<range_type, range_type>
         expand(const node_type& v, const range_type& r) const {
             auto v_sp_rank = m_tree_rank(v.offset);  // this is already calculated in expand(v)
-            auto sp_rank    = m_tree_rank(v.offset + r.first);
-            auto right_size = m_tree_rank(v.offset + r.second + 1)
+            auto sp_rank    = m_tree_rank(v.offset + std::get<0>(r));
+            auto right_size = m_tree_rank(v.offset + std::get<1>(r) + 1)
                               - sp_rank;
-            auto left_size  = (r.second-r.first+1)-right_size;
+            auto left_size  = (std::get<1>(r)-std::get<0>(r)+1)-right_size;
 
             auto right_sp = sp_rank - v_sp_rank;
-            auto left_sp  = r.first - right_sp;
+            auto left_sp  = std::get<0>(r) - right_sp;
 
             return make_pair(range_type(left_sp, left_sp + left_size - 1),
                              range_type(right_sp, right_sp + right_size - 1));

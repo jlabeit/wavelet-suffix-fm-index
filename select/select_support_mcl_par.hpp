@@ -119,10 +119,10 @@ class select_support_mcl : public select_support
 template<uint8_t t_b, uint8_t t_pat_len>
 select_support_mcl<t_b,t_pat_len>::select_support_mcl(const bit_vector* f_v):select_support(f_v)
 {
-    if (t_pat_len>1 or(v!=nullptr and  v->size() < 100000))
-        init_slow(v);
+    if (t_pat_len>1 or(vv!=nullptr and  vv->size() < 100000))
+        init_slow(vv);
     else {
-        init_fast(v);
+        init_fast(vv);
    }
     return;
 }
@@ -400,11 +400,11 @@ void select_support_mcl<t_b,t_pat_len>::init_superblock_serial(
 template<uint8_t t_b, uint8_t t_pat_len>
 void select_support_mcl<t_b,t_pat_len>::init_longblock_serial(int_vector<64>& longblock, size_type s, size_type e, size_type offset) {
 	size_type arg_cnt = offset;	
-	const uint64_t* data = v->data();
+	const uint64_t* data = vv->data();
 	uint64_t carry = 0;
 	// first partial block
 	while (s % 64 != 0 && s < e) {
-		if (select_support_trait<t_b, t_pat_len>::found_arg(s, *v)) {
+		if (select_support_trait<t_b, t_pat_len>::found_arg(s, *vv)) {
 			longblock[arg_cnt] = s;
 			arg_cnt++;
 		}	
@@ -428,7 +428,7 @@ void select_support_mcl<t_b,t_pat_len>::init_longblock_serial(int_vector<64>& lo
 	// last partial block
 	if ( s > e) s -= 64;
 	while (s < e) {
-		if (select_support_trait<t_b, t_pat_len>::found_arg(s, *v)) {
+		if (select_support_trait<t_b, t_pat_len>::found_arg(s, *vv)) {
 			longblock[arg_cnt] = s;
 			arg_cnt++;
 		}	
@@ -438,7 +438,7 @@ void select_support_mcl<t_b,t_pat_len>::init_longblock_serial(int_vector<64>& lo
 // Sample the delta to start of every 64 argument
 template<uint8_t t_b, uint8_t t_pat_len>
 void select_support_mcl<t_b,t_pat_len>::init_miniblock_serial(int_vector<0>& miniblock, size_type s, size_type e) {
-const uint64_t* data = v->data();
+const uint64_t* data = vv->data();
 uint64_t carry, carry_old;
 carry = carry_old = 0;
 size_type arg_cnt, arg_cnt_old;
@@ -447,7 +447,7 @@ size_type i = s;
 
 // First partial block
 while (i % 64 != 0 && i < e) {
-	if (select_support_trait<t_b, t_pat_len>::found_arg(i, *v)) {
+	if (select_support_trait<t_b, t_pat_len>::found_arg(i, *vv)) {
 		if (arg_cnt % 64 == 0) {
 			miniblock[arg_cnt/64] = i-s;	
 		}	
@@ -469,7 +469,7 @@ while (i/64 < e/64) {
 
 // Rest of the interval
 while (i < e) {
-	if (select_support_trait<t_b, t_pat_len>::found_arg(i, *v)) {
+	if (select_support_trait<t_b, t_pat_len>::found_arg(i, *vv)) {
 		if (arg_cnt % 64 == 0) {
 			miniblock[arg_cnt/64] = i-s;	
 		}	

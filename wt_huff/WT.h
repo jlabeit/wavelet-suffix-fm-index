@@ -24,6 +24,8 @@ using namespace std;
 #define POINTERS 1
 //#define INT 1
 
+#include "../rank/rank_support_v_par.hpp"
+#include "../select/select_support_mcl_par.hpp"
 #include "wt_huff_par.hpp"
 #include <sdsl/construct.hpp>
 //#include <sdsl/wt_huff.hpp>

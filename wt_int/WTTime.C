@@ -98,13 +98,12 @@ void timeWT(symbol* s, long n, int rounds, char* outFile, int check) {
   for (uint64_t i = 0; i < n; i++) {
 	input[i] = s[i];
   }
-  string input_file = "@input.sdsl"; 
-  sdsl::store_to_file(input, input_file);
   sdsl::wt_int<> wt;
-  sdsl::construct(wt, input_file);
+  wt = sdsl::wt_int<>(input, input.size());
   for (int i=0; i < rounds; i++) {
+    wt = sdsl::wt_int<>();
     startTime();
-    sdsl::construct(wt, input_file);
+    wt = sdsl::wt_int<>(input, input.size());
     nextTimeN();
   }
   cout<<"Peak-memory: " << getPeakRSS() / (1024*1024)<< endl;

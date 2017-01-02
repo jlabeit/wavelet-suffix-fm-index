@@ -280,7 +280,7 @@ class wt_pc
 	    int_vector<tree_strat_type::int_width> s2(m_size);
 	    // Has to be sequential because may be on disk 
 	    for (size_type i = 0;i < m_size; i++) {
-		s1[i] = input_buf[i];
+		    s1[i] = input_buf[i];
 	    }
 	    startTime();
             // O(n + |\Sigma|\log|\Sigma|) algorithm for calculating node sizes
@@ -319,6 +319,47 @@ class wt_pc
             m_tree.init_node_ranks(m_bv_rank);
         }
 
+        wt_pc(int_vector<tree_strat_type::int_width>& s1,
+                size_type size):m_size(size) {
+            if (0 == m_size)
+                return;
+            // For parallel construction buffer needs to be in memory
+            int_vector<tree_strat_type::int_width> s2(m_size);
+            // O(n + |\Sigma|\log|\Sigma|) algorithm for calculating node sizes
+            // TODO: C should also depend on the tree_strategy. C is just a mapping
+            // from a symbol to its frequency. So a map<uint64_t,uint64_t> could be
+            // used for integer alphabets...
+            std::vector<size_type> C;
+            // 1. Count occurrences of characters
+            calculate_character_occurences(s1, m_size, C); // TODO count in parallel
+            // 2. Calculate effective alphabet size
+            calculate_effective_alphabet_size(C, m_sigma);
+            // 3. Generate tree shape
+            size_type tree_size = construct_tree_shape(C);
+            // 4. Generate wavelet tree bit sequence m_bv
+            bit_vector temp_bv(tree_size, 0);
+
+            // START PERFORMANCE CRITCAL
+            // Initializing starting position of wavelet tree nodes
+            std::vector<uint64_t> bv_node_pos(m_tree.size(), 0);
+            for (size_type v=0; v < m_tree.size(); ++v) {
+                bv_node_pos[v] = m_tree.bv_pos(v);
+            }
+            if (s1.size() < size) {
+                throw std::logic_error("Stream size is smaller than size!");
+                return;
+            }
+            // start, len, source, destination, huff_tree_structure, output_wt
+            build_recursive(0, m_size, s1, s2, (uint64_t*)temp_bv.data(), bv_node_pos, m_tree.root());
+            m_bv = bit_vector_type(std::move(temp_bv));
+            // 5. Initialize rank and select data structures for m_bv
+            construct_init_rank_select();
+            // END PERFORMANCE CRITICAL
+
+
+            // 6. Finish inner nodes by precalculating the bv_pos_rank values
+            m_tree.init_node_ranks(m_bv_rank);
+        }
 
         //! Copy constructor
         wt_pc(const wt_pc& wt) { copy(wt); }
@@ -799,13 +840,13 @@ class wt_pc
             //for (auto& r : ranges) {
 	    for (auto it = ranges.begin(); it != ranges.end(); ++it) {
 		auto& r = *it;
-                auto sp_rank    = m_bv_rank(m_tree.bv_pos(v) + r.first);
-                auto right_size = m_bv_rank(m_tree.bv_pos(v) + r.second + 1)
+                auto sp_rank    = m_bv_rank(m_tree.bv_pos(v) + std::get<0>(r));
+                auto right_size = m_bv_rank(m_tree.bv_pos(v) + std::get<1>(r)+ 1)
                                   - sp_rank;
-                auto left_size  = (r.second-r.first+1)-right_size;
+                auto left_size  = (std::get<1>(r)-std::get<0>(r)+1)-right_size;
 
                 auto right_sp = sp_rank - v_sp_rank;
-                auto left_sp  = r.first - right_sp;
+                auto left_sp  = std::get<0>(r)- right_sp;
 
                 r = range_type(left_sp, left_sp + left_size - 1);
                 res[i++] = range_type(right_sp, right_sp + right_size - 1);
@@ -826,13 +867,13 @@ class wt_pc
         std::pair<range_type, range_type>
         expand(const node_type& v, const range_type& r) const {
             auto v_sp_rank = m_tree.bv_pos_rank(v);
-            auto sp_rank    = m_bv_rank(m_tree.bv_pos(v) + r.first);
-            auto right_size = m_bv_rank(m_tree.bv_pos(v) + r.second + 1)
+            auto sp_rank    = m_bv_rank(m_tree.bv_pos(v) + std::get<0>(r));
+            auto right_size = m_bv_rank(m_tree.bv_pos(v) + std::get<1>(r)+ 1)
                               - sp_rank;
-            auto left_size  = (r.second-r.first+1)-right_size;
+            auto left_size  = (std::get<1>(r)-std::get<0>(r)+1)-right_size;
 
             auto right_sp = sp_rank - v_sp_rank;
-            auto left_sp  = r.first - right_sp;
+            auto left_sp  = std::get<0>(r)- right_sp;
 
             return make_pair(range_type(left_sp, left_sp + left_size - 1),
                              range_type(right_sp, right_sp + right_size - 1));
