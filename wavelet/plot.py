@@ -12,11 +12,10 @@ with open('results', 'rb') as csvfile:
     for row in spamreader:
         data.append(parseRow(row))
 
-salgos = ['divsufsort']
-palgos = [('b', 'o', 'parallelKS'),
-          ('g', '', 'parallelRange'),
-          ('r', 'x', 'parallelDivsufsort'),
-          ('black', '|' , 'pScan')]
+salgos = ['serialWT', 'sdslWT']
+palgos = [('b', 'o', 'levelWT'),
+          ('g', '', 'recWT'),
+          ('r', 'x', 'ddWT')]
 
 def getTime(algo, f, p):
     for row in data:
@@ -27,7 +26,7 @@ def getTime(algo, f, p):
 
 
 def getSpeedup(algo, f):
-    return [getTime('divsufsort', f, 1) / getTime(algo, f, p) for p in threads]
+    return [getTime('serialWT', f, 1) / getTime(algo, f, p) for p in threads]
 lines = dict()
 
 def makePlot(plot, filename):
@@ -57,10 +56,10 @@ ax7.set_ylabel(r'absolute speedup', fontsize=16)
 ax7.set_xlabel(r'number of threads', fontsize=16)
 ax8.set_xlabel(r'number of threads', fontsize=16)
 
-f.legend([lines['parallelKS'], lines['parallelRange'], lines['parallelDivsufsort'], lines['pScan']], 
-        ['KS', 'Range', 'parDss', 'Scan'], 'lower center', ncol=4)
+f.legend([lines['levelWT'], lines['recWT'], lines['ddWT']], 
+        ['levelWT', 'recWT', 'ddWT'], 'lower center', ncol=3)
 
 plt.rc('text', usetex=True)
 plt.rc('font', family='serif')
-plt.savefig('suffixPlot.eps', format='eps')
+plt.savefig('waveletPlot.eps', format='eps')
 plt.show()
