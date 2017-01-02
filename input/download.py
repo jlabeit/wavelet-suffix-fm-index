@@ -21,6 +21,17 @@ def writeRep(pat, count, filename):
     if not os.path.isfile(filename + '.bwt'):
         os.system('../tools/BWT ' + filename + ' ' + filename + '.bwt')
 
+def writeRnd(sigma, n):
+    filename = 'rnd-%d.bwt' % sigma
+    if not os.path.isfile(filename):
+        f = open(filename, 'w')
+        os.system('../sequenceData/randomSeq -r %d -t int %d %s' %
+                (2**sigma, n, filename))
+
+sigmas = [8, 12, 16, 20]
+for s in sigmas:
+    writeRnd(s, 1024*1024*100)
+
 # Writing 100 MB of some pattern.
 writeRep('a', 1024*1024*100, 'aaa')
 writeRep(('a'*512*1024)+('b'*512*1024) ,100, 'aabbaabb')

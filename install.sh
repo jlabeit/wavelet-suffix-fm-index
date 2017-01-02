@@ -18,6 +18,10 @@ cd tools
 make
 cd ..
 
+cd sequenceData
+make 
+cd ..
+
 # All suffix arrays.
 cd suffixArray
 sh install.sh

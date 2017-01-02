@@ -1,6 +1,7 @@
 import subprocess
 import os
 
+integer = ['rnd-8', 'rnd-12', 'rnd-16', 'rnd-20']
 artificial = ['fib41', 'rs.13', 'tm29']
 real = ['Escherichia_Coli', 'cere', 'coreutils', 'einstein.de.txt',
         'influenza', 'kernel', 'para', 'world_leaders']
@@ -9,12 +10,17 @@ pseudo= ['dblp.xml.00001.1', 'dblp.xml.00001.2', 'dblp.xml.0001.1', 'dblp.xml.00
 classic = ['sources', 'pitches', 'proteins', 'dna', 'english.1024MB', 'dblp.xml']
 special = ['aaa', 'abab', 'aabbaabb']
 
-inputs = [special, real, pseudo, artificial, classic]
+INT = True
+if INT:
+    inputs = [integer]
+    result_file = open('results.int', 'w')
+else:
+    inputs = [special, real, pseudo, artificial, classic]
+    result_file = open('results', 'w')
 threads = [1, 2, 4, 8, 12, 16, 24, 32, 40, 48, 56, 64]
+
 salgos = ['serialWT', 'sdslWT']
 palgos = ['ddWT', 'levelWT', 'recWT']
-
-result_file = open('results', 'w')
 
 def get_command(algo, f, p):
     executable = './' + algo + '/WT'
