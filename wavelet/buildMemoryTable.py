@@ -1,6 +1,6 @@
 import csv
 
-sizes = {'abab': 104857600, 'kernel': 257961544, 'dblp.xml.0001.1': 104857600, 'influenza': 154808555, 'dblp.xml.0001.2': 104857600, 'sources.001.2': 104857600, 'proteins.001.1': 104857600, 'sources': 210866603, 'einstein.de.txt': 92758441, 'english.001.2': 104857600, 'dna': 403927746, 'Escherichia_Coli': 112689515, 'world_leaders': 46968181, 'coreutils': 205281760, 'fib41': 267914296, 'english.1024MB': 1073741816, 'dblp.xml': 296135874, 'para': 429265758, 'aabbaabb': 104857600, 'pitches': 55814376, 'dna.001.1': 104857600, 'tm29': 268435456, 'rs.13': 216747218, 'cere': 461286644, 'aaa': 104857600, 'proteins': 1184051855, 'dblp.xml.00001.2': 104857600, 'dblp.xml.00001.1': 104857600}
+sizes = {'abab': 104857600, 'kernel': 257961544, 'dblp.xml.0001.1': 104857600, 'influenza': 154808555, 'dblp.xml.0001.2': 104857600, 'sources.001.2': 104857600, 'proteins.001.1': 104857600, 'sources': 210866603, 'einstein.de.txt': 92758441, 'english.001.2': 104857600, 'dna': 403927746, 'Escherichia_Coli': 112689515, 'world_leaders': 46968181, 'coreutils': 205281760, 'fib41': 267914296, 'english.1024MB': 1073741816, 'dblp.xml': 296135874, 'para': 429265758, 'aabbaabb': 104857600, 'pitches': 55814376, 'dna.001.1': 104857600, 'tm29': 268435456, 'rs.13': 216747218, 'cere': 461286644, 'aaa': 104857600, 'proteins': 1184051855, 'dblp.xml.00001.2': 104857600, 'dblp.xml.00001.1': 104857600, 'rnd-8': 104857600, 'rnd-12': 104857600, 'rnd-16': 104857600, 'rnd-20': 104857600 }
 
 # Read result data.
 
@@ -12,6 +12,7 @@ with open('results', 'rb') as csvfile:
     spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
     for row in spamreader:
         data.append(parseRow(row))
+print data
 
 artificial = ('artificial repetitive', ['fib41', 'rs.13', 'tm29'])
 real = ('real repetitive', ['Escherichia_Coli', 'cere', 'coreutils', 'einstein.de.txt',
@@ -20,8 +21,9 @@ pseudo= ('pseudo repetitive', ['dblp.xml.00001.1', 'dblp.xml.00001.2', 'dblp.xml
     'dblp.xml.0001.2', 'dna.001.1', 'english.001.2', 'proteins.001.1', 'sources.001.2'])
 classic = ('non-repetitive', ['sources', 'pitches', 'proteins', 'dna', 'english.1024MB', 'dblp.xml'])
 special = ('special cases', ['aaa', 'abab', 'aabbaabb'])
+integer = ('integer', ['rnd-8', 'rnd-12', 'rnd-16', 'rnd-20'])
 
-inputs = [classic, real, artificial, pseudo, special]
+inputs = [classic, real, artificial, pseudo, special, integer]
 #threads = [1, 2, 4, 8, 12, 16, 24, 32, 40, 48, 56, 64]
 threads = [1, 8, 16, 32, 64]
 
