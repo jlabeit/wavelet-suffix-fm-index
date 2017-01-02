@@ -11,7 +11,7 @@ PLFLAGS = -fopenmp
 else ifdef GCILK
 PCC = g++
 PCFLAGS = -std=c++14 -I ~/include -I ../libdivsufsort/include -O2 -lcilkrts -fcilkplus -mcx16  -DCILKP -DMCX16 $(INTT)
-PLFLAGS = -L ~/lib -L ~/libdivsufsort/lib -lcilkrts -fcilkplus
+PLFLAGS = -L ~/lib -L ../libdivsufsort/lib -lcilkrts -fcilkplus
 
 else ifdef CILK
 PCC = cilk++

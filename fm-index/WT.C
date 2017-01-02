@@ -36,7 +36,7 @@ void FMIndex(symbol* s, int32_t* data, long n) {
 	sdsl::int_vector<sizeof(symbol)*8> bwt(n);
 	// Calculate BWT
 	int32_t to_add[2] = {(int32_t)-1,(int32_t)n-1};
-        parallel_for (long i=0; i < n; ++i) {
+    parallel_for (long i=0; i < n; ++i) {
 		bwt[i] = s[data[i]+to_add[data[i]==0]];
 	}
 	// Construct WT

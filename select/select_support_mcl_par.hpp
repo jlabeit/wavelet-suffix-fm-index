@@ -24,6 +24,7 @@
 //#include "int_vector.hpp"
 //#include "util.hpp"
 //#include "select_support.hpp"
+#include "../rank/rank_support_v_par.hpp"
 #include <sdsl/int_vector.hpp>
 #include <sdsl/util.hpp>
 #include <sdsl/select_support.hpp>
