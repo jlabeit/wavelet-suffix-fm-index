@@ -56,7 +56,7 @@ ax1.set_ylabel(r'absolute speedup', fontsize=16)
 ax3.set_ylabel(r'absolute speedup', fontsize=16)
 ax5.set_ylabel(r'absolute speedup', fontsize=16)
 ax7.set_ylabel(r'absolute speedup', fontsize=16)
-ax7.set_ylabel(r'absolute speedup', fontsize=16)
+ax9.set_ylabel(r'absolute speedup', fontsize=16)
 ax9.set_xlabel(r'number of threads', fontsize=16)
 ax10.set_xlabel(r'number of threads', fontsize=16)
 
