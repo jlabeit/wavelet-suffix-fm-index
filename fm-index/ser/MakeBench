@@ -20,10 +20,10 @@ TEST_FILES = testInputs
 
 # Make the benchmark, and make the output check code in the common directory
 all : $(BNCHMRK) testInputs 
-	cd ../common; make -s $(CHECK)
+	cd ../../common; make -s $(CHECK)
 
 $(TEST_FILES) :
-	cp ../common/$@ .
+	cp ../../common/$@ .
 
 # Files copied (linked) from toplevel common directory
 # The sort used to remove duplicates
@@ -36,7 +36,7 @@ $(GLOBAL) :
 BENCH = $(TIME).C $(sort $(TIME_REQUIRE) $(BENCH_REQUIRE))
 
 $(BENCH) :
-	ln -s ../common/$@ .
+	ln -s ../../common/$@ .
 
 # Make all implementation objects
 %.o : %.C $(GLOBAL_REQUIRE) $(BENCH_REQUIRE) $(LOCAL_REQUIRE)

@@ -24,9 +24,9 @@
 //#define INT 1
 
 #include "gettime.h"
-#include "../select/select_support_mcl_par.hpp"
-#include "../rank/rank_support_v_par.hpp"
-#include "../wt_huff/wt_huff_par.hpp"
+#include "../../select/select_support_mcl_par.hpp"
+#include "../../rank/rank_support_v_par.hpp"
+#include "../../wt_huff/wt_huff_par.hpp"
 //#include <sdsl/csa_wt.hpp>
 //#include <sdsl/construct.hpp>
 //#include <sdsl/util.hpp>

@@ -10,8 +10,8 @@ PLFLAGS = -fopenmp
 
 else ifdef GCILK
 PCC = g++
-PCFLAGS = -std=c++14 -I ../parallel-divsufsort/include -I ~/include -O2 -lcilkrts -fcilkplus -mcx16  -DCILKP -DMCX16 $(INTT)
-PLFLAGS = -L ../parallel-divsufsort/lib -L ~/lib $(LIBS) -lcilkrts -fcilkplus
+PCFLAGS = -std=c++14 -I ../../parallel-divsufsort/include -I ~/include -O2 -lcilkrts -fcilkplus -mcx16  -DCILKP -DMCX16 $(INTT)
+PLFLAGS = -L ../../parallel-divsufsort/lib -L ~/lib $(LIBS) -lcilkrts -fcilkplus
 
 else ifdef CILK
 PCC = cilk++
@@ -25,6 +25,6 @@ PLFLAGS =
 
 else
 PCC = g++
-PLFLAGS = $(LFLAGS) -L ../parallel-divsufsort/lib
-PCFLAGS = -g -std=c++14 -O2 -I ../parallel-divsufsort/include $(INTT)
+PLFLAGS = $(LFLAGS) -L ../../parallel-divsufsort/lib
+PCFLAGS = -g -std=c++14 -O2 -I ../../parallel-divsufsort/include $(INTT)
 endif
