@@ -282,7 +282,6 @@ class wt_pc
 	    for (size_type i = 0;i < m_size; i++) {
 		    s1[i] = input_buf[i];
 	    }
-	    startTime();
             // O(n + |\Sigma|\log|\Sigma|) algorithm for calculating node sizes
             // TODO: C should also depend on the tree_strategy. C is just a mapping
             // from a symbol to its frequency. So a map<uint64_t,uint64_t> could be
