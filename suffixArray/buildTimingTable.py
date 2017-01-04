@@ -58,7 +58,7 @@ def getFastest(f):
     return result
 
 def write_result(f):
-    result_file.write(f + ' & ')
+    result_file.write(f.replace('_', '\\_') + ' & ')
     fastest = getFastest(f)
     for algo in palgos:
         result_file.write(getTiming(f, algo, fastest == algo))

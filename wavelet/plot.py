@@ -39,22 +39,25 @@ def makePlot(plot, filename):
 # Example data
 threads = [1, 2, 4, 8, 12, 16, 24, 32, 40, 48, 56, 64]
 
-f, ((ax1, ax2), (ax3, ax4), (ax5, ax6), (ax7, ax8)) = plt.subplots(4, 2, sharex='col', sharey='row')
+f, ((ax1, ax2), (ax3, ax4), (ax5, ax6), (ax7, ax8), (ax9, ax10)) = plt.subplots(5, 2, sharex='col', sharey='row')
 
-makePlot(ax1, 'english.1024MB')
-makePlot(ax2, 'dna')
-makePlot(ax3, 'coreutils')
+makePlot(ax1, 'proteins')
+makePlot(ax2, 'dblp.xml')
+makePlot(ax3, 'Escherichia_Coli')
 makePlot(ax4, 'world_leaders')
-makePlot(ax5, 'fib41')
-makePlot(ax6, 'rs.13')
-makePlot(ax7, 'dblp.xml.00001.1')
-makePlot(ax8, 'dblp.xml.0001.2')
+makePlot(ax5, 'tm29')
+makePlot(ax6, 'fib41')
+makePlot(ax7, 'sources.001.2')
+makePlot(ax8, 'dna.001.1')
+makePlot(ax9, 'rnd-20')
+makePlot(ax10, 'rnd-8')
 ax1.set_ylabel(r'absolute speedup', fontsize=16)
 ax3.set_ylabel(r'absolute speedup', fontsize=16)
 ax5.set_ylabel(r'absolute speedup', fontsize=16)
 ax7.set_ylabel(r'absolute speedup', fontsize=16)
-ax7.set_xlabel(r'number of threads', fontsize=16)
-ax8.set_xlabel(r'number of threads', fontsize=16)
+ax9.set_ylabel(r'absolute speedup', fontsize=16)
+ax9.set_xlabel(r'number of threads', fontsize=16)
+ax10.set_xlabel(r'number of threads', fontsize=16)
 
 f.legend([lines['levelWT'], lines['recWT'], lines['ddWT']], 
         ['levelWT', 'recWT', 'ddWT'], 'lower center', ncol=3)

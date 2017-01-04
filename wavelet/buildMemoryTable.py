@@ -23,7 +23,7 @@ classic = ('non-repetitive', ['sources', 'pitches', 'proteins', 'dna', 'english.
 special = ('special cases', ['aaa', 'abab', 'aabbaabb'])
 integer = ('integer', ['rnd-8', 'rnd-12', 'rnd-16', 'rnd-20'])
 
-inputs = [classic, real, artificial, pseudo, special, integer]
+inputs = [classic, real, artificial, pseudo, integer]
 #threads = [1, 2, 4, 8, 12, 16, 24, 32, 40, 48, 56, 64]
 threads = [1, 8, 16, 32, 64]
 

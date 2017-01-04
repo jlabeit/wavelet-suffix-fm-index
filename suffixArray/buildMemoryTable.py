@@ -61,7 +61,7 @@ def getSmallest(f):
     return result
 
 def write_result(f):
-    result_file.write(f + ' & ')
+    result_file.write(f.replace('_', '\\_') + ' & ')
     smallest = getSmallest(f)
     for algo in palgos:
         result_file.write(getStrMemory(f, algo, smallest == algo))
