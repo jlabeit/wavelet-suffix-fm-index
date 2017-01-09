@@ -504,8 +504,8 @@ const size_type SUPER_BLOCK_SIZE = 64*64;
 if (m_arg_cnt==0) // if there are no arguments in the vector we are done...
 return;
 
-//    size_type sb = (m_arg_cnt+63+SUPER_BLOCK_SIZE-1)/SUPER_BLOCK_SIZE; // number of superblocks, add 63 as the last block could contain 63 uninitialized bits
-size_type sb = (m_arg_cnt+SUPER_BLOCK_SIZE-1)/SUPER_BLOCK_SIZE; // number of superblocks
+size_type sb = (m_arg_cnt+63+SUPER_BLOCK_SIZE-1)/SUPER_BLOCK_SIZE; // number of superblocks, add 63 as the last block could contain 63 uninitialized bits
+//size_type sb = (m_arg_cnt+SUPER_BLOCK_SIZE-1)/SUPER_BLOCK_SIZE; // number of superblocks
 if (m_miniblock != nullptr) delete [] m_miniblock;
 m_miniblock = new int_vector<0>[sb];
 if (m_longsuperblock != nullptr) delete [] m_longsuperblock;
