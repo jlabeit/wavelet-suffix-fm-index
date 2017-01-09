@@ -30,14 +30,16 @@
 #define THRESHOLD 10000
 
 
-void FMIndex(symbol* s, int32_t* data, long n, sdsl::int_vector<sizeof(symbol)*8>& bwt) {
+void FMIndex(symbol* s, long n, sdsl::int_vector<sizeof(symbol)*8>& bwt) {
 	// Calculate SA
+    int32_t *data = newA(int32_t, n); 
     divsufsort(s, (int32_t*)data, n);
 	// Calculate BWT
 	int32_t to_add[2] = {(int32_t)-1,(int32_t)n-1};
-        for (long i=0; i < n; ++i) {
+    for (long i=0; i < n; ++i) {
 		bwt[i] = s[data[i]+to_add[data[i]==0]];
 	}
+    free(data);
 	// Construct WT
 	sdsl::wt_huff<> wt(bwt,n);
 }

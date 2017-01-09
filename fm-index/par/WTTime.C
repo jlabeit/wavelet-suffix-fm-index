@@ -61,15 +61,13 @@ void timeWT(symbol* s, long n, int rounds, char* outFile, int check) {
   }
 */  
 
-  int32_t *data = newA(int32_t, n); 
   sdsl::int_vector<sizeof(symbol)*8> bwt(n);
-  FMIndex(s,data, n, bwt); 
+  FMIndex(s, n, bwt); 
   for (int i=0; i < rounds; i++) {
     startTime();
-    FMIndex(s,data,n, bwt);
+    FMIndex(s, n, bwt);
     nextTimeN();
   }
-  free(data);
   cout<<"Peak-memory: " << getPeakRSS() / (1024*1024)<< endl;
 
   if(check) {
