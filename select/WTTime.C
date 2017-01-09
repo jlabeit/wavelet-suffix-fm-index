@@ -51,7 +51,7 @@ void timeWT(symbol* s, long n, int rounds, char* outFile, int check) {
 
   parallel_for(long i=0;i<n;i++) s[i] = A[s[i]];
   free(A);
-
+  free(s);
   // Version for sdsl
   sdsl::int_vector<sizeof(symbol)*8> input(n, 0, sizeof(symbol)*8);
   for (uint64_t i = 0; i < n; i++) {
@@ -95,7 +95,6 @@ int parallel_main(int argc, char* argv[]) {
     in.read(s,n);
     in.close(); 
     timeWT((symbol*)s, n/sizeof(symbol), rounds, oFile, check);
-    free(s);
   }
   else {
 #ifdef INT
@@ -107,6 +106,5 @@ int parallel_main(int argc, char* argv[]) {
     uintT n = S.n;
     timeWT((unsigned char*) S.A, n, rounds, oFile, check);
 #endif
-    S.del();
   }
 }

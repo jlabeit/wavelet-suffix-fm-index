@@ -83,8 +83,7 @@ void timeWT(symbol* s, long n, int rounds, char* outFile, int check) {
   parallel_for(long i=0;i<n;i++) {
     if(!A[s[i]]) A[s[i]] = 1;
   }
-  long sigma = sequence::plusScan(A,A,k+1);
-  //cout << "n = " << n << endl;
+  long sigma = sequence::plusScan(A,A,k+1); //cout << "n = " << n << endl;
   //cout << "sigma = " << sigma << endl;
   int* reverseMap = newA(int,sigma);
   parallel_for(long i=0;i<k;i++) 
@@ -98,6 +97,7 @@ void timeWT(symbol* s, long n, int rounds, char* outFile, int check) {
   for (uint64_t i = 0; i < n; i++) {
 	input[i] = s[i];
   }
+  free(s);
   string input_file = "@input.sdsl"; 
   sdsl::store_to_file(input, input_file);
   sdsl::wt_int<> wt;
@@ -145,7 +145,6 @@ int parallel_main(int argc, char* argv[]) {
     in.read(s,n);
     in.close(); 
     timeWT((symbol*)s, n/sizeof(symbol), rounds, oFile, check);
-    free(s);
   }
   else {
 #ifdef INT
@@ -157,6 +156,5 @@ int parallel_main(int argc, char* argv[]) {
     uintT n = S.n;
     timeWT((unsigned char*) S.A, n, rounds, oFile, check);
 #endif
-    S.del();
   }
 }
