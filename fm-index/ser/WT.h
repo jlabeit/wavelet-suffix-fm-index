@@ -39,4 +39,4 @@ typedef unsigned char symbol;
 #endif
 
 //pair<WTnode*,long*> WT(symbol* s, uintT n, uintT sigma);
-void FMIndex(symbol* s, int32_t* data, long n);
+void FMIndex(symbol* s, int32_t* data, long n, sdsl::int_vector<sizeof(symbol)*8>& bwt);

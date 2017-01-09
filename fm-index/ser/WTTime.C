@@ -61,10 +61,11 @@ void timeWT(symbol* s, long n, int rounds, char* outFile, int check) {
   }
 */  
   int32_t *data = newA(int32_t, n); 
-  FMIndex(s,data, n); 
+  sdsl::int_vector<sizeof(symbol)*8> bwt(n);
+  FMIndex(s,data, n, bwt); 
   for (int i=0; i < rounds; i++) {
     startTime();
-    FMIndex(s,data,n);
+    FMIndex(s,data,n, bwt);
     nextTimeN();
   }
   free(data);
