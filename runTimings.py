@@ -19,7 +19,7 @@ result_file = open('results', 'w')
 
 def get_command(algo, f, p):
     executable = './' + algo + '/WT'
-    filedir = 'input/' + f
+    filedir = 'input/' + f + '.bv'
     if (p == 1):
         return [executable, filedir]
     else:
