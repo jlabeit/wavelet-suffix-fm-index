@@ -10,6 +10,10 @@ BWT: bwt.cpp
 
 STATS: stats.cpp
 	$(CC) -I ../parallel-divsufsort/include $(CFLAGS) -o STATS stats.cpp -L ../parallel-divsufsort/lib -ldivsufsort -lcilkrts -fcilkplus -llibprange
+
+BV: bv.cpp
+	$(CC) -I ~/include $(CFLAGS) -o BV bv.cpp -L ~/lib -lsdsl -ldivsufsort -ldivsufsort64
+
 clean:
 	/bin/rm -f *.o BWT STATS
 

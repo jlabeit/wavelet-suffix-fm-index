@@ -1,4 +1,4 @@
-par, proteins, 1, , 
+par, proteins, 1, 8780, 705 
 par, proteins, 2, 8788, 431
 par, proteins, 4, 8815, 232
 par, proteins, 8, 8816, 126
@@ -50,7 +50,7 @@ par, dna, 48, 2983, 15.7
 par, dna, 56, 2984, 15.4
 par, dna, 64, 2972, 15.6
 ser, dna, 1, 2313, 73.9
-par, english.1024MB, 1, , 
+par, english.1024MB, 1, 7931, 721
 par, english.1024MB, 2, 7935, 477
 par, english.1024MB, 4, 7957, 252
 par, english.1024MB, 8, 7958, 139

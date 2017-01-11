@@ -11,6 +11,8 @@ def download(url, files):
             os.system('mv ' + f +'.zero ' + f)
         if not os.path.isfile(f + '.bwt'):
             os.system('../tools/BWT ' + f + ' ' + f + '.bwt')
+        if not os.path.isfile(f + '.bv'):
+            os.system('../tools/BV %s %s' % (f + '.bwt', f + '.bv'))
 
 def writeRep(pat, count, filename):
     if not os.path.isfile(filename):
