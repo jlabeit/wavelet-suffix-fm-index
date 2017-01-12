@@ -491,6 +491,7 @@ return;
 // Calculate prefix sum blockwise over sum args 
 size_type num_blocks = nblocks(v->size(), _SCAN_BSIZE<<3); 
 bit_vector::size_type *block_sum_arg = new bit_vector::size_type[num_blocks];
+memset(block_sum_arg, 0, sizeof(bit_vector::size_type)*num_blocks);
 bit_vector::size_type s = 0;
 bit_vector::size_type e = v->size();
 blocked_for (i, s, e, _SCAN_BSIZE<<3, 
