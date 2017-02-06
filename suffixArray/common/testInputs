@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
-bnchmrk="SA"
-benchmark="Suffix Array"
-checkProgram="../common/SACheck"
+bnchmrk="WT"
+benchmark="Wavelet Tree"
+checkProgram="../common/WTCheck"
 dataDir = "../sequenceData/data"
 
 tests = [
