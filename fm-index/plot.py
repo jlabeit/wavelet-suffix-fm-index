@@ -33,11 +33,12 @@ def makePlot(plot, filename):
         lines[algo], = plot.plot(threads, speedup, c, marker=m, label=algo)
     plot.set_xticks([1, 4, 8, 12, 16, 24, 32, 40, 48, 56, 64])
     plot.set_title(filename.replace('_', '\\_'), fontsize=16)
+    plot.set_ylim([0,5])
 
 # Example data
 threads = [1, 2, 4, 8, 12, 16, 24, 32, 40, 48, 56, 64]
 
-f, ((ax1, ax2), (ax3, ax4), (ax5, ax6), (ax7, ax8), (ax9, ax10)) = plt.subplots(5, 2, sharex='col', sharey='row')
+f, ((ax1, ax2), (ax3, ax4), (ax5, ax6), (ax7, ax8), (ax9, ax10)) = plt.subplots(5, 2, sharex='col')
 
 makePlot(ax1, 'dna')
 makePlot(ax2, 'sources')

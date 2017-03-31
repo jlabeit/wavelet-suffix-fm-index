@@ -40,7 +40,7 @@ def makePlot(plot, filename):
 # Example data
 threads = [1, 2, 4, 8, 12, 16, 24, 32, 40, 48, 56, 64]
 
-f, ((ax1, ax2), (ax3, ax4), (ax5, ax6), (ax7, ax8), (ax9, ax10)) = plt.subplots(5, 2, sharex='col', sharey='row')
+f, ((ax1, ax2), (ax3, ax4), (ax5, ax6), (ax7, ax8), (ax9, ax10)) = plt.subplots(5, 2, sharex='col')
 
 makePlot(ax1, 'english.1024MB')
 makePlot(ax2, 'dna')
@@ -52,6 +52,16 @@ makePlot(ax7, 'proteins.001.1')
 makePlot(ax8, 'dna.001.1')
 makePlot(ax9, 'proteins.001.1')
 makePlot(ax10, 'dna.001.1')
+ax1.set_ylim([0,8])
+ax2.set_ylim([0,8])
+ax3.set_ylim([0,4.5])
+ax4.set_ylim([0,4.5])
+ax5.set_ylim([0,9])
+ax6.set_ylim([0,9])
+ax7.set_ylim([0,7])
+ax8.set_ylim([0,7])
+ax9.set_ylim([0,7])
+ax10.set_ylim([0,7])
 ax1.set_ylabel(r'absolute speedup', fontsize=16)
 ax3.set_ylabel(r'absolute speedup', fontsize=16)
 ax5.set_ylabel(r'absolute speedup', fontsize=16)
